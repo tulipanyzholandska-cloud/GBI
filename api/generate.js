@@ -25,6 +25,7 @@ RULES you must follow:
 - If their budget is low, suggest zero-cost or near-zero-cost approaches
 - If their time is limited (e.g. 5h/week), all suggestions must be realistic within that constraint
 - Write entirely in ${lang}
+- difficulty must be integer 1-5 (never higher)
 - Respond ONLY with valid JSON, no markdown, no extra text`;
 
   const userPrompt = `Create a hyper-personalized business plan for this exact person:
