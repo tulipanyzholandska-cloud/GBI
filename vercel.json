@@ -1,6 +1,10 @@
 {
-  "version": 2,
   "functions": {
-    "api/*.js": { "maxDuration": 30 }
+    "api/generate.js": {
+      "maxDuration": 60
+    },
+    "api/generate-pdf.js": {
+      "maxDuration": 60
+    }
   }
 }
