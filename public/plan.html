@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Your 30-Day Action Plan – Get Biz Idea</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#fff;min-height:100vh}
+.bg{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 20% 50%,#1a0a2e 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,#2d0a1e 0%,transparent 50%),#0a0a0f}
+.content{position:relative;z-index:1;max-width:700px;margin:0 auto;padding:40px 20px}
+nav{display:flex;align-items:center;justify-content:space-between;padding:20px 40px;border-bottom:1px solid rgba(255,255,255,0.08);position:relative;z-index:1}
+.logo{font-size:18px;font-weight:600;color:#fff;text-decoration:none}
+h1{font-size:28px;font-weight:700;margin-bottom:8px;text-align:center}
+.sub{font-size:15px;color:rgba(255,255,255,0.6);text-align:center;margin-bottom:32px}
+.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:24px;margin-bottom:16px}
+.week-title{font-size:13px;font-weight:700;color:#a78bfa;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.task{display:flex;gap:10px;margin-bottom:8px;font-size:13px;color:rgba(255,255,255,0.85);line-height:1.6}
+.task-num{min-width:22px;height:22px;border-radius:50%;background:rgba(124,58,237,0.3);border:1px solid #7c3aed;color:#a78bfa;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.script-box{background:rgba(232,65,122,0.08);border:1px solid rgba(232,65,122,0.3);border-radius:12px;padding:16px;font-size:13px;color:rgba(255,255,255,0.85);line-height:1.7}
+.metric{background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.3);border-radius:12px;padding:16px;font-size:14px;color:#5dcaa5;text-align:center;font-weight:600}
+.habit{background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.3);border-radius:12px;padding:14px;font-size:13px;color:rgba(255,255,255,0.8);text-align:center}
+.btn-main{display:block;width:100%;padding:16px;border-radius:12px;border:none;background:#e8417a;color:#fff;font-size:16px;font-weight:700;cursor:pointer;text-align:center;text-decoration:none;margin-top:24px}
+.btn-main:hover{background:#d63a6e}
+.upsell{background:linear-gradient(135deg,rgba(124,58,237,0.2),rgba(232,65,122,0.15));border:1px solid rgba(124,58,237,0.4);border-radius:16px;padding:24px;margin-top:24px;text-align:center}
+.upsell h3{font-size:18px;font-weight:700;margin-bottom:8px}
+.upsell p{font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:16px;line-height:1.6}
+.btn-upsell{display:inline-block;padding:14px 32px;border-radius:12px;border:none;background:#7c3aed;color:#fff;font-size:15px;font-weight:700;cursor:pointer;text-decoration:none}
+.loading{text-align:center;padding:60px 20px}
+.spinner{width:40px;height:40px;border-radius:50%;border:3px solid rgba(255,255,255,0.1);border-top-color:#e8417a;animation:spin 1s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sec-label{font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.07em;margin:20px 0 10px}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<nav><a class="logo" href="https://getbizidea.com">Get Biz Idea</a></nav>
+<div class="content">
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+    <div style="font-size:16px;font-weight:500">Generating your 30-day plan…</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:8px">This takes about 10 seconds</div>
+  </div>
+  <div id="plan-content" style="display:none">
+    <h1 id="plan-title"></h1>
+    <p class="sub" id="plan-sub"></p>
+    <div id="weeks"></div>
+    <div class="card" style="margin-top:8px">
+      <div class="sec-label">First client script</div>
+      <div class="script-box" id="script"></div>
+    </div>
+    <div class="card">
+      <div class="sec-label">Daily habit (15 min/day)</div>
+      <div class="habit" id="habit"></div>
+    </div>
+    <div class="card">
+      <div class="sec-label">Success metric — end of month 1</div>
+      <div class="metric" id="metric"></div>
+    </div>
+    <a href="#" onclick="window.print()" class="btn-main">⬇ Save as PDF (Print → Save as PDF)</a>
+    <div class="upsell" id="upsell" style="display:none">
+      <h3>Want the full 90-day plan?</h3>
+      <p>Includes complete action plan, pricing strategy, tools list, top mistakes to avoid, and first customer script — everything you need to launch and grow.</p>
+      <a href="#" id="upsell-btn" class="btn-upsell">Unlock Full Plan · 19 €</a>
+    </div>
+  </div>
+</div>
+<script>
+const p = new URLSearchParams(window.location.search);
+const rid = p.get('rid');
+const tw = p.get('tw');
+
+async function loadPlan() {
+  if (!rid) { document.getElementById('loading').innerHTML = '<p style="color:rgba(255,255,255,0.5)">Invalid link.</p>'; return; }
+  try {
+    const resp = await fetch('/api/generate-pdf?rid=' + rid);
+    const data = await resp.json();
+    if (!data.ok) throw new Error(data.error);
+    const pdf = data.pdf;
+    document.getElementById('plan-title').textContent = pdf.title;
+    document.getElementById('plan-sub').textContent = pdf.subtitle;
+    const weeks = ['week1','week2','week3','week4'];
+    document.getElementById('weeks').innerHTML = weeks.map(w => `
+      <div class="card">
+        <div class="week-title">${pdf[w].title}</div>
+        ${pdf[w].tasks.map((t,i) => `<div class="task"><div class="task-num">${i+1}</div>${t}</div>`).join('')}
+      </div>`).join('');
+    document.getElementById('script').textContent = pdf.first_client_script;
+    document.getElementById('habit').textContent = pdf.daily_habit;
+    document.getElementById('metric').textContent = pdf.success_metric;
+    if (tw !== '1') {
+      document.getElementById('upsell').style.display = 'block';
+      document.getElementById('upsell-btn').href = '/?rid=' + rid;
+    }
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('plan-content').style.display = 'block';
+  } catch(e) {
+    document.getElementById('loading').innerHTML = '<p style="color:rgba(255,255,255,0.5)">Something went wrong. <a href="/" style="color:#e8417a">Go back</a></p>';
+  }
+}
+loadPlan();
+</script>
+</body>
+</html>
