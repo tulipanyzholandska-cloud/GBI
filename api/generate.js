@@ -143,7 +143,7 @@ Return ONLY this JSON with ALL fields filled with specific, actionable content:
   try {
     const msg = await claude.messages.create({
       model: 'claude-sonnet-4-20250514',
-      max_tokens: 4000,
+      max_tokens: 3000,
       system: systemPrompt,
       messages: [{ role: 'user', content: userPrompt }]
     });
