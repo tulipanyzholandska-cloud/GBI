@@ -14,46 +14,157 @@ export default async function handler(req, res) {
   const { quizData } = req.body;
   const lang = LANG_MAP[quizData?.language] || 'English';
 
-  const systemPrompt = `You are a brutally specific business coach who has helped 10,000 people start businesses. You NEVER give generic advice. Every single recommendation must be tailored to THIS specific person's age, location, budget, time, and strengths.
+  const systemPrompt = `You are a top-tier business consultant who creates detailed, data-rich business plans. Your plans feel like they cost €500+ from a real consultant. Every number must be specific and realistic for their location and situation.
 
-RULES you must follow:
-- Name real tools, platforms, and websites (e.g. "post on Facebook Marketplace", not "use social media")
-- Give real price ranges based on their location and market (e.g. "charge 800–1200 CZK/session in Prague", not "charge a competitive rate")
-- Income forecasts must be realistic and based on their specific time availability and budget
-- Action steps must be so specific that the person can do them TODAY without asking any follow-up questions
-- first_customer field must describe EXACTLY how to get the first paying customer: which platform, what message to send, what to offer
-- If their budget is low, suggest zero-cost or near-zero-cost approaches
-- If their time is limited (e.g. 5h/week), all suggestions must be realistic within that constraint
+RULES:
+- Use REAL market data and specific numbers (e.g. "Czech Republic freelance market grew 23% in 2024")
+- Every income projection must show the math (e.g. "3 clients × €250/session × 4 sessions/month = €3,000")
+- Include competitor analysis with real named competitors and their pricing
+- first_customer must be a complete ready-to-send message with subject line
+- Each action step must be doable TODAY, under 2 hours, zero additional research needed
+- Include exact copy-paste scripts for outreach, follow-up, and upsell
+- difficulty must be integer 1-5 ONLY
 - Write entirely in ${lang}
-- difficulty must be integer 1-5 (never higher)
-- Respond ONLY with valid JSON, no markdown, no extra text`;
+- Respond ONLY with valid JSON, no markdown`;
 
-  const userPrompt = `Create a hyper-personalized business plan for this exact person:
+  const userPrompt = `Create a premium, data-rich business plan for this person:
 
 AGE: ${quizData.age}
 LOCATION: ${quizData.location}
 LIFESTYLE: ${quizData.lifestyle}
-AVAILABLE TIME: ${quizData.time} hours/week
-STARTING BUDGET: ${quizData.budget}
+TIME/WEEK: ${quizData.time}
+BUDGET: ${quizData.budget}
 STRENGTHS: ${quizData.strengths}
 INTERESTS: ${quizData.interests}
-PREFERRED BUSINESS TYPE: ${quizData.btype}
+BUSINESS TYPE: ${quizData.btype}
 INCOME GOAL: ${quizData.income}
-RISK TOLERANCE: ${quizData.risk}
+RISK: ${quizData.risk}
 
-Think step by step:
-1. What can this SPECIFIC person realistically start given their time, budget, and location?
-2. What is their most marketable strength?
-3. Who would pay them, and how much, in their specific location?
-4. What is the single fastest path to their first €/$/CZK earned?
-
-Return ONLY this JSON (fill every field with specific, actionable content — no placeholders, no vague advice):
-{"top_idea":{"name":"","tagline":"","fit_reasons":["","",""],"income_forecast":{"month_3_low":0,"month_3_high":0,"month_6_low":0,"month_6_high":0,"month_12_low":0,"month_12_high":0,"explanation":""},"difficulty":3,"difficulty_reason":""},"full_plan":{"first_customer":"","pricing":{"recommended_price":"","reasoning":"","when_to_raise":""},"action_plan":{"days_1_7":["","",""],"days_8_30":["","",""],"days_31_90":["",""]},"tools":[{"name":"","purpose":"","cost":""}],"top_mistakes":[{"mistake":"","how_to_avoid":""}],"main_objection":{"objection":"","reframe":""}},"other_ideas":[{"name":"","tagline":"","fit_score":0},{"name":"","tagline":"","fit_score":0}]}`;
+Return ONLY this JSON with ALL fields filled with specific, actionable, data-rich content:
+{
+  "top_idea": {
+    "name": "",
+    "tagline": "",
+    "market_size": "",
+    "market_growth": "",
+    "why_now": "",
+    "fit_reasons": ["","",""],
+    "income_forecast": {
+      "month_3_low": 0, "month_3_high": 0,
+      "month_6_low": 0, "month_6_high": 0,
+      "month_12_low": 0, "month_12_high": 0,
+      "year_2_low": 0, "year_2_high": 0,
+      "month_3_math": "",
+      "month_6_math": "",
+      "month_12_math": "",
+      "explanation": ""
+    },
+    "difficulty": 3,
+    "difficulty_reason": "",
+    "competitors": [
+      {"name": "", "price": "", "weakness": ""},
+      {"name": "", "price": "", "weakness": ""},
+      {"name": "", "price": "", "weakness": ""}
+    ],
+    "your_advantage": ""
+  },
+  "full_plan": {
+    "first_customer": {
+      "platform": "",
+      "subject": "",
+      "message": "",
+      "followup": "",
+      "expected_response_rate": ""
+    },
+    "pricing": {
+      "starter": {"name": "", "price": "", "what_included": ""},
+      "main": {"name": "", "price": "", "what_included": ""},
+      "premium": {"name": "", "price": "", "what_included": ""},
+      "reasoning": "",
+      "when_to_raise": "",
+      "annual_potential": ""
+    },
+    "action_plan": {
+      "week_1": {
+        "goal": "",
+        "tasks": ["","",""],
+        "milestone": "",
+        "expected_revenue": ""
+      },
+      "week_2": {
+        "goal": "",
+        "tasks": ["","",""],
+        "milestone": "",
+        "expected_revenue": ""
+      },
+      "week_3_4": {
+        "goal": "",
+        "tasks": ["","",""],
+        "milestone": "",
+        "expected_revenue": ""
+      },
+      "month_2_3": {
+        "goal": "",
+        "tasks": ["","",""],
+        "milestone": "",
+        "expected_revenue": ""
+      },
+      "month_4_6": {
+        "goal": "",
+        "tasks": ["","",""],
+        "milestone": "",
+        "expected_revenue": ""
+      },
+      "month_7_12": {
+        "goal": "",
+        "tasks": ["","",""],
+        "milestone": "",
+        "expected_revenue": ""
+      }
+    },
+    "scripts": {
+      "cold_outreach": "",
+      "follow_up": "",
+      "upsell": "",
+      "referral_ask": ""
+    },
+    "tools": [
+      {"name": "", "url": "", "purpose": "", "cost": "", "how_to_use": ""},
+      {"name": "", "url": "", "purpose": "", "cost": "", "how_to_use": ""},
+      {"name": "", "url": "", "purpose": "", "cost": "", "how_to_use": ""},
+      {"name": "", "url": "", "purpose": "", "cost": "", "how_to_use": ""}
+    ],
+    "top_mistakes": [
+      {"mistake": "", "why_fatal": "", "how_to_avoid": ""},
+      {"mistake": "", "why_fatal": "", "how_to_avoid": ""},
+      {"mistake": "", "why_fatal": "", "how_to_avoid": ""}
+    ],
+    "main_objection": {"objection": "", "reframe": ""},
+    "scaling_roadmap": {
+      "phase1": {"months": "1-3", "focus": "", "revenue_target": "", "key_action": ""},
+      "phase2": {"months": "4-6", "focus": "", "revenue_target": "", "key_action": ""},
+      "phase3": {"months": "7-12", "focus": "", "revenue_target": "", "key_action": ""},
+      "phase4": {"months": "13-24", "focus": "", "revenue_target": "", "key_action": ""}
+    },
+    "monthly_income_breakdown": [
+      {"month": 1, "revenue": 0, "main_source": ""},
+      {"month": 2, "revenue": 0, "main_source": ""},
+      {"month": 3, "revenue": 0, "main_source": ""},
+      {"month": 6, "revenue": 0, "main_source": ""},
+      {"month": 9, "revenue": 0, "main_source": ""},
+      {"month": 12, "revenue": 0, "main_source": ""}
+    ]
+  },
+  "other_ideas": [
+    {"name": "", "tagline": "", "fit_score": 0, "monthly_potential": ""},
+    {"name": "", "tagline": "", "fit_score": 0, "monthly_potential": ""}
+  ]
+}`;
 
   try {
     const msg = await claude.messages.create({
       model: 'claude-sonnet-4-20250514',
-      max_tokens: 3000,
+      max_tokens: 6000,
       system: systemPrompt,
       messages: [{ role: 'user', content: userPrompt }]
     });
@@ -63,7 +174,11 @@ Return ONLY this JSON (fill every field with specific, actionable content — no
     let resultId = null;
     try {
       const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
-      const { data } = await supabase.from('results').insert({ quiz_data: quizData, plan, language: quizData.language || 'en' }).select('id').single();
+      const { data } = await supabase.from('results').insert({
+        quiz_data: quizData,
+        plan,
+        language: quizData.language || 'en'
+      }).select('id').single();
       resultId = data?.id;
     } catch (e) { console.error('DB:', e.message); }
 
