@@ -278,9 +278,123 @@ async function startUpsell(){try{const resp=await fetch('/api/checkout',{method:
 function devUnlock(){
     if(!planData) return;
     showPayment();
-    generatePremium();
+    generateBlocks();
   }
   
+  async function generateBlocks(){
+    const paidSection = document.getElementById('rc-paid');
+    if(!paidSection) return;
+    paidSection.style.display='block';
+    paidSection.innerHTML='';
+    document.getElementById('locked-card').style.display='none';
+    const ub=document.getElementById('upsell-block');if(ub)ub.style.display='block';
+
+    const blocks = [1,2,3,4];
+    for(const block of blocks){
+      const placeholder = document.createElement('div');
+      placeholder.id='block-'+block;
+      placeholder.innerHTML=`<div style="padding:20px;text-align:center;color:rgba(255,255,255,0.3);font-size:13px">
+        <div style="width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,255,255,0.1);border-top-color:#7c3aed;animation:spin 1s linear infinite;margin:0 auto 10px"></div>
+        Generuji část ${block}/4...
+      </div>`;
+      paidSection.appendChild(placeholder);
+      
+      try {
+        const resp = await fetch('/api/generate-block', {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({
+            block,
+            quizData: window._lastQuizData,
+            ideaName: planData?.top_idea?.name || '',
+            language: window._lastQuizData?.language || 'en'
+          })
+        });
+        const result = await resp.json();
+        if(result.data) renderBlock(block, result.data, placeholder);
+      } catch(e) {
+        placeholder.innerHTML='<div style="color:rgba(255,0,0,0.5);font-size:12px;padding:10px">Chyba při generování části '+block+'</div>';
+      }
+    }
+  }
+
+  function renderBlock(block, data, el){
+    if(block===1) {
+      const ip = data.income_projection||{};
+      el.innerHTML = `
+      <div style="background:linear-gradient(135deg,rgba(124,58,237,0.2),rgba(232,65,122,0.1));border:1px solid rgba(124,58,237,0.3);border-radius:12px;padding:16px;margin-bottom:16px;font-size:15px;font-weight:600;color:#fff;line-height:1.5">💡 ${data.hero_statement||''}</div>
+      <div class="sec-label">Příjmová projekce</div>
+      <div style="display:flex;align-items:flex-end;gap:4px;height:70px;margin-bottom:8px">
+        ${[{m:'M1',v:ip.month_1||0},{m:'M2',v:ip.month_2||0},{m:'M3',v:ip.month_3||0},{m:'M6',v:ip.month_6||0},{m:'M9',v:ip.month_9||0},{m:'M12',v:ip.month_12||0}].map(({m,v})=>{
+          const max=ip.month_12||1;
+          const h=Math.max(4,Math.round((v/max)*70));
+          const c=v>=(ip.month_6||0)?'linear-gradient(180deg,#5dcaa5,#1D9E75)':'linear-gradient(180deg,#e8417a,#7c3aed)';
+          return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="font-size:8px;color:rgba(255,255,255,0.4)">${v}€</div><div style="width:100%;height:${h}px;border-radius:2px 2px 0 0;background:${c}"></div><div style="font-size:8px;color:rgba(255,255,255,0.4)">${m}</div></div>`;
+        }).join('')}
+      </div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:12px">${ip.month_12_math||''}</div>
+      ${(ip.income_sources||[]).map(s=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><div style="font-size:12px;color:rgba(255,255,255,0.7);min-width:140px">${s.source}</div><div style="flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,0.08)"><div style="width:${s.percentage||0}%;height:100%;background:linear-gradient(90deg,#7c3aed,#e8417a);border-radius:3px"></div></div><div style="font-size:12px;font-weight:600;min-width:50px;text-align:right">${s.monthly_amount||0}€</div></div>`).join('')}
+      <div class="sec-label" style="margin-top:16px">Analýza konkurence</div>
+      ${(data.competitors||[]).map(c=>`<div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:10px;margin-bottom:8px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:13px;font-weight:600">${c.name}</span><span style="font-size:12px;color:#e8417a;font-weight:600">${c.price}</span></div><div style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:3px">❌ ${c.weakness}</div><div style="font-size:12px;color:#5dcaa5">✓ Vy: ${c.how_you_beat_them}</div></div>`).join('')}
+      `;
+    }
+    if(block===2) {
+      const pr=data.pricing||{};const fc=data.first_customer||{};
+      el.innerHTML=`
+      <div class="sec-label">Cenová strategie</div>
+      ${[{t:'VSTUP',d:pr.starter||{}},{t:'HLAVNÍ ⭐',d:pr.main||{},highlight:true},{t:'PREMIUM',d:pr.premium||{}}].map(({t,d,highlight})=>`
+        <div style="background:${highlight?'rgba(124,58,237,0.15)':'rgba(255,255,255,0.04)'};border:1px solid ${highlight?'rgba(124,58,237,0.4)':'rgba(255,255,255,0.08)'};border-radius:10px;padding:12px;margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <div><div style="font-size:10px;color:rgba(255,255,255,0.4)">${t}</div><div style="font-size:14px;font-weight:700">${d.name||''}</div></div>
+            <div style="font-size:22px;font-weight:700;color:#a78bfa">${d.price||''}</div>
+          </div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55)">${d.what_included||''}</div>
+        </div>
+      `).join('')}
+      <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:16px;line-height:1.6">${pr.psychology||''}</div>
+      <div class="sec-label">Copy-paste skripty</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:4px;text-transform:uppercase;letter-spacing:.07em">Subject line</div>
+      <div style="background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.2);border-radius:8px;padding:10px;font-size:13px;font-weight:600;color:#5dcaa5;margin-bottom:10px">${fc.subject_line||''}</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:4px;text-transform:uppercase;letter-spacing:.07em">První zpráva (${fc.platform||''})</div>
+      <div style="background:rgba(124,58,237,0.12);border-left:3px solid #7c3aed;border-radius:0 8px 8px 0;padding:12px;font-size:13px;color:rgba(255,255,255,0.9);line-height:1.7;font-style:italic;margin-bottom:10px">${fc.outreach_message||''}</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:4px;text-transform:uppercase;letter-spacing:.07em">Follow-up (den 3)</div>
+      <div style="background:rgba(124,58,237,0.12);border-left:3px solid #7c3aed;border-radius:0 8px 8px 0;padding:12px;font-size:13px;color:rgba(255,255,255,0.9);line-height:1.7;font-style:italic;margin-bottom:10px">${fc.followup_day3||''}</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:4px;text-transform:uppercase;letter-spacing:.07em">Closing skript</div>
+      <div style="background:rgba(124,58,237,0.12);border-left:3px solid #7c3aed;border-radius:0 8px 8px 0;padding:12px;font-size:13px;color:rgba(255,255,255,0.9);line-height:1.7;font-style:italic;margin-bottom:6px">${fc.closing_script||''}</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.35)">✓ Denní cíl: ${fc.daily_target||0} zpráv · Response rate: ${fc.expected_response_rate||''}</div>
+      `;
+    }
+    if(block===3) {
+      const cl=data.checklist||{};
+      const mkItem=(t,sub)=>`<div style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:0.5px solid rgba(255,255,255,0.06);cursor:pointer" onclick="var cb=this.querySelector('.chkb');cb.textContent=cb.textContent?'':'✓';cb.style.background=cb.textContent?'#5dcaa5':'transparent';this.querySelector('.chkt').style.opacity=cb.textContent?'0.35':'1';this.querySelector('.chkt').style.textDecoration=cb.textContent?'line-through':'none'">
+        <div class="chkb" style="width:20px;height:20px;min-width:20px;border-radius:5px;border:1.5px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;margin-top:1px;flex-shrink:0;transition:all .2s"></div>
+        <div><div class="chkt" style="font-size:13px;color:rgba(255,255,255,0.85);line-height:1.5;transition:all .2s">${t}</div><div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px">${sub}</div></div>
+      </div>`;
+      el.innerHTML=`
+      <div class="sec-label">Akční checklist — zaškrtávej jak postupuješ</div>
+      <div style="font-size:11px;font-weight:600;color:#a78bfa;text-transform:uppercase;letter-spacing:.07em;padding:6px 10px;background:rgba(124,58,237,0.15);border-radius:6px;margin-bottom:8px;display:inline-block">Den 1</div>
+      ${(cl.day1||[]).map(t=>mkItem(`<strong>${t.task}</strong> <span style="color:rgba(255,255,255,0.35)">(${t.time_minutes}min)</span>`,`${t.tool} · ${t.tool_url} · ${t.why||''}`)).join('')}
+      <div style="font-size:11px;font-weight:600;color:#5dcaa5;text-transform:uppercase;letter-spacing:.07em;padding:6px 10px;background:rgba(29,158,117,0.1);border-radius:6px;margin:12px 0 8px;display:inline-block">Den 2–7 · Denní rutina</div>
+      ${(cl.day2_7||[]).map(t=>mkItem(`<strong>${t.task}</strong> <span style="color:rgba(255,255,255,0.35)">(${t.daily_time_minutes}min/den)</span>`,`Cíl: ${t.goal} · Milestone: ${t.milestone||''}`)).join('')}
+      <div style="font-size:11px;font-weight:600;color:#BA7517;text-transform:uppercase;letter-spacing:.07em;padding:6px 10px;background:rgba(186,117,23,0.1);border-radius:6px;margin:12px 0 8px;display:inline-block">Týden 2–4</div>
+      ${(cl.week2_4||[]).map(t=>mkItem(`<strong>${t.task}</strong>`,`Výsledek: ${t.expected_result} · 💰 ${t.revenue_milestone}`)).join('')}
+      <div style="font-size:11px;font-weight:600;color:#e8417a;text-transform:uppercase;letter-spacing:.07em;padding:6px 10px;background:rgba(232,65,122,0.1);border-radius:6px;margin:12px 0 8px;display:inline-block">Měsíc 2–3</div>
+      ${(cl.month2_3||[]).map(t=>mkItem(`<strong>${t.task}</strong>`,`Výsledek: ${t.expected_result} · 💰 ${t.revenue_milestone}`)).join('')}
+      `;
+    }
+    if(block===4) {
+      el.innerHTML=`
+      <div class="sec-label">Nástroje</div>
+      ${(data.tools||[]).map(t=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)"><div><div style="font-size:13px;font-weight:600">${t.name} <span style="font-size:11px;font-weight:400;color:rgba(255,255,255,0.35)">${t.url}</span></div><div style="font-size:12px;color:rgba(255,255,255,0.4)">${t.purpose} · Setup: ${t.time_to_setup_minutes}min</div></div><span style="font-size:12px;color:${(t.cost||'').toLowerCase().includes('free')||(t.cost||'').toLowerCase().includes('zdarma')?'#5dcaa5':'rgba(255,255,255,0.4)'};flex-shrink:0;margin-left:8px">${t.cost}</span></div>`).join('')}
+      <div class="sec-label" style="margin-top:20px">Chyby které vás budou stát peníze</div>
+      ${(data.mistakes||[]).map(m=>`<div style="border-left:3px solid #BA7517;padding:10px 12px;margin-bottom:8px;border-radius:0 8px 8px 0;background:rgba(186,117,23,0.08)"><div style="font-size:13px;font-weight:600;color:#BA7517;margin-bottom:3px">❌ ${m.mistake}</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:3px">${m.why_fatal}</div><div style="font-size:12px;color:#5dcaa5">✓ ${m.how_to_avoid}</div></div>`).join('')}
+      <div class="sec-label" style="margin-top:20px">Scaling roadmapa</div>
+      ${(data.scaling_roadmap||[]).map((s,i)=>{const c=['#a78bfa','#5dcaa5','#BA7517','#e8417a'][i];return `<div style="display:grid;grid-template-columns:76px 1fr;gap:10px;align-items:start;margin-bottom:10px"><div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:${c};font-weight:600;margin-bottom:2px">${s.phase}</div><div style="font-size:13px;font-weight:700;color:#fff">${s.revenue_target}</div></div><div style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.5"><strong style="color:#fff">${s.focus}</strong><br>${s.key_action}<br><span style="font-size:11px;color:rgba(255,255,255,0.35)">Milestone: ${s.milestone}</span></div></div>`;}).join('')}
+      ${(data.passive_income||[]).length?`<div class="sec-label" style="margin-top:20px">Pasivní příjmy</div>${data.passive_income.map(p=>`<div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:10px;margin-bottom:6px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:13px;font-weight:600">${p.product}</span><span style="font-size:12px;color:#5dcaa5">${p.monthly_potential}/měs</span></div><div style="font-size:12px;color:rgba(255,255,255,0.4)">${p.platform} · ${p.price} · Tvorba: ${p.time_to_create}</div></div>`).join('')}`:''}
+      `;
+    }
+  }
+
   async function generatePremium(){
     const paidSection = document.getElementById('rc-paid');
     if(paidSection) {
