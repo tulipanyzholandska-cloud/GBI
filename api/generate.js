@@ -13,26 +13,143 @@ export default async function handler(req, res) {
 
   const { quizData } = req.body;
   const lang = LANG_MAP[quizData?.language] || 'English';
+  const isCzSk = ['cs','sk'].includes(quizData?.language);
 
-  const systemPrompt = `You are a ruthlessly specific business coach. Every recommendation must be tailored to THIS person. Name real platforms, give exact prices, copy-paste scripts. difficulty must be integer 1-5 ONLY. Write in ${lang}. Respond ONLY with valid JSON.`;
+  const systemPrompt = `You are a world-class business coach creating a premium personalized business plan worth €500+. 
 
-  const userPrompt = `Hyper-personalized business plan for:
-AGE: ${quizData.age}, LOCATION: ${quizData.location}, LIFESTYLE: ${quizData.lifestyle}
-TIME: ${quizData.time}/week, BUDGET: ${quizData.budget}, STRENGTHS: ${quizData.strengths}
-INTERESTS: ${quizData.interests}, TYPE: ${quizData.btype}, GOAL: ${quizData.income}, RISK: ${quizData.risk}
+CRITICAL RULES:
+- Be hyper-specific to THIS person's profile — their age, location type, budget, strengths
+- NEVER mention specific cities unless the user explicitly stated one — use "your area" or "your region" instead
+- Use ${isCzSk ? 'formal Czech/Slovak (vykání — Vy, Váš, Vám)' : lang} throughout — never informal
+- Give EXACT copy-paste scripts that work without editing — no [placeholder] for location
+- Every income number must include the math: "X clients × Y€ = Z€"
+- difficulty must be integer 1-5 ONLY
+- Scripts must work universally — not tied to specific geography
+- Respond ONLY with valid JSON, no markdown`;
 
-Return ONLY this JSON:
-{"top_idea":{"name":"","tagline":"","market_size":"","why_now":"","fit_reasons":["","",""],"income_forecast":{"month_3_low":0,"month_3_high":0,"month_6_low":0,"month_6_high":0,"month_12_low":0,"month_12_high":0,"month_12_math":"","explanation":""},"difficulty":3,"difficulty_reason":"","your_advantage":""},"full_plan":{"first_customer":{"platform":"","subject":"","message":"","expected_response_rate":""},"pricing":{"starter":{"name":"","price":"","what_included":""},"main":{"name":"","price":"","what_included":""},"premium":{"name":"","price":"","what_included":""},"reasoning":"","when_to_raise":""},"action_plan":{"days_1_7":["","",""],"days_8_30":["","",""],"days_31_90":["",""]},"scripts":{"cold_outreach":"","follow_up":"","upsell":""},"tools":[{"name":"","url":"","purpose":"","cost":""}],"top_mistakes":[{"mistake":"","how_to_avoid":""}],"main_objection":{"objection":"","reframe":""}},"other_ideas":[{"name":"","tagline":"","fit_score":0,"monthly_potential":""},{"name":"","tagline":"","fit_score":0,"monthly_potential":""}]}`;
+  const userPrompt = `Create a premium business plan for:
+AGE: ${quizData.age}
+LOCATION TYPE: ${quizData.location}
+LIFESTYLE: ${quizData.lifestyle}
+TIME/WEEK: ${quizData.time}
+BUDGET: ${quizData.budget}
+STRENGTHS: ${quizData.strengths}
+INTERESTS: ${quizData.interests}
+BUSINESS TYPE: ${quizData.btype}
+INCOME GOAL: ${quizData.income}
+RISK: ${quizData.risk}
+
+Return ONLY this JSON with ALL fields filled with specific, actionable content:
+{
+  "top_idea": {
+    "name": "",
+    "tagline": "",
+    "market_size": "",
+    "why_now": "",
+    "fit_reasons": ["","",""],
+    "income_forecast": {
+      "month_1": 0, "month_2": 0, "month_3": 0,
+      "month_6": 0, "month_9": 0, "month_12": 0,
+      "month_3_low": 0, "month_3_high": 0,
+      "month_6_low": 0, "month_6_high": 0,
+      "month_12_low": 0, "month_12_high": 0,
+      "month_12_math": "",
+      "income_sources": [
+        {"source": "", "amount": 0, "percentage": 0},
+        {"source": "", "amount": 0, "percentage": 0},
+        {"source": "", "amount": 0, "percentage": 0}
+      ],
+      "explanation": ""
+    },
+    "difficulty": 3,
+    "difficulty_reason": "",
+    "competitors": [
+      {"name": "", "price": "", "weakness": ""},
+      {"name": "", "price": "", "weakness": ""},
+      {"name": "", "price": "", "weakness": ""}
+    ],
+    "your_advantage": ""
+  },
+  "full_plan": {
+    "first_customer": {
+      "platform": "",
+      "subject": "",
+      "message": "",
+      "followup_message": "",
+      "expected_response_rate": "",
+      "daily_outreach_target": 0
+    },
+    "pricing": {
+      "starter": {"name": "", "price": "", "price_number": 0, "what_included": ""},
+      "main": {"name": "", "price": "", "price_number": 0, "what_included": ""},
+      "premium": {"name": "", "price": "", "price_number": 0, "what_included": ""},
+      "reasoning": "",
+      "when_to_raise": "",
+      "psychology": ""
+    },
+    "checklist": {
+      "day1": [
+        {"task": "", "time_minutes": 0, "tool": "", "tool_url": ""},
+        {"task": "", "time_minutes": 0, "tool": "", "tool_url": ""},
+        {"task": "", "time_minutes": 0, "tool": "", "tool_url": ""}
+      ],
+      "week1": [
+        {"task": "", "time_minutes": 0, "goal": ""},
+        {"task": "", "time_minutes": 0, "goal": ""},
+        {"task": "", "time_minutes": 0, "goal": ""}
+      ],
+      "month1": [
+        {"task": "", "milestone": "", "expected_revenue": ""},
+        {"task": "", "milestone": "", "expected_revenue": ""},
+        {"task": "", "milestone": "", "expected_revenue": ""}
+      ],
+      "month2_3": [
+        {"task": "", "milestone": "", "expected_revenue": ""},
+        {"task": "", "milestone": "", "expected_revenue": ""}
+      ]
+    },
+    "scripts": {
+      "cold_outreach": "",
+      "follow_up": "",
+      "closing": "",
+      "upsell": "",
+      "referral": ""
+    },
+    "tools": [
+      {"name": "", "url": "", "purpose": "", "cost": "", "how_to_start": ""},
+      {"name": "", "url": "", "purpose": "", "cost": "", "how_to_start": ""},
+      {"name": "", "url": "", "purpose": "", "cost": "", "how_to_start": ""},
+      {"name": "", "url": "", "purpose": "", "cost": "", "how_to_start": ""}
+    ],
+    "top_mistakes": [
+      {"mistake": "", "why_fatal": "", "how_to_avoid": ""},
+      {"mistake": "", "why_fatal": "", "how_to_avoid": ""},
+      {"mistake": "", "why_fatal": "", "how_to_avoid": ""}
+    ],
+    "main_objection": {"objection": "", "reframe": ""},
+    "scaling_roadmap": [
+      {"phase": "M1-3", "focus": "", "revenue_target": "", "key_action": ""},
+      {"phase": "M4-6", "focus": "", "revenue_target": "", "key_action": ""},
+      {"phase": "M7-12", "focus": "", "revenue_target": "", "key_action": ""},
+      {"phase": "Rok 2", "focus": "", "revenue_target": "", "key_action": ""}
+    ]
+  },
+  "other_ideas": [
+    {"name": "", "tagline": "", "fit_score": 0, "monthly_potential": ""},
+    {"name": "", "tagline": "", "fit_score": 0, "monthly_potential": ""}
+  ]
+}`;
 
   try {
     const msg = await claude.messages.create({
       model: 'claude-sonnet-4-20250514',
-      max_tokens: 3500,
+      max_tokens: 4000,
       system: systemPrompt,
       messages: [{ role: 'user', content: userPrompt }]
     });
 
-    const plan = JSON.parse(msg.content[0].text.replace(/```json|```/g, '').trim());
+    const raw = msg.content[0].text.replace(/```json|```/g, '').trim();
+    const plan = JSON.parse(raw);
 
     let resultId = null;
     try {
