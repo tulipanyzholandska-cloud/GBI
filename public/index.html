@@ -68,11 +68,11 @@
         <line x1="80" y1="80" x2="38" y2="50" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
         <polygon id="radar-poly" points="80,80 80,80 80,80 80,80 80,80 80,80" fill="rgba(124,58,237,0.2)" stroke="url(#rg)" stroke-width="1.5" style="transition:all 1.2s cubic-bezier(.4,0,.2,1)"/>
         <defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#e8417a"/></linearGradient></defs>
-        <text x="80" y="20" text-anchor="middle" style="font-size:9px;fill:rgba(255,255,255,0.4);font-family:-apple-system,sans-serif">Trh</text>
-        <text x="128" y="48" text-anchor="start" style="font-size:9px;fill:rgba(255,255,255,0.4);font-family:-apple-system,sans-serif">Kompet.</text>
-        <text x="130" y="114" text-anchor="start" style="font-size:9px;fill:rgba(255,255,255,0.4);font-family:-apple-system,sans-serif">Zisk</text>
-        <text x="80" y="148" text-anchor="middle" style="font-size:9px;fill:rgba(255,255,255,0.4);font-family:-apple-system,sans-serif">Proveditel.</text>
-        <text x="30" y="114" text-anchor="end" style="font-size:9px;fill:rgba(255,255,255,0.4);font-family:-apple-system,sans-serif">Zakladatel</text>
+        <text x="80" y="16" text-anchor="middle" style="font-size:9px;fill:rgba(255,255,255,0.4);font-family:-apple-system,sans-serif">Trh</text>
+        <text x="136" y="48" text-anchor="start" style="font-size:9px;fill:rgba(255,255,255,0.4);font-family:-apple-system,sans-serif">Kompet.</text>
+        <text x="136" y="114" text-anchor="start" style="font-size:9px;fill:rgba(255,255,255,0.4);font-family:-apple-system,sans-serif">Zisk</text>
+        <text x="80" y="158" text-anchor="middle" style="font-size:9px;fill:rgba(255,255,255,0.4);font-family:-apple-system,sans-serif">Proveditel.</text>
+        <text x="24" y="114" text-anchor="end" style="font-size:9px;fill:rgba(255,255,255,0.4);font-family:-apple-system,sans-serif">Zakladatel</text>
         <text x="32" y="48" text-anchor="end" style="font-size:9px;fill:rgba(255,255,255,0.4);font-family:-apple-system,sans-serif">Diferenc.</text>
       </svg>
     </div>
@@ -90,6 +90,9 @@
     <input class="email-input" type="email" id="gate-email" placeholder="tvuj@email.com">
     <button class="btn-email" onclick="saveEmail()">Uložit a vidět preview →</button>
     <div class="skip-link" onclick="showPayment()">Přeskočit, rovnou k platbě</div>
+  </div>
+  <div style="text-align:center;margin-bottom:12px">
+    <button onclick="devUnlock()" style="padding:10px 24px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:8px;color:rgba(255,255,255,0.5);font-size:12px;cursor:pointer">🔓 DEV — přeskočit platbu</button>
   </div>
 
   <!-- LEVEL 2: Po emailu -->
