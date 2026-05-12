@@ -189,7 +189,7 @@
     const pd = document.getElementById('preview-days');
     const pp = document.getElementById('preview-pricing');
     if(pc) pc.textContent = d.full_plan.first_customer;
-    if(pd) pd.innerHTML = (d.full_plan.action_plan.days_1_7||[]).slice(0,2).map((s,i)=>'<div style="display:flex;gap:8px;margin-bottom:6px;font-size:13px;color:rgba(255,255,255,0.8)"><span style="color:#6366F1;font-weight:700">'+(i+1)+'.</span>'+s+'</div>').join('');
+    if(pd){const _d17=((d.full_plan.action_plan||{}).days_1_7||(d.full_plan.checklist||{}).day1||[]);pd.innerHTML=_d17.slice(0,2).map((s,i)=>'<div style="display:flex;gap:8px;margin-bottom:6px;font-size:13px;color:rgba(255,255,255,0.8)"><span style="color:#6366F1;font-weight:700">'+(i+1)+'.</span>'+(typeof s==='object'?s.task:s)+'</div>').join('');}
     if(pp) pp.textContent = d.full_plan.pricing.recommended_price;
   } catch(e) { console.log('preview err', e); }document.getElementById('r-others').innerHTML=(d.other_ideas||[]).map(o=>'<div style="background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid rgba(255,255,255,0.08);padding:12px;margin-bottom:6px"><div style="font-size:13px;font-weight:600;margin-bottom:3px">'+o.name+'</div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.4;margin-bottom:6px">'+o.tagline+'</div><div style="font-size:11px;color:#a78bfa;font-weight:600">Match '+o.fit_score+'%</div></div>').join('');if(isPaid)showPaidContent(fp)}function showPaidContent(fp){document.getElementById('email-gate').style.display='none';document.getElementById('locked-card').style.display='none';document.getElementById('level2-reveal').style.display='none';document.getElementById('rc-paid').style.display='block';const ub=document.getElementById('upsell-block');if(ub)ub.style.display='block';const fc = fp.first_customer;
   if(typeof fc === 'object') {
@@ -244,7 +244,7 @@
     const fc = document.getElementById('l2-firstcust');
     const d17 = document.getElementById('l2-days17');
     if(fc) fc.textContent = planData.full_plan.first_customer;
-    if(d17) d17.innerHTML = (planData.full_plan.action_plan.days_1_7||[]).map((s,i)=>
+    if(d17) d17.innerHTML = ((planData.full_plan.action_plan||{}).days_1_7||(planData.full_plan.checklist||{}).day1||[]).map((s,i)=>
       '<div style="display:flex;gap:8px;margin-bottom:6px"><div style="width:22px;height:22px;min-width:22px;border-radius:50%;background:rgba(124,58,237,0.3);border:1px solid #7c3aed;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#a78bfa;flex-shrink:0;margin-top:2px">'+(i+1)+'</div><div style="font-size:13px;line-height:1.5;color:rgba(255,255,255,0.8)">'+s+'</div></div>'
     ).join('');
     if(l2) l2.style.display='block';
