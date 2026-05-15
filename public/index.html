@@ -472,7 +472,7 @@ function devUnlock(){
 
 
     // INTERACTIVE CALCULATORS
-    const calcDiv=document.createElement('div');
+    var calcDiv=document.createElement('div');
     calcDiv.innerHTML=`<div class="sec-label">💰 Příjmová kalkulačka — pohybujte posuvníky</div>
 <div class="calc-wrap">
 <div class="slider-wrap"><div class="slider-label"><span class="slider-name">Počet klientů za měsíc</span><span class="slider-val" id="vc">4 klienti</span></div><input type="range" id="sc" min="1" max="20" value="4" oninput="gbiCalc()"></div>
@@ -535,7 +535,7 @@ function devUnlock(){
     setTimeout(()=>{if(window.gbiCalc)window.gbiCalc();const tb=document.querySelector('#rc-paid .toggle-btn');if(tb&&window.gbiView)window.gbiView('o',tb);},300);
 
     // INTERACTIVE CALCULATORS
-    const calcDiv=document.createElement('div');
+    var calcDiv=document.createElement('div');
     calcDiv.innerHTML=`<div class="sec-label">💰 Příjmová kalkulačka — pohybujte posuvníky</div>
 <div class="calc-wrap">
 <div class="slider-wrap"><div class="slider-label"><span class="slider-name">Počet klientů za měsíc</span><span class="slider-val" id="vc">4 klienti</span></div><input type="range" id="sc" min="1" max="20" value="4" oninput="gbiCalc()"></div>
