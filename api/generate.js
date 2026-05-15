@@ -25,7 +25,7 @@ JSON (be specific, concise):
 
   try {
     const msg = await claude.messages.create({
-      model: 'claude-sonnet-4-5',
+      model: 'claude-sonnet-4-20250514',
       max_tokens: 4000,
       system: systemPrompt,
       messages: [{ role: 'user', content: userPrompt }]
