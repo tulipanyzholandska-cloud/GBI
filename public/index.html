@@ -137,6 +137,13 @@
     <button class="btn-email" onclick="saveEmail()">Uložit a vidět preview →</button>
     <div class="skip-link" onclick="showPayment()">Přeskočit, rovnou k platbě</div>
   </div>
+  <div style="text-align:center;margin:8px 0 12px">
+    <div style="display:flex;gap:8px;max-width:280px;margin:0 auto">
+      <input id="unlock-code" type="text" placeholder="Máte kód? Zadejte zde" style="flex:1;padding:10px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#fff;font-size:13px;outline:none" />
+      <button onclick="tryCode()" style="padding:10px 16px;background:rgba(124,58,237,0.3);border:1px solid rgba(124,58,237,0.5);border-radius:8px;color:#a78bfa;font-size:13px;cursor:pointer;font-weight:600">OK</button>
+    </div>
+    <div id="code-error" style="font-size:12px;color:#e8417a;margin-top:6px;display:none">Nesprávný kód</div>
+  </div>
   <div style="text-align:center;margin-bottom:12px">
     <button onclick="devUnlock()" style="padding:10px 24px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:8px;color:rgba(255,255,255,0.5);font-size:12px;cursor:pointer">🔓 DEV — přeskočit platbu</button>
   </div>
@@ -318,7 +325,16 @@ async function startTripwire(){
   }catch(e){alert('Payment error. Please try again.');}
 }async function startCheckout(){try{const resp=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resultId,email:userEmail})});const{url}=await resp.json();window.location.href=url}catch(e){alert('Payment error. Please try again.')}}window.addEventListener('DOMContentLoaded',()=>{const p=new URLSearchParams(window.location.search);if(p.get('unlocked')==='true'&&p.get('rid')){loadResult(p.get('rid'))}if(p.get('dev')==='1'){window._devMode=true;}});async function loadResult(rid){try{const resp=await fetch("/api/result?rid="+rid);const data=await resp.json();if(data.plan){resultId=rid;planData=data.plan;renderResult(data.plan,true);}}catch(e){console.error(e);}}
 async function startUpsell(){try{const resp=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resultId,email:userEmail,product:'upsell'})});const{url}=await resp.json();window.location.href=url}catch(e){alert('Payment error. Please try again.')}}
-function devUnlock(){
+function tryCode(){
+    const code = document.getElementById('unlock-code').value.trim().toUpperCase();
+    if(['GETBIZ2025','TULIPANY','TESTMODE','ADMIN123'].includes(code)){
+      document.getElementById('code-error').style.display='none';
+      generateBlocks();
+    } else {
+      document.getElementById('code-error').style.display='block';
+    }
+  }
+  function devUnlock(){
     if(!planData) return;
     showPayment();
     generateBlocks();
