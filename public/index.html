@@ -535,68 +535,6 @@ function devUnlock(){
     setTimeout(()=>{if(window.gbiCalc)window.gbiCalc();const tb=document.querySelector('#rc-paid .toggle-btn');if(tb&&window.gbiView)window.gbiView('o',tb);},300);
 
     // INTERACTIVE CALCULATORS
-    var calcDiv=document.createElement('div');
-    calcDiv.innerHTML=`<div class="sec-label">💰 Příjmová kalkulačka — pohybujte posuvníky</div>
-<div class="calc-wrap">
-<div class="slider-wrap"><div class="slider-label"><span class="slider-name">Počet klientů za měsíc</span><span class="slider-val" id="vc">4 klienti</span></div><input type="range" id="sc" min="1" max="20" value="4" oninput="gbiCalc()"></div>
-<div class="slider-wrap"><div class="slider-label"><span class="slider-name">Průměrná cena za klienta</span><span class="slider-val" id="vp">300 €</span></div><input type="range" id="sp" min="50" max="1000" step="25" value="300" oninput="gbiCalc()"></div>
-<div class="slider-wrap"><div class="slider-label"><span class="slider-name">Hodin práce týdně</span><span class="slider-val" id="vh">20 hodin</span></div><input type="range" id="sh" min="5" max="40" value="20" oninput="gbiCalc()"></div>
-<div class="result-big"><div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px">Váš měsíční příjem</div><div class="result-num" id="rm" style="color:#5dcaa5">1 200 €</div><div style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:6px">= <span id="rczk">30 000 Kč</span> · <span id="ran">14 400 € ročně</span></div></div>
-<div class="bk-grid"><div class="bk-card"><div style="font-size:12px;color:rgba(255,255,255,0.4)">Hodinová sazba</div><div class="bk-num" id="rh" style="color:#a78bfa">–</div><div class="bk-sub">efektivní</div></div><div class="bk-card"><div style="font-size:12px;color:rgba(255,255,255,0.4)">Týdenní výdělek</div><div class="bk-num" id="rw" style="color:#BA7517">–</div><div class="bk-sub">průměrně</div></div><div class="bk-card"><div style="font-size:12px;color:rgba(255,255,255,0.4)">Cíl splněn za</div><div class="bk-num" id="rg" style="color:#5dcaa5">–</div><div class="bk-sub">tempu</div></div></div>
-<div class="mini-bars" id="gbars"></div>
-</div>
-<div class="sec-label">⚖️ Break-even kalkulačka</div>
-<div class="calc-wrap">
-<div class="slider-wrap"><div class="slider-label"><span class="slider-name">Měsíční náklady</span><span class="slider-val" id="vcosts">200 €</span></div><input type="range" id="scosts" min="0" max="1000" step="25" value="200" oninput="gbiCalc()"></div>
-<div class="bk-grid" style="grid-template-columns:1fr 1fr"><div class="bk-card"><div style="font-size:12px;color:rgba(255,255,255,0.4)">Klientů pro break-even</div><div class="bk-num" id="bec" style="color:#BA7517">–</div><div class="bk-sub">minimum</div></div><div class="bk-card"><div style="font-size:12px;color:rgba(255,255,255,0.4)">Čistý zisk / měsíc</div><div class="bk-num" id="bep" style="color:#5dcaa5">–</div><div class="bk-sub">po nákladech</div></div></div>
-<div style="height:10px;border-radius:5px;background:rgba(255,255,255,0.08);overflow:hidden;position:relative;margin-top:12px"><div id="bebc" style="position:absolute;left:0;top:0;height:100%;background:#e8417a;border-radius:5px;transition:width .4s"></div><div id="bebp" style="position:absolute;top:0;height:100%;background:#5dcaa5;border-radius:5px;transition:all .4s"></div></div>
-<div id="benote" style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:8px;text-align:center"></div>
-</div>
-<div class="sec-label">🗓 Cesta k prvnímu příjmu</div>
-<div class="calc-wrap">
-<div class="toggle-row"><button class="toggle-btn active" onclick="gbiView('o',this)">Optimistický</button><button class="toggle-btn" onclick="gbiView('r',this)">Realistický</button><button class="toggle-btn" onclick="gbiView('c',this)">Konzervativní</button></div>
-<div class="timeline" id="gtl"></div>
-</div>`;
-    el.appendChild(calcDiv);
-    window._gbiViews={o:[{m:'Týden 1–2',t:'Profil + první outreach',b:'LinkedIn nastaven, 20 zpráv denně, 2–3 schůzky',r:'0 → 300 €'},{m:'Měsíc 1',t:'První platící klient',b:'1–2 pilotní projekty, sbíráš testimonials',r:'300–600 €'},{m:'Měsíc 2–3',t:'Stabilní zákazníci',b:'3–4 klienti, retainer model',r:'900–1 500 €'},{m:'Měsíc 4–6',t:'Škálování',b:'6–8 klientů, zdražuješ, nové služby',r:'2 000–3 500 €'},{m:'Měsíc 7–12',t:'Plný příjem',b:'10+ klientů, pasivní příjmy',r:'4 000–8 000 €'}],r:[{m:'Měsíc 1',t:'Příprava a kontakty',b:'Portfolio, oslovení, bezplatný audit jako háček',r:'0 → 150 €'},{m:'Měsíc 2',t:'První placený projekt',b:'1 klient za pilotní cenu, testimonial',r:'200–500 €'},{m:'Měsíc 3–4',t:'2–3 klienti',b:'Opakuješ co funguje, retainer model',r:'600–1 200 €'},{m:'Měsíc 5–8',t:'Pravidelný příjem',b:'4–6 klientů, stabilní cash flow',r:'1 500–3 000 €'},{m:'Měsíc 9–12',t:'Optimalizace',b:'Zdražíš, pasivní produkt',r:'3 000–6 000 €'}],c:[{m:'Měsíc 1–2',t:'Budování důvěry',b:'Content, bezplatné audity, portfolio',r:'0 €'},{m:'Měsíc 3',t:'První příjem',b:'1 testovací klient',r:'100–300 €'},{m:'Měsíc 4–6',t:'Pomalý růst',b:'2–3 klienti, testování pricing',r:'500–1 000 €'},{m:'Měsíc 7–9',t:'Stabilizace',b:'4–5 klientů, retainer základ',r:'1 500–2 500 €'},{m:'Měsíc 10–12',t:'Cíl dosažen',b:'6+ klientů, pravidelný příjem',r:'2 500–4 000 €'}]};
-    window.gbiCalc=function(){
-      const c=+document.getElementById('sc').value,p=+document.getElementById('sp').value,h=+document.getElementById('sh').value,costs=+(document.getElementById('scosts')||{value:200}).value,m=c*p;
-      document.getElementById('vc').textContent=c+' klient'+(c===1?'':'ů');
-      document.getElementById('vp').textContent=p+' €';
-      document.getElementById('vh').textContent=h+' hodin';
-      const vc=document.getElementById('vcosts');if(vc)vc.textContent=costs+' €';
-      document.getElementById('rm').textContent=m.toLocaleString('cs')+' €';
-      document.getElementById('rm').style.color=m>=2000?'#5dcaa5':m>=1000?'#a78bfa':'#BA7517';
-      document.getElementById('rczk').textContent=Math.round(m*25).toLocaleString('cs')+' Kč';
-      document.getElementById('ran').textContent=(m*12).toLocaleString('cs')+' € ročně';
-      document.getElementById('rh').textContent=Math.round(m/(h*4.3))+' €/h';
-      document.getElementById('rw').textContent=Math.round(m/4)+' €';
-      const goal=m>=2000?'M3':m>=1000?'M5':m>=500?'M7':'M10+';
-      document.getElementById('rg').textContent=goal;
-      document.getElementById('rg').style.color=m>=2000?'#5dcaa5':m>=1000?'#BA7517':'#e8417a';
-      const proj=[{m:'M1',v:Math.round(m*.15)},{m:'M2',v:Math.round(m*.3)},{m:'M3',v:Math.round(m*.55)},{m:'M6',v:Math.round(m*.8)},{m:'M9',v:Math.round(m*.92)},{m:'M12',v:m}];
-      const gb=document.getElementById('gbars');
-      if(gb)gb.innerHTML=proj.map(({m:lm,v})=>{const hh=Math.max(5,Math.round((v/Math.max(m,1))*80));const col=v>=m*.7?'linear-gradient(180deg,#5dcaa5,#1D9E75)':'linear-gradient(180deg,#e8417a,#7c3aed)';return '<div class="mini-bar-wrap"><div style="font-size:9px;color:rgba(255,255,255,0.4)">'+v+'</div><div class="mini-bar" style="height:'+hh+'px;background:'+col+'"></div><div style="font-size:10px;color:rgba(255,255,255,0.4)">'+lm+'</div></div>';}).join('');
-      const sc2=document.getElementById('scosts');if(!sc2)return;
-      const bec=Math.ceil(costs/Math.max(p,1)),bep=m-costs;
-      document.getElementById('bec').textContent=bec;
-      document.getElementById('bep').textContent=(bep>0?'+':'')+bep.toLocaleString('cs')+' €';
-      document.getElementById('bep').style.color=bep>0?'#5dcaa5':'#e8417a';
-      const cpct=Math.min(100,m>0?Math.round(costs/m*100):100);
-      document.getElementById('bebc').style.width=cpct+'%';
-      document.getElementById('bebp').style.left=cpct+'%';
-      document.getElementById('bebp').style.width=(100-cpct)+'%';
-      document.getElementById('benote').textContent=cpct+'% příjmů jde na náklady · '+(100-cpct)+'% je čistý zisk';
-      ['sc','sp','sh','scosts'].forEach(id=>{const el=document.getElementById(id);if(!el)return;el.style.setProperty('--pct',((+el.value-+el.min)/(+el.max-+el.min)*100).toFixed(1)+'%');});
-    };
-    window.gbiView=function(key,btn){
-      document.querySelectorAll('#rc-paid .toggle-btn').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      const tl=document.getElementById('gtl');if(!tl)return;
-      tl.innerHTML=(window._gbiViews[key]||[]).map((item,i)=>'<div class="tl-item"><div class="tl-dot" style="background:'+(i===0?'#7c3aed':'#0a0a0f')+'"></div><div class="tl-month">'+item.m+'</div><div class="tl-title">'+item.t+'</div><div class="tl-body">'+item.b+'</div><div class="tl-rev">💰 '+item.r+'</div></div>').join('');
-    };
-    setTimeout(()=>{if(window.gbiCalc)window.gbiCalc();const tb=document.querySelector('#rc-paid .toggle-btn');if(tb&&window.gbiView)window.gbiView('o',tb);},300);
-    if(block===2){
       const pr=data.pricing||{};const fc=data.first_customer||{};
       el.innerHTML=`
       ${SL('💰','Cenová strategie — 3 produkty')}
