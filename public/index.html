@@ -1,107 +1,7 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Get Biz Idea – AI Business Matchmaker</title><style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#fff;min-height:100vh}.bg{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 20% 50%,#1a0a2e 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,#2d0a1e 0%,transparent 50%),radial-gradient(ellipse at 60% 80%,#0a1a3e 0%,transparent 50%),#0a0a0f}.content{position:relative;z-index:1}nav{display:flex;align-items:center;justify-content:space-between;padding:20px 40px;border-bottom:1px solid rgba(255,255,255,0.08)}.logo{font-size:18px;font-weight:600;color:#fff;text-decoration:none}.nav-btn{padding:8px 20px;border-radius:8px;border:1.5px solid #e8417a;color:#e8417a;font-size:14px;font-weight:500;cursor:pointer;background:transparent;text-decoration:none}#quiz-section{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px}.quiz-card{background:linear-gradient(135deg,rgba(120,60,180,0.35) 0%,rgba(180,40,100,0.25) 100%);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:40px;width:100%;max-width:760px;backdrop-filter:blur(20px)}.quiz-title{font-size:26px;font-weight:700;text-align:center;margin-bottom:6px}.quiz-sub{font-size:14px;color:rgba(255,255,255,0.6);text-align:center;margin-bottom:28px}.lang-select{display:flex;gap:8px;justify-content:center;margin-bottom:20px}.lang-btn{padding:6px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.2);background:transparent;color:rgba(255,255,255,0.6);font-size:13px;cursor:pointer;transition:all .2s}.lang-btn.on{border-color:#7c3aed;color:#fff;background:rgba(124,58,237,0.2)}.progress-bar{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:32px}.prog-step{display:flex;flex-direction:column;align-items:center;gap:6px}.prog-dot{width:32px;height:32px;border-radius:50%;border:2px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:rgba(255,255,255,0.4);transition:all .3s}.prog-dot.active{border-color:#e8417a;color:#fff;background:#e8417a}.prog-dot.done{border-color:#7c3aed;background:#7c3aed;color:#fff}.prog-label{font-size:11px;color:rgba(255,255,255,0.5);white-space:nowrap}.prog-label.active{color:#fff}.prog-line{width:80px;height:2px;background:rgba(255,255,255,0.15);margin-bottom:18px;transition:background .3s}.prog-line.done{background:#7c3aed}.step{display:none}.step.active{display:block}.field-label{font-size:13px;font-weight:600;color:rgba(255,255,255,0.8);margin-bottom:10px;margin-top:20px}.field-label:first-child{margin-top:0}.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{padding:8px 16px;border-radius:24px;border:1.5px solid rgba(255,255,255,0.2);font-size:13px;color:rgba(255,255,255,0.7);cursor:pointer;transition:all .2s;user-select:none;background:rgba(255,255,255,0.05)}.chip.on{background:rgba(124,58,237,0.4);border-color:#7c3aed;color:#fff}.btn-row{display:flex;gap:12px;margin-top:32px}.btn-back{flex:1;padding:14px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.2);background:transparent;color:rgba(255,255,255,0.6);font-size:15px;cursor:pointer}.btn-next{flex:2;padding:14px;border-radius:12px;border:none;background:#e8417a;color:#fff;font-size:15px;font-weight:600;cursor:pointer}.no-email-note{text-align:center;font-size:12px;color:rgba(255,255,255,0.4);margin-top:16px}#loading-section{display:none;min-height:100vh;align-items:center;justify-content:center;flex-direction:column;gap:20px;text-align:center;padding:40px}.spinner{width:48px;height:48px;border-radius:50%;border:3px solid rgba(255,255,255,0.1);border-top-color:#e8417a;animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.loading-text{font-size:18px;font-weight:500}.loading-sub{font-size:14px;color:rgba(255,255,255,0.5)}#result-section{display:none;padding:40px 20px;max-width:800px;margin:0 auto}.result-header{text-align:center;margin-bottom:32px}.result-header h1{font-size:28px;font-weight:700;margin-bottom:8px}.result-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:28px;margin-bottom:16px}.free-badge,.paid-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;margin-bottom:14px}.free-badge{background:rgba(29,158,117,0.2);color:#5dcaa5}.paid-badge{background:rgba(124,58,237,0.2);color:#a78bfa}.idea-name{font-size:22px;font-weight:700;margin-bottom:6px}.idea-tagline{font-size:14px;color:rgba(255,255,255,0.65);margin-bottom:20px;line-height:1.6}.sec-label{font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.07em;margin:20px 0 10px}.fit-item{font-size:13px;color:rgba(255,255,255,0.8);padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);line-height:1.6;display:flex;gap:10px}.fit-item:last-child{border-bottom:none}.fit-dot{color:#a78bfa;flex-shrink:0}.forecast-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}.fc-l{font-size:12px;color:rgba(255,255,255,0.5);min-width:72px}.fc-bar{flex:1;height:6px;border-radius:3px;background:rgba(255,255,255,0.08)}.fc-fill{height:6px;border-radius:3px;background:linear-gradient(90deg,#7c3aed,#e8417a)}.fc-v{font-size:12px;font-weight:600;min-width:90px;text-align:right}.diff-track{height:6px;border-radius:3px;background:rgba(255,255,255,0.08);margin-bottom:6px}.diff-fill{height:6px;border-radius:3px;background:#e8417a}.email-gate{background:linear-gradient(135deg,rgba(124,58,237,0.2),rgba(232,65,122,0.15));border:1px solid rgba(124,58,237,0.4);border-radius:16px;padding:28px;margin-bottom:16px;text-align:center}.email-gate h3{font-size:18px;font-weight:700;margin-bottom:8px}.email-gate p{font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:20px}.email-input{width:100%;padding:13px 16px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.06);color:#fff;font-size:14px;margin-bottom:12px;outline:none}.btn-email{width:100%;padding:14px;border-radius:10px;border:none;background:#7c3aed;color:#fff;font-size:15px;font-weight:600;cursor:pointer;margin-bottom:10px}.skip-link{font-size:12px;color:rgba(255,255,255,0.4);cursor:pointer;text-decoration:underline}.locked-card{position:relative;border-radius:16px;overflow:hidden;margin-bottom:16px}.locked-inner{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:28px;filter:blur(4px);pointer-events:none;user-select:none}.locked-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(10,10,15,0.6);border:1px solid rgba(232,65,122,0.3);border-radius:16px}.btn-buy{padding:14px 32px;border-radius:12px;border:none;background:#e8417a;color:#fff;font-size:15px;font-weight:700;cursor:pointer}.buy-note{font-size:12px;color:rgba(255,255,255,0.5)}.step-item{display:flex;gap:12px;margin-bottom:10px;font-size:13px;color:rgba(255,255,255,0.8);line-height:1.6}.step-num{min-width:24px;height:24px;border-radius:50%;background:rgba(124,58,237,0.3);border:1px solid #7c3aed;color:#a78bfa;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}.tool-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tool-card{background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid rgba(255,255,255,0.08);padding:12px 14px}.tool-name{font-size:13px;font-weight:600;margin-bottom:3px}.tool-desc{font-size:12px;color:rgba(255,255,255,0.5)}.tool-cost{font-size:11px;color:#5dcaa5;margin-top:4px}.mistake-box{background:rgba(186,117,23,0.1);border-left:3px solid #BA7517;border-radius:0 8px 8px 0;padding:12px 14px;margin-bottom:8px}.mistake-box p{font-size:12px;color:rgba(255,255,255,0.8);line-height:1.6}.objection-box{background:rgba(124,58,237,0.1);border-radius:10px;border:1px solid rgba(124,58,237,0.3);padding:14px 16px}.objection-box p{font-size:13px;color:rgba(255,255,255,0.8);line-height:1.7}.other-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.other-card{background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid rgba(255,255,255,0.08);padding:14px}.other-name{font-size:14px;font-weight:600;margin-bottom:4px}.other-tag{font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:8px;line-height:1.5}.other-score{font-size:12px;color:#a78bfa;font-weight:600}@media(max-width:600px){nav{padding:16px 20px}.quiz-card{padding:24px 20px}.prog-line{width:40px}.tool-grid,.other-grid{grid-template-columns:1fr}.btn-row{flex-direction:column}}.cb.checked{background:#5dcaa5;border-color:#5dcaa5}
 .cb.checked::after{content:'✓';color:#fff;font-size:12px;font-weight:700}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* PREMIUM CONTENT TYPOGRAPHY */
-#rc-paid{font-size:15px;line-height:1.7}
-#rc-paid .sec-label{font-size:11px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,0.5);text-transform:uppercase;margin:28px 0 14px;display:flex;align-items:center;gap:10px}
-#rc-paid .sec-label::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.08)}
-#rc-paid h2.prem-h{font-size:22px;font-weight:700;line-height:1.3;margin-bottom:8px;color:#fff}
-#rc-paid h3.prem-h3{font-size:17px;font-weight:700;line-height:1.4;margin-bottom:6px;color:#fff}
-#rc-paid p.prem-p{font-size:14px;color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:10px}
-#rc-paid .prem-stat-n{font-size:32px;font-weight:700;line-height:1;letter-spacing:-.01em}
-#rc-paid .prem-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:16px;padding:20px;margin-bottom:12px}
-#rc-paid .prem-script{background:rgba(124,58,237,0.1);border-left:4px solid #7c3aed;border-radius:0 10px 10px 0;padding:16px 18px;font-size:14px;color:rgba(255,255,255,0.88);line-height:1.8;font-style:italic;margin:8px 0 16px}
-#rc-paid .prem-subject{background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.25);border-radius:10px;padding:12px 16px;font-size:15px;font-weight:700;color:#5dcaa5;margin:8px 0 14px}
-#rc-paid .prem-badge{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:5px 12px;border-radius:8px;display:inline-block;margin:14px 0 10px}
-#rc-paid .prem-check{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:.5px solid rgba(255,255,255,0.06);cursor:pointer;user-select:none}
-#rc-paid .prem-check:last-child{border-bottom:none}
-#rc-paid .prem-cb{width:22px;height:22px;min-width:22px;border-radius:6px;border:2px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;margin-top:2px;flex-shrink:0;transition:all .2s}
-#rc-paid .prem-check-title{font-size:15px;font-weight:600;color:rgba(255,255,255,0.9);line-height:1.5;margin-bottom:4px;transition:all .2s}
-#rc-paid .prem-check-sub{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.5}
-#rc-paid .prem-tool{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 0;border-bottom:.5px solid rgba(255,255,255,0.06);gap:12px}
-#rc-paid .prem-tool:last-child{border-bottom:none}
-#rc-paid .prem-tool-name{font-size:15px;font-weight:700;margin-bottom:4px}
-#rc-paid .prem-tool-desc{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.5}
-#rc-paid .prem-mistake{border-left:4px solid #BA7517;padding:14px 16px;margin-bottom:12px;border-radius:0 12px 12px 0;background:rgba(186,117,23,0.08)}
-#rc-paid .prem-mistake-title{font-size:15px;font-weight:700;color:#BA7517;margin-bottom:6px}
-#rc-paid .prem-mistake-body{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6;margin-bottom:6px}
-#rc-paid .prem-mistake-fix{font-size:13px;color:#5dcaa5;line-height:1.6}
-#rc-paid .prem-road{display:grid;grid-template-columns:100px 1fr;gap:14px;align-items:start;margin-bottom:14px}
-#rc-paid .prem-road-phase{border-radius:10px;padding:12px 8px;text-align:center;flex-shrink:0}
-#rc-paid .prem-road-phase-label{font-size:10px;font-weight:700;letter-spacing:.08em;margin-bottom:4px}
-#rc-paid .prem-road-phase-revenue{font-size:18px;font-weight:700;color:#fff;margin-top:4px}
-#rc-paid .prem-road-focus{font-size:16px;font-weight:700;color:#fff;margin-bottom:5px}
-#rc-paid .prem-road-action{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.6;margin-bottom:4px}
-#rc-paid .prem-road-milestone{font-size:12px;color:rgba(255,255,255,0.35)}
-#rc-paid .prem-comp{background:rgba(255,255,255,0.04);border-radius:12px;padding:14px 16px;margin-bottom:10px}
-#rc-paid .prem-comp-name{font-size:15px;font-weight:700;margin-bottom:5px}
-#rc-paid .prem-comp-weak{font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:5px}
-#rc-paid .prem-comp-win{font-size:13px;color:#5dcaa5}
-#rc-paid .prem-price-tier{border-radius:12px;padding:18px;margin-bottom:10px}
-#rc-paid .prem-price-label{font-size:11px;font-weight:700;letter-spacing:.08em;margin-bottom:4px}
-#rc-paid .prem-price-name{font-size:17px;font-weight:700;margin-bottom:6px}
-#rc-paid .prem-price-amount{font-size:28px;font-weight:700;line-height:1}
-#rc-paid .prem-price-inc{font-size:13px;line-height:1.6;margin-top:6px}
-#rc-paid .prem-price-pitch{font-size:12px;font-style:italic;margin-top:6px;opacity:.6}
-</style></head><body><div class="bg"></div><div class="content"><nav><a class="logo" href="https://getbizidea.com">Get Biz Idea</a><a class="nav-btn" href="https://getbizidea.com">← Back</a></nav><div id="quiz-section"><div class="quiz-card"><h2 class="quiz-title">AI Business Matchmaker</h2><p class="quiz-sub">Click through a few quick steps and let AI suggest the best business ideas for your life.</p><div class="lang-select"><button class="lang-btn on" onclick="setLang('en',this)">🇬🇧 English</button><button class="lang-btn" onclick="setLang('cs',this)">🇨🇿 Česky</button><button class="lang-btn" onclick="setLang('sk',this)">🇸🇰 Slovensky</button><button class="lang-btn" onclick="setLang('de',this)">🇩🇪 Deutsch</button></div><div class="progress-bar"><div class="prog-step"><div class="prog-dot active" id="dot1">1</div><div class="prog-label active" id="lbl1">About you</div></div><div class="prog-line" id="line1"></div><div class="prog-step"><div class="prog-dot" id="dot2">2</div><div class="prog-label" id="lbl2">Lifestyle</div></div><div class="prog-line" id="line2"></div><div class="prog-step"><div class="prog-dot" id="dot3">3</div><div class="prog-label" id="lbl3">Strengths</div></div><div class="prog-line" id="line3"></div><div class="prog-step"><div class="prog-dot" id="dot4">4</div><div class="prog-label" id="lbl4">Goals</div></div></div><div class="step active" id="step1"><div class="field-label">Age group</div><div class="chips" id="g-age"><span class="chip" data-g="age">18–24</span><span class="chip" data-g="age">25–34</span><span class="chip" data-g="age">35–44</span><span class="chip" data-g="age">45–54</span><span class="chip" data-g="age">55+</span></div><div class="field-label">Where do you live?</div><div class="chips" id="g-loc"><span class="chip" data-g="loc">Big city</span><span class="chip" data-g="loc">Smaller city</span><span class="chip" data-g="loc">Village</span><span class="chip" data-g="loc">I travel a lot</span><span class="chip" data-g="loc">Abroad / expat</span></div><div class="btn-row"><button class="btn-next" onclick="goStep(2)">Next step</button></div></div><div class="step" id="step2"><div class="field-label">What kind of lifestyle business do you want?</div><div class="chips" id="g-life"><span class="chip" data-g="life">Calm &amp; stable income</span><span class="chip" data-g="life">Dynamic &amp; active</span><span class="chip" data-g="life">Remote / laptop lifestyle</span><span class="chip" data-g="life">Creative work</span><span class="chip" data-g="life">Working with people</span><span class="chip" data-g="life">In the field / outdoors</span></div><div class="field-label">Time per week for business</div><div class="chips" id="g-time"><span class="chip" data-g="time">5–10 h</span><span class="chip" data-g="time">10–20 h</span><span class="chip" data-g="time">20–40 h</span><span class="chip" data-g="time">Full-time</span></div><div class="field-label">Starting budget</div><div class="chips" id="g-budget"><span class="chip" data-g="budget">0–200 €</span><span class="chip" data-g="budget">200–1 000 €</span><span class="chip" data-g="budget">1 000–5 000 €</span><span class="chip" data-g="budget">5 000+ €</span></div><div class="btn-row"><button class="btn-back" onclick="goStep(1)">Back</button><button class="btn-next" onclick="goStep(3)">Next step</button></div></div><div class="step" id="step3"><div class="field-label">Your strengths (choose a few)</div><div class="chips" id="g-str"><span class="chip" data-g="str">Communication</span><span class="chip" data-g="str">Creativity</span><span class="chip" data-g="str">Analytical thinking</span><span class="chip" data-g="str">Technical skills</span><span class="chip" data-g="str">Organisation</span><span class="chip" data-g="str">Sales &amp; persuasion</span><span class="chip" data-g="str">Fast learner</span></div><div class="field-label">What do you enjoy?</div><div class="chips" id="g-int"><span class="chip" data-g="int">Sport</span><span class="chip" data-g="int">Food &amp; gastronomy</span><span class="chip" data-g="int">Travel</span><span class="chip" data-g="int">IT &amp; technology</span><span class="chip" data-g="int">Fashion &amp; style</span><span class="chip" data-g="int">Finance &amp; investing</span><span class="chip" data-g="int">Nature &amp; gardening</span><span class="chip" data-g="int">Creative content</span><span class="chip" data-g="int">Cars / moto</span><span class="chip" data-g="int">Health &amp; fitness</span></div><div class="btn-row"><button class="btn-back" onclick="goStep(2)">Back</button><button class="btn-next" onclick="goStep(4)">Next step</button></div></div><div class="step" id="step4"><div class="field-label">Do you prefer online or offline?</div><div class="chips" id="g-btype"><span class="chip" data-g="btype">Online business</span><span class="chip" data-g="btype">Offline business</span><span class="chip" data-g="btype">Combination</span></div><div class="field-label">Monthly income goal from business</div><div class="chips" id="g-inc"><span class="chip" data-g="inc">300–500 €</span><span class="chip" data-g="inc">500–2 000 €</span><span class="chip" data-g="inc">2 000–5 000 €</span><span class="chip" data-g="inc">5 000+ €</span></div><div class="field-label">Risk level you are comfortable with</div><div class="chips" id="g-risk"><span class="chip" data-g="risk">Low – I prefer safer options</span><span class="chip" data-g="risk">Medium – some risk is ok</span><span class="chip" data-g="risk">High – I can handle more risk</span></div><div class="btn-row"><button class="btn-back" onclick="goStep(3)">Back</button><button class="btn-next" onclick="generate()">Find my business ideas</button></div><p class="no-email-note">No email required. Instant AI suggestions.</p></div></div></div><div id="loading-section">
-<div style="text-align:center;padding:30px 20px;max-width:480px;margin:0 auto">
-<div style="margin-bottom:20px">
-<div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:8px"><span id="lstep">Analyzuji vas profil...</span><span id="lpct">0%</span></div>
-<div style="height:4px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden"><div id="lbar" style="height:100%;width:0%;background:linear-gradient(90deg,#7c3aed,#e8417a);border-radius:2px;transition:width 1.5s ease"></div></div>
-</div>
-<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;margin-bottom:16px;min-height:130px;display:flex;flex-direction:column;justify-content:center">
-<div id="lquote" style="font-size:16px;font-weight:600;line-height:1.6;color:#fff;margin-bottom:10px;font-style:italic"></div>
-<div id="lauthor" style="font-size:13px;color:rgba(255,255,255,0.45)"></div>
-</div>
-<div id="lfact" style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;padding:12px 16px;background:rgba(124,58,237,0.08);border-radius:10px;border-left:3px solid #7c3aed"></div>
-</div>
-<script>
-(function(){
-var Q=[
-["Nejvetsi riziko je nepodstoupit zadne riziko.","Mark Zuckerberg, zakladatel Facebooku"],
-["Nemusite byt skveli abyste zacali, ale musite zacit abyste byli skveli.","Zig Ziglar"],
-["Steve Jobs byl vyhozen z Apple - firmy kterou sam zalozil. Vratil se a zachranil ji.","Steve Jobs"],
-["Airbnb odmitli vsichni investori. Dnes ma hodnotu 75 miliard dolaru.","Brian Chesky, zakladatel Airbnb"],
-["Kazdy expert byl kdysi zacatecnik. Kazdy profik byl kdysi amater.","Robin Sharma"],
-["Amazon prvnich 7 let neprodelalval - Bezos veril ve vizi a vydrzel.","Jeff Bezos, Amazon"],
-["WhatsApp mel pri prodeji za 19 miliard dolaru jen 55 zamestnancu.","Jan Koum, zakladatel WhatsApp"],
-["Neni dulezite odkud startujete, ale kam smerujete.","H. Jackson Brown Jr."]
-];
-var F=[
-"90% miliardarku si vybudovalo bohatstvi sami od nuly.",
-"Prumerny uspesny podnikatel spustil prvni business ve veku 40 let.",
-"Instagram byl prodan Facebooku za 1 miliardu dolaru - 18 mesicu po zalozeni.",
-["Pres 50% novych businessu prezije prvnich 5 let - sance jsou lepsi nez si myslite."],
-"Canva zacala jako projekt jedne cloveka. Dnes ma hodnotu 40 miliard dolaru.",
-"Spotify odmitli vsechny velke nahravaci spolecnosti. Dnes maji 600 milionu uzivatelu."
-];
-var S=["Analyzuji vas profil a silne stranky...","Hledam nejlepsi business prilezitosti...","Pocitam vas prijmovy potencial...","Pripravuji personalizovany akcni plan...","Finalizuji doporuceni pro vas...","Skoro hotovo - pripravuji vysledky..."];
-var qi=Math.floor(Math.random()*Q.length);
-var fi=Math.floor(Math.random()*F.length);
-var si=0;var pct=0;
-function upd(){
-var q=Q[qi%Q.length];
-var lq=document.getElementById("lquote");
-var la=document.getElementById("lauthor");
-var lf=document.getElementById("lfact");
-var ls=document.getElementById("lstep");
-var lb=document.getElementById("lbar");
-var lp=document.getElementById("lpct");
-if(lq)lq.textContent='"'+q[0]+'"';
-if(la)la.textContent="— "+q[1];
-if(lf)lf.textContent="💡 "+F[fi%F.length];
-if(ls)ls.textContent=S[si%S.length];
-pct=Math.min(90,pct+Math.floor(Math.random()*12+8));
-if(lb)lb.style.width=pct+"%";
-if(lp)lp.textContent=pct+"%";
-qi++;fi++;si++;
-}
-upd();
-window._li=setInterval(upd,8000);
-})();
-</script>
-</div><div id="result-section" style="display:none;padding:24px 16px;max-width:800px;margin:0 auto">
+</style></head><body><div class="bg"></div><div class="content"><nav><a class="logo" href="https://getbizidea.com">Get Biz Idea</a><a class="nav-btn" href="https://getbizidea.com">← Back</a></nav><div id="quiz-section"><div class="quiz-card"><h2 class="quiz-title">AI Business Matchmaker</h2><p class="quiz-sub">Click through a few quick steps and let AI suggest the best business ideas for your life.</p><div class="lang-select"><button class="lang-btn on" onclick="setLang('en',this)">🇬🇧 English</button><button class="lang-btn" onclick="setLang('cs',this)">🇨🇿 Česky</button><button class="lang-btn" onclick="setLang('sk',this)">🇸🇰 Slovensky</button><button class="lang-btn" onclick="setLang('de',this)">🇩🇪 Deutsch</button></div><div class="progress-bar"><div class="prog-step"><div class="prog-dot active" id="dot1">1</div><div class="prog-label active" id="lbl1">About you</div></div><div class="prog-line" id="line1"></div><div class="prog-step"><div class="prog-dot" id="dot2">2</div><div class="prog-label" id="lbl2">Lifestyle</div></div><div class="prog-line" id="line2"></div><div class="prog-step"><div class="prog-dot" id="dot3">3</div><div class="prog-label" id="lbl3">Strengths</div></div><div class="prog-line" id="line3"></div><div class="prog-step"><div class="prog-dot" id="dot4">4</div><div class="prog-label" id="lbl4">Goals</div></div></div><div class="step active" id="step1"><div class="field-label">Age group</div><div class="chips" id="g-age"><span class="chip" data-g="age">18–24</span><span class="chip" data-g="age">25–34</span><span class="chip" data-g="age">35–44</span><span class="chip" data-g="age">45–54</span><span class="chip" data-g="age">55+</span></div><div class="field-label">Where do you live?</div><div class="chips" id="g-loc"><span class="chip" data-g="loc">Big city</span><span class="chip" data-g="loc">Smaller city</span><span class="chip" data-g="loc">Village</span><span class="chip" data-g="loc">I travel a lot</span><span class="chip" data-g="loc">Abroad / expat</span></div><div class="btn-row"><button class="btn-next" onclick="goStep(2)">Next step</button></div></div><div class="step" id="step2"><div class="field-label">What kind of lifestyle business do you want?</div><div class="chips" id="g-life"><span class="chip" data-g="life">Calm &amp; stable income</span><span class="chip" data-g="life">Dynamic &amp; active</span><span class="chip" data-g="life">Remote / laptop lifestyle</span><span class="chip" data-g="life">Creative work</span><span class="chip" data-g="life">Working with people</span><span class="chip" data-g="life">In the field / outdoors</span></div><div class="field-label">Time per week for business</div><div class="chips" id="g-time"><span class="chip" data-g="time">5–10 h</span><span class="chip" data-g="time">10–20 h</span><span class="chip" data-g="time">20–40 h</span><span class="chip" data-g="time">Full-time</span></div><div class="field-label">Starting budget</div><div class="chips" id="g-budget"><span class="chip" data-g="budget">0–200 €</span><span class="chip" data-g="budget">200–1 000 €</span><span class="chip" data-g="budget">1 000–5 000 €</span><span class="chip" data-g="budget">5 000+ €</span></div><div class="btn-row"><button class="btn-back" onclick="goStep(1)">Back</button><button class="btn-next" onclick="goStep(3)">Next step</button></div></div><div class="step" id="step3"><div class="field-label">Your strengths (choose a few)</div><div class="chips" id="g-str"><span class="chip" data-g="str">Communication</span><span class="chip" data-g="str">Creativity</span><span class="chip" data-g="str">Analytical thinking</span><span class="chip" data-g="str">Technical skills</span><span class="chip" data-g="str">Organisation</span><span class="chip" data-g="str">Sales &amp; persuasion</span><span class="chip" data-g="str">Fast learner</span></div><div class="field-label">What do you enjoy?</div><div class="chips" id="g-int"><span class="chip" data-g="int">Sport</span><span class="chip" data-g="int">Food &amp; gastronomy</span><span class="chip" data-g="int">Travel</span><span class="chip" data-g="int">IT &amp; technology</span><span class="chip" data-g="int">Fashion &amp; style</span><span class="chip" data-g="int">Finance &amp; investing</span><span class="chip" data-g="int">Nature &amp; gardening</span><span class="chip" data-g="int">Creative content</span><span class="chip" data-g="int">Cars / moto</span><span class="chip" data-g="int">Health &amp; fitness</span></div><div class="btn-row"><button class="btn-back" onclick="goStep(2)">Back</button><button class="btn-next" onclick="goStep(4)">Next step</button></div></div><div class="step" id="step4"><div class="field-label">Do you prefer online or offline?</div><div class="chips" id="g-btype"><span class="chip" data-g="btype">Online business</span><span class="chip" data-g="btype">Offline business</span><span class="chip" data-g="btype">Combination</span></div><div class="field-label">Monthly income goal from business</div><div class="chips" id="g-inc"><span class="chip" data-g="inc">300–500 €</span><span class="chip" data-g="inc">500–2 000 €</span><span class="chip" data-g="inc">2 000–5 000 €</span><span class="chip" data-g="inc">5 000+ €</span></div><div class="field-label">Risk level you are comfortable with</div><div class="chips" id="g-risk"><span class="chip" data-g="risk">Low – I prefer safer options</span><span class="chip" data-g="risk">Medium – some risk is ok</span><span class="chip" data-g="risk">High – I can handle more risk</span></div><div class="btn-row"><button class="btn-back" onclick="goStep(3)">Back</button><button class="btn-next" onclick="generate()">Find my business ideas</button></div><p class="no-email-note">No email required. Instant AI suggestions.</p></div></div></div><div id="loading-section"><div class="spinner"></div><div class="loading-text">Analysing your profile…</div><div class="loading-sub">AI is crafting your personalised business plan</div></div><div id="result-section" style="display:none;padding:24px 16px;max-width:800px;margin:0 auto">
 
   <!-- Social proof -->
   <div style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:16px">
@@ -160,7 +60,7 @@ window._li=setInterval(upd,8000);
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
     <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:14px">
       <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,0.4);margin-bottom:8px">profil příležitosti</div>
-      <svg width="100%" viewBox="-20 -15 200 200">
+      <svg width="100%" viewBox="-20 -15 200 195">
         <polygon points="80,44 108,62 108,98 80,116 52,98 52,62" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
         <polygon points="80,26 122,50 122,110 80,134 38,110 38,50" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
         <line x1="80" y1="80" x2="80" y2="26" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
@@ -193,13 +93,6 @@ window._li=setInterval(upd,8000);
     <input class="email-input" type="email" id="gate-email" placeholder="tvuj@email.com">
     <button class="btn-email" onclick="saveEmail()">Uložit a vidět preview →</button>
     <div class="skip-link" onclick="showPayment()">Přeskočit, rovnou k platbě</div>
-  </div>
-  <div style="text-align:center;margin:8px 0 12px">
-    <div style="display:flex;gap:8px;max-width:280px;margin:0 auto">
-      <input id="unlock-code" type="text" placeholder="Máte kód? Zadejte zde" style="flex:1;padding:10px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#fff;font-size:13px;outline:none" />
-      <button onclick="tryCode()" style="padding:10px 16px;background:rgba(124,58,237,0.3);border:1px solid rgba(124,58,237,0.5);border-radius:8px;color:#a78bfa;font-size:13px;cursor:pointer;font-weight:600">OK</button>
-    </div>
-    <div id="code-error" style="font-size:12px;color:#e8417a;margin-top:6px;display:none">Nesprávný kód</div>
   </div>
   <div style="text-align:center;margin-bottom:12px">
     <button onclick="devUnlock()" style="padding:10px 24px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:8px;color:rgba(255,255,255,0.5);font-size:12px;cursor:pointer">🔓 DEV — přeskočit platbu</button>
@@ -276,7 +169,7 @@ window._li=setInterval(upd,8000);
     <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:8px">Nebo pokračuj s tím co máš — plán stačí na start</div>
   </div>
 
-</div></div><script>let currentStep=1,selectedLang='en',resultId=null,planData=null,userEmail=null;function setLang(l,b){selectedLang=l;document.querySelectorAll('.lang-btn').forEach(x=>x.classList.remove('on'));b.classList.add('on')}document.querySelectorAll('.chip').forEach(c=>{c.addEventListener('click',()=>{const g=c.dataset.g;const single=['age','loc','time','budget','btype','inc','risk','life'];if(single.includes(g))document.querySelectorAll(`[data-g="${g}"]`).forEach(x=>x.classList.remove('on'));c.classList.toggle('on')})});function get(g){return[...document.querySelectorAll(`[data-g="${g}"].on`)].map(x=>x.textContent).join(', ')||'not specified'}function goStep(n){document.getElementById('step'+currentStep).classList.remove('active');const dot=document.getElementById('dot'+currentStep);const lbl=document.getElementById('lbl'+currentStep);dot.classList.remove('active');dot.classList.add('done');lbl.classList.remove('active');if(currentStep<4)document.getElementById('line'+currentStep).classList.add('done');currentStep=n;document.getElementById('step'+n).classList.add('active');document.getElementById('dot'+n).classList.add('active');document.getElementById('lbl'+n).classList.add('active')}async function generate(){const quizData={age:get('age'),location:get('loc'),lifestyle:get('life'),time:get('time'),budget:get('budget'),strengths:get('str'),interests:get('int'),btype:get('btype'),income:get('inc'),risk:get('risk'),language:selectedLang};document.getElementById('quiz-section').style.display='none';document.getElementById('loading-section').style.display='flex';try{const controller=new AbortController();const tid=setTimeout(()=>controller.abort(),110000);const resp=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({quizData}),signal:controller.signal});clearTimeout(tid);const data=await resp.json();if(!data.plan){throw new Error(data.error||'No plan returned')}resultId=data.resultId;planData=data.plan;window._lastQuizData=quizData;if(window._loadingInterval)clearInterval(window._loadingInterval);if(window._li)clearInterval(window._li);renderResult(data.plan,false);
+</div></div><script>let currentStep=1,selectedLang='en',resultId=null,planData=null,userEmail=null;function setLang(l,b){selectedLang=l;document.querySelectorAll('.lang-btn').forEach(x=>x.classList.remove('on'));b.classList.add('on')}document.querySelectorAll('.chip').forEach(c=>{c.addEventListener('click',()=>{const g=c.dataset.g;const single=['age','loc','time','budget','btype','inc','risk','life'];if(single.includes(g))document.querySelectorAll(`[data-g="${g}"]`).forEach(x=>x.classList.remove('on'));c.classList.toggle('on')})});function get(g){return[...document.querySelectorAll(`[data-g="${g}"].on`)].map(x=>x.textContent).join(', ')||'not specified'}function goStep(n){document.getElementById('step'+currentStep).classList.remove('active');const dot=document.getElementById('dot'+currentStep);const lbl=document.getElementById('lbl'+currentStep);dot.classList.remove('active');dot.classList.add('done');lbl.classList.remove('active');if(currentStep<4)document.getElementById('line'+currentStep).classList.add('done');currentStep=n;document.getElementById('step'+n).classList.add('active');document.getElementById('dot'+n).classList.add('active');document.getElementById('lbl'+n).classList.add('active')}async function generate(){const quizData={age:get('age'),location:get('loc'),lifestyle:get('life'),time:get('time'),budget:get('budget'),strengths:get('str'),interests:get('int'),btype:get('btype'),income:get('inc'),risk:get('risk'),language:selectedLang};document.getElementById('quiz-section').style.display='none';document.getElementById('loading-section').style.display='flex';try{const controller=new AbortController();const tid=setTimeout(()=>controller.abort(),110000);const resp=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({quizData}),signal:controller.signal});clearTimeout(tid);const data=await resp.json();if(!data.plan){throw new Error(data.error||'No plan returned')}resultId=data.resultId;planData=data.plan;window._lastQuizData=quizData;renderResult(data.plan,false);
   if(window._devMode){
     showPayment();
     setTimeout(()=>showPaidContent(data.plan.full_plan),100);
@@ -382,16 +275,7 @@ async function startTripwire(){
   }catch(e){alert('Payment error. Please try again.');}
 }async function startCheckout(){try{const resp=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resultId,email:userEmail})});const{url}=await resp.json();window.location.href=url}catch(e){alert('Payment error. Please try again.')}}window.addEventListener('DOMContentLoaded',()=>{const p=new URLSearchParams(window.location.search);if(p.get('unlocked')==='true'&&p.get('rid')){loadResult(p.get('rid'))}if(p.get('dev')==='1'){window._devMode=true;}});async function loadResult(rid){try{const resp=await fetch("/api/result?rid="+rid);const data=await resp.json();if(data.plan){resultId=rid;planData=data.plan;renderResult(data.plan,true);}}catch(e){console.error(e);}}
 async function startUpsell(){try{const resp=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resultId,email:userEmail,product:'upsell'})});const{url}=await resp.json();window.location.href=url}catch(e){alert('Payment error. Please try again.')}}
-function tryCode(){
-    const code = document.getElementById('unlock-code').value.trim().toUpperCase();
-    if(['GETBIZ2025','TULIPANY','TESTMODE','ADMIN123'].includes(code)){
-      document.getElementById('code-error').style.display='none';
-      generateBlocks();
-    } else {
-      document.getElementById('code-error').style.display='block';
-    }
-  }
-  function devUnlock(){
+function devUnlock(){
     if(!planData) return;
     showPayment();
     generateBlocks();
@@ -435,197 +319,78 @@ function tryCode(){
   }
 
   function renderBlock(block, data, el){
-    el.style.opacity='0';el.style.transform='translateY(14px)';
-    setTimeout(()=>{el.style.transition='all .5s ease';el.style.opacity='1';el.style.transform='none';},50);
-
-    const SL=(icon,t)=>`<div class="sec-label">${icon} ${t}</div>`;
-    const SCR=t=>`<div class="prem-script">${t}</div>`;
-    const SUB=t=>`<div class="prem-subject">${t}</div>`;
-    const BADGE=(t,bg,c)=>`<div class="prem-badge" style="background:${bg};color:${c}">${t}</div>`;
-    const CHK=(title,sub)=>`<div class="prem-check" onclick="var cb=this.querySelector('.prem-cb');var done=cb.dataset.done;cb.dataset.done=done?'':'1';cb.textContent=done?'':'✓';cb.style.background=done?'transparent':'#5dcaa5';cb.style.borderColor=done?'rgba(255,255,255,0.2)':'#5dcaa5';this.querySelector('.prem-check-title').style.opacity=done?'1':'0.4';this.querySelector('.prem-check-title').style.textDecoration=done?'none':'line-through';var tot=document.querySelectorAll('.prem-cb').length,dn=document.querySelectorAll('.prem-cb[data-done]').length;var pb=document.getElementById('prog-bar');if(pb)pb.style.width=(dn/tot*100)+'%';var pt=document.getElementById('prog-text');if(pt)pt.textContent=dn+' / '+tot+' kroků';"><div class="prem-cb"></div><div><div class="prem-check-title">${title}</div><div class="prem-check-sub">${sub}</div></div></div>`;
-
-    if(block===1){
-      const ip=data.income_projection||{};
-      const max=Math.max(ip.month_12||1,1);
-      const bars=[{m:'M1',v:ip.month_1||0},{m:'M2',v:ip.month_2||0},{m:'M3',v:ip.month_3||0},{m:'M6',v:ip.month_6||0},{m:'M9',v:ip.month_9||0},{m:'M12',v:ip.month_12||0}];
-      el.innerHTML=`
-      <div style="background:linear-gradient(135deg,rgba(124,58,237,0.2),rgba(232,65,122,0.1));border:1px solid rgba(124,58,237,0.25);border-radius:16px;padding:20px;margin-bottom:20px">
-        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#a78bfa;margin-bottom:10px">💡 Vaše vize za 12 měsíců</div>
-        <h2 class="prem-h">${data.hero_statement||''}</h2>
+    if(block===1) {
+      const ip = data.income_projection||{};
+      el.innerHTML = `
+      <div style="background:linear-gradient(135deg,rgba(124,58,237,0.2),rgba(232,65,122,0.1));border:1px solid rgba(124,58,237,0.3);border-radius:12px;padding:16px;margin-bottom:16px;font-size:15px;font-weight:600;color:#fff;line-height:1.5">💡 ${data.hero_statement||''}</div>
+      <div class="sec-label">Příjmová projekce</div>
+      <div style="display:flex;align-items:flex-end;gap:4px;height:70px;margin-bottom:8px">
+        ${[{m:'M1',v:ip.month_1||0},{m:'M2',v:ip.month_2||0},{m:'M3',v:ip.month_3||0},{m:'M6',v:ip.month_6||0},{m:'M9',v:ip.month_9||0},{m:'M12',v:ip.month_12||0}].map(({m,v})=>{
+          const max=ip.month_12||1;
+          const h=Math.max(4,Math.round((v/max)*70));
+          const c=v>=(ip.month_6||0)?'linear-gradient(180deg,#5dcaa5,#1D9E75)':'linear-gradient(180deg,#e8417a,#7c3aed)';
+          return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="font-size:8px;color:rgba(255,255,255,0.4)">${v}€</div><div style="width:100%;height:${h}px;border-radius:2px 2px 0 0;background:${c}"></div><div style="font-size:8px;color:rgba(255,255,255,0.4)">${m}</div></div>`;
+        }).join('')}
       </div>
-      ${SL('📈','Příjmová projekce')}
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px">
-        <div class="prem-card" style="text-align:center;padding:18px 12px">
-          <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:8px">Za 3 měsíce</div>
-          <div class="prem-stat-n" style="color:#BA7517">${ip.month_3||0} €</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-top:6px">měsíčně</div>
-        </div>
-        <div class="prem-card" style="text-align:center;padding:18px 12px">
-          <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:8px">Za 6 měsíců</div>
-          <div class="prem-stat-n" style="color:#a78bfa">${ip.month_6||0} €</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-top:6px">měsíčně</div>
-        </div>
-        <div class="prem-card" style="text-align:center;padding:18px 12px">
-          <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:8px">Za 12 měsíců</div>
-          <div class="prem-stat-n" style="color:#5dcaa5">${ip.month_12||0} €</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-top:6px">měsíčně</div>
-        </div>
-      </div>
-      <div style="display:flex;align-items:flex-end;gap:5px;height:90px;margin-bottom:12px">
-        ${bars.map(({m,v})=>{const h=Math.max(5,Math.round((v/max)*90));const c=v>=(ip.month_6||0)?'linear-gradient(180deg,#5dcaa5,#1D9E75)':'linear-gradient(180deg,#e8417a,#7c3aed)';return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="font-size:10px;color:rgba(255,255,255,0.45)">${v}</div><div style="width:100%;height:${h}px;border-radius:4px 4px 0 0;background:${c}"></div><div style="font-size:10px;color:rgba(255,255,255,0.45)">${m}</div></div>`;}).join('')}
-      </div>
-      <div style="font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:20px;padding:12px 16px;background:rgba(255,255,255,0.03);border-radius:10px;line-height:1.7">
-        📐 <strong style="color:rgba(255,255,255,0.8)">Matematika M12:</strong> ${ip.month_12_math||''}
-      </div>
-      ${SL('','Zdroje příjmů — měsíčně v M12')}
-      ${(ip.income_sources||[]).map(s=>`
-        <div style="margin-bottom:14px">
-          <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-            <span style="font-size:14px;color:rgba(255,255,255,0.8)">${s.source}</span>
-            <span style="font-size:14px;font-weight:700">${s.monthly_amount||0} €</span>
-          </div>
-          <div style="height:8px;border-radius:4px;background:rgba(255,255,255,0.08);overflow:hidden">
-            <div style="height:100%;width:${s.percentage||0}%;border-radius:4px;background:linear-gradient(90deg,#7c3aed,#e8417a)"></div>
-          </div>
-        </div>
-      `).join('')}
-      ${SL('⚔️','Analýza konkurence — vaše výhoda')}
-      ${(data.competitors||[]).map((c,i)=>i<2?`
-        <div class="prem-comp">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-            <span class="prem-comp-name">${c.name}</span>
-            <span style="font-size:14px;font-weight:700;color:#e8417a">${c.price}</span>
-          </div>
-          <p class="prem-comp-weak">❌ ${c.weakness}</p>
-          <p class="prem-comp-win">✓ Vaše výhoda: ${c.how_you_beat_them}</p>
-        </div>
-      `:`
-        <div class="prem-comp" style="background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.35)">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-            <span class="prem-comp-name" style="color:#a78bfa">Vy ⭐</span>
-            <span style="font-size:14px;font-weight:700;color:#5dcaa5">${c.price}</span>
-          </div>
-          <p style="font-size:14px;color:rgba(255,255,255,0.8)">✓ Prémiové pozicionování · ${c.how_you_beat_them}</p>
-        </div>
-      `).join('')}
+      <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:12px">${ip.month_12_math||''}</div>
+      ${(ip.income_sources||[]).map(s=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><div style="font-size:12px;color:rgba(255,255,255,0.7);min-width:140px">${s.source}</div><div style="flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,0.08)"><div style="width:${s.percentage||0}%;height:100%;background:linear-gradient(90deg,#7c3aed,#e8417a);border-radius:3px"></div></div><div style="font-size:12px;font-weight:600;min-width:50px;text-align:right">${s.monthly_amount||0}€</div></div>`).join('')}
+      <div class="sec-label" style="margin-top:16px">Analýza konkurence</div>
+      ${(data.competitors||[]).map(c=>`<div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:10px;margin-bottom:8px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:13px;font-weight:600">${c.name}</span><span style="font-size:12px;color:#e8417a;font-weight:600">${c.price}</span></div><div style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:3px">❌ ${c.weakness}</div><div style="font-size:12px;color:#5dcaa5">✓ Vy: ${c.how_you_beat_them}</div></div>`).join('')}
       `;
     }
-
-    if(block===2){
+    if(block===2) {
       const pr=data.pricing||{};const fc=data.first_customer||{};
       el.innerHTML=`
-      ${SL('💰','Cenová strategie — 3 produkty')}
-      ${[
-        {t:'VSTUP · impulzní nákup',d:pr.starter||{},bg:'rgba(255,255,255,0.04)',bc:'rgba(255,255,255,0.09)',nc:'#a78bfa'},
-        {t:'HLAVNÍ ⭐ · 80% příjmů',d:pr.main||{},bg:'rgba(124,58,237,0.12)',bc:'rgba(124,58,237,0.4)',nc:'#fff',hl:true},
-        {t:'PREMIUM · anchor price',d:pr.premium||{},bg:'rgba(255,255,255,0.04)',bc:'rgba(255,255,255,0.09)',nc:'#5dcaa5'}
-      ].map(({t,d,bg,bc,nc,hl})=>`
-        <div class="prem-price-tier" style="background:${bg};border:1px solid ${bc}">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start">
-            <div style="flex:1;margin-right:12px">
-              <div class="prem-price-label" style="color:${hl?'#a78bfa':'rgba(255,255,255,0.4)'}">${t}</div>
-              <h3 class="prem-price-name">${d.name||''}</h3>
-              <p class="prem-price-inc" style="color:rgba(255,255,255,${hl?'.7':'.5'})">${d.what_included||''}</p>
-              ${d.pitch?`<p class="prem-price-pitch" style="color:${hl?'#a78bfa':'rgba(255,255,255,0.4)'}">${d.pitch}</p>`:''}
-            </div>
-            <div class="prem-price-amount" style="color:${nc};flex-shrink:0">${d.price||''}</div>
+      <div class="sec-label">Cenová strategie</div>
+      ${[{t:'VSTUP',d:pr.starter||{}},{t:'HLAVNÍ ⭐',d:pr.main||{},highlight:true},{t:'PREMIUM',d:pr.premium||{}}].map(({t,d,highlight})=>`
+        <div style="background:${highlight?'rgba(124,58,237,0.15)':'rgba(255,255,255,0.04)'};border:1px solid ${highlight?'rgba(124,58,237,0.4)':'rgba(255,255,255,0.08)'};border-radius:10px;padding:12px;margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <div><div style="font-size:10px;color:rgba(255,255,255,0.4)">${t}</div><div style="font-size:14px;font-weight:700">${d.name||''}</div></div>
+            <div style="font-size:22px;font-weight:700;color:#a78bfa">${d.price||''}</div>
           </div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55)">${d.what_included||''}</div>
         </div>
       `).join('')}
-      <div style="font-size:14px;color:rgba(255,255,255,0.55);padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:10px;line-height:1.7;margin-bottom:20px">
-        💡 <strong style="color:rgba(255,255,255,0.8)">Psychologie:</strong> ${pr.psychology||''}<br>
-        <strong style="color:rgba(255,255,255,0.8)">Kdy zdražit:</strong> ${pr.when_to_raise||''}
-      </div>
-      ${SL('✉️','Copy-paste skripty — použijte dnes')}
-      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.4);margin-bottom:8px">Subject line · 35%+ open rate</div>
-      ${SUB(fc.subject_line||'')}
-      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.4);margin:16px 0 8px">První zpráva · ${fc.platform||''}</div>
-      <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px">Kde hledat: ${fc.where_to_find||''}</div>
-      ${SCR(fc.outreach_message||'')}
-      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.4);margin:16px 0 8px">Follow-up · den 3 bez odpovědi</div>
-      ${SCR(fc.followup_day3||'')}
-      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.4);margin:16px 0 8px">Closing skript</div>
-      ${SCR(fc.closing_script||'')}
-      <div style="display:flex;gap:20px;font-size:13px;color:rgba(255,255,255,0.4);margin-top:10px">
-        <span>✓ Denní cíl: ${fc.daily_target||0} zpráv</span>
-        <span>✓ Response rate: ${fc.expected_response_rate||''}</span>
-      </div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:16px;line-height:1.6">${pr.psychology||''}</div>
+      <div class="sec-label">Copy-paste skripty</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:4px;text-transform:uppercase;letter-spacing:.07em">Subject line</div>
+      <div style="background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.2);border-radius:8px;padding:10px;font-size:13px;font-weight:600;color:#5dcaa5;margin-bottom:10px">${fc.subject_line||''}</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:4px;text-transform:uppercase;letter-spacing:.07em">První zpráva (${fc.platform||''})</div>
+      <div style="background:rgba(124,58,237,0.12);border-left:3px solid #7c3aed;border-radius:0 8px 8px 0;padding:12px;font-size:13px;color:rgba(255,255,255,0.9);line-height:1.7;font-style:italic;margin-bottom:10px">${fc.outreach_message||''}</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:4px;text-transform:uppercase;letter-spacing:.07em">Follow-up (den 3)</div>
+      <div style="background:rgba(124,58,237,0.12);border-left:3px solid #7c3aed;border-radius:0 8px 8px 0;padding:12px;font-size:13px;color:rgba(255,255,255,0.9);line-height:1.7;font-style:italic;margin-bottom:10px">${fc.followup_day3||''}</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:4px;text-transform:uppercase;letter-spacing:.07em">Closing skript</div>
+      <div style="background:rgba(124,58,237,0.12);border-left:3px solid #7c3aed;border-radius:0 8px 8px 0;padding:12px;font-size:13px;color:rgba(255,255,255,0.9);line-height:1.7;font-style:italic;margin-bottom:6px">${fc.closing_script||''}</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.35)">✓ Denní cíl: ${fc.daily_target||0} zpráv · Response rate: ${fc.expected_response_rate||''}</div>
       `;
     }
-
-    if(block===3){
+    if(block===3) {
       const cl=data.checklist||{};
-      const total=(cl.day1||[]).length+(cl.day2_7||[]).length+(cl.week2_4||[]).length+(cl.month2_3||[]).length;
+      const mkItem=(t,sub)=>`<div style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:0.5px solid rgba(255,255,255,0.06);cursor:pointer" onclick="var cb=this.querySelector('.chkb');cb.textContent=cb.textContent?'':'✓';cb.style.background=cb.textContent?'#5dcaa5':'transparent';this.querySelector('.chkt').style.opacity=cb.textContent?'0.35':'1';this.querySelector('.chkt').style.textDecoration=cb.textContent?'line-through':'none'">
+        <div class="chkb" style="width:20px;height:20px;min-width:20px;border-radius:5px;border:1.5px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;margin-top:1px;flex-shrink:0;transition:all .2s"></div>
+        <div><div class="chkt" style="font-size:13px;color:rgba(255,255,255,0.85);line-height:1.5;transition:all .2s">${t}</div><div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px">${sub}</div></div>
+      </div>`;
       el.innerHTML=`
-      ${SL('✅','Akční checklist — zaškrtávejte jak postupujete')}
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <div style="font-size:13px;color:rgba(255,255,255,0.4)">Celkový postup</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.5)" id="prog-text">0 / ${total} kroků</div>
-      </div>
-      <div style="height:6px;border-radius:3px;background:rgba(255,255,255,0.08);margin-bottom:20px;overflow:hidden">
-        <div id="prog-bar" style="height:100%;width:0;background:linear-gradient(90deg,#7c3aed,#5dcaa5);border-radius:3px;transition:width .4s ease"></div>
-      </div>
-      ${BADGE('Den 1 · '+((cl.day1||[]).reduce((a,x)=>a+(x.time_minutes||0),0))+' minut celkem','rgba(124,58,237,0.2)','#a78bfa')}
-      ${(cl.day1||[]).map(t=>CHK(`<strong>${t.task}</strong> <span style="font-size:13px;font-weight:400;color:rgba(255,255,255,0.35)">(${t.time_minutes} min)</span>`,`${t.tool||''}${t.tool_url?' · '+t.tool_url:''}${t.why?' · '+t.why:''}`)).join('')}
-      ${BADGE('Den 2–7 · denní rutina','rgba(29,158,117,0.15)','#5dcaa5')}
-      ${(cl.day2_7||[]).map(t=>CHK(`<strong>${t.task}</strong> <span style="font-size:13px;font-weight:400;color:rgba(255,255,255,0.35)">(${t.daily_time_minutes} min/den)</span>`,`Cíl: ${t.goal||''} · Milestone: ${t.milestone||''}`)).join('')}
-      ${BADGE('Týden 2–4 · první příjmy','rgba(186,117,23,0.15)','#BA7517')}
-      ${(cl.week2_4||[]).map(t=>CHK(`<strong>${t.task}</strong>`,`Výsledek: ${t.expected_result||''} · 💰 ${t.revenue_milestone||''}`)).join('')}
-      ${BADGE('Měsíc 2–3 · škálování','rgba(232,65,122,0.15)','#e8417a')}
-      ${(cl.month2_3||[]).map(t=>CHK(`<strong>${t.task}</strong>`,`Výsledek: ${t.expected_result||''} · 💰 ${t.revenue_milestone||''}`)).join('')}
+      <div class="sec-label">Akční checklist — zaškrtávej jak postupuješ</div>
+      <div style="font-size:11px;font-weight:600;color:#a78bfa;text-transform:uppercase;letter-spacing:.07em;padding:6px 10px;background:rgba(124,58,237,0.15);border-radius:6px;margin-bottom:8px;display:inline-block">Den 1</div>
+      ${(cl.day1||[]).map(t=>mkItem(`<strong>${t.task}</strong> <span style="color:rgba(255,255,255,0.35)">(${t.time_minutes}min)</span>`,`${t.tool} · ${t.tool_url} · ${t.why||''}`)).join('')}
+      <div style="font-size:11px;font-weight:600;color:#5dcaa5;text-transform:uppercase;letter-spacing:.07em;padding:6px 10px;background:rgba(29,158,117,0.1);border-radius:6px;margin:12px 0 8px;display:inline-block">Den 2–7 · Denní rutina</div>
+      ${(cl.day2_7||[]).map(t=>mkItem(`<strong>${t.task}</strong> <span style="color:rgba(255,255,255,0.35)">(${t.daily_time_minutes}min/den)</span>`,`Cíl: ${t.goal} · Milestone: ${t.milestone||''}`)).join('')}
+      <div style="font-size:11px;font-weight:600;color:#BA7517;text-transform:uppercase;letter-spacing:.07em;padding:6px 10px;background:rgba(186,117,23,0.1);border-radius:6px;margin:12px 0 8px;display:inline-block">Týden 2–4</div>
+      ${(cl.week2_4||[]).map(t=>mkItem(`<strong>${t.task}</strong>`,`Výsledek: ${t.expected_result} · 💰 ${t.revenue_milestone}`)).join('')}
+      <div style="font-size:11px;font-weight:600;color:#e8417a;text-transform:uppercase;letter-spacing:.07em;padding:6px 10px;background:rgba(232,65,122,0.1);border-radius:6px;margin:12px 0 8px;display:inline-block">Měsíc 2–3</div>
+      ${(cl.month2_3||[]).map(t=>mkItem(`<strong>${t.task}</strong>`,`Výsledek: ${t.expected_result} · 💰 ${t.revenue_milestone}`)).join('')}
       `;
     }
-
-    if(block===4){
+    if(block===4) {
       el.innerHTML=`
-      ${SL('🛠','Nástroje — přímé linky + jak začít')}
-      ${(data.tools||[]).map(t=>`
-        <div class="prem-tool">
-          <div>
-            <div class="prem-tool-name">${t.name} <span style="font-size:13px;font-weight:400;color:rgba(255,255,255,0.35)">${t.url||''}</span></div>
-            <div class="prem-tool-desc">${t.purpose||''}</div>
-            <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px">Setup: ${t.time_to_setup_minutes||'?'} min · ${t.how_to_start||''}</div>
-          </div>
-          <div style="font-size:14px;font-weight:700;color:${(t.cost||'').match(/zdarma|free|0/i)?'#5dcaa5':'rgba(255,255,255,0.5)'};flex-shrink:0;margin-left:12px;text-align:right">${t.cost||''}</div>
-        </div>
-      `).join('')}
-      ${SL('⚠️','Chyby které vás budou stát peníze')}
-      ${(data.mistakes||[]).map(m=>`
-        <div class="prem-mistake">
-          <div class="prem-mistake-title">❌ ${m.mistake||''}</div>
-          <div class="prem-mistake-body">${m.why_fatal||''}</div>
-          <div class="prem-mistake-fix">✓ ${m.how_to_avoid||''}</div>
-        </div>
-      `).join('')}
-      ${SL('🚀','Scaling roadmapa')}
-      ${(data.scaling_roadmap||[]).map((s,i)=>{
-        const cols=['#a78bfa','#5dcaa5','#BA7517','#e8417a'];
-        const bgs=['rgba(124,58,237,0.2)','rgba(29,158,117,0.15)','rgba(186,117,23,0.15)','rgba(232,65,122,0.15)'];
-        return `
-        <div class="prem-road">
-          <div class="prem-road-phase" style="background:${bgs[i]};border:1px solid ${cols[i]}33">
-            <div class="prem-road-phase-label" style="color:${cols[i]}">${s.phase||''}</div>
-            <div class="prem-road-phase-revenue">${s.revenue_target||''}</div>
-          </div>
-          <div>
-            <div class="prem-road-focus">${s.focus||''}</div>
-            <div class="prem-road-action">${s.key_action||''}</div>
-            <div class="prem-road-milestone">Milestone: ${s.milestone||''}</div>
-          </div>
-        </div>`;
-      }).join('')}
-      ${(data.passive_income||[]).length?`
-        ${SL('💤','Pasivní příjmy')}
-        ${data.passive_income.map(p=>`
-          <div class="prem-card" style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
-            <div>
-              <div style="font-size:16px;font-weight:700;margin-bottom:6px">${p.product||''}</div>
-              <div style="font-size:13px;color:rgba(255,255,255,0.5)">${p.platform||''} · ${p.price||''} · Tvorba: ${p.time_to_create||''}</div>
-            </div>
-            <div style="font-size:16px;font-weight:700;color:#5dcaa5;flex-shrink:0">${p.monthly_potential||''}/měs</div>
-          </div>
-        `).join('')}
-      `:''}
+      <div class="sec-label">Nástroje</div>
+      ${(data.tools||[]).map(t=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)"><div><div style="font-size:13px;font-weight:600">${t.name} <span style="font-size:11px;font-weight:400;color:rgba(255,255,255,0.35)">${t.url}</span></div><div style="font-size:12px;color:rgba(255,255,255,0.4)">${t.purpose} · Setup: ${t.time_to_setup_minutes}min</div></div><span style="font-size:12px;color:${(t.cost||'').toLowerCase().includes('free')||(t.cost||'').toLowerCase().includes('zdarma')?'#5dcaa5':'rgba(255,255,255,0.4)'};flex-shrink:0;margin-left:8px">${t.cost}</span></div>`).join('')}
+      <div class="sec-label" style="margin-top:20px">Chyby které vás budou stát peníze</div>
+      ${(data.mistakes||[]).map(m=>`<div style="border-left:3px solid #BA7517;padding:10px 12px;margin-bottom:8px;border-radius:0 8px 8px 0;background:rgba(186,117,23,0.08)"><div style="font-size:13px;font-weight:600;color:#BA7517;margin-bottom:3px">❌ ${m.mistake}</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:3px">${m.why_fatal}</div><div style="font-size:12px;color:#5dcaa5">✓ ${m.how_to_avoid}</div></div>`).join('')}
+      <div class="sec-label" style="margin-top:20px">Scaling roadmapa</div>
+      ${(data.scaling_roadmap||[]).map((s,i)=>{const c=['#a78bfa','#5dcaa5','#BA7517','#e8417a'][i];return `<div style="display:grid;grid-template-columns:76px 1fr;gap:10px;align-items:start;margin-bottom:10px"><div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:${c};font-weight:600;margin-bottom:2px">${s.phase}</div><div style="font-size:13px;font-weight:700;color:#fff">${s.revenue_target}</div></div><div style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.5"><strong style="color:#fff">${s.focus}</strong><br>${s.key_action}<br><span style="font-size:11px;color:rgba(255,255,255,0.35)">Milestone: ${s.milestone}</span></div></div>`;}).join('')}
+      ${(data.passive_income||[]).length?`<div class="sec-label" style="margin-top:20px">Pasivní příjmy</div>${data.passive_income.map(p=>`<div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:10px;margin-bottom:6px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:13px;font-weight:600">${p.product}</span><span style="font-size:12px;color:#5dcaa5">${p.monthly_potential}/měs</span></div><div style="font-size:12px;color:rgba(255,255,255,0.4)">${p.platform} · ${p.price} · Tvorba: ${p.time_to_create}</div></div>`).join('')}`:''}
       `;
     }
   }
