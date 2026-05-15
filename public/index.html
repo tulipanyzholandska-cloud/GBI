@@ -44,38 +44,6 @@
 #rc-paid .prem-price-amount{font-size:28px;font-weight:700;line-height:1}
 #rc-paid .prem-price-inc{font-size:13px;line-height:1.6;margin-top:6px}
 #rc-paid .prem-price-pitch{font-size:12px;font-style:italic;margin-top:6px;opacity:.6}
-
-/* INTERACTIVE CALCULATOR */
-#rc-paid input[type=range]{width:100%;height:6px;border-radius:3px;outline:none;cursor:pointer;-webkit-appearance:none;background:linear-gradient(90deg,#7c3aed var(--pct,50%),rgba(255,255,255,0.1) var(--pct,50%))}
-#rc-paid input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(124,58,237,0.6);border:2px solid #7c3aed;cursor:pointer}
-#rc-paid .calc-wrap{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:16px;padding:22px;margin-bottom:14px}
-#rc-paid .slider-wrap{margin-bottom:18px}
-#rc-paid .slider-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-#rc-paid .slider-name{font-size:14px;color:rgba(255,255,255,0.7);font-weight:500}
-#rc-paid .slider-val{font-size:16px;font-weight:700;color:#a78bfa}
-#rc-paid .result-big{text-align:center;background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.25);border-radius:14px;padding:20px;margin:14px 0}
-#rc-paid .result-num{font-size:48px;font-weight:700;line-height:1;letter-spacing:-.02em;transition:all .3s}
-#rc-paid .bk-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0}
-#rc-paid .bk-card{background:rgba(255,255,255,0.04);border-radius:12px;padding:14px;text-align:center}
-#rc-paid .bk-num{font-size:22px;font-weight:700;margin-top:6px;line-height:1}
-#rc-paid .bk-sub{font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px}
-#rc-paid .mini-bars{display:flex;align-items:flex-end;gap:5px;height:80px;margin:14px 0}
-#rc-paid .mini-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
-#rc-paid .mini-bar{width:100%;border-radius:4px 4px 0 0;transition:height .4s ease}
-#rc-paid .toggle-row{display:flex;gap:8px;margin-bottom:14px}
-#rc-paid .toggle-btn{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.5);font-size:13px;cursor:pointer;transition:all .2s;font-weight:500}
-#rc-paid .toggle-btn.active{background:rgba(124,58,237,0.3);border-color:#7c3aed;color:#fff}
-#rc-paid .timeline{position:relative;padding-left:20px}
-#rc-paid .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,#7c3aed,#5dcaa5)}
-#rc-paid .tl-item{position:relative;padding:0 0 20px 20px}
-#rc-paid .tl-dot{position:absolute;left:-25px;top:4px;width:12px;height:12px;border-radius:50%;border:2px solid #7c3aed;background:#0a0a0f}
-#rc-paid .tl-month{font-size:11px;font-weight:700;color:#a78bfa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
-#rc-paid .tl-title{font-size:16px;font-weight:700;margin-bottom:4px}
-#rc-paid .tl-body{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6}
-#rc-paid .tl-rev{font-size:15px;font-weight:700;color:#5dcaa5;margin-top:6px}
-#rc-paid .phases-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-#rc-paid .phase-card{border-radius:12px;padding:16px;cursor:pointer;transition:all .2s}
-#rc-paid .phase-card:hover{transform:translateY(-2px)}
 </style></head><body><div class="bg"></div><div class="content"><nav><a class="logo" href="https://getbizidea.com">Get Biz Idea</a><a class="nav-btn" href="https://getbizidea.com">← Back</a></nav><div id="quiz-section"><div class="quiz-card"><h2 class="quiz-title">AI Business Matchmaker</h2><p class="quiz-sub">Click through a few quick steps and let AI suggest the best business ideas for your life.</p><div class="lang-select"><button class="lang-btn on" onclick="setLang('en',this)">🇬🇧 English</button><button class="lang-btn" onclick="setLang('cs',this)">🇨🇿 Česky</button><button class="lang-btn" onclick="setLang('sk',this)">🇸🇰 Slovensky</button><button class="lang-btn" onclick="setLang('de',this)">🇩🇪 Deutsch</button></div><div class="progress-bar"><div class="prog-step"><div class="prog-dot active" id="dot1">1</div><div class="prog-label active" id="lbl1">About you</div></div><div class="prog-line" id="line1"></div><div class="prog-step"><div class="prog-dot" id="dot2">2</div><div class="prog-label" id="lbl2">Lifestyle</div></div><div class="prog-line" id="line2"></div><div class="prog-step"><div class="prog-dot" id="dot3">3</div><div class="prog-label" id="lbl3">Strengths</div></div><div class="prog-line" id="line3"></div><div class="prog-step"><div class="prog-dot" id="dot4">4</div><div class="prog-label" id="lbl4">Goals</div></div></div><div class="step active" id="step1"><div class="field-label">Age group</div><div class="chips" id="g-age"><span class="chip" data-g="age">18–24</span><span class="chip" data-g="age">25–34</span><span class="chip" data-g="age">35–44</span><span class="chip" data-g="age">45–54</span><span class="chip" data-g="age">55+</span></div><div class="field-label">Where do you live?</div><div class="chips" id="g-loc"><span class="chip" data-g="loc">Big city</span><span class="chip" data-g="loc">Smaller city</span><span class="chip" data-g="loc">Village</span><span class="chip" data-g="loc">I travel a lot</span><span class="chip" data-g="loc">Abroad / expat</span></div><div class="btn-row"><button class="btn-next" onclick="goStep(2)">Next step</button></div></div><div class="step" id="step2"><div class="field-label">What kind of lifestyle business do you want?</div><div class="chips" id="g-life"><span class="chip" data-g="life">Calm &amp; stable income</span><span class="chip" data-g="life">Dynamic &amp; active</span><span class="chip" data-g="life">Remote / laptop lifestyle</span><span class="chip" data-g="life">Creative work</span><span class="chip" data-g="life">Working with people</span><span class="chip" data-g="life">In the field / outdoors</span></div><div class="field-label">Time per week for business</div><div class="chips" id="g-time"><span class="chip" data-g="time">5–10 h</span><span class="chip" data-g="time">10–20 h</span><span class="chip" data-g="time">20–40 h</span><span class="chip" data-g="time">Full-time</span></div><div class="field-label">Starting budget</div><div class="chips" id="g-budget"><span class="chip" data-g="budget">0–200 €</span><span class="chip" data-g="budget">200–1 000 €</span><span class="chip" data-g="budget">1 000–5 000 €</span><span class="chip" data-g="budget">5 000+ €</span></div><div class="btn-row"><button class="btn-back" onclick="goStep(1)">Back</button><button class="btn-next" onclick="goStep(3)">Next step</button></div></div><div class="step" id="step3"><div class="field-label">Your strengths (choose a few)</div><div class="chips" id="g-str"><span class="chip" data-g="str">Communication</span><span class="chip" data-g="str">Creativity</span><span class="chip" data-g="str">Analytical thinking</span><span class="chip" data-g="str">Technical skills</span><span class="chip" data-g="str">Organisation</span><span class="chip" data-g="str">Sales &amp; persuasion</span><span class="chip" data-g="str">Fast learner</span></div><div class="field-label">What do you enjoy?</div><div class="chips" id="g-int"><span class="chip" data-g="int">Sport</span><span class="chip" data-g="int">Food &amp; gastronomy</span><span class="chip" data-g="int">Travel</span><span class="chip" data-g="int">IT &amp; technology</span><span class="chip" data-g="int">Fashion &amp; style</span><span class="chip" data-g="int">Finance &amp; investing</span><span class="chip" data-g="int">Nature &amp; gardening</span><span class="chip" data-g="int">Creative content</span><span class="chip" data-g="int">Cars / moto</span><span class="chip" data-g="int">Health &amp; fitness</span></div><div class="btn-row"><button class="btn-back" onclick="goStep(2)">Back</button><button class="btn-next" onclick="goStep(4)">Next step</button></div></div><div class="step" id="step4"><div class="field-label">Do you prefer online or offline?</div><div class="chips" id="g-btype"><span class="chip" data-g="btype">Online business</span><span class="chip" data-g="btype">Offline business</span><span class="chip" data-g="btype">Combination</span></div><div class="field-label">Monthly income goal from business</div><div class="chips" id="g-inc"><span class="chip" data-g="inc">300–500 €</span><span class="chip" data-g="inc">500–2 000 €</span><span class="chip" data-g="inc">2 000–5 000 €</span><span class="chip" data-g="inc">5 000+ €</span></div><div class="field-label">Risk level you are comfortable with</div><div class="chips" id="g-risk"><span class="chip" data-g="risk">Low – I prefer safer options</span><span class="chip" data-g="risk">Medium – some risk is ok</span><span class="chip" data-g="risk">High – I can handle more risk</span></div><div class="btn-row"><button class="btn-back" onclick="goStep(3)">Back</button><button class="btn-next" onclick="generate()">Find my business ideas</button></div><p class="no-email-note">No email required. Instant AI suggestions.</p></div></div></div><div id="loading-section"><div class="spinner"></div><div class="loading-text">Analysing your profile…</div><div class="loading-sub">AI is crafting your personalised business plan</div></div><div id="result-section" style="display:none;padding:24px 16px;max-width:800px;margin:0 auto">
 
   <!-- Social proof -->
@@ -470,71 +438,7 @@ function devUnlock(){
       `;
     }
 
-
-    // INTERACTIVE CALCULATORS
-    var calcDiv=document.createElement('div');
-    calcDiv.innerHTML=`<div class="sec-label">💰 Příjmová kalkulačka — pohybujte posuvníky</div>
-<div class="calc-wrap">
-<div class="slider-wrap"><div class="slider-label"><span class="slider-name">Počet klientů za měsíc</span><span class="slider-val" id="vc">4 klienti</span></div><input type="range" id="sc" min="1" max="20" value="4" oninput="gbiCalc()"></div>
-<div class="slider-wrap"><div class="slider-label"><span class="slider-name">Průměrná cena za klienta</span><span class="slider-val" id="vp">300 €</span></div><input type="range" id="sp" min="50" max="1000" step="25" value="300" oninput="gbiCalc()"></div>
-<div class="slider-wrap"><div class="slider-label"><span class="slider-name">Hodin práce týdně</span><span class="slider-val" id="vh">20 hodin</span></div><input type="range" id="sh" min="5" max="40" value="20" oninput="gbiCalc()"></div>
-<div class="result-big"><div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px">Váš měsíční příjem</div><div class="result-num" id="rm" style="color:#5dcaa5">1 200 €</div><div style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:6px">= <span id="rczk">30 000 Kč</span> · <span id="ran">14 400 € ročně</span></div></div>
-<div class="bk-grid"><div class="bk-card"><div style="font-size:12px;color:rgba(255,255,255,0.4)">Hodinová sazba</div><div class="bk-num" id="rh" style="color:#a78bfa">–</div><div class="bk-sub">efektivní</div></div><div class="bk-card"><div style="font-size:12px;color:rgba(255,255,255,0.4)">Týdenní výdělek</div><div class="bk-num" id="rw" style="color:#BA7517">–</div><div class="bk-sub">průměrně</div></div><div class="bk-card"><div style="font-size:12px;color:rgba(255,255,255,0.4)">Cíl splněn za</div><div class="bk-num" id="rg" style="color:#5dcaa5">–</div><div class="bk-sub">tempu</div></div></div>
-<div class="mini-bars" id="gbars"></div>
-</div>
-<div class="sec-label">⚖️ Break-even kalkulačka</div>
-<div class="calc-wrap">
-<div class="slider-wrap"><div class="slider-label"><span class="slider-name">Měsíční náklady</span><span class="slider-val" id="vcosts">200 €</span></div><input type="range" id="scosts" min="0" max="1000" step="25" value="200" oninput="gbiCalc()"></div>
-<div class="bk-grid" style="grid-template-columns:1fr 1fr"><div class="bk-card"><div style="font-size:12px;color:rgba(255,255,255,0.4)">Klientů pro break-even</div><div class="bk-num" id="bec" style="color:#BA7517">–</div><div class="bk-sub">minimum</div></div><div class="bk-card"><div style="font-size:12px;color:rgba(255,255,255,0.4)">Čistý zisk / měsíc</div><div class="bk-num" id="bep" style="color:#5dcaa5">–</div><div class="bk-sub">po nákladech</div></div></div>
-<div style="height:10px;border-radius:5px;background:rgba(255,255,255,0.08);overflow:hidden;position:relative;margin-top:12px"><div id="bebc" style="position:absolute;left:0;top:0;height:100%;background:#e8417a;border-radius:5px;transition:width .4s"></div><div id="bebp" style="position:absolute;top:0;height:100%;background:#5dcaa5;border-radius:5px;transition:all .4s"></div></div>
-<div id="benote" style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:8px;text-align:center"></div>
-</div>
-<div class="sec-label">🗓 Cesta k prvnímu příjmu</div>
-<div class="calc-wrap">
-<div class="toggle-row"><button class="toggle-btn active" onclick="gbiView('o',this)">Optimistický</button><button class="toggle-btn" onclick="gbiView('r',this)">Realistický</button><button class="toggle-btn" onclick="gbiView('c',this)">Konzervativní</button></div>
-<div class="timeline" id="gtl"></div>
-</div>`;
-    el.appendChild(calcDiv);
-    window._gbiViews={o:[{m:'Týden 1–2',t:'Profil + první outreach',b:'LinkedIn nastaven, 20 zpráv denně, 2–3 schůzky',r:'0 → 300 €'},{m:'Měsíc 1',t:'První platící klient',b:'1–2 pilotní projekty, sbíráš testimonials',r:'300–600 €'},{m:'Měsíc 2–3',t:'Stabilní zákazníci',b:'3–4 klienti, retainer model',r:'900–1 500 €'},{m:'Měsíc 4–6',t:'Škálování',b:'6–8 klientů, zdražuješ, nové služby',r:'2 000–3 500 €'},{m:'Měsíc 7–12',t:'Plný příjem',b:'10+ klientů, pasivní příjmy',r:'4 000–8 000 €'}],r:[{m:'Měsíc 1',t:'Příprava a kontakty',b:'Portfolio, oslovení, bezplatný audit jako háček',r:'0 → 150 €'},{m:'Měsíc 2',t:'První placený projekt',b:'1 klient za pilotní cenu, testimonial',r:'200–500 €'},{m:'Měsíc 3–4',t:'2–3 klienti',b:'Opakuješ co funguje, retainer model',r:'600–1 200 €'},{m:'Měsíc 5–8',t:'Pravidelný příjem',b:'4–6 klientů, stabilní cash flow',r:'1 500–3 000 €'},{m:'Měsíc 9–12',t:'Optimalizace',b:'Zdražíš, pasivní produkt',r:'3 000–6 000 €'}],c:[{m:'Měsíc 1–2',t:'Budování důvěry',b:'Content, bezplatné audity, portfolio',r:'0 €'},{m:'Měsíc 3',t:'První příjem',b:'1 testovací klient',r:'100–300 €'},{m:'Měsíc 4–6',t:'Pomalý růst',b:'2–3 klienti, testování pricing',r:'500–1 000 €'},{m:'Měsíc 7–9',t:'Stabilizace',b:'4–5 klientů, retainer základ',r:'1 500–2 500 €'},{m:'Měsíc 10–12',t:'Cíl dosažen',b:'6+ klientů, pravidelný příjem',r:'2 500–4 000 €'}]};
-    window.gbiCalc=function(){
-      const c=+document.getElementById('sc').value,p=+document.getElementById('sp').value,h=+document.getElementById('sh').value,costs=+(document.getElementById('scosts')||{value:200}).value,m=c*p;
-      document.getElementById('vc').textContent=c+' klient'+(c===1?'':'ů');
-      document.getElementById('vp').textContent=p+' €';
-      document.getElementById('vh').textContent=h+' hodin';
-      const vc=document.getElementById('vcosts');if(vc)vc.textContent=costs+' €';
-      document.getElementById('rm').textContent=m.toLocaleString('cs')+' €';
-      document.getElementById('rm').style.color=m>=2000?'#5dcaa5':m>=1000?'#a78bfa':'#BA7517';
-      document.getElementById('rczk').textContent=Math.round(m*25).toLocaleString('cs')+' Kč';
-      document.getElementById('ran').textContent=(m*12).toLocaleString('cs')+' € ročně';
-      document.getElementById('rh').textContent=Math.round(m/(h*4.3))+' €/h';
-      document.getElementById('rw').textContent=Math.round(m/4)+' €';
-      const goal=m>=2000?'M3':m>=1000?'M5':m>=500?'M7':'M10+';
-      document.getElementById('rg').textContent=goal;
-      document.getElementById('rg').style.color=m>=2000?'#5dcaa5':m>=1000?'#BA7517':'#e8417a';
-      const proj=[{m:'M1',v:Math.round(m*.15)},{m:'M2',v:Math.round(m*.3)},{m:'M3',v:Math.round(m*.55)},{m:'M6',v:Math.round(m*.8)},{m:'M9',v:Math.round(m*.92)},{m:'M12',v:m}];
-      const gb=document.getElementById('gbars');
-      if(gb)gb.innerHTML=proj.map(({m:lm,v})=>{const hh=Math.max(5,Math.round((v/Math.max(m,1))*80));const col=v>=m*.7?'linear-gradient(180deg,#5dcaa5,#1D9E75)':'linear-gradient(180deg,#e8417a,#7c3aed)';return '<div class="mini-bar-wrap"><div style="font-size:9px;color:rgba(255,255,255,0.4)">'+v+'</div><div class="mini-bar" style="height:'+hh+'px;background:'+col+'"></div><div style="font-size:10px;color:rgba(255,255,255,0.4)">'+lm+'</div></div>';}).join('');
-      const sc2=document.getElementById('scosts');if(!sc2)return;
-      const bec=Math.ceil(costs/Math.max(p,1)),bep=m-costs;
-      document.getElementById('bec').textContent=bec;
-      document.getElementById('bep').textContent=(bep>0?'+':'')+bep.toLocaleString('cs')+' €';
-      document.getElementById('bep').style.color=bep>0?'#5dcaa5':'#e8417a';
-      const cpct=Math.min(100,m>0?Math.round(costs/m*100):100);
-      document.getElementById('bebc').style.width=cpct+'%';
-      document.getElementById('bebp').style.left=cpct+'%';
-      document.getElementById('bebp').style.width=(100-cpct)+'%';
-      document.getElementById('benote').textContent=cpct+'% příjmů jde na náklady · '+(100-cpct)+'% je čistý zisk';
-      ['sc','sp','sh','scosts'].forEach(id=>{const el=document.getElementById(id);if(!el)return;el.style.setProperty('--pct',((+el.value-+el.min)/(+el.max-+el.min)*100).toFixed(1)+'%');});
-    };
-    window.gbiView=function(key,btn){
-      document.querySelectorAll('#rc-paid .toggle-btn').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      const tl=document.getElementById('gtl');if(!tl)return;
-      tl.innerHTML=(window._gbiViews[key]||[]).map((item,i)=>'<div class="tl-item"><div class="tl-dot" style="background:'+(i===0?'#7c3aed':'#0a0a0f')+'"></div><div class="tl-month">'+item.m+'</div><div class="tl-title">'+item.t+'</div><div class="tl-body">'+item.b+'</div><div class="tl-rev">💰 '+item.r+'</div></div>').join('');
-    };
-    setTimeout(()=>{if(window.gbiCalc)window.gbiCalc();const tb=document.querySelector('#rc-paid .toggle-btn');if(tb&&window.gbiView)window.gbiView('o',tb);},300);
-
-    // INTERACTIVE CALCULATORS
+    if(block===2){
       const pr=data.pricing||{};const fc=data.first_customer||{};
       el.innerHTML=`
       ${SL('💰','Cenová strategie — 3 produkty')}
