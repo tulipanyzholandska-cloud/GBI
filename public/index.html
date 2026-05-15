@@ -511,9 +511,6 @@ function tryCode(){
       `;
     }
 
-
-      el.insertAdjacentHTML('beforeend','<div class="sec-label">💰 Prijmova kalkulacka</div><div class="calc-wrap"><div class="slider-wrap"><div class="slider-label"><span class="slider-name">Pocet klientu za mesic</span><span class="slider-val" id="vc">4 klientu</span></div><input type="range" id="sc" min="1" max="20" value="4" oninput="gbiCalc()"></div><div class="slider-wrap"><div class="slider-label"><span class="slider-name">Prumerna cena za klienta</span><span class="slider-val" id="vp">300 EUR</span></div><input type="range" id="sp" min="50" max="1000" step="25" value="300" oninput="gbiCalc()"></div><div class="slider-wrap"><div class="slider-label"><span class="slider-name">Hodin prace tydne</span><span class="slider-val" id="vh">20 hodin</span></div><input type="range" id="sh" min="5" max="40" value="20" oninput="gbiCalc()"></div><div class="result-big"><div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px">Vas mesicni prijem</div><div class="result-num" id="rm" style="color:#5dcaa5">1200 EUR</div><div style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:6px">= <span id="rczk">30000 Kc</span> · <span id="ran">14400 EUR rocne</span></div></div><div class="bk-grid"><div class="bk-card"><div style="font-size:12px;color:rgba(255,255,255,0.4)">Hodinova sazba</div><div class="bk-num" id="rh" style="color:#a78bfa">-</div><div class="bk-sub">efektivni</div></div><div class="bk-card"><div style="font-size:12px;color:rgba(255,255,255,0.4)">Tydeni vydelek</div><div class="bk-num" id="rw" style="color:#BA7517">-</div><div class="bk-sub">prumerne</div></div><div class="bk-card"><div style="font-size:12px;color:rgba(255,255,255,0.4)">Cil splnen za</div><div class="bk-num" id="rg" style="color:#5dcaa5">-</div><div class="bk-sub">tempu</div></div></div><div class="mini-bars" id="gbars"></div></div><div class="sec-label">⚖️ Break-even kalkulacka</div><div class="calc-wrap"><div class="slider-wrap"><div class="slider-label"><span class="slider-name">Mesicni naklady</span><span class="slider-val" id="vcosts">200 EUR</span></div><input type="range" id="scosts" min="0" max="1000" step="25" value="200" oninput="gbiCalc()"></div><div class="bk-grid" style="grid-template-columns:1fr 1fr"><div class="bk-card"><div style="font-size:12px;color:rgba(255,255,255,0.4)">Klientu pro break-even</div><div class="bk-num" id="bec" style="color:#BA7517">-</div><div class="bk-sub">minimum</div></div><div class="bk-card"><div style="font-size:12px;color:rgba(255,255,255,0.4)">Cisty zisk / mesic</div><div class="bk-num" id="bep" style="color:#5dcaa5">-</div><div class="bk-sub">po nakladech</div></div></div><div style="height:10px;border-radius:5px;background:rgba(255,255,255,0.08);overflow:hidden;position:relative;margin-top:12px"><div id="bebc" style="position:absolute;left:0;top:0;height:100%;background:#e8417a;border-radius:5px;transition:width .4s"></div><div id="bebp" style="position:absolute;top:0;height:100%;background:#5dcaa5;border-radius:5px;transition:all .4s"></div></div><div id="benote" style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:8px;text-align:center"></div></div><div class="sec-label">🗓 Cesta k prvnimu prijmu</div><div class="calc-wrap"><div class="toggle-row"><button class="toggle-btn active" onclick="gbiView('o',this)">Optimisticky</button><button class="toggle-btn" onclick="gbiView('r',this)">Realisticky</button><button class="toggle-btn" onclick="gbiView('c',this)">Konzervativni</button></div><div class="timeline" id="gtl"></div></div>');
-      setTimeout(function(){if(window.gbiCalc)window.gbiCalc();var tb=document.querySelector('#rc-paid .toggle-btn');if(tb&&window.gbiView)window.gbiView('o',tb);},300);
     if(block===2){
       const pr=data.pricing||{};const fc=data.first_customer||{};
       el.innerHTML=`
@@ -837,59 +834,4 @@ function tryCode(){
     `).join('')}` : ''}
     `;
   }document.addEventListener("keydown",function(e){if(e.key==="d"&&e.shiftKey&&e.ctrlKey){devUnlock();}});
-</script><script>
-window.gbiCalc=function(){
-  var sc=document.getElementById('sc'),sp=document.getElementById('sp'),sh=document.getElementById('sh'),scosts=document.getElementById('scosts');
-  if(!sc||!sp||!sh)return;
-  var c=+sc.value,p=+sp.value,h=+sh.value,costs=scosts?+scosts.value:0,m=c*p;
-  var set=function(id,v){var e=document.getElementById(id);if(e)e.textContent=v;};
-  var setc=function(id,v,col){var e=document.getElementById(id);if(e){e.textContent=v;if(col)e.style.color=col;}};
-  set('vc',c+' klient'+(c===1?'':'u'));
-  set('vp',p+' EUR');
-  set('vh',h+' hodin');
-  if(scosts)set('vcosts',costs+' EUR');
-  var col=m>=2000?'#5dcaa5':m>=1000?'#a78bfa':'#BA7517';
-  setc('rm',m.toLocaleString('cs')+' EUR',col);
-  set('rczk',Math.round(m*25).toLocaleString('cs')+' Kc');
-  set('ran',(m*12).toLocaleString('cs')+' EUR rocne');
-  setc('rh',Math.round(m/(h*4.3))+' EUR/h',null);
-  set('rw',Math.round(m/4)+' EUR');
-  var goal=m>=2000?'M3':m>=1000?'M5':m>=500?'M7':'M10+';
-  setc('rg',goal,m>=2000?'#5dcaa5':m>=1000?'#BA7517':'#e8417a');
-  var gb=document.getElementById('gbars');
-  if(gb){
-    var proj=[{m:'M1',v:Math.round(m*.15)},{m:'M2',v:Math.round(m*.3)},{m:'M3',v:Math.round(m*.55)},{m:'M6',v:Math.round(m*.8)},{m:'M9',v:Math.round(m*.92)},{m:'M12',v:m}];
-    gb.innerHTML=proj.map(function(x){
-      var hh=Math.max(5,Math.round((x.v/Math.max(m,1))*80));
-      var col=x.v>=m*.7?'linear-gradient(180deg,#5dcaa5,#1D9E75)':'linear-gradient(180deg,#e8417a,#7c3aed)';
-      return '<div class="mini-bar-wrap"><div style="font-size:9px;color:rgba(255,255,255,0.4)">'+x.v+'</div><div class="mini-bar" style="height:'+hh+'px;background:'+col+'"></div><div style="font-size:10px;color:rgba(255,255,255,0.4)">'+x.m+'</div></div>';
-    }).join('');
-  }
-  if(scosts){
-    var bec=Math.ceil(costs/Math.max(p,1)),bep=m-costs;
-    setc('bec',bec,null);
-    setc('bep',(bep>0?'+':'')+bep.toLocaleString('cs')+' EUR',bep>0?'#5dcaa5':'#e8417a');
-    var cpct=Math.min(100,m>0?Math.round(costs/m*100):100);
-    var bebc=document.getElementById('bebc');if(bebc)bebc.style.width=cpct+'%';
-    var bebp=document.getElementById('bebp');if(bebp){bebp.style.left=cpct+'%';bebp.style.width=(100-cpct)+'%';}
-    var benote=document.getElementById('benote');if(benote)benote.textContent=cpct+'% prijmu jde na naklady - '+(100-cpct)+'% je cisty zisk';
-  }
-  ['sc','sp','sh','scosts'].forEach(function(id){
-    var el=document.getElementById(id);if(!el)return;
-    el.style.setProperty('--pct',((+el.value-+el.min)/(+el.max-+el.min)*100).toFixed(1)+'%');
-  });
-};
-window.gbiView=function(key,btn){
-  document.querySelectorAll('#rc-paid .toggle-btn').forEach(function(b){b.classList.remove('active');});
-  btn.classList.add('active');
-  var tl=document.getElementById('gtl');if(!tl)return;
-  var V={
-    o:[{m:'Tyden 1-2',t:'Profil + prvni outreach',b:'LinkedIn nastaven, 20 zprav denne, 2-3 schuzky',r:'0 -> 300 EUR'},{m:'Mesic 1',t:'Prvni platici klient',b:'1-2 pilotni projekty, sbiras testimonials',r:'300-600 EUR'},{m:'Mesic 2-3',t:'Stabilni zakaznici',b:'3-4 klienti, retainer model',r:'900-1500 EUR'},{m:'Mesic 4-6',t:'Skvalovani',b:'6-8 klientu, zdrazujes, nove sluzby',r:'2000-3500 EUR'},{m:'Mesic 7-12',t:'Plny prijem',b:'10+ klientu, pasivni prijmy',r:'4000-8000 EUR'}],
-    r:[{m:'Mesic 1',t:'Priprava a kontakty',b:'Portfolio, osloveni, bezplatny audit jako hacek',r:'0 -> 150 EUR'},{m:'Mesic 2',t:'Prvni placeny projekt',b:'1 klient za pilotni cenu, testimonial',r:'200-500 EUR'},{m:'Mesic 3-4',t:'2-3 klienti',b:'Opakujes co funguje, retainer model',r:'600-1200 EUR'},{m:'Mesic 5-8',t:'Pravideny prijem',b:'4-6 klientu, stabilni cash flow',r:'1500-3000 EUR'},{m:'Mesic 9-12',t:'Optimalizace',b:'Zdrazis, pasivni produkt',r:'3000-6000 EUR'}],
-    c:[{m:'Mesic 1-2',t:'Budovani duvery',b:'Content, bezplatne audity, portfolio',r:'0 EUR'},{m:'Mesic 3',t:'Prvni prijem',b:'1 testovaci klient',r:'100-300 EUR'},{m:'Mesic 4-6',t:'Pomaly rust',b:'2-3 klienti, testovani pricing',r:'500-1000 EUR'},{m:'Mesic 7-9',t:'Stabilizace',b:'4-5 klientu, retainer zaklad',r:'1500-2500 EUR'},{m:'Mesic 10-12',t:'Cil doshazen',b:'6+ klientu, pravideny prijem',r:'2500-4000 EUR'}]
-  };
-  tl.innerHTML=(V[key]||[]).map(function(item,i){
-    return '<div class="tl-item"><div class="tl-dot" style="background:'+(i===0?'#7c3aed':'#0a0a0f')+'"></div><div class="tl-month">'+item.m+'</div><div class="tl-title">'+item.t+'</div><div class="tl-body">'+item.b+'</div><div class="tl-rev">💰 '+item.r+'</div></div>';
-  }).join('');
-};
 </script></body></html>
