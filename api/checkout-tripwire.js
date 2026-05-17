@@ -14,6 +14,7 @@ export default async function handler(req, res) {
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
+      locale: 'en',
       line_items: [{ price_data: { currency: 'eur', product_data: { name: '30-Day Action Plan PDF', description: 'Your personalized step-by-step launch plan — ready to execute today' }, unit_amount: 700 }, quantity: 1 }],
       mode: 'payment',
       metadata: { resultId: resultId || '', email: email || '', type: 'tripwire' },

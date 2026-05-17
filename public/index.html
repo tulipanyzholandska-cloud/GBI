@@ -350,24 +350,7 @@
       } else {
         fc.textContent = fcData;
       }
-    }if(d17)d17.innerHTML=((planData.full_plan.action_plan||{}).days_1_7||(planData.full_plan.checklist||{}).day1||[]).map((s,i)=>'<div style="display:flex;gap:8px;margin-bottom:6px"><div style="width:20px;height:20px;min-width:20px;border-radius:50%;background:rgba(124,58,237,0.3);border:1px solid #7c3aed;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#a78bfa;flex-shrink:0">'+(i+1)+'</div><div style="font-size:13px;line-height:1.5;color:rgba(255,255,255,0.8)">'+s+'</div></div>').join('');if(l2)l2.style.display='block';}
-  if(planData&&planData.full_plan){
-    const l2=document.getElementById('level2-reveal');
-    const fc=document.getElementById('l2-firstcust');
-    const d17=document.getElementById('l2-days17');
-    if(fc)fc.textContent=planData.full_plan.first_customer;
-    if(d17)d17.innerHTML=((planData.full_plan.action_plan||{}).days_1_7||(planData.full_plan.checklist||{}).day1||[]).map((s,i)=>'<div style="display:flex;gap:8px;margin-bottom:6px"><div style="width:20px;height:20px;min-width:20px;border-radius:50%;background:rgba(124,58,237,0.3);border:1px solid #7c3aed;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#a78bfa;flex-shrink:0">'+(i+1)+'</div><div style="font-size:13px;line-height:1.5;color:rgba(255,255,255,0.8)">'+s+'</div></div>').join('');
-    if(l2)l2.style.display='block';
-  }
-  if(planData && planData.full_plan) {
-    const l2 = document.getElementById('level2-reveal');
-    const fc = document.getElementById('l2-firstcust');
-    const d17 = document.getElementById('l2-days17');
-    if(fc) fc.textContent = planData.full_plan.first_customer;
-    if(d17) d17.innerHTML = ((planData.full_plan.action_plan||{}).days_1_7||(planData.full_plan.checklist||{}).day1||[]).map((s,i)=>
-      '<div style="display:flex;gap:8px;margin-bottom:6px"><div style="width:22px;height:22px;min-width:22px;border-radius:50%;background:rgba(124,58,237,0.3);border:1px solid #7c3aed;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#a78bfa;flex-shrink:0;margin-top:2px">'+(i+1)+'</div><div style="font-size:13px;line-height:1.5;color:rgba(255,255,255,0.8)">'+s+'</div></div>'
-    ).join('');
-    if(l2) l2.style.display='block';
+    }if(d17)d17.innerHTML=((planData.full_plan.action_plan||{}).days_1_7||(planData.full_plan.checklist||{}).day1||[]).map((s,i)=>'<div style="display:flex;gap:8px;margin-bottom:6px"><div style="width:20px;height:20px;min-width:20px;border-radius:50%;background:rgba(124,58,237,0.3);border:1px solid #7c3aed;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#a78bfa;flex-shrink:0">'+(i+1)+'</div><div style="font-size:13px;line-height:1.5;color:rgba(255,255,255,0.8)">'+(typeof s==='object'?(s.task||JSON.stringify(s)):s)+'</div></div>').join('');if(l2)l2.style.display='block';
   }
   showTripwire();
 }

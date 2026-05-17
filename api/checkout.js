@@ -14,7 +14,8 @@ export default async function handler(req, res) {
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      line_items: [{ price_data: { currency: 'eur', product_data: { name: 'Krok za krokem k prvnímu zákazníkovi', description: '90-denní akční plán · první zákazník · cenová strategie · nástroje · chyby k vyhnout' }, unit_amount: 700 }, quantity: 1 }],
+      locale: 'en',
+      line_items: [{ price_data: { currency: 'eur', product_data: { name: 'Full Business Plan · 90-day roadmap', description: 'First client strategy + pricing + tools + day-by-day action plan + mistakes to avoid' }, unit_amount: 700 }, quantity: 1 }],
       mode: 'payment',
       metadata: { resultId: resultId || '', email: email || '' },
       customer_email: email || undefined,
