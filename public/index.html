@@ -279,8 +279,8 @@
       <div style="text-align:center">
         <div style="font-size:11px;color:rgba(255,255,255,0.45);font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">🔑 Have an access code?</div>
         <div style="display:flex;gap:8px;justify-content:center;align-items:center">
-          <input type="text" id="pin-input" maxlength="4" placeholder="0000" style="flex:1;padding:14px;text-align:center;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(0,0,0,0.4);color:#fff;font-size:20px;letter-spacing:10px;font-weight:700;outline:none" />
-          <button onclick="checkPin()" style="padding:14px 24px;background:rgba(124,58,237,0.2);border:1px solid rgba(124,58,237,0.5);border-radius:10px;color:#a78bfa;font-size:13px;cursor:pointer;font-weight:700">Unlock</button>
+          <input type="text" id="pin-input" maxlength="4" placeholder="0000" inputmode="numeric" pattern="[0-9]*" autocomplete="off" enterkeyhint="go" oninput="if(this.value.length===4){this.blur();checkPin()}" onkeypress="if(event.key==='Enter'){event.preventDefault();checkPin()}" style="flex:1;min-width:0;padding:14px;text-align:center;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(0,0,0,0.4);color:#fff;font-size:20px;letter-spacing:10px;font-weight:700;outline:none" />
+          <button onclick="checkPin()" style="padding:14px 20px;background:rgba(124,58,237,0.2);border:1px solid rgba(124,58,237,0.5);border-radius:10px;color:#a78bfa;font-size:13px;cursor:pointer;font-weight:700;white-space:nowrap">Unlock</button>
         </div>
       </div>
     </div>
