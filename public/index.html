@@ -367,7 +367,7 @@
   const ap=fp.action_plan||{};const cl=fp.checklist||{};
   rs('r-steps17', ap.days_1_7||(cl.day1||[]).concat(cl.week1||[]).map(x=>x.task||x));
   rs('r-steps830', ap.days_8_30||( cl.month1||[]).map(x=>x.task||x));
-  rs('r-steps3190', ap.days_31_90||(cl.month2_3||[]).map(x=>x.task||x));document.getElementById('r-tools').innerHTML=(fp.tools||[]).slice(0,4).map(t=>`<div class="tool-card"><div class="tool-name">${t.name}</div><div class="tool-desc">${t.purpose}</div><div class="tool-cost">${t.cost}</div></div>`).join('');document.getElementById('r-mistakes').innerHTML=(fp.top_mistakes||[]).map(m=>`<div class="mistake-box"><p><strong>${m.mistake}</strong><br>${m.how_to_avoid}</p></div>`).join('');document.getElementById('r-objection').innerHTML='<p><strong>'+fp.main_objection.objection+'</strong><br>'+fp.main_objection.reframe+'</p>';
+  rs('r-steps3190', ap.days_31_90||(cl.month2_3||[]).map(x=>x.task||x));document.getElementById('r-tools').innerHTML=(fp.tools||[]).slice(0,4).map(t=>`<div class="tool-card" style="padding:14px 16px"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px"><div style="font-size:16px;font-weight:700;flex:1">${t.name}</div><span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:100px;${(t.cost||'').match(/free|0|zdarma/i)?'background:rgba(34,197,94,0.15);color:#5dcaa5':'background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.6)'}">${t.cost||'—'}</span></div><div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">${t.purpose}</div></div>`).join('');document.getElementById('r-mistakes').innerHTML=(fp.top_mistakes||[]).map(m=>`<div class="mistake-box"><p><strong>${m.mistake}</strong><br>${m.how_to_avoid}</p></div>`).join('');document.getElementById('r-objection').innerHTML='<p><strong>'+fp.main_objection.objection+'</strong><br>'+fp.main_objection.reframe+'</p>';
   // Add scripts if they exist
   if(fp.scripts) {
     const sc = document.getElementById('r-scripts');
@@ -600,18 +600,24 @@ function devUnlock(){
 
     if(block===4){
       el.innerHTML=`
-      ${SL('🛠','Tools — direct links + how to start')}
+      ${SL('🛠','Tools you need — direct links')}
       ${(data.tools||[]).map(t=>`
-        <div class="prem-tool">
-          <div>
-            <div class="prem-tool-name">${t.name} <span style="font-size:13px;font-weight:400;color:rgba(255,255,255,0.35)">${t.url||''}</span></div>
-            <div class="prem-tool-desc">${t.purpose||''}</div>
-            <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px">Setup: ${t.time_to_setup_minutes||'?'} min · ${t.how_to_start||''}</div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px;margin-bottom:10px;transition:border-color .15s" onmouseover="this.style.borderColor='rgba(167,139,250,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+            <div style="flex:1;min-width:0">
+              <div style="font-size:18px;font-weight:800;letter-spacing:-.01em;line-height:1.2;margin-bottom:4px">${t.name}</div>
+              ${t.url?`<a href="${t.url}" target="_blank" rel="noopener" style="font-size:12px;color:#a78bfa;text-decoration:none;word-break:break-all">${t.url.replace(/^https?:\/\//,'')} →</a>`:''}
+            </div>
+            <span style="flex-shrink:0;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:.02em;${(t.cost||'').match(/free|0|zdarma/i)?'background:rgba(34,197,94,0.15);color:#5dcaa5;border:1px solid rgba(34,197,94,0.3)':'background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.1)'}">${t.cost||'—'}</span>
           </div>
-          <div style="font-size:14px;font-weight:700;color:${(t.cost||'').match(/zdarma|free|0/i)?'#5dcaa5':'rgba(255,255,255,0.5)'};flex-shrink:0;margin-left:12px;text-align:right">${t.cost||''}</div>
+          <div style="font-size:14px;color:rgba(255,255,255,0.75);line-height:1.5;margin-bottom:10px">${t.purpose||''}</div>
+          <div style="display:flex;align-items:center;gap:8px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.05);font-size:12px;color:rgba(255,255,255,0.45)">
+            <span>⚡ Setup: ${t.time_to_setup_minutes||'?'} min</span>
+            ${t.how_to_start?`<span style="opacity:.4">·</span><span style="flex:1">${t.how_to_start}</span>`:''}
+          </div>
         </div>
       `).join('')}
-      ${SL('⚠️','Chyby which you budou become money')}
+      ${SL('⚠️','Mistakes that will cost you money')}
       ${(data.mistakes||[]).map(m=>`
         <div class="prem-mistake">
           <div class="prem-mistake-title">❌ ${m.mistake||''}</div>
@@ -822,7 +828,7 @@ function devUnlock(){
       </div>
     `).join('')}
 
-    <div class="sec-label" style="margin-top:20px">Chyby which you budou become money</div>
+    <div class="sec-label" style="margin-top:20px">Mistakes that will cost you money</div>
     ${(pp.mistakes||[]).map(m=>`
       <div style="border-left:3px solid #BA7517;padding:10px 12px;margin-bottom:8px;border-radius:0 8px 8px 0;background:rgba(186,117,23,0.08)">
         <div style="font-size:13px;font-weight:600;color:#BA7517;margin-bottom:3px">❌ ${m.mistake}</div>
