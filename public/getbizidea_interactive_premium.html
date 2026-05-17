@@ -50,83 +50,83 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 </style>
 
 <div class="w">
-<h2 class="sr-only">GetBizIdea — interaktivní prémiový plán s kalkulačkami</h2>
+<h2 class="sr-only">GetBizIdea — interactive premium plan with calculators</h2>
 
 <!-- HERO -->
 <div class="hero-box">
-  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#a78bfa;margin-bottom:10px">🔓 Plný plán odemčen</div>
+  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#a78bfa;margin-bottom:10px">🔓 Full plan unlocked</div>
   <div style="font-size:20px;font-weight:700;line-height:1.4">I help tourism businesses unlock hidden revenue opportunities through data-driven insights that boost bookings and optimize pricing.</div>
 </div>
 
-<!-- KALKULAČKA PŘÍJMŮ -->
-<div class="sec">💰 Příjmová kalkulačka — pohybujte posuvníky</div>
+<!-- INCOME CALCULATOR -->
+<div class="sec">💰 Income calculator — move the sliders</div>
 <div class="card">
   <div class="slider-wrap">
     <div class="slider-label">
-      <span class="slider-name">Počet klientů za měsíc</span>
-      <span class="slider-val" id="v-clients">4 klienti</span>
+      <span class="slider-name">Clients per month</span>
+      <span class="slider-val" id="v-clients">4 clienti</span>
     </div>
     <input type="range" id="s-clients" min="1" max="20" value="4" oninput="calc()">
   </div>
   <div class="slider-wrap">
     <div class="slider-label">
-      <span class="slider-name">Průměrná cena za klienta</span>
+      <span class="slider-name">Average price per client</span>
       <span class="slider-val" id="v-price">300 €</span>
     </div>
     <input type="range" id="s-price" min="50" max="1000" step="25" value="300" oninput="calc()">
   </div>
   <div class="slider-wrap">
     <div class="slider-label">
-      <span class="slider-name">Hodin práce týdně</span>
-      <span class="slider-val" id="v-hours">20 hodin</span>
+      <span class="slider-name">Work hours per week</span>
+      <span class="slider-val" id="v-hours">20 hours</span>
     </div>
     <input type="range" id="s-hours" min="5" max="40" value="20" oninput="calc()">
   </div>
 
   <div class="result-big">
-    <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px">Váš měsíční příjem</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px">Your monthly income</div>
     <div class="result-num" id="r-monthly" style="color:#5dcaa5">1 200 €</div>
-    <div class="result-label">= <span id="r-czk">30 000 Kč</span> měsíčně · <span id="r-annual">14 400 €</span> ročně</div>
+    <div class="result-label">= <span id="r-czk">30,000 Kč</span> monthly · <span id="r-annual">14 400 €</span> annually</div>
   </div>
 
   <div class="breakdown">
     <div class="bk-card">
-      <div style="font-size:12px;color:rgba(255,255,255,0.4)">Hodinová sazba</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4)">Hourly rate</div>
       <div class="bk-num" id="r-hourly" style="color:#a78bfa">15 €/h</div>
-      <div class="bk-sub">efektivní sazba</div>
+      <div class="bk-sub">effective rate</div>
     </div>
     <div class="bk-card">
-      <div style="font-size:12px;color:rgba(255,255,255,0.4)">Týdenní výdělek</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4)">Weekly earnings</div>
       <div class="bk-num" id="r-weekly" style="color:#BA7517">300 €</div>
-      <div class="bk-sub">průměrně</div>
+      <div class="bk-sub">average</div>
     </div>
     <div class="bk-card">
-      <div style="font-size:12px;color:rgba(255,255,255,0.4)">Cíl splněn za</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4)">Goal reached in</div>
       <div class="bk-num" id="r-goal" style="color:#5dcaa5">M3</div>
-      <div class="bk-sub">při tomto tempu</div>
+      <div class="bk-sub">at this pace</div>
     </div>
   </div>
 
   <!-- Mini bar chart -->
-  <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:8px">Projekce růstu příjmu:</div>
+  <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:8px">Revenue growth projection:</div>
   <div class="mini-bars" id="bars"></div>
 </div>
 
-<!-- ČASOVÁ OSA -->
-<div class="sec">🗓 Vaše cesta k prvnímu příjmu</div>
+<!-- TIME OSA -->
+<div class="sec">🗓 Your path to first revenue</div>
 <div class="card">
   <div class="toggle-row">
-    <button class="toggle-btn active" onclick="setView('optimistic',this)">Optimistický</button>
-    <button class="toggle-btn" onclick="setView('realistic',this)">Realistický</button>
-    <button class="toggle-btn" onclick="setView('conservative',this)">Konzervativní</button>
+    <button class="toggle-btn active" onclick="setView('optimistic',this)">Optimistic</button>
+    <button class="toggle-btn" onclick="setView('realistic',this)">Realistic</button>
+    <button class="toggle-btn" onclick="setView('conservative',this)">Conservative</button>
   </div>
   <div class="timeline" id="timeline"></div>
 </div>
 
-<!-- SCALING ROADMAPA — INTERAKTIVNÍ -->
-<div class="sec">🚀 Scaling roadmapa</div>
+<!-- SCALING ROADMAPA — INTERACTIVE -->
+<div class="sec">🚀 Scaling roadmap</div>
 <div class="card">
-  <div style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:16px;line-height:1.6">Klikněte na fázi pro detail:</div>
+  <div style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:16px;line-height:1.6">Click on a phase for details:</div>
   <div class="phases" id="phases"></div>
   <div id="phase-detail" style="margin-top:14px;padding:16px;background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.2);border-radius:12px;display:none">
     <div id="pd-title" style="font-size:17px;font-weight:700;margin-bottom:8px"></div>
@@ -135,31 +135,31 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
   </div>
 </div>
 
-<!-- BREAK-EVEN KALKULAČKA -->
-<div class="sec">⚖️ Break-even kalkulačka</div>
+<!-- BREAK-EVEN CALCULATOR -->
+<div class="sec">⚖️ Break-even calculator</div>
 <div class="card">
   <div class="slider-wrap">
     <div class="slider-label">
-      <span class="slider-name">Měsíční náklady</span>
+      <span class="slider-name">Monthly costs</span>
       <span class="slider-val" id="v-costs">200 €</span>
     </div>
     <input type="range" id="s-costs" min="0" max="1000" step="25" value="200" oninput="calcBE()">
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
     <div class="bk-card">
-      <div style="font-size:12px;color:rgba(255,255,255,0.4)">Klientů pro break-even</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4)">Clients for break-even</div>
       <div class="bk-num" id="be-clients" style="color:#BA7517">1</div>
       <div class="bk-sub">minimum</div>
     </div>
     <div class="bk-card">
-      <div style="font-size:12px;color:rgba(255,255,255,0.4)">Čistý zisk / měsíc</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4)">Net profit / month</div>
       <div class="bk-num" id="be-profit" style="color:#5dcaa5">1 000 €</div>
-      <div class="bk-sub">po nákladech</div>
+      <div class="bk-sub">after costs</div>
     </div>
   </div>
   <div style="margin-top:14px">
     <div style="display:flex;justify-content:space-between;font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:6px">
-      <span>Náklady</span><span>Příjmy</span>
+      <span>Costs</span><span>Revenue</span>
     </div>
     <div style="height:10px;border-radius:5px;background:rgba(255,255,255,0.08);overflow:hidden;position:relative">
       <div id="be-bar-cost" style="position:absolute;left:0;top:0;height:100%;background:#e8417a;border-radius:5px;transition:width .4s"></div>
@@ -175,33 +175,33 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 // Data
 const views = {
   optimistic: [
-    {m:'Týden 1-2',title:'Profil + první outreach',body:'Nastav LinkedIn, pošli 20 zpráv denně, 2-3 schůzky',rev:'0 € → 300 €'},
-    {m:'Měsíc 1',title:'První platící klient',body:'1-2 pilotní projekty za nižší cenu, sbíráš testimonials',rev:'300–600 €'},
-    {m:'Měsíc 2-3',title:'Stabilní zákazníci',body:'3-4 klienti, retainer model, content marketing',rev:'900–1 500 €'},
-    {m:'Měsíc 4-6',title:'Škálování',body:'6-8 klientů, zdražuješ, přidáváš služby',rev:'2 000–3 500 €'},
-    {m:'Měsíc 7-12',title:'Plný příjem',body:'10+ klientů, pasivní příjmy, čekací listina',rev:'4 000–8 000 €'}
+    {m:'Week 1-2',title:'Profile + first outreach',body:'Set up LinkedIn, send 20 messages daily, 2-3 meetings',rev:'0 € → 300 €'},
+    {m:'Month 1',title:'First paying client',body:'1-2 pilot projects at lower price, collect testimonials',rev:'300–600 €'},
+    {m:'Month 2-3',title:'Stable customers',body:'3-4 clients, retainer model, content marketing',rev:'900–1 500 €'},
+    {m:'Month 4-6',title:'Scaling',body:'6-8 clients, raise prices, add services',rev:'2 000–3 500 €'},
+    {m:'Month 7-12',title:'Full income',body:'10+ clients, passive income, waiting list',rev:'4 000–8 000 €'}
   ],
   realistic: [
-    {m:'Měsíc 1',title:'Příprava a první kontakty',body:'Portfolio, první 3-5 oslovení, bezplatný audit jako háček',rev:'0 € → 150 €'},
-    {m:'Měsíc 2',title:'První placený projekt',body:'1 klient za pilotní cenu, testimonial, portfolio',rev:'200–500 €'},
-    {m:'Měsíc 3-4',title:'2-3 klienti',body:'Opakuješ co fungovalo, nastavuješ retainer model',rev:'600–1 200 €'},
-    {m:'Měsíc 5-8',title:'Pravidelný příjem',body:'4-6 klientů měsíčně, stabilní cash flow',rev:'1 500–3 000 €'},
-    {m:'Měsíc 9-12',title:'Optimalizace',body:'Zdražíš, odmítáš špatné klienty, pasivní produkt',rev:'3 000–6 000 €'}
+    {m:'Month 1',title:'Preparation & first contacts',body:'Portfolio, first 3-5 outreach, free audit as a hook',rev:'0 € → 150 €'},
+    {m:'Month 2',title:'First paid project',body:'1 client at pilot price, testimonial, portfolio',rev:'200–500 €'},
+    {m:'Month 3-4',title:'2-3 clients',body:'Repeat what worked, set up retainer model',rev:'600–1 200 €'},
+    {m:'Month 5-8',title:'Regular income',body:'4-6 clients monthly, stable cash flow',rev:'1 500–3 000 €'},
+    {m:'Month 9-12',title:'Optimization',body:'Raise prices, decline bad clients, passive product',rev:'3 000–6 000 €'}
   ],
   conservative: [
-    {m:'Měsíc 1-2',title:'Budování důvěry',body:'LinkedIn content, bezplatné audity, portfolio zdarma',rev:'0 €'},
-    {m:'Měsíc 3',title:'Velmi první příjem',body:'1 testovací klient za minimální cenu',rev:'100–300 €'},
-    {m:'Měsíc 4-6',title:'Pomalý růst',body:'2-3 klienti, testování pricing',rev:'500–1 000 €'},
-    {m:'Měsíc 7-9',title:'Stabilizace',body:'4-5 klientů, retainer základ',rev:'1 500–2 500 €'},
-    {m:'Měsíc 10-12',title:'Cíl dosažen',body:'6+ klientů, pravidelný příjem',rev:'2 500–4 000 €'}
+    {m:'Month 1-2',title:'Building trust',body:'LinkedIn content, free audits, free portfolio',rev:'0 €'},
+    {m:'Month 3',title:'Very first income',body:'1 test client at minimum price',rev:'100–300 €'},
+    {m:'Month 4-6',title:'Slow growth',body:'2-3 clients, testing pricing',rev:'500–1 000 €'},
+    {m:'Month 7-9',title:'Stabilization',body:'4-5 clients, retainer foundation',rev:'1 500–2 500 €'},
+    {m:'Month 10-12',title:'Goal reached',body:'6+ clients, regular income',rev:'2 500–4 000 €'}
   ]
 };
 
 const phases = [
-  {phase:'M1–3',focus:'Validace',revenue:'1 500–3 000 €',color:'#a78bfa',bg:'rgba(124,58,237,0.2)',action:'3-5 pilotních projektů, portfolio, první testimonials. Cíl: zjistit co zákazníci nejvíce oceňují.',milestone:'Secured first paying client'},
-  {phase:'M4–6',focus:'Standardizace',revenue:'3 000–5 000 €',color:'#5dcaa5',bg:'rgba(29,158,117,0.15)',action:'Standardizované reporting templates, 8-10 pravidelných klientů, retainer model zavedený.',milestone:'Consistent monthly recurring revenue'},
-  {phase:'M7–12',focus:'Prémiové pozicionování',revenue:'6 000–8 000 €',color:'#BA7517',bg:'rgba(186,117,23,0.15)',action:'Sazby zvyšte o 40%, větší klienti, prediktivní analytics jako prémiová služba.',milestone:'Thought leadership established'},
-  {phase:'Rok 2',focus:'Pasivní příjmy',revenue:'10 000–15 000 €',color:'#e8417a',bg:'rgba(232,65,122,0.15)',action:'Junior analytik, online kurz, certification program. 30% příjmů pasivně.',milestone:'Business runs without you'}
+  {phase:'M1–3',focus:'Validation',revenue:'1 500–3 000 €',color:'#a78bfa',bg:'rgba(124,58,237,0.2)',action:'3-5 pilot projects, portfolio, first testimonials. Goal: find out what customers value most.',milestone:'Secured first paying client'},
+  {phase:'M4–6',focus:'Standardization',revenue:'3 000–5 000 €',color:'#5dcaa5',bg:'rgba(29,158,117,0.15)',action:'Standardized reporting templates, 8-10 regular clients, retainer model established.',milestone:'Consistent monthly recurring revenue'},
+  {phase:'M7–12',focus:'Premium positioning',revenue:'6 000–8 000 €',color:'#BA7517',bg:'rgba(186,117,23,0.15)',action:'Raise rates by 40%, bigger clients, predictive analytics as premium service.',milestone:'Thought leadership established'},
+  {phase:'Year 2',focus:'Passive income',revenue:'10 000–15 000 €',color:'#e8417a',bg:'rgba(232,65,122,0.15)',action:'Junior analyst, online course, certification program. 30% of income passive.',milestone:'Business runs without you'}
 ];
 
 // Render phases
@@ -213,7 +213,7 @@ phases.forEach((p,i)=>{
   d.style.border='1px solid '+p.color+'44';
   d.style.cursor='pointer';
   d.style.transition='all .2s';
-  d.innerHTML=`<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:${p.color};margin-bottom:4px">${p.phase}</div><div style="font-size:15px;font-weight:700;margin-bottom:6px">${p.focus}</div><div style="font-size:18px;font-weight:700;color:#fff">${p.revenue}</div><div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px">/měsíc</div>`;
+  d.innerHTML=`<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:${p.color};margin-bottom:4px">${p.phase}</div><div style="font-size:15px;font-weight:700;margin-bottom:6px">${p.focus}</div><div style="font-size:18px;font-weight:700;color:#fff">${p.revenue}</div><div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px">/month</div>`;
   d.onmouseover=()=>d.style.transform='translateY(-2px)';
   d.onmouseout=()=>d.style.transform='none';
   d.onclick=()=>{
@@ -223,7 +223,7 @@ phases.forEach((p,i)=>{
     det.style.display='block';
     document.getElementById('pd-title').textContent=p.phase+' · '+p.focus;
     document.getElementById('pd-body').textContent=p.action;
-    document.getElementById('pd-rev').textContent='Cílový příjem: '+p.revenue+' / měsíc · Milestone: '+p.milestone;
+    document.getElementById('pd-rev').textContent='Target income: '+p.revenue+' / month · Milestone: '+p.milestone;
     det.style.borderColor=p.color+'44';
     det.style.background=p.bg;
   };
@@ -257,14 +257,14 @@ function calc(){
   const weekly=Math.round(monthly/4);
   const hourly=Math.round(monthly/(hours*4.3));
   
-  document.getElementById('v-clients').textContent=clients+' klient'+(clients===1?'':'ů');
+  document.getElementById('v-clients').textContent=clients+' client'+(clients===1?'':'ů');
   document.getElementById('v-price').textContent=price+' €';
-  document.getElementById('v-hours').textContent=hours+' hodin';
-  document.getElementById('r-monthly').textContent=monthly.toLocaleString('cs')+' €';
-  document.getElementById('r-czk').textContent=czk.toLocaleString('cs')+' Kč';
-  document.getElementById('r-annual').textContent=annual.toLocaleString('cs')+' €';
+  document.getElementById('v-hours').textContent=hours+' hours';
+  document.getElementById('r-monthly').textContent=monthly.toLocaleString('en')+' €';
+  document.getElementById('r-czk').textContent=czk.toLocaleString('en')+' Kč';
+  document.getElementById('r-annual').textContent=annual.toLocaleString('en')+' €';
   document.getElementById('r-hourly').textContent=hourly+' €/h';
-  document.getElementById('r-weekly').textContent=weekly.toLocaleString('cs')+' €';
+  document.getElementById('r-weekly').textContent=weekly.toLocaleString('en')+' €';
 
   const goal=monthly>=2000?'M3':monthly>=1000?'M5':monthly>=500?'M7':'M10+';
   document.getElementById('r-goal').textContent=goal;
@@ -311,14 +311,14 @@ function calcBE(){
   const beClients=Math.ceil(costs/price);
   const profit=monthly-costs;
   document.getElementById('be-clients').textContent=beClients;
-  document.getElementById('be-profit').textContent=(profit>0?'+':'')+profit.toLocaleString('cs')+' €';
+  document.getElementById('be-profit').textContent=(profit>0?'+':'')+profit.toLocaleString('en')+' €';
   document.getElementById('be-profit').style.color=profit>0?'#5dcaa5':'#e8417a';
   
   const costPct=Math.min(100,Math.round(costs/monthly*100))||0;
   document.getElementById('be-bar-cost').style.width=costPct+'%';
   document.getElementById('be-bar-profit').style.left=costPct+'%';
   document.getElementById('be-bar-profit').style.width=(100-costPct)+'%';
-  document.getElementById('be-note').textContent=costPct+'% příjmů jde na náklady · '+Math.round(100-costPct)+'% je váš čistý zisk';
+  document.getElementById('be-note').textContent=costPct+'% of revenue goes to costs · '+Math.round(100-costPct)+'% is your net profit';
   
   const sc=document.getElementById('s-costs');
   const pct=((costs-0)/(1000-0)*100).toFixed(1);
