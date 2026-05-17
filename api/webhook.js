@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
+import { scheduleDripEmails } from './_drip-emails.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -115,6 +116,16 @@ export default async function handler(req, res) {
             htmlContent
           })
         });
+
+        // Schedule 7-email drip sequence (Day 1, 3, 7, 14, 30, 60, 90)
+        if (type !== 'tripwire') {
+          try {
+            const drip = await scheduleDripEmails(email, resultId, baseUrl);
+            console.log('Drip scheduled:', JSON.stringify(drip));
+          } catch (dripErr) {
+            console.error('Drip schedule error:', dripErr.message);
+          }
+        }
       }
     } catch (err) {
       console.error('Post-payment error:', err.message);
