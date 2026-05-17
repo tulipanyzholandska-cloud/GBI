@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   const to = req.query.to || req.body?.to;
-  const from = req.query.from || 'getbizidea.now@gmail.com';
+  const from = req.query.from || 'hello@getbizidea.com';
   if (!to) return res.status(400).json({ error: 'Missing ?to=email@example.com' });
 
   if (!process.env.BREVO_API_KEY) {
@@ -17,7 +17,7 @@ export default async function handler(req, res) {
         'accept': 'application/json'
       },
       body: JSON.stringify({
-        sender: { name: 'Get Biz Idea', email: from },
+        sender: { name: 'Get Biz Idea 🚀', email: from },
         to: [{ email: to }],
         subject: '🧪 Test email from Get Biz Idea',
         htmlContent: `<html><body style="font-family:sans-serif;padding:20px"><h2>✅ Brevo works!</h2><p>If you see this, your Brevo integration is configured correctly.</p><p><small>Sent from: ${from}</small></p></body></html>`

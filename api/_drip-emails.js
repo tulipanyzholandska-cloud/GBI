@@ -1,7 +1,7 @@
 // Drip email sequence — scheduled after unlock to drive engagement & retention
 // Uses Brevo's scheduledAt parameter
 
-const SENDER = { name: 'Get Biz Idea', email: 'getbizidea.now@gmail.com' };
+const SENDER = { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' };
 
 const wrap = (title, body, magicLink) => `
 <!DOCTYPE html><html><head><meta charset="UTF-8"></head>

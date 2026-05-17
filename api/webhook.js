@@ -110,7 +110,7 @@ export default async function handler(req, res) {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            sender: { name: 'Get Biz Idea', email: 'getbizidea.now@gmail.com' },
+            sender: { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' },
             to: [{ email }],
             subject,
             htmlContent
