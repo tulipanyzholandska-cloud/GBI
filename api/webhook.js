@@ -7,15 +7,27 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
   let event;
-  const body = req.body || (await getRawBody(req));
+  let raw;
+
+  try {
+    raw = await getRawBody(req);
+  } catch (e) {
+    return res.status(400).json({ error: 'Failed to read body' });
+  }
+
+  let body;
+  try {
+    body = JSON.parse(raw);
+  } catch (e) {
+    body = {};
+  }
 
   if (body.testMode === true) {
-    event = typeof body === 'string' ? JSON.parse(body) : body;
+    event = body;
   } else {
     const sig = req.headers['stripe-signature'];
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
     try {
-      const raw = await getRawBody(req);
       event = stripe.webhooks.constructEvent(raw, sig, webhookSecret);
     } catch (err) {
       console.error('Webhook error:', err.message);
