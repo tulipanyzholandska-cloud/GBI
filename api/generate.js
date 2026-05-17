@@ -35,15 +35,20 @@ JSON (fill ALL fields, be specific and concrete):
     const plan = JSON.parse(raw);
 
     let resultId = null;
+    let dbError = null;
     try {
       const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
-      const { data } = await supabase.from('results').insert({
+      const { data, error } = await supabase.from('results').insert({
         quiz_data: quizData, plan, language: quizData.language || 'en'
       }).select('id').single();
+      if (error) { dbError = error.message || JSON.stringify(error); console.error('DB error:', error); }
       resultId = data?.id;
-    } catch (e) { console.error('DB:', e.message); }
+    } catch (e) {
+      dbError = e.message;
+      console.error('DB exception:', e.message);
+    }
 
-    res.json({ resultId, plan });
+    res.json({ resultId, plan, dbError });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
