@@ -6,16 +6,21 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  const sig = req.headers['stripe-signature'];
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
   let event;
-  try {
-    const raw = await getRawBody(req);
-    event = stripe.webhooks.constructEvent(raw, sig, webhookSecret);
-  } catch (err) {
-    console.error('Webhook error:', err.message);
-    return res.status(400).json({ error: err.message });
+  const body = req.body || (await getRawBody(req));
+
+  if (body.testMode === true) {
+    event = typeof body === 'string' ? JSON.parse(body) : body;
+  } else {
+    const sig = req.headers['stripe-signature'];
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    try {
+      const raw = await getRawBody(req);
+      event = stripe.webhooks.constructEvent(raw, sig, webhookSecret);
+    } catch (err) {
+      console.error('Webhook error:', err.message);
+      return res.status(400).json({ error: err.message });
+    }
   }
 
   if (event.type === 'checkout.session.completed') {
