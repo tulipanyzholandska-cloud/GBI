@@ -162,12 +162,17 @@
 
   <!-- EMAIL GATE -->
   <div class="email-gate" id="email-gate">
-    <h3 style="font-size:18px;font-weight:700;margin-bottom:6px">🔓 Save your result — get free preview</h3>
-    <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:6px;line-height:1.6">Enter your email to see <strong style="color:#fff">how to get your first client + days 1–7</strong> for free.</p>
-    <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:16px">Full plan (days 1–90 + pricing + tools) unlocked for 7€</div>
-    <input class="email-input" type="email" id="gate-email" placeholder="your@email.com">
-    <button class="btn-email" onclick="saveEmail()">Save & view preview →</button>
-    <div class="skip-link" onclick="showPayment()">Skip, go to payment</div>
+    <div style="display:inline-block;padding:4px 12px;border-radius:100px;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);font-size:11px;font-weight:700;color:#5dcaa5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px">🎁 Free Preview</div>
+    <h3 style="font-size:22px;font-weight:800;margin-bottom:8px;line-height:1.2">See exactly how to land your first paying client</h3>
+    <p style="font-size:14px;color:rgba(255,255,255,0.65);margin-bottom:20px;line-height:1.6">Drop your email and unlock the <strong style="color:#fff">first-client outreach script</strong> + <strong style="color:#fff">your 7-day launch plan</strong>. Plus we'll bookmark your result so you can return anytime.</p>
+    <input class="email-input" type="email" id="gate-email" placeholder="your@email.com" style="font-size:15px;padding:14px 16px">
+    <button class="btn-email" onclick="saveEmail()" style="font-size:15px;padding:15px;background:linear-gradient(135deg,#7c3aed,#e8417a);box-shadow:0 6px 20px rgba(124,58,237,0.35)">Unlock Free Preview →</button>
+    <div style="display:flex;justify-content:center;gap:16px;margin-top:14px;font-size:11px;color:rgba(255,255,255,0.4);flex-wrap:wrap">
+      <span>🔒 No spam, ever</span>
+      <span>✓ No credit card</span>
+      <span>⚡ Instant access</span>
+    </div>
+    <div class="skip-link" onclick="showPayment()" style="margin-top:12px;font-size:12px">Skip preview, go straight to full plan →</div>
   </div>
 
   <!-- LEVEL 2: Po emailu -->
@@ -205,15 +210,17 @@
           ⚠️ <strong>3 mistakes</strong> that kill beginners
         </div>
       </div>
-      <button class="btn-buy" onclick="startCheckout()">Get My First Clients · 7€</button>
-      <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:6px">One-time payment · Instant access</div>
-      <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);text-align:center">
-        <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:8px">Or enter PIN code:</div>
-        <div style="display:flex;gap:6px;justify-content:center;align-items:center">
-          <input type="text" id="pin-input" maxlength="4" placeholder="0000" style="width:50px;padding:8px;text-align:center;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#fff;font-size:16px;letter-spacing:6px;font-weight:700" />
-          <button onclick="checkPin()" style="padding:8px 14px;background:rgba(124,58,237,0.3);border:1px solid #7c3aed;border-radius:8px;color:#a78bfa;font-size:11px;cursor:pointer;font-weight:600">Unlock</button>
-        </div>
-      </div>
+      <button class="btn-buy" onclick="startCheckout()">Get Full Plan · €7</button>
+      <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:6px">One-time payment · Instant access · 7-day money-back</div>
+    </div>
+  </div>
+
+  <!-- PIN ACCESS CARD (separate, always visible) -->
+  <div id="pin-card" style="background:rgba(255,255,255,0.03);border:1px dashed rgba(255,255,255,0.15);border-radius:14px;padding:18px;margin-bottom:16px;text-align:center">
+    <div style="font-size:11px;color:rgba(255,255,255,0.45);font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">🔑 Have an access code?</div>
+    <div style="display:flex;gap:8px;justify-content:center;align-items:center;max-width:280px;margin:0 auto">
+      <input type="text" id="pin-input" maxlength="4" placeholder="0000" style="flex:1;padding:12px;text-align:center;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(0,0,0,0.3);color:#fff;font-size:18px;letter-spacing:8px;font-weight:700;outline:none" />
+      <button onclick="checkPin()" style="padding:12px 20px;background:linear-gradient(135deg,#7c3aed,#a78bfa);border:none;border-radius:10px;color:#fff;font-size:13px;cursor:pointer;font-weight:700;box-shadow:0 4px 12px rgba(124,58,237,0.3)">Unlock →</button>
     </div>
   </div>
 
