@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   const to = req.query.to || req.body?.to;
-  const from = req.query.from || 'hello@getbizidea.com';
+  const from = req.query.from || 'getbizidea.now@gmail.com';
   if (!to) return res.status(400).json({ error: 'Missing ?to=email@example.com' });
 
   if (!process.env.BREVO_API_KEY) {
