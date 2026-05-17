@@ -470,6 +470,8 @@ function devUnlock(){
       `;
     }
 
+
+      el.insertAdjacentHTML("beforeend", '<iframe src="/getbizidea_interactive_premium.html" style="width:100%;border:none;border-radius:16px;min-height:2400px;background:transparent" scrolling="no" onload="this.style.height=this.contentWindow.document.body.scrollHeight+50+\'px\'"></iframe>');
     if(block===2){
       const pr=data.pricing||{};const fc=data.first_customer||{};
       el.innerHTML=`
