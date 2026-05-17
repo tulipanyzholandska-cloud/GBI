@@ -170,7 +170,7 @@
     <div class="skip-link" onclick="showPayment()">Přeskočit, rovnou k platbě</div>
   </div>
   <div style="text-align:center;margin-bottom:12px">
-    <button onclick="devUnlock()" style="padding:10px 24px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:8px;color:rgba(255,255,255,0.5);font-size:12px;cursor:pointer">🔓 DEV — přeskočit platbu</button>
+    <button class="dev-btn" onclick="devUnlock()" style="padding:10px 24px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:8px;color:rgba(255,255,255,0.5);font-size:12px;cursor:pointer">🔓 DEV — skip payment</button>
   </div>
 
   <!-- LEVEL 2: Po emailu -->
@@ -210,7 +210,7 @@
       </div>
       <button class="btn-buy" onclick="startCheckout()">Chci první zákazníky · 7 €</button>
       <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:6px">Jednorázová platba · Okamžitý přístup</div>
-      <button onclick="devUnlock()" style="margin-top:10px;padding:6px 16px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:rgba(255,255,255,0.4);font-size:11px;cursor:pointer">DEV UNLOCK</button>
+      <button class="dev-btn" onclick="devUnlock()" style="margin-top:10px;padding:6px 16px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:rgba(255,255,255,0.4);font-size:11px;cursor:pointer">DEV UNLOCK</button>
     </div>
   </div>
 
@@ -348,7 +348,7 @@ async function startTripwire(){
     const{url}=await resp.json();
     window.location.href=url;
   }catch(e){alert('Payment error. Please try again.');}
-}async function startCheckout(){try{const resp=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resultId,email:userEmail})});const{url}=await resp.json();window.location.href=url}catch(e){alert('Payment error. Please try again.')}}window.addEventListener('DOMContentLoaded',()=>{const p=new URLSearchParams(window.location.search);if(p.get('unlocked')==='true'&&p.get('rid')){loadResult(p.get('rid'))}if(p.get('dev')==='1'){window._devMode=true;}});async function loadResult(rid){try{const resp=await fetch("/api/result?rid="+rid);const data=await resp.json();if(data.plan){resultId=rid;planData=data.plan;renderResult(data.plan,true);}}catch(e){console.error(e);}}
+}async function startCheckout(){try{const resp=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resultId,email:userEmail})});const{url}=await resp.json();window.location.href=url}catch(e){alert('Payment error. Please try again.')}}window.addEventListener('DOMContentLoaded',()=>{const p=new URLSearchParams(window.location.search);if(p.get('unlocked')==='true'&&p.get('rid')){loadResult(p.get('rid'))}if(p.get('dev')==='1'){window._devMode=true;}const isLocalhost=window.location.hostname==='localhost'||window.location.hostname==='127.0.0.1';if(!isLocalhost&&!p.get('dev')){document.querySelectorAll('.dev-btn').forEach(el=>el.style.display='none');}});async function loadResult(rid){try{const resp=await fetch("/api/result?rid="+rid);const data=await resp.json();if(data.plan){resultId=rid;planData=data.plan;renderResult(data.plan,true);}}catch(e){console.error(e);}}
 async function startUpsell(){try{const resp=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resultId,email:userEmail,product:'upsell'})});const{url}=await resp.json();window.location.href=url}catch(e){alert('Payment error. Please try again.')}}
 function devUnlock(){
     if(!planData) return;
