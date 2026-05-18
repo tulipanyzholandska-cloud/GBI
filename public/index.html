@@ -475,8 +475,113 @@ async function startTripwire(){
     window.location.href=url;
   }catch(e){alert('Payment error. Please try again.');}
 }async function startCheckout(){try{const resp=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resultId,email:userEmail})});const{url}=await resp.json();window.location.href=url}catch(e){alert('Payment error. Please try again.')}}
-/* Listen for iframe height reports (calculator iframe self-reports its content height) */
-window.addEventListener('message',(e)=>{if(e.data&&e.data.type==='gbi-iframe-resize'){const f=document.getElementById('gbi-calc-iframe');if(f&&e.data.height>50)f.style.height=(e.data.height+10)+'px'}});
+/* Inline calculator builder + initializer (replaces iframe to avoid sizing/flicker issues) */
+function buildCalculatorHTML(){
+  return `<style>
+#gbicalc *{box-sizing:border-box;margin:0;padding:0}
+#gbicalc{margin-top:14px;background:transparent;color:#fff;font-family:inherit;font-size:15px;line-height:1.6}
+#gbicalc .gc-sec{font-size:17px;font-weight:800;color:#fff;margin:24px 0 14px;display:flex;align-items:center;gap:14px;line-height:1.2}
+#gbicalc .gc-sec::before{content:'';width:4px;height:20px;background:linear-gradient(180deg,#a78bfa,#e8417a);border-radius:3px;flex-shrink:0}
+#gbicalc .gc-sec::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.08)}
+#gbicalc .gc-card{background:linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px;margin-bottom:14px}
+#gbicalc .gc-hint{display:flex;align-items:center;gap:8px;margin-bottom:18px;padding:10px 14px;background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(232,65,122,0.08));border:1px solid rgba(167,139,250,0.25);border-radius:12px;font-size:13px;color:rgba(255,255,255,0.85);font-weight:500}
+#gbicalc .gc-slider-wrap{margin-bottom:22px}
+#gbicalc .gc-slider-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+#gbicalc .gc-slider-name{font-size:14px;color:rgba(255,255,255,0.75);font-weight:500}
+#gbicalc .gc-slider-val{font-size:16px;font-weight:700;background:linear-gradient(135deg,#a78bfa,#f472b6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+#gbicalc input[type=range]{width:100%;height:10px;border-radius:5px;outline:none;cursor:grab;-webkit-appearance:none;background:linear-gradient(90deg,#7c3aed var(--pct,50%),rgba(255,255,255,0.1) var(--pct,50%));touch-action:none}
+#gbicalc input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#fff,#f0f0ff);box-shadow:0 4px 16px rgba(124,58,237,0.7),0 0 0 3px #7c3aed;cursor:grab;animation:gcPulse 2.5s ease-in-out infinite}
+#gbicalc input[type=range]:hover::-webkit-slider-thumb{animation:none;transform:scale(1.1)}
+#gbicalc input[type=range]::-moz-range-thumb{width:32px;height:32px;border-radius:50%;background:#fff;box-shadow:0 4px 16px rgba(124,58,237,0.7),0 0 0 3px #7c3aed;cursor:grab;border:none}
+@keyframes gcPulse{0%,100%{box-shadow:0 4px 16px rgba(124,58,237,0.7),0 0 0 3px #7c3aed,0 0 0 0 rgba(124,58,237,0.6)}50%{box-shadow:0 4px 16px rgba(124,58,237,0.7),0 0 0 3px #7c3aed,0 0 0 10px rgba(124,58,237,0)}}
+#gbicalc .gc-result-big{text-align:center;background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(232,65,122,0.08));border:1px solid rgba(167,139,250,0.3);border-radius:14px;padding:22px;margin:16px 0}
+#gbicalc .gc-result-num{font-size:48px;font-weight:800;line-height:1;letter-spacing:-.03em;background:linear-gradient(135deg,#5dcaa5,#34d399);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+#gbicalc .gc-result-label{font-size:13px;color:rgba(255,255,255,0.55);margin-top:8px}
+#gbicalc .gc-breakdown{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:16px 0}
+#gbicalc .gc-bk{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:14px;text-align:center}
+#gbicalc .gc-bk-label{font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+#gbicalc .gc-bk-num{font-size:22px;font-weight:800;margin-top:6px;line-height:1}
+#gbicalc .gc-bk-sub{font-size:11px;color:rgba(255,255,255,0.4);margin-top:6px;text-transform:uppercase;letter-spacing:.06em}
+#gbicalc .gc-bars{display:flex;align-items:flex-end;gap:6px;height:80px;margin:18px 0 8px}
+#gbicalc .gc-bw{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+#gbicalc .gc-bar{width:100%;border-radius:6px 6px 0 0;transition:height .4s cubic-bezier(.34,1.56,.64,1)}
+#gbicalc .gc-bar-l{font-size:10px;color:rgba(255,255,255,0.4);font-weight:600}
+#gbicalc .gc-bar-v{font-size:10px;font-weight:700;color:rgba(255,255,255,0.7)}
+@media(max-width:600px){#gbicalc .gc-card{padding:16px}#gbicalc .gc-result-num{font-size:38px}#gbicalc .gc-breakdown{grid-template-columns:1fr 1fr;gap:8px}#gbicalc .gc-bk-num{font-size:18px}}
+@media(max-width:380px){#gbicalc .gc-breakdown{grid-template-columns:1fr}}
+</style>
+<div id="gbicalc">
+<div class="gc-sec">💰 Income Calculator</div>
+<div class="gc-card">
+  <div class="gc-hint"><span style="font-size:18px">👆</span><span><strong style="color:#a78bfa">Drag the sliders</strong> — your income updates live</span></div>
+  <div class="gc-slider-wrap"><div class="gc-slider-label"><span class="gc-slider-name">Clients per month</span><span class="gc-slider-val" id="gc-v-clients">4 clients</span></div><input type="range" id="gc-s-clients" min="1" max="20" value="4"></div>
+  <div class="gc-slider-wrap"><div class="gc-slider-label"><span class="gc-slider-name">Average price per client</span><span class="gc-slider-val" id="gc-v-price">€300</span></div><input type="range" id="gc-s-price" min="50" max="1000" step="25" value="300"></div>
+  <div class="gc-slider-wrap"><div class="gc-slider-label"><span class="gc-slider-name">Work hours per week</span><span class="gc-slider-val" id="gc-v-hours">20 h</span></div><input type="range" id="gc-s-hours" min="5" max="40" value="20"></div>
+  <div class="gc-result-big">
+    <div style="font-size:11px;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-bottom:10px">Your monthly income</div>
+    <div class="gc-result-num" id="gc-r-monthly">€1,200</div>
+    <div class="gc-result-label">= <span id="gc-r-annual">€14,400</span> per year</div>
+  </div>
+  <div class="gc-breakdown">
+    <div class="gc-bk"><div class="gc-bk-label">Hourly rate</div><div class="gc-bk-num" id="gc-r-hourly" style="color:#a78bfa">€15/h</div><div class="gc-bk-sub">effective</div></div>
+    <div class="gc-bk"><div class="gc-bk-label">Weekly</div><div class="gc-bk-num" id="gc-r-weekly" style="color:#fbbf24">€300</div><div class="gc-bk-sub">average</div></div>
+    <div class="gc-bk"><div class="gc-bk-label">Goal in</div><div class="gc-bk-num" id="gc-r-goal" style="color:#5dcaa5">M3</div><div class="gc-bk-sub">at this pace</div></div>
+  </div>
+  <div style="font-size:11px;color:rgba(255,255,255,0.45);margin:18px 0 6px;text-transform:uppercase;letter-spacing:.08em;font-weight:700">Revenue growth projection</div>
+  <div class="gc-bars" id="gc-bars"></div>
+</div>
+<div class="gc-sec">⚖️ Break-even calculator</div>
+<div class="gc-card">
+  <div class="gc-hint"><span style="font-size:18px">👆</span><span><strong style="color:#a78bfa">Set your monthly costs</strong> — see profit instantly</span></div>
+  <div class="gc-slider-wrap"><div class="gc-slider-label"><span class="gc-slider-name">Monthly costs</span><span class="gc-slider-val" id="gc-v-costs">€200</span></div><input type="range" id="gc-s-costs" min="0" max="1000" step="25" value="200"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px">
+    <div class="gc-bk"><div class="gc-bk-label">Clients to break-even</div><div class="gc-bk-num" id="gc-be-clients" style="color:#fbbf24">1</div><div class="gc-bk-sub">minimum</div></div>
+    <div class="gc-bk"><div class="gc-bk-label">Net profit / month</div><div class="gc-bk-num" id="gc-be-profit" style="color:#5dcaa5">€1,000</div><div class="gc-bk-sub">after costs</div></div>
+  </div>
+  <div style="margin-top:18px">
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em;font-weight:700"><span>Costs</span><span>Profit</span></div>
+    <div style="height:12px;border-radius:6px;background:rgba(255,255,255,0.06);overflow:hidden;position:relative">
+      <div id="gc-be-bar-cost" style="position:absolute;left:0;top:0;height:100%;background:linear-gradient(90deg,#e8417a,#f87171);border-radius:6px;transition:width .4s"></div>
+      <div id="gc-be-bar-profit" style="position:absolute;top:0;height:100%;background:linear-gradient(90deg,#5dcaa5,#34d399);border-radius:6px;transition:all .4s"></div>
+    </div>
+    <div id="gc-be-note" style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:10px;text-align:center;font-weight:500"></div>
+  </div>
+</div>
+</div>`;
+}
+function initCalculator(){
+  const $=id=>document.getElementById(id);
+  const fmt=n=>n.toLocaleString('en-US');
+  function calc(){
+    if(!$('gc-s-clients'))return;
+    const clients=+$('gc-s-clients').value,price=+$('gc-s-price').value,hours=+$('gc-s-hours').value;
+    const monthly=clients*price,annual=monthly*12,weekly=Math.round(monthly/4),hourly=Math.round(monthly/(hours*4.3));
+    $('gc-v-clients').textContent=clients+' client'+(clients===1?'':'s');
+    $('gc-v-price').textContent='€'+price;$('gc-v-hours').textContent=hours+' h';
+    $('gc-r-monthly').textContent='€'+fmt(monthly);$('gc-r-annual').textContent='€'+fmt(annual);
+    $('gc-r-hourly').textContent='€'+hourly+'/h';$('gc-r-weekly').textContent='€'+fmt(weekly);
+    const goal=monthly>=2000?'M3':monthly>=1000?'M5':monthly>=500?'M7':'M10+';
+    $('gc-r-goal').textContent=goal;$('gc-r-goal').style.color=monthly>=2000?'#5dcaa5':monthly>=1000?'#fbbf24':'#e8417a';
+    [['gc-s-clients',1,20],['gc-s-price',50,1000],['gc-s-hours',5,40]].forEach(([id,min,max])=>{const el=$(id);const pct=((el.value-min)/(max-min)*100).toFixed(1);el.style.setProperty('--pct',pct+'%');});
+    const proj=[['M1',.15],['M2',.3],['M3',.55],['M6',.8],['M9',.92],['M12',1]].map(([m,p])=>({m,v:Math.round(monthly*p)}));
+    $('gc-bars').innerHTML=proj.map(({m,v})=>{const h=Math.max(5,Math.round((v/(monthly||1))*70));const c=v>=monthly*0.7?'linear-gradient(180deg,#5dcaa5,#1D9E75)':v>=monthly*0.4?'linear-gradient(180deg,#fbbf24,#f59e0b)':'linear-gradient(180deg,#e8417a,#7c3aed)';return `<div class="gc-bw"><div class="gc-bar-v">${v>0?'€'+fmt(v):''}</div><div class="gc-bar" style="height:${h}px;background:${c}"></div><div class="gc-bar-l">${m}</div></div>`}).join('');
+    calcBE();
+  }
+  function calcBE(){
+    if(!$('gc-s-costs'))return;
+    const clients=+$('gc-s-clients').value,price=+$('gc-s-price').value,costs=+$('gc-s-costs').value;
+    const monthly=clients*price,beClients=Math.ceil(costs/price),profit=monthly-costs;
+    $('gc-v-costs').textContent='€'+costs;$('gc-be-clients').textContent=beClients;
+    $('gc-be-profit').textContent=(profit>0?'+€':'-€')+fmt(Math.abs(profit));$('gc-be-profit').style.color=profit>0?'#5dcaa5':'#e8417a';
+    const costPct=Math.min(100,Math.round(costs/monthly*100))||0;
+    $('gc-be-bar-cost').style.width=costPct+'%';$('gc-be-bar-profit').style.left=costPct+'%';$('gc-be-bar-profit').style.width=(100-costPct)+'%';
+    $('gc-be-note').textContent=costPct+'% → costs · '+Math.round(100-costPct)+'% → your profit';
+    const sc=$('gc-s-costs');const pct=((costs)/1000*100).toFixed(1);sc.style.setProperty('--pct',pct+'%');
+  }
+  ['gc-s-clients','gc-s-price','gc-s-hours'].forEach(id=>{const el=$(id);if(el){el.oninput=calc;el.onchange=calc}});
+  const sc=$('gc-s-costs');if(sc){sc.oninput=calcBE;sc.onchange=calcBE}
+  calc();
+}
 window.addEventListener('DOMContentLoaded',()=>{const p=new URLSearchParams(window.location.search);const storedRid=localStorage.getItem('gbi_rid');const storedEmail=localStorage.getItem('gbi_email');if(storedEmail)userEmail=storedEmail;if(p.get('unlocked')==='true'&&p.get('rid')){loadResult(p.get('rid'))}else if(p.get('rid')){loadResult(p.get('rid'))}else if(storedRid&&!resultId){/* restore session if user returns to root */resultId=storedRid;}if(p.get('dev')==='1'){window._devMode=true;}const isLocalhost=window.location.hostname==='localhost'||window.location.hostname==='127.0.0.1';if(!isLocalhost&&!p.get('dev')){document.querySelectorAll('.dev-btn').forEach(el=>el.style.display='none');}});async function loadResult(rid){try{document.getElementById('quiz-section').style.display='none';document.getElementById('loading-section').style.display='flex';const resp=await fetch("/api/result?rid="+rid);const data=await resp.json();if(data.plan){resultId=rid;planData=data.plan;userEmail=data.email||userEmail;window._lastQuizData=data.quiz_data||window._lastQuizData||{language:'en'};if(data.paid===true){/* PAID: show full premium */renderResult(data.plan,false);setStage(2);setStage(3);setTimeout(()=>{generateBlocks();},300);}else{/* NOT PAID: show free preview + email gate + payment */renderResult(data.plan,false);if(userEmail)setStage(2);}}else{document.getElementById('loading-section').style.display='none';document.getElementById('quiz-section').style.display='flex';alert('Could not load your plan. Please complete the quiz again.')}}catch(e){console.error('loadResult error:',e);document.getElementById('loading-section').style.display='none';document.getElementById('quiz-section').style.display='flex';alert('Error loading plan: '+e.message)}}
 async function startUpsell(){try{const resp=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resultId,email:userEmail,product:'upsell'})});const{url}=await resp.json();window.location.href=url}catch(e){alert('Payment error. Please try again.')}}
 function setStage(n){const s2=document.getElementById('stage-2');const s3=document.getElementById('stage-3');if(n>=2&&s2){s2.style.background='rgba(34,197,94,0.15)';s2.style.borderColor='rgba(34,197,94,0.3)';s2.style.color='#5dcaa5';s2.children[0].textContent='✓';s2.children[0].style.opacity='1'}if(n>=3&&s3){s3.style.background='linear-gradient(135deg,rgba(124,58,237,0.25),rgba(232,65,122,0.15))';s3.style.borderColor='rgba(167,139,250,0.5)';s3.style.color='#a78bfa';s3.children[0].textContent='✓';s3.children[0].style.opacity='1'}}
@@ -623,7 +728,8 @@ function devUnlock(){
     }
 
 
-      el.insertAdjacentHTML("beforeend", '<iframe id="gbi-calc-iframe" src="/getbizidea_interactive_premium.html" style="width:100%;border:none;border-radius:16px;min-height:300px;background:transparent;display:block" scrolling="no"></iframe>');
+      el.insertAdjacentHTML("beforeend", buildCalculatorHTML());
+      setTimeout(initCalculator, 50);
     if(block===2){
       const pr=data.pricing||{};const fc=data.first_customer||{};
       el.innerHTML=`
