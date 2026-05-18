@@ -582,18 +582,18 @@ function devUnlock(){
         </div>
       `).join('')}
       <div style="font-size:14px;color:rgba(255,255,255,0.55);padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:10px;line-height:1.7;margin-bottom:20px">
-        💡 <strong style="color:rgba(255,255,255,0.8)">Psychologie:</strong> ${pr.psychology||''}<br>
+        💡 <strong style="color:rgba(255,255,255,0.8)">Psychology:</strong> ${pr.psychology||''}<br>
         <strong style="color:rgba(255,255,255,0.8)">When to raise:</strong> ${pr.when_to_raise||''}
       </div>
-      ${SL('✉️','Copy-paste skripty — use dnes')}
+      ${SL('✉️','Copy-paste scripts — use today')}
       <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.4);margin-bottom:8px">Subject line · 35%+ open rate</div>
       ${SUB(fc.subject_line||'')}
       <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.4);margin:16px 0 8px">First message · ${fc.platform||''}</div>
-      <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px">Kde hledat: ${fc.where_to_find||''}</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px">Where to find: ${fc.where_to_find||''}</div>
       ${SCR(fc.outreach_message||'')}
-      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.4);margin:16px 0 8px">Follow-up · den 3 bez responses</div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.4);margin:16px 0 8px">Follow-up · day 3 with no response</div>
       ${SCR(fc.followup_day3||'')}
-      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.4);margin:16px 0 8px">Closing skript</div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.4);margin:16px 0 8px">Closing script</div>
       ${SCR(fc.closing_script||'')}
       <div style="display:flex;gap:20px;font-size:13px;color:rgba(255,255,255,0.4);margin-top:10px">
         <span>✓ Daily goal: ${fc.daily_target||0} messages</span>
@@ -614,7 +614,7 @@ function devUnlock(){
       <div style="height:6px;border-radius:3px;background:rgba(255,255,255,0.08);margin-bottom:20px;overflow:hidden">
         <div id="prog-bar" style="height:100%;width:0;background:linear-gradient(90deg,#7c3aed,#5dcaa5);border-radius:3px;transition:width .4s ease"></div>
       </div>
-      ${BADGE('Den 1 · '+((cl.day1||[]).reduce((a,x)=>a+(x.time_minutes||0),0))+' minut celkem','rgba(124,58,237,0.2)','#a78bfa')}
+      ${BADGE('Day 1 · '+((cl.day1||[]).reduce((a,x)=>a+(x.time_minutes||0),0))+' minut celkem','rgba(124,58,237,0.2)','#a78bfa')}
       ${(cl.day1||[]).map(t=>CHK(`<strong>${t.task}</strong> <span style="font-size:13px;font-weight:400;color:rgba(255,255,255,0.35)">(${t.time_minutes} min)</span>`,`${t.tool||''}${t.tool_url?' · '+t.tool_url:''}${t.why?' · '+t.why:''}`)).join('')}
       ${BADGE('Day 2–7 · daily rutina','rgba(29,158,117,0.15)','#5dcaa5')}
       ${(cl.day2_7||[]).map(t=>CHK(`<strong>${t.task}</strong> <span style="font-size:13px;font-weight:400;color:rgba(255,255,255,0.35)">(${t.daily_time_minutes} min/day)</span>`,`Goal: ${t.goal||''} · Milestone: ${t.milestone||''}`)).join('')}
@@ -652,7 +652,7 @@ function devUnlock(){
           <div class="prem-mistake-fix">✓ ${m.how_to_avoid||''}</div>
         </div>
       `).join('')}
-      ${SL('🚀','Scaling roadmapa')}
+      ${SL('🚀','Scaling roadmap')}
       ${(data.scaling_roadmap||[]).map((s,i)=>{
         const cols=['#a78bfa','#5dcaa5','#BA7517','#e8417a'];
         const bgs=['rgba(124,58,237,0.2)','rgba(29,158,117,0.15)','rgba(186,117,23,0.15)','rgba(232,65,122,0.15)'];
@@ -675,7 +675,7 @@ function devUnlock(){
           <div class="prem-card" style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
             <div>
               <div style="font-size:16px;font-weight:700;margin-bottom:6px">${p.product||''}</div>
-              <div style="font-size:13px;color:rgba(255,255,255,0.5)">${p.platform||''} · ${p.price||''} · Tvorba: ${p.time_to_create||''}</div>
+              <div style="font-size:13px;color:rgba(255,255,255,0.5)">${p.platform||''} · ${p.price||''} · Created in: ${p.time_to_create||''}</div>
             </div>
             <div style="font-size:16px;font-weight:700;color:#5dcaa5;flex-shrink:0">${p.monthly_potential||''}/month</div>
           </div>
@@ -798,20 +798,20 @@ function devUnlock(){
     <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:16px;line-height:1.6">${pr.psychology||''} When to raise: ${pr.when_to_raise||''}</div>
 
     <div class="sec-label">Jak get firstho klienta — copy-paste</div>
-    <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:6px">Platform: <strong style="color:#fff">${fc.platform}</strong> · Kde hledat: ${fc.where_to_find}</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:6px">Platform: <strong style="color:#fff">${fc.platform}</strong> · Where to find: ${fc.where_to_find}</div>
     <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:4px;text-transform:uppercase;letter-spacing:.07em">Subject line</div>
     <div style="background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.2);border-radius:8px;padding:10px;font-size:13px;font-weight:600;color:#5dcaa5;margin-bottom:10px">${fc.subject_line}</div>
     <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:4px;text-transform:uppercase;letter-spacing:.07em">First message</div>
     <div style="background:rgba(124,58,237,0.12);border-left:3px solid #7c3aed;border-radius:0 8px 8px 0;padding:12px;font-size:13px;color:rgba(255,255,255,0.9);line-height:1.7;font-style:italic;margin-bottom:10px">${fc.outreach_message}</div>
     <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:4px;text-transform:uppercase;letter-spacing:.07em">Follow-up (den 3)</div>
     <div style="background:rgba(124,58,237,0.12);border-left:3px solid #7c3aed;border-radius:0 8px 8px 0;padding:12px;font-size:13px;color:rgba(255,255,255,0.9);line-height:1.7;font-style:italic;margin-bottom:10px">${fc.followup_day3}</div>
-    <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:4px;text-transform:uppercase;letter-spacing:.07em">Closing skript</div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:4px;text-transform:uppercase;letter-spacing:.07em">Closing script</div>
     <div style="background:rgba(124,58,237,0.12);border-left:3px solid #7c3aed;border-radius:0 8px 8px 0;padding:12px;font-size:13px;color:rgba(255,255,255,0.9);line-height:1.7;font-style:italic;margin-bottom:16px">${fc.closing_script}</div>
     <div style="font-size:12px;color:rgba(255,255,255,0.35)">✓ Daily goal: ${fc.daily_target} messages · Response rate: ${fc.expected_response_rate}</div>
 
     <div class="sec-label" style="margin-top:20px">Action checklist — check off as you progress</div>
     
-    <div style="font-size:11px;font-weight:600;color:#a78bfa;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Den 1 · ~${(cl.day1||[]).reduce((a,x)=>a+(x.time_minutes||0),0)} minut</div>
+    <div style="font-size:11px;font-weight:600;color:#a78bfa;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Day 1 · ~${(cl.day1||[]).reduce((a,x)=>a+(x.time_minutes||0),0)} minut</div>
     ${(cl.day1||[]).map((t,i)=>`
       <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:0.5px solid rgba(255,255,255,0.06);cursor:pointer" onclick="this.querySelector('.cb').classList.toggle('checked');this.querySelector('.ct').style.textDecoration=this.querySelector('.cb').classList.contains('checked')?'line-through':'none';this.querySelector('.ct').style.opacity=this.querySelector('.cb').classList.contains('checked')?'0.4':'1'">
         <div class="cb" style="width:20px;height:20px;min-width:20px;border-radius:5px;border:1.5px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;margin-top:1px;transition:all .2s;flex-shrink:0"></div>
@@ -864,7 +864,7 @@ function devUnlock(){
       </div>
     `).join('')}
 
-    <div class="sec-label" style="margin-top:20px">Scaling roadmapa</div>
+    <div class="sec-label" style="margin-top:20px">Scaling roadmap</div>
     ${(pp.scaling_roadmap||[]).map((s,i)=>{
       const colors=['#a78bfa','#5dcaa5','#BA7517','#e8417a'];
       return `<div style="display:grid;grid-template-columns:80px 1fr;gap:10px;align-items:start;margin-bottom:10px">
@@ -884,7 +884,7 @@ function devUnlock(){
           <span style="font-size:13px;font-weight:600">${p.product}</span>
           <span style="font-size:12px;color:#5dcaa5">${p.monthly_potential}/month</span>
         </div>
-        <div style="font-size:12px;color:rgba(255,255,255,0.45)">${p.platform} · ${p.price} · Tvorba: ${p.time_to_create}</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.45)">${p.platform} · ${p.price} · Created in: ${p.time_to_create}</div>
       </div>
     `).join('')}` : ''}
     `;

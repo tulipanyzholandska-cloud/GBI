@@ -4,11 +4,8 @@
 .w{background:transparent;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;font-size:15px;line-height:1.6;padding:0}
 .card{background:linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:24px;margin-bottom:14px;backdrop-filter:blur(20px);transition:border-color .25s,transform .25s}
 .card:hover{border-color:rgba(167,139,250,0.25)}
-.sec{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#a78bfa;margin:28px 0 14px;display:flex;align-items:center;gap:12px}
+.sec{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#a78bfa;margin:24px 0 12px;display:flex;align-items:center;gap:12px}
 .sec::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(167,139,250,0.3),transparent)}
-.hero-box{background:linear-gradient(135deg,rgba(124,58,237,0.18),rgba(232,65,122,0.10));border:1px solid rgba(167,139,250,0.3);border-radius:20px;padding:24px;margin-bottom:14px;position:relative;overflow:hidden}
-.hero-box::before{content:'';position:absolute;top:-50%;right:-20%;width:60%;height:200%;background:radial-gradient(circle,rgba(167,139,250,0.15),transparent 60%);animation:rotate 24s linear infinite;pointer-events:none}
-@keyframes rotate{to{transform:rotate(360deg)}}
 
 /* SLIDER */
 .slider-wrap{margin-bottom:22px;animation:slideUp .4s ease-out backwards}
@@ -47,65 +44,23 @@ input[type=range]::-webkit-slider-thumb:active{transform:scale(0.95)}
 .mini-bar-label{font-size:10px;color:rgba(255,255,255,0.4);font-weight:600}
 .mini-bar-val{font-size:10px;font-weight:700;color:rgba(255,255,255,0.7)}
 
-/* TOGGLE */
-.toggle-row{display:flex;gap:6px;margin-bottom:18px;background:rgba(0,0,0,0.2);padding:4px;border-radius:12px;border:1px solid rgba(255,255,255,0.06)}
-.toggle-btn{flex:1;padding:10px 12px;border-radius:9px;border:none;background:transparent;color:rgba(255,255,255,0.5);font-size:13px;cursor:pointer;transition:all .2s;font-weight:600}
-.toggle-btn:hover{color:rgba(255,255,255,0.8)}
-.toggle-btn.active{background:linear-gradient(135deg,#7c3aed,#e8417a);color:#fff;box-shadow:0 4px 12px rgba(124,58,237,0.3)}
-
-/* TIMELINE */
-.timeline{position:relative;padding-left:24px}
-.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,#7c3aed,#e8417a,#5dcaa5)}
-.tl-item{position:relative;padding:0 0 24px 22px;animation:slideRight .4s ease-out backwards}
-.tl-item:nth-child(1){animation-delay:.05s}
-.tl-item:nth-child(2){animation-delay:.1s}
-.tl-item:nth-child(3){animation-delay:.15s}
-.tl-item:nth-child(4){animation-delay:.2s}
-.tl-item:nth-child(5){animation-delay:.25s}
-@keyframes slideRight{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
-@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
-.tl-dot{position:absolute;left:-29px;top:4px;width:14px;height:14px;border-radius:50%;border:2px solid #7c3aed;background:#0a0a0f;box-shadow:0 0 0 4px rgba(124,58,237,0.15)}
-.tl-month{font-size:11px;font-weight:700;color:#a78bfa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
-.tl-title{font-size:16px;font-weight:700;margin-bottom:6px;letter-spacing:-.01em}
-.tl-body{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6}
-.tl-revenue{font-size:15px;font-weight:700;color:#5dcaa5;margin-top:8px;display:inline-block;padding:3px 10px;background:rgba(34,197,94,0.12);border-radius:100px;border:1px solid rgba(34,197,94,0.25)}
-
-/* PHASES */
-.phases{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.phase-card{border-radius:14px;padding:18px;cursor:pointer;transition:all .25s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden}
-.phase-card::after{content:'→';position:absolute;top:14px;right:14px;font-size:14px;opacity:.3;transition:all .2s}
-.phase-card:hover{transform:translateY(-3px) scale(1.01)}
-.phase-card:hover::after{opacity:.8;transform:translateX(2px)}
-
 /* MOBILE */
 @media(max-width:600px){
   .card{padding:18px;border-radius:16px}
-  .hero-box{padding:20px}
-  .sec{margin:22px 0 12px}
+  .sec{margin:20px 0 10px}
   .result-num{font-size:42px}
   .breakdown{grid-template-columns:1fr 1fr;gap:8px}
   .bk-num{font-size:20px}
   .bk-card{padding:12px}
   .bk-sub{font-size:10px}
-  .phases{grid-template-columns:1fr;gap:8px}
-  .toggle-btn{font-size:11px;padding:9px 6px}
-  .timeline{padding-left:18px}
-  .tl-item{padding:0 0 18px 18px}
-  .tl-dot{left:-23px}
-  .tl-title{font-size:14px}
-  .tl-body{font-size:12px}
+  .slider-name{font-size:13px}
+  .slider-val{font-size:14px}
   .mini-bars{height:70px;gap:4px}
 }
 @media(max-width:380px){.breakdown{grid-template-columns:1fr}}
 </style>
 
 <div class="w">
-
-<!-- HERO -->
-<div class="hero-box">
-  <div style="display:inline-flex;align-items:center;gap:8px;padding:4px 12px;border-radius:100px;background:rgba(167,139,250,0.2);border:1px solid rgba(167,139,250,0.3);font-size:10px;font-weight:700;color:#a78bfa;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;position:relative">🔓 Full plan unlocked</div>
-  <div style="font-size:22px;font-weight:800;line-height:1.3;letter-spacing:-.01em;position:relative">I help tourism businesses unlock hidden revenue opportunities through data-driven insights that boost bookings and optimize pricing.</div>
-</div>
 
 <!-- INCOME CALCULATOR -->
 <div class="sec">💰 Income Calculator — drag the sliders</div>
@@ -135,7 +90,7 @@ input[type=range]::-webkit-slider-thumb:active{transform:scale(0.95)}
   <div class="result-big">
     <div style="font-size:11px;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-bottom:10px;position:relative">Your monthly income</div>
     <div class="result-num" id="r-monthly">€1,200</div>
-    <div class="result-label">= <span id="r-czk">30,000 CZK</span> monthly · <span id="r-annual">€14,400</span> per year</div>
+    <div class="result-label">= <span id="r-annual">€14,400</span> per year</div>
   </div>
 
   <div class="breakdown">
@@ -160,29 +115,6 @@ input[type=range]::-webkit-slider-thumb:active{transform:scale(0.95)}
   <div class="mini-bars" id="bars"></div>
 </div>
 
-<!-- TIMELINE -->
-<div class="sec">🗓 Your path to first revenue</div>
-<div class="card">
-  <div class="toggle-row">
-    <button class="toggle-btn active" onclick="setView('optimistic',this)">⚡ Optimistic</button>
-    <button class="toggle-btn" onclick="setView('realistic',this)">📊 Realistic</button>
-    <button class="toggle-btn" onclick="setView('conservative',this)">🛡 Conservative</button>
-  </div>
-  <div class="timeline" id="timeline"></div>
-</div>
-
-<!-- SCALING ROADMAP -->
-<div class="sec">🚀 Scaling roadmap</div>
-<div class="card">
-  <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:18px;line-height:1.6">Tap a phase for details:</div>
-  <div class="phases" id="phases"></div>
-  <div id="phase-detail" style="margin-top:16px;padding:18px;background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.2);border-radius:14px;display:none;animation:fadeIn .3s ease-out">
-    <div id="pd-title" style="font-size:17px;font-weight:800;margin-bottom:10px;letter-spacing:-.01em"></div>
-    <div id="pd-body" style="font-size:14px;color:rgba(255,255,255,0.7);line-height:1.7"></div>
-    <div id="pd-rev" style="font-size:14px;font-weight:700;color:#5dcaa5;margin-top:12px;display:inline-block;padding:6px 14px;background:rgba(34,197,94,0.12);border-radius:100px;border:1px solid rgba(34,197,94,0.25)"></div>
-  </div>
-</div>
-
 <!-- BREAK-EVEN -->
 <div class="sec">⚖️ Break-even calculator</div>
 <div class="card">
@@ -195,7 +127,7 @@ input[type=range]::-webkit-slider-thumb:active{transform:scale(0.95)}
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px">
     <div class="bk-card">
-      <div class="bk-label">Clients for break-even</div>
+      <div class="bk-label">Clients to break-even</div>
       <div class="bk-num" id="be-clients" style="color:#fbbf24">1</div>
       <div class="bk-sub">minimum</div>
     </div>
@@ -220,101 +152,26 @@ input[type=range]::-webkit-slider-thumb:active{transform:scale(0.95)}
 </div>
 
 <script>
-const views = {
-  optimistic: [
-    {m:'Week 1-2',title:'Profile + first outreach',body:'Set up LinkedIn, send 20 messages daily, 2-3 meetings',rev:'€0 → €300'},
-    {m:'Month 1',title:'First paying client',body:'1-2 pilot projects at lower price, collect testimonials',rev:'€300–600'},
-    {m:'Month 2-3',title:'Stable customers',body:'3-4 clients, retainer model, content marketing',rev:'€900–1,500'},
-    {m:'Month 4-6',title:'Scaling',body:'6-8 clients, raise prices, add services',rev:'€2,000–3,500'},
-    {m:'Month 7-12',title:'Full income',body:'10+ clients, passive income, waiting list',rev:'€4,000–8,000'}
-  ],
-  realistic: [
-    {m:'Month 1',title:'Preparation & first contacts',body:'Portfolio, first 3-5 outreach, free audit as hook',rev:'€0 → €150'},
-    {m:'Month 2',title:'First paid project',body:'1 client at pilot price, testimonial, portfolio',rev:'€200–500'},
-    {m:'Month 3-4',title:'2-3 clients',body:'Repeat what worked, set up retainer model',rev:'€600–1,200'},
-    {m:'Month 5-8',title:'Regular income',body:'4-6 clients monthly, stable cash flow',rev:'€1,500–3,000'},
-    {m:'Month 9-12',title:'Optimization',body:'Raise prices, decline bad clients, passive product',rev:'€3,000–6,000'}
-  ],
-  conservative: [
-    {m:'Month 1-2',title:'Building trust',body:'LinkedIn content, free audits, free portfolio',rev:'€0'},
-    {m:'Month 3',title:'Very first income',body:'1 test client at minimum price',rev:'€100–300'},
-    {m:'Month 4-6',title:'Slow growth',body:'2-3 clients, pricing testing',rev:'€500–1,000'},
-    {m:'Month 7-9',title:'Stabilization',body:'4-5 clients, retainer foundation',rev:'€1,500–2,500'},
-    {m:'Month 10-12',title:'Goal reached',body:'6+ clients, regular income',rev:'€2,500–4,000'}
-  ]
-};
-
-const phases = [
-  {phase:'M1–3',focus:'Validation',revenue:'€1,500–3,000',color:'#a78bfa',bg:'rgba(124,58,237,0.18)',border:'rgba(167,139,250,0.3)',action:'3-5 pilot projects, portfolio, first testimonials. Goal: find out what customers value most.',milestone:'Secured first paying client'},
-  {phase:'M4–6',focus:'Standardization',revenue:'€3,000–5,000',color:'#5dcaa5',bg:'rgba(34,197,94,0.15)',border:'rgba(34,197,94,0.3)',action:'Standardized reporting templates, 8-10 regular clients, retainer model established.',milestone:'Consistent monthly recurring revenue'},
-  {phase:'M7–12',focus:'Premium positioning',revenue:'€6,000–8,000',color:'#fbbf24',bg:'rgba(251,191,36,0.15)',border:'rgba(251,191,36,0.3)',action:'Raise rates by 40%, bigger clients, predictive analytics as premium service.',milestone:'Thought leadership established'},
-  {phase:'Year 2',focus:'Passive income',revenue:'€10,000–15,000',color:'#f472b6',bg:'rgba(232,65,122,0.15)',border:'rgba(232,65,122,0.3)',action:'Junior analyst, online course, certification program. 30% of income passive.',milestone:'Business runs without you'}
-];
-
-const ph = document.getElementById('phases');
-phases.forEach((p,i)=>{
-  const d = document.createElement('div');
-  d.className='phase-card';
-  d.style.background=p.bg;
-  d.style.border='1px solid '+p.border;
-  d.style.animationDelay=(i*0.06)+'s';
-  d.style.animation='slideUp .4s ease-out backwards';
-  d.innerHTML=`<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:${p.color};margin-bottom:6px">${p.phase}</div><div style="font-size:16px;font-weight:800;margin-bottom:8px;letter-spacing:-.01em">${p.focus}</div><div style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-.01em">${p.revenue}</div><div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px;text-transform:uppercase;letter-spacing:.06em">per month</div>`;
-  d.onclick=()=>{
-    document.querySelectorAll('.phase-card').forEach(x=>{x.style.boxShadow='none';x.style.transform=''});
-    d.style.boxShadow='0 0 0 2px '+p.color+', 0 10px 30px '+p.bg;
-    const det=document.getElementById('phase-detail');
-    det.style.display='block';
-    det.style.animation='none';
-    setTimeout(()=>{det.style.animation='fadeIn .3s ease-out'},10);
-    document.getElementById('pd-title').textContent=p.phase+' · '+p.focus;
-    document.getElementById('pd-body').textContent=p.action;
-    document.getElementById('pd-rev').textContent='🎯 Target: '+p.revenue+'/mo · '+p.milestone;
-    det.style.borderColor=p.border;
-    det.style.background=p.bg;
-  };
-  ph.appendChild(d);
-});
-
-function setView(key, btn){
-  document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  const tl=document.getElementById('timeline');
-  tl.innerHTML='';
-  views[key].forEach((item,i)=>{
-    const d=document.createElement('div');
-    d.className='tl-item';
-    d.style.animationDelay=(i*0.05)+'s';
-    d.innerHTML=`<div class="tl-dot" style="background:${i===0?'#7c3aed':'#0a0a0f'}"></div><div class="tl-month">${item.m}</div><div class="tl-title">${item.title}</div><div class="tl-body">${item.body}</div><div class="tl-revenue">💰 ${item.rev}</div>`;
-    tl.appendChild(d);
-  });
-}
-setView('optimistic',document.querySelector('.toggle-btn'));
-
 function bump(el){if(!el)return;el.classList.add('bump');clearTimeout(el._bt);el._bt=setTimeout(()=>el.classList.remove('bump'),200)}
-
 function calc(){
   const clients=+document.getElementById('s-clients').value;
   const price=+document.getElementById('s-price').value;
   const hours=+document.getElementById('s-hours').value;
   const monthly=clients*price;
   const annual=monthly*12;
-  const czk=Math.round(monthly*25);
   const weekly=Math.round(monthly/4);
   const hourly=Math.round(monthly/(hours*4.3));
-
   const fmt=n=>n.toLocaleString('en-US');
 
   document.getElementById('v-clients').textContent=clients+' client'+(clients===1?'':'s');
   document.getElementById('v-price').textContent='€'+price;
   document.getElementById('v-hours').textContent=hours+' h';
   document.getElementById('r-monthly').textContent='€'+fmt(monthly);
-  document.getElementById('r-czk').textContent=fmt(czk)+' CZK';
   document.getElementById('r-annual').textContent='€'+fmt(annual);
   document.getElementById('r-hourly').textContent='€'+hourly+'/h';
   document.getElementById('r-weekly').textContent='€'+fmt(weekly);
 
-  ['v-clients','v-price','v-hours','r-monthly','r-czk','r-annual','r-hourly','r-weekly'].forEach(id=>bump(document.getElementById(id)));
+  ['v-clients','v-price','v-hours','r-monthly','r-annual','r-hourly','r-weekly'].forEach(id=>bump(document.getElementById(id)));
 
   const goal=monthly>=2000?'M3':monthly>=1000?'M5':monthly>=500?'M7':'M10+';
   const goalEl=document.getElementById('r-goal');
@@ -342,17 +199,14 @@ function calc(){
     const c=v>=monthly*0.7?'linear-gradient(180deg,#5dcaa5,#1D9E75)':v>=monthly*0.4?'linear-gradient(180deg,#fbbf24,#f59e0b)':'linear-gradient(180deg,#e8417a,#7c3aed)';
     return `<div class="mini-bar-wrap"><div class="mini-bar-val">${v>0?'€'+fmt(v):''}</div><div class="mini-bar" style="height:${h}px;background:${c}"></div><div class="mini-bar-label">${m}</div></div>`;
   }).join('');
-
   calcBE();
 }
-
 function calcBE(){
   const clients=+document.getElementById('s-clients').value;
   const price=+document.getElementById('s-price').value;
   const costs=+document.getElementById('s-costs').value;
   const monthly=clients*price;
   const fmt=n=>n.toLocaleString('en-US');
-
   document.getElementById('v-costs').textContent='€'+costs;
   const beClients=Math.ceil(costs/price);
   const profit=monthly-costs;
@@ -361,17 +215,14 @@ function calcBE(){
   profEl.textContent=(profit>0?'+€':'-€')+fmt(Math.abs(profit));
   profEl.style.color=profit>0?'#5dcaa5':'#e8417a';
   bump(profEl);
-
   const costPct=Math.min(100,Math.round(costs/monthly*100))||0;
   document.getElementById('be-bar-cost').style.width=costPct+'%';
   document.getElementById('be-bar-profit').style.left=costPct+'%';
   document.getElementById('be-bar-profit').style.width=(100-costPct)+'%';
   document.getElementById('be-note').textContent=costPct+'% of revenue → costs · '+Math.round(100-costPct)+'% → your profit';
-
   const sc=document.getElementById('s-costs');
   const pct=((costs-0)/(1000-0)*100).toFixed(1);
   sc.style.setProperty('--pct',pct+'%');
 }
-
 calc();
 </script>
