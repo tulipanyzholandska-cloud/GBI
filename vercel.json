@@ -3,5 +3,32 @@
     "api/*.js": {
       "maxDuration": 120
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "https://getbizidea.com",
+      "permanent": true,
+      "has": [{ "type": "host", "value": "www.getbizidea.com" }]
+    },
+    {
+      "source": "/",
+      "destination": "https://getbizidea.com",
+      "permanent": true,
+      "has": [{ "type": "host", "value": "www.getbizidea.io" }]
+    },
+    {
+      "source": "/",
+      "destination": "https://getbizidea.com",
+      "permanent": true,
+      "has": [{ "type": "host", "value": "getbizidea.io" }]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/landing.html",
+      "has": [{ "type": "host", "value": "getbizidea.com" }]
+    }
+  ]
 }
