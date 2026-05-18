@@ -11,9 +11,8 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
   const { block, quizData, ideaName, language } = req.body;
-  const lang = LANG_MAP[language] || 'English';
-  const isCzSk = ['cs','sk'].includes(language);
-  const formal = isCzSk ? 'Use formal Czech/Slovak (vykání). ' : '';
+  // FORCE English output for all blocks — language buttons removed
+  const formal = 'ALL output in English (US) only. NEVER use Czech/Slovak/German words. ';
   const ctx = `Business: "${ideaName}", Person: age ${quizData.age}, location type ${quizData.location}, ${quizData.time}/week, budget ${quizData.budget}, strengths: ${quizData.strengths}, interests: ${quizData.interests}, goal: ${quizData.income}`;
 
   const blocks = {

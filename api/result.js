@@ -13,7 +13,14 @@ export default async function handler(req, res) {
     const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
     const { data, error } = await supabase.from('results').select('plan, email, quiz_data, paid').eq('id', rid).single();
     if (error || !data) return res.status(404).json({ error: 'Not found' });
-    res.json({ plan: data.plan, email: data.email, quiz_data: data.quiz_data, paid: data.paid });
+    // Only return full plan if paid; otherwise just basic preview
+    const isPaid = data.paid === true;
+    res.json({
+      plan: data.plan,
+      email: data.email,
+      quiz_data: data.quiz_data,
+      paid: isPaid
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
