@@ -612,7 +612,7 @@ async function generate(){const quizData={age:get('age'),location:get('loc'),lif
   }}catch(e){console.error('Generate error:',e);stopLoadingAnim();alert('Something went wrong: '+e.message);document.getElementById('quiz-section').style.display='flex';document.getElementById('loading-section').style.display='none'}}function renderResult(d,isPaid){stopLoadingAnim();document.getElementById('loading-section').style.display='none';document.getElementById('result-section').style.display='block';const t=d.top_idea;const fp=d.full_plan;const max=t.income_forecast.month_12_high||3000;
   document.getElementById('r-name').textContent=t.name;
   document.getElementById('r-tagline').textContent=t.tagline;
-  if(document.getElementById('r-eyebrow')) document.getElementById('r-eyebrow').textContent='AI business report · '+new Date().toLocaleDateString('cs-CZ');
+  if(document.getElementById('r-eyebrow')) document.getElementById('r-eyebrow').textContent='AI business report · '+new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
   document.getElementById('r-fit').innerHTML=t.fit_reasons.map(r=>'<div class="fit-item"><span class="fit-dot">·</span>'+r+'</div>').join('');
   if(document.getElementById('r-diff-bar')) document.getElementById('r-diff-bar').style.width=((t.difficulty/5)*100)+'%';
   document.getElementById('r-diff-reason').textContent=t.difficulty+'/5 – '+t.difficulty_reason;

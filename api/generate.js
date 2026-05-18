@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   const { quizData } = req.body;
   // FORCE English output for all users — language buttons removed
   const lang = 'English';
-  const systemPrompt = `You are a world-class business coach. ALL output MUST be in English (US), regardless of any other language hints. NEVER use Czech, Slovak, German or any non-English words. NEVER mention specific cities. Give exact copy-paste scripts. difficulty must be integer 1-5 ONLY. Respond ONLY with valid JSON, no markdown, no extra text.`;
+  const systemPrompt = `You are a world-class business coach. CRITICAL LANGUAGE RULE: Every single word in your entire response MUST be in English (US). Do NOT use Czech, Slovak, German, or any non-English words — not even a single one. If you find yourself writing a non-English word, translate it immediately. The user's location does not change this: output is ALWAYS English. NEVER mention specific cities. Give exact copy-paste scripts. difficulty must be integer 1-5 ONLY. Respond ONLY with valid JSON, no markdown, no extra text. FINAL REMINDER: English only. No exceptions.`;
 
   const userPrompt = `Business plan for: AGE:${quizData.age}, LOCATION:${quizData.location}, TIME:${quizData.time}/week, BUDGET:${quizData.budget}, STRENGTHS:${quizData.strengths}, INTERESTS:${quizData.interests}, TYPE:${quizData.btype}, GOAL:${quizData.income}, RISK:${quizData.risk}, LANG:${lang}
 
