@@ -45,8 +45,19 @@ export default async function handler(req, res) {
     try {
       const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
+      // IDEMPOTENCY: check if already paid (don't re-send emails on repeated unlocks)
+      let alreadyPaid = false;
       if (resultId) {
-        await supabase.from('results').update({ paid: true, email }).eq('id', resultId);
+        const { data: existing } = await supabase.from('results').select('paid').eq('id', resultId).single();
+        alreadyPaid = existing?.paid === true;
+        if (!alreadyPaid) {
+          await supabase.from('results').update({ paid: true, email }).eq('id', resultId);
+        }
+      }
+
+      if (alreadyPaid) {
+        console.log('Skipping emails — already paid for rid:', resultId);
+        return res.json({ received: true, alreadyPaid: true });
       }
 
       if (email && resultId) {
