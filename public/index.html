@@ -100,6 +100,8 @@
   #rc-paid .toggle-btn{font-size:11px;padding:8px 6px}
   #rc-paid .mini-bars{height:60px;gap:4px}
   #unlock-modal>div{padding:20px 16px !important;border-radius:16px !important;max-height:92vh;overflow-y:auto}
+  .radar-ideas-grid{grid-template-columns:1fr !important}
+  .radar-ideas-grid svg{max-width:340px;margin:0 auto;display:block}
   /* SALES CARD compact */
   #locked-card{padding:0 !important}
   #locked-card>div:last-child{padding:20px 16px !important}
@@ -206,30 +208,36 @@
   </div>
 
   <!-- Radar + Why grid -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
-    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:14px">
-      <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,0.4);margin-bottom:8px">profil opportunities</div>
-      <svg width="100%" viewBox="-20 -15 200 195">
-        <polygon points="80,44 108,62 108,98 80,116 52,98 52,62" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-        <polygon points="80,26 122,50 122,110 80,134 38,110 38,50" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-        <line x1="80" y1="80" x2="80" y2="26" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-        <line x1="80" y1="80" x2="122" y2="50" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-        <line x1="80" y1="80" x2="122" y2="110" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-        <line x1="80" y1="80" x2="80" y2="134" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-        <line x1="80" y1="80" x2="38" y2="110" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-        <line x1="80" y1="80" x2="38" y2="50" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-        <polygon id="radar-poly" points="80,80 80,80 80,80 80,80 80,80 80,80" fill="rgba(124,58,237,0.2)" stroke="url(#rg)" stroke-width="1.5" style="transition:all 1.2s cubic-bezier(.4,0,.2,1)"/>
-        <defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#e8417a"/></linearGradient></defs>
-        <text x="80" y="16" text-anchor="middle" style="font-size:9px;fill:rgba(255,255,255,0.4);font-family:-apple-system,sans-serif">Market</text>
-        <text x="136" y="48" text-anchor="start" style="font-size:9px;fill:rgba(255,255,255,0.4);font-family:-apple-system,sans-serif">Compet.</text>
-        <text x="136" y="114" text-anchor="start" style="font-size:9px;fill:rgba(255,255,255,0.4);font-family:-apple-system,sans-serif">Profit</text>
-        <text x="80" y="158" text-anchor="middle" style="font-size:9px;fill:rgba(255,255,255,0.4);font-family:-apple-system,sans-serif">Doable</text>
-        <text x="24" y="114" text-anchor="end" style="font-size:9px;fill:rgba(255,255,255,0.4);font-family:-apple-system,sans-serif">Founder</text>
-        <text x="32" y="48" text-anchor="end" style="font-size:9px;fill:rgba(255,255,255,0.4);font-family:-apple-system,sans-serif">Diff.</text>
+  <div class="radar-ideas-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:18px">
+      <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,0.4);margin-bottom:10px">Opportunity profile</div>
+      <svg width="100%" viewBox="-50 -25 300 230" style="overflow:visible">
+        <defs>
+          <linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#e8417a"/></linearGradient>
+          <radialGradient id="radarGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(167,139,250,0.4)"/><stop offset="100%" stop-color="rgba(167,139,250,0)"/></radialGradient>
+          <filter id="radarBlur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+        </defs>
+        <polygon points="100,55 135,77.5 135,122.5 100,145 65,122.5 65,77.5" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+        <polygon points="100,32.5 152.5,62.5 152.5,137.5 100,167.5 47.5,137.5 47.5,62.5" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+        <line x1="100" y1="100" x2="100" y2="32.5" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+        <line x1="100" y1="100" x2="152.5" y2="62.5" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+        <line x1="100" y1="100" x2="152.5" y2="137.5" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+        <line x1="100" y1="100" x2="100" y2="167.5" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+        <line x1="100" y1="100" x2="47.5" y2="137.5" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+        <line x1="100" y1="100" x2="47.5" y2="62.5" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+        <polygon id="radar-glow" points="100,100 100,100 100,100 100,100 100,100 100,100" fill="url(#radarGlow)" filter="url(#radarBlur)" opacity="0.6" style="transition:all 1.4s cubic-bezier(.4,0,.2,1)"/>
+        <polygon id="radar-poly" points="100,100 100,100 100,100 100,100 100,100 100,100" fill="rgba(124,58,237,0.25)" stroke="url(#rg)" stroke-width="2" stroke-linejoin="round" style="transition:all 1.4s cubic-bezier(.34,1.56,.64,1);filter:drop-shadow(0 0 8px rgba(167,139,250,0.4))"/>
+        <g id="radar-dots" style="opacity:0;transition:opacity .6s .8s ease"></g>
+        <text x="100" y="22" text-anchor="middle" style="font-size:12px;font-weight:700;fill:rgba(255,255,255,0.85);font-family:inherit">Market</text>
+        <text x="160" y="62" text-anchor="start" style="font-size:12px;font-weight:700;fill:rgba(255,255,255,0.85);font-family:inherit">Competition</text>
+        <text x="160" y="142" text-anchor="start" style="font-size:12px;font-weight:700;fill:rgba(255,255,255,0.85);font-family:inherit">Profit</text>
+        <text x="100" y="188" text-anchor="middle" style="font-size:12px;font-weight:700;fill:rgba(255,255,255,0.85);font-family:inherit">Doable</text>
+        <text x="40" y="142" text-anchor="end" style="font-size:12px;font-weight:700;fill:rgba(255,255,255,0.85);font-family:inherit">Founder fit</text>
+        <text x="40" y="62" text-anchor="end" style="font-size:12px;font-weight:700;fill:rgba(255,255,255,0.85);font-family:inherit">Differentiation</text>
       </svg>
     </div>
     <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:14px">
-      <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,0.4);margin-bottom:10px">2 other ideas</div>
+      <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,0.4);margin-bottom:10px">2 other ideas · tap to switch</div>
       <div id="r-others" style="display:flex;flex-direction:column;gap:8px"></div>
     </div>
   </div>
@@ -417,7 +425,7 @@ function goStep(n){if(n>currentStep){const missing=validateStep(currentStep);if(
     if(pc) pc.textContent = d.full_plan.first_customer;
     if(pd){const _d17=((d.full_plan.action_plan||{}).days_1_7||(d.full_plan.checklist||{}).day1||[]);pd.innerHTML=_d17.slice(0,2).map((s,i)=>'<div style="display:flex;gap:8px;margin-bottom:6px;font-size:13px;color:rgba(255,255,255,0.8)"><span style="color:#6366F1;font-weight:700">'+(i+1)+'.</span>'+(typeof s==='object'?s.task:s)+'</div>').join('');}
     if(pp) pp.textContent = d.full_plan.pricing.recommended_price;
-  } catch(e) { console.log('preview err', e); }document.getElementById('r-others').innerHTML=(d.other_ideas||[]).map(o=>'<div style="background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid rgba(255,255,255,0.08);padding:12px;margin-bottom:6px;cursor:pointer;transition:border-color .2s" onmouseover="this.style.borderColor=\'rgba(124,58,237,0.4)\'" onmouseout="this.style.borderColor=\'rgba(255,255,255,0.08)\'"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><div style="font-size:13px;font-weight:600">'+o.name+'</div><div style="font-size:11px;color:#a78bfa;font-weight:600">Match '+Math.max(75,o.fit_score)+'%</div></div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.4;margin-bottom:8px">'+o.tagline+'</div><div style="font-size:11px;color:rgba(255,255,255,0.35)">Potential: '+(o.monthly_potential||'')+'</div></div>').join('');if(isPaid)showPaidContent(fp)}function showPaidContent(fp){document.getElementById('email-gate').style.display='none';document.getElementById('locked-card').style.display='none';document.getElementById('level2-reveal').style.display='none';document.getElementById('rc-paid').style.display='block';const ub=document.getElementById('upsell-block');if(ub)ub.style.display='block';const fc = fp.first_customer;
+  } catch(e) { console.log('preview err', e); }window._currentPlanData=d;document.getElementById('r-others').innerHTML=(d.other_ideas||[]).map((o,idx)=>'<div onclick="switchToOtherIdea('+idx+')" style="background:rgba(255,255,255,0.04);border-radius:12px;border:1px solid rgba(255,255,255,0.08);padding:14px;margin-bottom:8px;cursor:pointer;transition:all .2s;position:relative" onmouseover="this.style.borderColor=\'rgba(167,139,250,0.5)\';this.style.background=\'rgba(124,58,237,0.08)\';this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.borderColor=\'rgba(255,255,255,0.08)\';this.style.background=\'rgba(255,255,255,0.04)\';this.style.transform=\'\'"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px"><div style="font-size:14px;font-weight:700;line-height:1.3">'+o.name+'</div><div style="font-size:11px;color:#a78bfa;font-weight:700;white-space:nowrap;padding:3px 8px;background:rgba(124,58,237,0.15);border-radius:100px">Match '+Math.max(75,o.fit_score)+'%</div></div><div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5;margin-bottom:10px">'+o.tagline+'</div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px"><span style="color:rgba(255,255,255,0.4)">💰 '+(o.monthly_potential||'')+'</span><span style="color:#a78bfa;font-weight:700">Tap to switch →</span></div></div>').join('');setTimeout(()=>{const dots=document.getElementById('radar-dots');if(dots)dots.style.opacity='1'},1200);if(isPaid)showPaidContent(fp)}function showPaidContent(fp){document.getElementById('email-gate').style.display='none';document.getElementById('locked-card').style.display='none';document.getElementById('level2-reveal').style.display='none';document.getElementById('rc-paid').style.display='block';const ub=document.getElementById('upsell-block');if(ub)ub.style.display='block';const fc = fp.first_customer;
   if(typeof fc === 'object') {
     document.getElementById('r-firstcust').innerHTML =
       '<strong>Platform:</strong> '+fc.platform+'<br><br>'+
@@ -477,6 +485,35 @@ async function startTripwire(){
     window.location.href=url;
   }catch(e){alert('Payment error. Please try again.');}
 }async function startCheckout(){try{const resp=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resultId,email:userEmail})});const{url}=await resp.json();window.location.href=url}catch(e){alert('Payment error. Please try again.')}}
+/* Switch the current top idea to one of the other ideas (cascading exploration) */
+function switchToOtherIdea(idx){
+  if(!planData||!planData.other_ideas||!planData.other_ideas[idx])return;
+  const newTop=planData.other_ideas[idx];
+  const oldTop=planData.top_idea;
+  /* Fill missing fields with defaults so renderResult doesn't error */
+  if(!newTop.income_forecast)newTop.income_forecast={month_3_low:newTop.fit_score*10,month_3_high:newTop.fit_score*15,month_6_low:newTop.fit_score*20,month_6_high:newTop.fit_score*30,month_12_low:newTop.fit_score*30,month_12_high:newTop.fit_score*50,explanation:'Estimated based on similar businesses'};
+  if(!newTop.fit_reasons)newTop.fit_reasons=['Personalized for your profile','Matches your strengths','Fits your time/budget'];
+  if(!newTop.difficulty)newTop.difficulty=3;
+  if(!newTop.difficulty_reason)newTop.difficulty_reason='Moderate complexity, requires consistent effort';
+  /* Swap: new top becomes top_idea, old top moves into other_ideas */
+  const otherSimplified={name:oldTop.name,tagline:oldTop.tagline,fit_score:90,monthly_potential:(oldTop.income_forecast?.month_12_low+'–'+oldTop.income_forecast?.month_12_high+'€')||''};
+  planData.other_ideas=[planData.other_ideas.filter((_,i)=>i!==idx)[0],otherSimplified].filter(Boolean);
+  planData.top_idea=newTop;
+  /* Smooth scroll to top + re-render */
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>{
+    /* Re-render top section + radar + others */
+    renderResult(planData,false);
+    /* Flash success indicator */
+    const banner=document.createElement('div');
+    banner.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#7c3aed,#e8417a);color:#fff;padding:12px 22px;border-radius:100px;font-size:14px;font-weight:700;z-index:9999;box-shadow:0 10px 30px rgba(124,58,237,0.5);animation:bannerSlide .4s ease-out';
+    banner.textContent='✓ Switched to '+newTop.name;
+    document.body.appendChild(banner);
+    setTimeout(()=>{banner.style.transition='opacity .4s';banner.style.opacity='0';setTimeout(()=>banner.remove(),400)},2200);
+    /* Reset block-generated flags so user can unlock new plan if needed */
+    window._gbiBlocksRendered=false;window._gbiBlocksInFlight=false;
+  },350);
+}
 /* Inline calculator builder + initializer (replaces iframe to avoid sizing/flicker issues) */
 function buildCalculatorHTML(){
   return `<style>
