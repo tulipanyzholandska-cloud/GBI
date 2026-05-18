@@ -345,25 +345,8 @@
   </div>
 
   <!-- PAID CONTENT -->
-  <div class="result-card" id="rc-paid" style="display:none">
-    <span class="paid-badge">Full plan · unlocked</span>
-    <div class="sec-label">How to get your first customer</div>
-    <div style="font-size:13px;color:rgba(255,255,255,0.8);line-height:1.7" id="r-firstcust"></div>
-    <div class="sec-label">Pricing</div>
-    <div style="font-size:13px;color:rgba(255,255,255,0.8);line-height:1.7" id="r-pricing"></div>
-    <div class="sec-label">Days 1–7</div>
-    <div id="r-steps17"></div>
-    <div class="sec-label">Days 8–30</div>
-    <div id="r-steps830"></div>
-    <div class="sec-label">Days 31–90</div>
-    <div id="r-steps3190"></div>
-    <div class="sec-label">Tools you'll need</div>
-    <div class="tool-grid" id="r-tools"></div>
-    <div class="sec-label">Top mistakes to avoid</div>
-    <div id="r-mistakes"></div>
-    <div class="sec-label">Your main objection & how to beat it</div>
-    <div class="objection-box" id="r-objection"></div>
-  </div>
+  <!-- Premium content container - filled dynamically by generateBlocks() after unlock -->
+  <div id="rc-paid" style="display:none"></div>
 
   <!-- UPSELL -->
   <div id="upsell-block" style="display:none;background:linear-gradient(135deg,rgba(232,65,122,0.15),rgba(124,58,237,0.1));border:1px solid rgba(232,65,122,0.3);border-radius:16px;padding:22px;margin-bottom:16px;text-align:center">
@@ -480,8 +463,14 @@ function devUnlock(){
   }
   
   async function generateBlocks(){
+    // GUARD: prevent double-execution (race conditions, double-clicks, magic link + PIN, etc.)
+    if(window._gbiBlocksInFlight){console.log('[generateBlocks] already running, skip');return}
+    if(window._gbiBlocksRendered){console.log('[generateBlocks] already rendered this session, skip');return}
+    window._gbiBlocksInFlight=true;
     const paidSection = document.getElementById('rc-paid');
-    if(!paidSection) return;
+    if(!paidSection){window._gbiBlocksInFlight=false;return}
+    // Remove any leftover block placeholders from prior incomplete runs
+    paidSection.querySelectorAll('[id^="block-"]').forEach(el=>el.remove());
     paidSection.style.display='block';
     const _rid=resultId||new URLSearchParams(window.location.search).get('rid')||localStorage.getItem('gbi_rid')||'';const _ml=_rid?(window.location.origin+'/?unlocked=true&rid='+_rid):'';
     paidSection.innerHTML=`<div style="background:linear-gradient(135deg,rgba(34,197,94,0.18),rgba(124,58,237,0.12));border:1px solid rgba(34,197,94,0.3);border-radius:18px;padding:22px;margin-bottom:16px"><div style="text-align:center;margin-bottom:${_ml?'18px':'0'}"><div style="display:inline-flex;align-items:center;gap:8px;padding:4px 14px;border-radius:100px;background:rgba(34,197,94,0.2);font-size:11px;font-weight:700;color:#5dcaa5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">✓ Full Access Granted</div><h2 style="font-size:22px;font-weight:800;margin-bottom:6px">🎉 Your complete 90-day plan is ready</h2><p style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.5;margin:0">${_ml?'Bookmark this page or save your magic link below to return anytime.':'Bookmark this page to return anytime.'}</p></div>${_ml?`<div style="background:rgba(0,0,0,0.3);border:1px solid rgba(167,139,250,0.25);border-radius:12px;padding:14px"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#a78bfa;margin-bottom:8px">🔗 Your Magic Link (save this!)</div><div style="display:flex;gap:8px;align-items:center"><input id="magic-link-input" type="text" readonly value="${_ml}" style="flex:1;min-width:0;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(0,0,0,0.4);color:rgba(255,255,255,0.85);font-size:12px;font-family:monospace;outline:none" onclick="this.select()"><button onclick="navigator.clipboard.writeText('${_ml}').then(()=>{this.textContent='✓ Copied!';this.style.background='rgba(34,197,94,0.3)';setTimeout(()=>{this.textContent='Copy';this.style.background='rgba(124,58,237,0.3)'},1800)})" style="padding:10px 16px;background:rgba(124,58,237,0.3);border:1px solid #7c3aed;border-radius:8px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap">Copy</button></div><div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:8px;line-height:1.5">📧 We'll also email this to <strong style="color:rgba(255,255,255,0.7)">${userEmail||'you'}</strong> shortly. Check spam if it doesn't arrive in 5 min.</div></div>`:''}</div>`;
@@ -515,6 +504,9 @@ function devUnlock(){
         placeholder.innerHTML='<div style="color:rgba(255,0,0,0.5);font-size:12px;padding:10px">Error generating part '+block+'</div>';
       }
     }
+    // Mark complete + release in-flight guard
+    window._gbiBlocksRendered=true;
+    window._gbiBlocksInFlight=false;
   }
 
   function renderBlock(block, data, el){
