@@ -13,7 +13,7 @@ export default async function handler(req, res) {
   const { block, quizData, ideaName, language } = req.body;
   // FORCE English output for all blocks — language buttons removed
   const formal = 'CRITICAL: Every single word MUST be in English (US). ZERO Czech/Slovak/German/non-English words allowed — not even one. If the business name or context appears in another language, translate it and continue in English. No exceptions. ';
-  const ctx = `Business: "${ideaName}", Person: age ${quizData.age}, location type ${quizData.location}, ${quizData.time}/week, budget ${quizData.budget}, strengths: ${quizData.strengths}, interests: ${quizData.interests}, goal: ${quizData.income}`;
+  const ctx = `Business: "${ideaName}", Person: age ${quizData.age}, location type ${quizData.location}, ${quizData.time}/week, budget ${quizData.budget}, strengths: ${quizData.strengths}, interests: ${quizData.interests}, timeline to first income: ${quizData.income}, main obstacle to overcome: ${quizData.risk}`;
 
   const blocks = {
     1: {
