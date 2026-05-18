@@ -143,7 +143,185 @@
   #r-name{font-size:18px !important}
   iframe{min-height:300px !important}
 }
-</style></head><body><div class="bg"></div><div class="content"><nav><a class="logo" href="https://getbizidea.com">Get Biz Idea</a><a class="nav-btn" href="https://getbizidea.com">← Back</a></nav><div id="quiz-section"><div class="quiz-card"><h2 class="quiz-title">AI Business Matchmaker</h2><p class="quiz-sub">Click through a few quick steps and let AI suggest the best business ideas for your life.</p><div class="progress-bar"><div class="prog-step"><div class="prog-dot active" id="dot1">1</div><div class="prog-label active" id="lbl1">About you</div></div><div class="prog-line" id="line1"></div><div class="prog-step"><div class="prog-dot" id="dot2">2</div><div class="prog-label" id="lbl2">Lifestyle</div></div><div class="prog-line" id="line2"></div><div class="prog-step"><div class="prog-dot" id="dot3">3</div><div class="prog-label" id="lbl3">Strengths</div></div><div class="prog-line" id="line3"></div><div class="prog-step"><div class="prog-dot" id="dot4">4</div><div class="prog-label" id="lbl4">Goals</div></div></div><div class="step active" id="step1"><div class="field-label">Age group</div><div class="chips" id="g-age"><span class="chip" data-g="age">18–24</span><span class="chip" data-g="age">25–34</span><span class="chip" data-g="age">35–44</span><span class="chip" data-g="age">45–54</span><span class="chip" data-g="age">55+</span></div><div class="field-label">Where do you live?</div><div class="chips" id="g-loc"><span class="chip" data-g="loc">Big city</span><span class="chip" data-g="loc">Smaller city</span><span class="chip" data-g="loc">Village</span><span class="chip" data-g="loc">I travel a lot</span><span class="chip" data-g="loc">Abroad / expat</span></div><div class="btn-row"><button class="btn-next" onclick="goStep(2)">Next step</button></div></div><div class="step" id="step2"><div class="field-label">What kind of lifestyle business do you want?</div><div class="chips" id="g-life"><span class="chip" data-g="life">Calm &amp; stable income</span><span class="chip" data-g="life">Dynamic &amp; active</span><span class="chip" data-g="life">Remote / laptop lifestyle</span><span class="chip" data-g="life">Creative work</span><span class="chip" data-g="life">Working with people</span><span class="chip" data-g="life">In the field / outdoors</span></div><div class="field-label">Time per week for business</div><div class="chips" id="g-time"><span class="chip" data-g="time">5–10 h</span><span class="chip" data-g="time">10–20 h</span><span class="chip" data-g="time">20–40 h</span><span class="chip" data-g="time">Full-time</span></div><div class="field-label">Starting budget</div><div class="chips" id="g-budget"><span class="chip" data-g="budget">0–200 €</span><span class="chip" data-g="budget">200–1 000 €</span><span class="chip" data-g="budget">1 000–5 000 €</span><span class="chip" data-g="budget">5 000+ €</span></div><div class="btn-row"><button class="btn-back" onclick="goStep(1)">Back</button><button class="btn-next" onclick="goStep(3)">Next step</button></div></div><div class="step" id="step3"><div class="field-label">Your strengths (choose a few)</div><div class="chips" id="g-str"><span class="chip" data-g="str">Communication</span><span class="chip" data-g="str">Creativity</span><span class="chip" data-g="str">Analytical thinking</span><span class="chip" data-g="str">Technical skills</span><span class="chip" data-g="str">Organisation</span><span class="chip" data-g="str">Sales &amp; persuasion</span><span class="chip" data-g="str">Fast learner</span></div><div class="field-label">What do you enjoy?</div><div class="chips" id="g-int"><span class="chip" data-g="int">Sport</span><span class="chip" data-g="int">Food &amp; gastronomy</span><span class="chip" data-g="int">Travel</span><span class="chip" data-g="int">IT &amp; technology</span><span class="chip" data-g="int">Fashion &amp; style</span><span class="chip" data-g="int">Finance &amp; investing</span><span class="chip" data-g="int">Nature &amp; gardening</span><span class="chip" data-g="int">Creative content</span><span class="chip" data-g="int">Cars / moto</span><span class="chip" data-g="int">Health &amp; fitness</span></div><div class="btn-row"><button class="btn-back" onclick="goStep(2)">Back</button><button class="btn-next" onclick="goStep(4)">Next step</button></div></div><div class="step" id="step4"><div class="field-label">Do you prefer online or offline?</div><div class="chips" id="g-btype"><span class="chip" data-g="btype">Online business</span><span class="chip" data-g="btype">Offline business</span><span class="chip" data-g="btype">Combination</span></div><div class="field-label">Monthly income goal from business</div><div class="chips" id="g-inc"><span class="chip" data-g="inc">300–500 €</span><span class="chip" data-g="inc">500–2 000 €</span><span class="chip" data-g="inc">2 000–5 000 €</span><span class="chip" data-g="inc">5 000+ €</span></div><div class="field-label">Risk level you are comfortable with</div><div class="chips" id="g-risk"><span class="chip" data-g="risk">Low – I prefer safer options</span><span class="chip" data-g="risk">Medium – some risk is ok</span><span class="chip" data-g="risk">High – I can handle more risk</span></div><div class="btn-row"><button class="btn-back" onclick="goStep(3)">Back</button><button class="btn-next" onclick="generate()">Find my business ideas</button></div><p class="no-email-note">No email required. Instant AI suggestions.</p></div></div></div><div id="loading-section"><div class="spinner"></div><div class="loading-text">Analysing your profile…</div><div class="loading-sub">AI is crafting your personalised business plan</div></div><div id="result-section" style="display:none;padding:24px 16px;max-width:800px;margin:0 auto">
+/* ===== TYPEFORM QUIZ ===== */
+#quiz-section{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:0;position:relative}
+#tf-bar-wrap{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,0.07);z-index:100}
+#tf-bar-fill{height:100%;background:linear-gradient(90deg,#7c3aed,#e8417a);width:5%;transition:width .5s cubic-bezier(.4,0,.2,1)}
+#tf-wrap{width:100%;max-width:660px;padding:70px 44px 100px;position:relative}
+#tf-meta{font-size:12px;font-weight:600;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:36px}
+.tf-q{display:none}
+.tf-q.active{display:block;animation:tfIn .38s cubic-bezier(.22,1,.36,1)}
+@keyframes tfIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.tf-icon{font-size:40px;margin-bottom:18px;line-height:1;display:block}
+.tf-qtxt{font-size:34px;font-weight:800;line-height:1.2;margin-bottom:12px;letter-spacing:-.02em}
+.tf-sub{font-size:15px;color:rgba(255,255,255,0.45);margin-bottom:32px;line-height:1.5}
+.tf-chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
+.tf-chips .chip{padding:13px 22px;font-size:15px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.15);transition:all .18s;background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.8)}
+.tf-chips .chip:hover{border-color:#7c3aed;background:rgba(124,58,237,0.12);color:#fff;transform:translateY(-2px)}
+.tf-chips .chip.on{background:rgba(124,58,237,0.3);border-color:#a78bfa;color:#fff;transform:scale(1.04);box-shadow:0 0 0 3px rgba(124,58,237,0.2)}
+.tf-continue{display:none;margin-top:8px;padding:15px 36px;border-radius:12px;border:none;background:linear-gradient(135deg,#7c3aed,#e8417a);color:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s}
+.tf-continue.visible{display:inline-block;animation:tfIn .3s ease}
+.tf-continue:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,0.4)}
+#tf-footer{position:fixed;bottom:28px;left:0;right:0;display:flex;justify-content:center;z-index:50}
+#tf-back-btn{padding:10px 22px;border-radius:10px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.45);font-size:14px;cursor:pointer;transition:all .2s}
+#tf-back-btn:hover{border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.8)}
+#tf-back-btn.tf-hidden{visibility:hidden;pointer-events:none}
+.tf-no-email{font-size:12px;color:rgba(255,255,255,0.2);margin-top:20px}
+@media(max-width:600px){
+  #tf-wrap{padding:60px 20px 90px}
+  .tf-qtxt{font-size:24px}
+  .tf-sub{font-size:14px;margin-bottom:22px}
+  .tf-chips .chip{padding:11px 16px;font-size:14px}
+  .tf-icon{font-size:30px;margin-bottom:14px}
+  #tf-meta{margin-bottom:24px}
+  .tf-continue{font-size:15px;padding:14px 28px}
+}
+</style></head><body><div class="bg"></div><div class="content"><nav><a class="logo" href="https://getbizidea.com">Get Biz Idea</a><a class="nav-btn" href="https://getbizidea.com">← Back</a></nav><div id="quiz-section">
+  <div id="tf-bar-wrap"><div id="tf-bar-fill"></div></div>
+  <div id="tf-wrap">
+    <div id="tf-meta">Question <strong style="color:#fff">1</strong> <span style="color:rgba(255,255,255,0.25)">/ 10</span></div>
+    <div id="tf-slides">
+
+      <div class="tf-q active" id="tfq-1" data-q="1">
+        <span class="tf-icon">🎂</span>
+        <h2 class="tf-qtxt">How old are you?</h2>
+        <p class="tf-sub">Helps us match ideas to your life stage</p>
+        <div class="chips tf-chips" id="g-age">
+          <span class="chip" data-g="age">18–24</span>
+          <span class="chip" data-g="age">25–34</span>
+          <span class="chip" data-g="age">35–44</span>
+          <span class="chip" data-g="age">45–54</span>
+          <span class="chip" data-g="age">55+</span>
+        </div>
+      </div>
+
+      <div class="tf-q" id="tfq-2" data-q="2">
+        <span class="tf-icon">📍</span>
+        <h2 class="tf-qtxt">Where are you based?</h2>
+        <p class="tf-sub">Local market size affects your options</p>
+        <div class="chips tf-chips" id="g-loc">
+          <span class="chip" data-g="loc">Big city</span>
+          <span class="chip" data-g="loc">Smaller city</span>
+          <span class="chip" data-g="loc">Village</span>
+          <span class="chip" data-g="loc">I travel a lot</span>
+          <span class="chip" data-g="loc">Abroad / expat</span>
+        </div>
+      </div>
+
+      <div class="tf-q" id="tfq-3" data-q="3">
+        <span class="tf-icon">🎯</span>
+        <h2 class="tf-qtxt">What kind of business lifestyle?</h2>
+        <p class="tf-sub">Your ideal work style matters most</p>
+        <div class="chips tf-chips" id="g-life">
+          <span class="chip" data-g="life">Calm &amp; stable income</span>
+          <span class="chip" data-g="life">Dynamic &amp; active</span>
+          <span class="chip" data-g="life">Remote / laptop lifestyle</span>
+          <span class="chip" data-g="life">Creative work</span>
+          <span class="chip" data-g="life">Working with people</span>
+          <span class="chip" data-g="life">In the field / outdoors</span>
+        </div>
+      </div>
+
+      <div class="tf-q" id="tfq-4" data-q="4">
+        <span class="tf-icon">⏰</span>
+        <h2 class="tf-qtxt">Hours per week you can commit?</h2>
+        <p class="tf-sub">Be realistic — this shapes everything</p>
+        <div class="chips tf-chips" id="g-time">
+          <span class="chip" data-g="time">5–10 h</span>
+          <span class="chip" data-g="time">10–20 h</span>
+          <span class="chip" data-g="time">20–40 h</span>
+          <span class="chip" data-g="time">Full-time</span>
+        </div>
+      </div>
+
+      <div class="tf-q" id="tfq-5" data-q="5">
+        <span class="tf-icon">💰</span>
+        <h2 class="tf-qtxt">Starting budget?</h2>
+        <p class="tf-sub">We'll only match ideas you can start today</p>
+        <div class="chips tf-chips" id="g-budget">
+          <span class="chip" data-g="budget">0–200 €</span>
+          <span class="chip" data-g="budget">200–1 000 €</span>
+          <span class="chip" data-g="budget">1 000–5 000 €</span>
+          <span class="chip" data-g="budget">5 000+ €</span>
+        </div>
+      </div>
+
+      <div class="tf-q" id="tfq-6" data-q="6">
+        <span class="tf-icon">💪</span>
+        <h2 class="tf-qtxt">What are your strengths?</h2>
+        <p class="tf-sub">Pick all that feel true — no wrong answers</p>
+        <div class="chips tf-chips" id="g-str">
+          <span class="chip" data-g="str">Communication</span>
+          <span class="chip" data-g="str">Creativity</span>
+          <span class="chip" data-g="str">Analytical thinking</span>
+          <span class="chip" data-g="str">Technical skills</span>
+          <span class="chip" data-g="str">Organisation</span>
+          <span class="chip" data-g="str">Sales &amp; persuasion</span>
+          <span class="chip" data-g="str">Fast learner</span>
+        </div>
+        <button class="tf-continue" id="tf-cont-6" onclick="tfNext()">Continue →</button>
+      </div>
+
+      <div class="tf-q" id="tfq-7" data-q="7">
+        <span class="tf-icon">❤️</span>
+        <h2 class="tf-qtxt">What do you enjoy most?</h2>
+        <p class="tf-sub">Your passion = your unfair advantage in business</p>
+        <div class="chips tf-chips" id="g-int">
+          <span class="chip" data-g="int">Sport</span>
+          <span class="chip" data-g="int">Food &amp; gastronomy</span>
+          <span class="chip" data-g="int">Travel</span>
+          <span class="chip" data-g="int">IT &amp; technology</span>
+          <span class="chip" data-g="int">Fashion &amp; style</span>
+          <span class="chip" data-g="int">Finance &amp; investing</span>
+          <span class="chip" data-g="int">Nature &amp; gardening</span>
+          <span class="chip" data-g="int">Creative content</span>
+          <span class="chip" data-g="int">Cars / moto</span>
+          <span class="chip" data-g="int">Health &amp; fitness</span>
+        </div>
+        <button class="tf-continue" id="tf-cont-7" onclick="tfNext()">Continue →</button>
+      </div>
+
+      <div class="tf-q" id="tfq-8" data-q="8">
+        <span class="tf-icon">🌐</span>
+        <h2 class="tf-qtxt">Online or offline business?</h2>
+        <p class="tf-sub">Or a mix — there's no wrong choice here</p>
+        <div class="chips tf-chips" id="g-btype">
+          <span class="chip" data-g="btype">Online business</span>
+          <span class="chip" data-g="btype">Offline business</span>
+          <span class="chip" data-g="btype">Combination</span>
+        </div>
+      </div>
+
+      <div class="tf-q" id="tfq-9" data-q="9">
+        <span class="tf-icon">📈</span>
+        <h2 class="tf-qtxt">Monthly income goal?</h2>
+        <p class="tf-sub">Dream big — this calibrates your plan</p>
+        <div class="chips tf-chips" id="g-inc">
+          <span class="chip" data-g="inc">300–500 €</span>
+          <span class="chip" data-g="inc">500–2 000 €</span>
+          <span class="chip" data-g="inc">2 000–5 000 €</span>
+          <span class="chip" data-g="inc">5 000+ €</span>
+        </div>
+      </div>
+
+      <div class="tf-q" id="tfq-10" data-q="10">
+        <span class="tf-icon">⚡</span>
+        <h2 class="tf-qtxt">How much risk can you handle?</h2>
+        <p class="tf-sub">Honest answer = better business match</p>
+        <div class="chips tf-chips" id="g-risk">
+          <span class="chip" data-g="risk">Low – I prefer safer options</span>
+          <span class="chip" data-g="risk">Medium – some risk is ok</span>
+          <span class="chip" data-g="risk">High – I can handle more risk</span>
+        </div>
+        <p class="tf-no-email">✓ No email required — instant AI results</p>
+      </div>
+
+    </div>
+  </div>
+  <div id="tf-footer">
+    <button id="tf-back-btn" class="tf-hidden" onclick="tfBack()">↑ Back</button>
+  </div>
+</div><div id="loading-section"><div class="spinner"></div><div class="loading-text">Analysing your profile…</div><div class="loading-sub">AI is crafting your personalised business plan</div></div><div id="result-section" style="display:none;padding:24px 16px;max-width:800px;margin:0 auto">
 
   <!-- Stage Progress -->
   <div id="stage-progress" style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:20px;padding:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px">
@@ -393,7 +571,11 @@
     <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:8px">Or continue with what you have — the plan is enough to start</div>
   </div>
 
-</div></div><script>let currentStep=1,selectedLang='en',resultId=null,planData=null,userEmail=null;function setLang(l,b){selectedLang=l;document.querySelectorAll('.lang-btn').forEach(x=>x.classList.remove('on'));b.classList.add('on')}document.querySelectorAll('.chip').forEach(c=>{c.addEventListener('click',()=>{const g=c.dataset.g;const single=['age','loc','time','budget','btype','inc','risk','life'];if(single.includes(g))document.querySelectorAll(`[data-g="${g}"]`).forEach(x=>x.classList.remove('on'));c.classList.toggle('on')})});function get(g){return[...document.querySelectorAll(`[data-g="${g}"].on`)].map(x=>x.textContent).join(', ')||'not specified'}
+</div></div><script>let currentStep=1,selectedLang='en',resultId=null,planData=null,userEmail=null;function setLang(l,b){selectedLang=l;document.querySelectorAll('.lang-btn').forEach(x=>x.classList.remove('on'));b.classList.add('on')}let tfCurrent=1;const TF_TOTAL=10;const TF_SINGLE=['age','loc','life','time','budget','btype','inc','risk'];const TF_GRP={1:'age',2:'loc',3:'life',4:'time',5:'budget',6:'str',7:'int',8:'btype',9:'inc',10:'risk'};
+function tfNext(){if(tfCurrent>=TF_TOTAL){generate();return;}const g=TF_GRP[tfCurrent];if(g&&document.querySelectorAll('[data-g="'+g+'"].on').length===0){const chips=document.getElementById('g-'+g);if(chips){chips.animate([{transform:'translateX(-5px)'},{transform:'translateX(5px)'},{transform:'translateX(-3px)'},{transform:'translateX(0)'}],{duration:280});chips.querySelectorAll('.chip').forEach(c=>{c.style.borderColor='#ef4444';setTimeout(()=>c.style.borderColor='',1800)});}return;}const cur=document.getElementById('tfq-'+tfCurrent);if(cur){cur.style.transition='opacity .2s,transform .2s';cur.style.opacity='0';cur.style.transform='translateY(-18px)';setTimeout(()=>{cur.style.display='none';cur.style.opacity='';cur.style.transform='';cur.classList.remove('active');tfCurrent++;const nxt=document.getElementById('tfq-'+tfCurrent);if(nxt){nxt.style.display='block';nxt.classList.add('active');}updateTfProgress();},200);}}
+function tfBack(){if(tfCurrent<=1)return;const cur=document.getElementById('tfq-'+tfCurrent);if(cur){cur.style.transition='opacity .18s,transform .18s';cur.style.opacity='0';cur.style.transform='translateY(18px)';setTimeout(()=>{cur.style.display='none';cur.style.opacity='';cur.style.transform='';cur.classList.remove('active');tfCurrent--;const prv=document.getElementById('tfq-'+tfCurrent);if(prv){prv.style.display='block';prv.classList.add('active');}updateTfProgress();},170);}}
+function updateTfProgress(){const pct=Math.max(5,Math.round((tfCurrent-1)/TF_TOTAL*100));const fill=document.getElementById('tf-bar-fill');if(fill)fill.style.width=pct+'%';const meta=document.getElementById('tf-meta');if(meta)meta.innerHTML='Question <strong style="color:#fff">'+tfCurrent+'</strong> <span style="color:rgba(255,255,255,0.25)">/ '+TF_TOTAL+'</span>';const back=document.getElementById('tf-back-btn');if(back)back.className=tfCurrent<=1?'tf-hidden':'';}
+document.querySelectorAll('.chip').forEach(c=>{c.addEventListener('click',()=>{const g=c.dataset.g;if(TF_SINGLE.includes(g)){document.querySelectorAll('[data-g="'+g+'"]').forEach(x=>x.classList.remove('on'));c.classList.add('on');window._autoAdv&&clearTimeout(window._autoAdv);window._autoAdv=setTimeout(tfNext,420);}else{c.classList.toggle('on');const qEl=c.closest('.tf-q');if(qEl){const contId='tf-cont-'+qEl.dataset.q;const cont=document.getElementById(contId);if(cont)cont.className=qEl.querySelectorAll('.chip.on').length>0?'tf-continue visible':'tf-continue';}}});});function get(g){return[...document.querySelectorAll(`[data-g="${g}"].on`)].map(x=>x.textContent).join(', ')||'not specified'}
 const REQUIRED={1:['age','loc'],2:['life','time','budget'],3:['str','int'],4:['btype','inc','risk']};
 function validateStep(step){const missing=[];(REQUIRED[step]||[]).forEach(g=>{if(document.querySelectorAll(`[data-g="${g}"].on`).length===0)missing.push(g)});return missing}
 function shakeMissing(missing){missing.forEach(g=>{const container=document.getElementById('g-'+g);if(!container)return;const label=container.previousElementSibling;[container,label].forEach(el=>{if(!el)return;el.style.transition='all .2s';el.style.color='#ef4444';el.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'translateX(0)'}],{duration:400,easing:'ease-in-out'});setTimeout(()=>{el.style.color=''},2000)});container.querySelectorAll('.chip').forEach(c=>{c.style.borderColor='#ef4444';setTimeout(()=>{c.style.borderColor=''},2000)})});const firstEl=document.getElementById('g-'+missing[0]);if(firstEl)firstEl.scrollIntoView({behavior:'smooth',block:'center'})}
