@@ -17,10 +17,16 @@ html,body{margin:0;padding:0;background:transparent}
 .slider-name{font-size:14px;color:rgba(255,255,255,0.75);font-weight:500}
 .slider-val{font-size:16px;font-weight:700;background:linear-gradient(135deg,#a78bfa,#f472b6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;transition:transform .15s}
 .slider-val.bump{transform:scale(1.1)}
-input[type=range]{width:100%;height:6px;border-radius:3px;outline:none;cursor:pointer;-webkit-appearance:none;background:linear-gradient(90deg,#7c3aed var(--pct,50%),rgba(255,255,255,0.08) var(--pct,50%));transition:background .1s}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#fff,#f0f0ff);box-shadow:0 4px 14px rgba(124,58,237,0.6),0 0 0 2px #7c3aed;cursor:pointer;transition:transform .15s}
-input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
-input[type=range]::-webkit-slider-thumb:active{transform:scale(0.95)}
+input[type=range]{width:100%;height:10px;border-radius:5px;outline:none;cursor:grab;-webkit-appearance:none;background:linear-gradient(90deg,#7c3aed var(--pct,50%),rgba(255,255,255,0.1) var(--pct,50%));transition:background .1s;touch-action:none}
+input[type=range]:active{cursor:grabbing}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#fff,#f0f0ff);box-shadow:0 4px 16px rgba(124,58,237,0.7),0 0 0 3px #7c3aed,inset 0 -2px 4px rgba(124,58,237,0.2);cursor:grab;transition:transform .15s;position:relative}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15);box-shadow:0 6px 20px rgba(124,58,237,0.9),0 0 0 3px #e8417a,inset 0 -2px 4px rgba(124,58,237,0.2)}
+input[type=range]::-webkit-slider-thumb:active{transform:scale(0.95);cursor:grabbing}
+input[type=range]::-moz-range-thumb{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#fff,#f0f0ff);box-shadow:0 4px 16px rgba(124,58,237,0.7),0 0 0 3px #7c3aed;cursor:grab;border:none}
+/* Pulse animation on thumb to signal interactivity */
+@keyframes thumbPulse{0%,100%{box-shadow:0 4px 16px rgba(124,58,237,0.7),0 0 0 3px #7c3aed,0 0 0 0 rgba(124,58,237,0.6)}50%{box-shadow:0 4px 16px rgba(124,58,237,0.7),0 0 0 3px #7c3aed,0 0 0 8px rgba(124,58,237,0)}}
+input[type=range]::-webkit-slider-thumb{animation:thumbPulse 2.5s ease-in-out infinite}
+input[type=range]:hover::-webkit-slider-thumb,input[type=range]:focus::-webkit-slider-thumb{animation:none}
 
 /* RESULT BOX */
 .result-big{text-align:center;background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(232,65,122,0.08));border:1px solid rgba(167,139,250,0.3);border-radius:16px;padding:24px;margin:16px 0;position:relative;overflow:hidden}
@@ -64,8 +70,12 @@ input[type=range]::-webkit-slider-thumb:active{transform:scale(0.95)}
 <div class="w">
 
 <!-- INCOME CALCULATOR -->
-<div class="sec">💰 Income Calculator — drag the sliders</div>
+<div class="sec">💰 Income Calculator</div>
 <div class="card">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;padding:10px 14px;background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(232,65,122,0.08));border:1px solid rgba(167,139,250,0.25);border-radius:12px;font-size:13px;color:rgba(255,255,255,0.85);font-weight:500">
+    <span style="font-size:18px">👆</span>
+    <span><strong style="color:#a78bfa">Drag the sliders below</strong> — your income updates live</span>
+  </div>
   <div class="slider-wrap">
     <div class="slider-label">
       <span class="slider-name">Clients per month</span>
@@ -119,6 +129,10 @@ input[type=range]::-webkit-slider-thumb:active{transform:scale(0.95)}
 <!-- BREAK-EVEN -->
 <div class="sec">⚖️ Break-even calculator</div>
 <div class="card">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;padding:10px 14px;background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(232,65,122,0.08));border:1px solid rgba(167,139,250,0.25);border-radius:12px;font-size:13px;color:rgba(255,255,255,0.85);font-weight:500">
+    <span style="font-size:18px">👆</span>
+    <span><strong style="color:#a78bfa">Set your monthly costs</strong> — see profit instantly</span>
+  </div>
   <div class="slider-wrap">
     <div class="slider-label">
       <span class="slider-name">Monthly costs</span>
