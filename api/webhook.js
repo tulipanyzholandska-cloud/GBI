@@ -103,7 +103,8 @@ export default async function handler(req, res) {
 </body>
 </html>`;
 
-        await fetch('https://api.brevo.com/v3/smtp/email', {
+        // FIRE-AND-FORGET welcome email + drip (don't block webhook response)
+        fetch('https://api.brevo.com/v3/smtp/email', {
           method: 'POST',
           headers: {
             'api-key': process.env.BREVO_API_KEY,
@@ -115,16 +116,13 @@ export default async function handler(req, res) {
             subject,
             htmlContent
           })
-        });
+        }).catch(e => console.error('Welcome email bg error:', e.message));
 
-        // Schedule 7-email drip sequence (Day 1, 3, 7, 14, 30, 60, 90)
+        // Fire-and-forget 7-email drip sequence
         if (type !== 'tripwire') {
-          try {
-            const drip = await scheduleDripEmails(email, resultId, baseUrl);
-            console.log('Drip scheduled:', JSON.stringify(drip));
-          } catch (dripErr) {
-            console.error('Drip schedule error:', dripErr.message);
-          }
+          scheduleDripEmails(email, resultId, baseUrl)
+            .then(drip => console.log('Drip scheduled:', JSON.stringify(drip)))
+            .catch(dripErr => console.error('Drip schedule error:', dripErr.message));
         }
       }
     } catch (err) {

@@ -454,7 +454,7 @@ function setStage(n){const s2=document.getElementById('stage-2');const s3=docume
 function openUnlockModal(mode){window._unlockMode=mode||'main';const m=document.getElementById('unlock-modal');if(m){m.style.display='flex';setTimeout(()=>{const inp=document.getElementById('pin-input');if(inp)inp.focus();},100)}}
 function payUnlock(){if(window._unlockMode==='tripwire'){startTripwire();}else{startCheckout();}}
 function closeUnlockModal(){const m=document.getElementById('unlock-modal');if(m)m.style.display='none'}
-async function checkPin(){const pin=document.getElementById('pin-input')?.value;if(pin==='2810'){if(planData&&planData.full_plan){const rid=resultId||new URLSearchParams(window.location.search).get('rid')||localStorage.getItem('gbi_rid');const email=userEmail||document.getElementById('gate-email')?.value||localStorage.getItem('gbi_email');if(!rid||!email){const missing=[];if(!rid)missing.push('resultId');if(!email)missing.push('email');alert('Missing: '+missing.join(' + ')+'\n\nDebug:\nrid='+JSON.stringify(rid)+'\nemail='+JSON.stringify(email)+'\nplanData='+(planData?'yes':'no')+'\nLS rid='+JSON.stringify(localStorage.getItem('gbi_rid'))+'\nLS email='+JSON.stringify(localStorage.getItem('gbi_email')));return}resultId=rid;userEmail=email;localStorage.setItem('gbi_rid',rid);localStorage.setItem('gbi_email',email);const evt={type:'checkout.session.completed',testMode:true,data:{object:{metadata:{resultId:rid,email,type:'plan'},customer_email:email}}};try{await fetch('/api/webhook',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(evt)});}catch(e){console.error('Email send error:',e);}closeUnlockModal();setStage(3);triggerUnlockCelebration();document.getElementById('email-gate').style.display='none';const lc=document.getElementById('locked-card');if(lc)lc.style.display='none';const tw=document.getElementById('tripwire-offer');if(tw)tw.remove();setTimeout(()=>{generateBlocks();setTimeout(()=>{const rc=document.getElementById('rc-paid');if(rc)rc.scrollIntoView({behavior:'smooth',block:'start'})},400)},800);}else{alert('Error: data not loaded - please complete quiz first');}}else{const inp=document.getElementById('pin-input');if(inp){inp.style.borderColor='#ef4444';inp.value='';inp.placeholder='Invalid';setTimeout(()=>{inp.style.borderColor='rgba(255,255,255,0.15)';inp.placeholder='0000'},2000)}}}
+async function checkPin(){const pin=document.getElementById('pin-input')?.value;if(pin==='2810'){if(planData&&planData.full_plan){const rid=resultId||new URLSearchParams(window.location.search).get('rid')||localStorage.getItem('gbi_rid');const email=userEmail||document.getElementById('gate-email')?.value||localStorage.getItem('gbi_email');if(!rid||!email){const missing=[];if(!rid)missing.push('resultId');if(!email)missing.push('email');alert('Missing: '+missing.join(' + ')+'\n\nDebug:\nrid='+JSON.stringify(rid)+'\nemail='+JSON.stringify(email)+'\nplanData='+(planData?'yes':'no'));return}resultId=rid;userEmail=email;localStorage.setItem('gbi_rid',rid);localStorage.setItem('gbi_email',email);/* FIRE-AND-FORGET webhook (don't block unlock UX) */const evt={type:'checkout.session.completed',testMode:true,data:{object:{metadata:{resultId:rid,email,type:'plan'},customer_email:email}}};fetch('/api/webhook',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(evt)}).catch(e=>console.error('Webhook bg error:',e));/* IMMEDIATE UI response */closeUnlockModal();setStage(3);triggerUnlockCelebration();document.getElementById('email-gate').style.display='none';const lc=document.getElementById('locked-card');if(lc)lc.style.display='none';const tw=document.getElementById('tripwire-offer');if(tw)tw.remove();setTimeout(()=>{generateBlocks();setTimeout(()=>{const rc=document.getElementById('rc-paid');if(rc)rc.scrollIntoView({behavior:'smooth',block:'start'})},400)},600);}else{alert('Error: data not loaded - please complete quiz first');}}else{const inp=document.getElementById('pin-input');if(inp){inp.style.borderColor='#ef4444';inp.value='';inp.placeholder='Invalid';setTimeout(()=>{inp.style.borderColor='rgba(255,255,255,0.15)';inp.placeholder='0000'},2000)}}}
 function triggerUnlockCelebration(){const c=document.createElement('div');c.id='unlock-celebration';c.style.cssText='position:fixed;inset:0;z-index:2000;pointer-events:none;display:flex;align-items:center;justify-content:center;background:rgba(10,10,15,0.85);backdrop-filter:blur(8px);animation:fadeOut 1.8s ease-out forwards';c.innerHTML='<style>@keyframes fadeOut{0%{opacity:0}15%{opacity:1}80%{opacity:1}100%{opacity:0}}@keyframes scaleIn{0%{transform:scale(0.5);opacity:0}50%{transform:scale(1.1);opacity:1}100%{transform:scale(1);opacity:1}}@keyframes confetti{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}</style><div style="text-align:center;animation:scaleIn .5s ease-out"><div style="font-size:64px;margin-bottom:14px">🎉</div><div style="font-size:28px;font-weight:800;background:linear-gradient(135deg,#a78bfa,#f472b6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px">Full Plan Unlocked!</div><div style="font-size:14px;color:rgba(255,255,255,0.6)">Loading your premium content…</div></div>';for(let i=0;i<30;i++){const p=document.createElement('div');const cols=['#a78bfa','#f472b6','#5dcaa5','#fbbf24','#7c3aed'];p.style.cssText=`position:absolute;left:${Math.random()*100}%;top:-20px;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;background:${cols[i%cols.length]};border-radius:${Math.random()>.5?'50%':'2px'};animation:confetti ${1.5+Math.random()*1}s ease-in ${Math.random()*0.5}s forwards`;c.appendChild(p)}document.body.appendChild(c);setTimeout(()=>c.remove(),1800)}
 function devUnlock(){
     if(!planData) return;
@@ -478,15 +478,21 @@ function devUnlock(){
     const ub=document.getElementById('upsell-block');if(ub)ub.style.display='block';
 
     const blocks = [1,2,3,4];
-    for(const block of blocks){
+    // Create all placeholders FIRST (so order is preserved while parallel fetches happen)
+    const placeholders = {};
+    blocks.forEach(block => {
       const placeholder = document.createElement('div');
       placeholder.id='block-'+block;
       placeholder.innerHTML=`<div style="padding:20px;text-align:center;color:rgba(255,255,255,0.3);font-size:13px">
         <div style="width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,255,255,0.1);border-top-color:#7c3aed;animation:spin 1s linear infinite;margin:0 auto 10px"></div>
-        Generating part ${block}/4...
+        Generating part ${block}/4…
       </div>`;
       paidSection.appendChild(placeholder);
-      
+      placeholders[block] = placeholder;
+    });
+    // PARALLEL fetch all blocks (4x faster than sequential)
+    await Promise.all(blocks.map(async block => {
+      const placeholder = placeholders[block];
       try {
         const resp = await fetch('/api/generate-block', {
           method:'POST',
@@ -503,7 +509,7 @@ function devUnlock(){
       } catch(e) {
         placeholder.innerHTML='<div style="color:rgba(255,0,0,0.5);font-size:12px;padding:10px">Error generating part '+block+'</div>';
       }
-    }
+    }));
     // Mark complete + release in-flight guard
     window._gbiBlocksRendered=true;
     window._gbiBlocksInFlight=false;
