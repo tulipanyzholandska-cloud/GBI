@@ -143,6 +143,15 @@
   #r-name{font-size:18px !important}
   iframe{min-height:300px !important}
 }
+/* ===== LOADING SCREEN ===== */
+#loading-section{display:none;min-height:100vh;align-items:center;justify-content:center;flex-direction:column;padding:40px}
+@keyframes ldPulse{0%,100%{transform:scale(1) rotate(0deg)}50%{transform:scale(1.12) rotate(-5deg)}}
+.ld-step{font-size:14px;color:rgba(255,255,255,0.2);display:flex;align-items:center;gap:10px;padding:2px 0;transition:all .4s}
+.ld-step::before{content:'·';width:18px;text-align:center;font-size:20px;flex-shrink:0;color:rgba(255,255,255,0.15)}
+.ld-step.ld-active{color:#fff;font-weight:600}
+.ld-step.ld-active::before{content:'';width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);border-top-color:#a78bfa;animation:spin .7s linear infinite;display:inline-block;flex-shrink:0;margin:1px}
+.ld-step.ld-done{color:rgba(255,255,255,0.55)}
+.ld-step.ld-done::before{content:'✓';color:#5dcaa5;font-weight:700;font-size:14px}
 /* ===== TYPEFORM QUIZ ===== */
 #quiz-section{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:0;position:relative}
 #tf-bar-wrap{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,0.07);z-index:100}
@@ -321,7 +330,22 @@
   <div id="tf-footer">
     <button id="tf-back-btn" class="tf-hidden" onclick="tfBack()">↑ Back</button>
   </div>
-</div><div id="loading-section"><div class="spinner"></div><div class="loading-text">Analysing your profile…</div><div class="loading-sub">AI is crafting your personalised business plan</div></div><div id="result-section" style="display:none;padding:24px 16px;max-width:800px;margin:0 auto">
+</div><div id="loading-section">
+  <div style="width:100%;max-width:420px;text-align:center;padding:0 24px">
+    <div id="ld-icon" style="font-size:52px;margin-bottom:20px;display:block;animation:ldPulse 2.2s ease-in-out infinite">🔍</div>
+    <h2 id="ld-headline" style="font-size:26px;font-weight:800;margin-bottom:8px;letter-spacing:-.01em;line-height:1.25">Scanning business models…</h2>
+    <p id="ld-sub" style="font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:28px">This usually takes 15–30 seconds</p>
+    <div style="width:100%;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;margin-bottom:32px;overflow:hidden"><div id="ld-bar" style="height:100%;background:linear-gradient(90deg,#7c3aed,#e8417a);width:6%;border-radius:2px;transition:width 1.2s cubic-bezier(.4,0,.2,1)"></div></div>
+    <div id="ld-steps" style="display:flex;flex-direction:column;gap:10px;text-align:left;margin-bottom:36px">
+      <div class="ld-step" id="lds-1">Scanning 2,400+ business models</div>
+      <div class="ld-step" id="lds-2">Matching ideas to your profile</div>
+      <div class="ld-step" id="lds-3">Calculating income projections</div>
+      <div class="ld-step" id="lds-4">Writing your 90-day action plan</div>
+      <div class="ld-step" id="lds-5">Finalising your results</div>
+    </div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:100px;padding:7px 18px;display:inline-block">🔥 &nbsp;847 people got their plan this week</div>
+  </div>
+</div><div id="result-section" style="display:none;padding:24px 16px;max-width:800px;margin:0 auto">
 
   <!-- Stage Progress -->
   <div id="stage-progress" style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:20px;padding:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px">
@@ -579,11 +603,13 @@ document.querySelectorAll('.chip').forEach(c=>{c.addEventListener('click',()=>{c
 const REQUIRED={1:['age','loc'],2:['life','time','budget'],3:['str','int'],4:['btype','inc','risk']};
 function validateStep(step){const missing=[];(REQUIRED[step]||[]).forEach(g=>{if(document.querySelectorAll(`[data-g="${g}"].on`).length===0)missing.push(g)});return missing}
 function shakeMissing(missing){missing.forEach(g=>{const container=document.getElementById('g-'+g);if(!container)return;const label=container.previousElementSibling;[container,label].forEach(el=>{if(!el)return;el.style.transition='all .2s';el.style.color='#ef4444';el.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'translateX(0)'}],{duration:400,easing:'ease-in-out'});setTimeout(()=>{el.style.color=''},2000)});container.querySelectorAll('.chip').forEach(c=>{c.style.borderColor='#ef4444';setTimeout(()=>{c.style.borderColor=''},2000)})});const firstEl=document.getElementById('g-'+missing[0]);if(firstEl)firstEl.scrollIntoView({behavior:'smooth',block:'center'})}
-function goStep(n){if(n>currentStep){const missing=validateStep(currentStep);if(missing.length){shakeMissing(missing);return}}document.getElementById('step'+currentStep).classList.remove('active');const dot=document.getElementById('dot'+currentStep);const lbl=document.getElementById('lbl'+currentStep);dot.classList.remove('active');dot.classList.add('done');lbl.classList.remove('active');if(currentStep<4)document.getElementById('line'+currentStep).classList.add('done');currentStep=n;document.getElementById('step'+n).classList.add('active');document.getElementById('dot'+n).classList.add('active');document.getElementById('lbl'+n).classList.add('active')}async function generate(){const missing=validateStep(4);if(missing.length){shakeMissing(missing);return}const quizData={age:get('age'),location:get('loc'),lifestyle:get('life'),time:get('time'),budget:get('budget'),strengths:get('str'),interests:get('int'),btype:get('btype'),income:get('inc'),risk:get('risk'),language:selectedLang};document.getElementById('quiz-section').style.display='none';document.getElementById('loading-section').style.display='flex';try{const controller=new AbortController();const tid=setTimeout(()=>controller.abort(),110000);const resp=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({quizData}),signal:controller.signal});clearTimeout(tid);const data=await resp.json();if(!data.plan){throw new Error(data.error||'No plan returned')}resultId=data.resultId;planData=data.plan;window._lastQuizData=quizData;if(resultId)localStorage.setItem('gbi_rid',resultId);if(data.dbError){console.error('DB error from generate:',data.dbError);window._dbError=data.dbError}renderResult(data.plan,false);
+function goStep(n){if(n>currentStep){const missing=validateStep(currentStep);if(missing.length){shakeMissing(missing);return}}document.getElementById('step'+currentStep).classList.remove('active');const dot=document.getElementById('dot'+currentStep);const lbl=document.getElementById('lbl'+currentStep);dot.classList.remove('active');dot.classList.add('done');lbl.classList.remove('active');if(currentStep<4)document.getElementById('line'+currentStep).classList.add('done');currentStep=n;document.getElementById('step'+n).classList.add('active');document.getElementById('dot'+n).classList.add('active');document.getElementById('lbl'+n).classList.add('active')}function startLoadingAnim(){const steps=[{id:'lds-1',icon:'🔍',text:'Scanning 2,400+ business models…',pct:18},{id:'lds-2',icon:'🎯',text:'Matching ideas to your profile…',pct:38},{id:'lds-3',icon:'📊',text:'Calculating income projections…',pct:58},{id:'lds-4',icon:'📋',text:'Writing your 90-day action plan…',pct:78},{id:'lds-5',icon:'✨',text:'Finalising your results…',pct:91}];const bar=document.getElementById('ld-bar');const icon=document.getElementById('ld-icon');const headline=document.getElementById('ld-headline');let i=0;const delays=[0,4000,8000,13000,19000];steps.forEach((s,idx)=>{window['_ld'+idx]=setTimeout(()=>{steps.forEach((ss,ii)=>{const el=document.getElementById(ss.id);if(!el)return;el.className=ii<idx?'ld-step ld-done':ii===idx?'ld-step ld-active':'ld-step';});if(bar)bar.style.width=s.pct+'%';if(icon)icon.textContent=s.icon;if(headline)headline.textContent=s.text;},delays[idx]);});}
+function stopLoadingAnim(){for(let i=0;i<5;i++)clearTimeout(window['_ld'+i]);const bar=document.getElementById('ld-bar');if(bar){bar.style.width='100%';}}
+async function generate(){const quizData={age:get('age'),location:get('loc'),lifestyle:get('life'),time:get('time'),budget:get('budget'),strengths:get('str'),interests:get('int'),btype:get('btype'),income:get('inc'),risk:get('risk'),language:selectedLang};document.getElementById('quiz-section').style.display='none';document.getElementById('loading-section').style.display='flex';startLoadingAnim();try{const controller=new AbortController();const tid=setTimeout(()=>controller.abort(),110000);const resp=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({quizData}),signal:controller.signal});clearTimeout(tid);const data=await resp.json();if(!data.plan){throw new Error(data.error||'No plan returned')}resultId=data.resultId;planData=data.plan;window._lastQuizData=quizData;if(resultId)localStorage.setItem('gbi_rid',resultId);if(data.dbError){console.error('DB error from generate:',data.dbError);window._dbError=data.dbError}renderResult(data.plan,false);
   if(window._devMode){
     showPayment();
     setTimeout(()=>showPaidContent(data.plan.full_plan),100);
-  }}catch(e){console.error('Generate error:',e);alert('Something went wrong: '+e.message);document.getElementById('quiz-section').style.display='flex';document.getElementById('loading-section').style.display='none'}}function renderResult(d,isPaid){document.getElementById('loading-section').style.display='none';document.getElementById('result-section').style.display='block';const t=d.top_idea;const fp=d.full_plan;const max=t.income_forecast.month_12_high||3000;
+  }}catch(e){console.error('Generate error:',e);stopLoadingAnim();alert('Something went wrong: '+e.message);document.getElementById('quiz-section').style.display='flex';document.getElementById('loading-section').style.display='none'}}function renderResult(d,isPaid){stopLoadingAnim();document.getElementById('loading-section').style.display='none';document.getElementById('result-section').style.display='block';const t=d.top_idea;const fp=d.full_plan;const max=t.income_forecast.month_12_high||3000;
   document.getElementById('r-name').textContent=t.name;
   document.getElementById('r-tagline').textContent=t.tagline;
   if(document.getElementById('r-eyebrow')) document.getElementById('r-eyebrow').textContent='AI business report · '+new Date().toLocaleDateString('cs-CZ');
