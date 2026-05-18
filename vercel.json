@@ -27,8 +27,8 @@
   "rewrites": [
     {
       "source": "/",
-      "destination": "/landing.html",
-      "has": [{ "type": "host", "value": "getbizidea.com" }]
+      "destination": "/quiz.html",
+      "has": [{ "type": "host", "value": "app.getbizidea.com" }]
     }
   ]
 }
