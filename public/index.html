@@ -3,181 +3,244 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Get Biz Idea – Find the Perfect Business Idea for You in 90 Seconds</title>
-<meta name="description" content="Stop guessing. AI matches you with the perfect business for your skills, time, and budget — with a complete 90-day plan, first client scripts, and pricing strategy. Free to try. Full plan €7.">
+<title>Get Biz Idea – Which Business Should You Start?</title>
+<meta name="description" content="90-second AI quiz. Find the perfect business for your skills, time, and budget. Free preview. Full plan €7.">
 <link rel="canonical" href="https://getbizidea.com">
-<meta property="og:title" content="Get Biz Idea – Find the Perfect Business Idea for You in 90 Seconds">
-<meta property="og:description" content="AI matches you with the right business for your life. 90-second quiz. Complete 90-day plan. First client scripts. €7 one-time.">
+<meta property="og:title" content="Which business should you actually start?">
+<meta property="og:description" content="90-second AI quiz. Personalised business match + complete 90-day launch plan. Free to try.">
 <meta property="og:url" content="https://getbizidea.com">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Get Biz Idea – Find the Perfect Business Idea for You">
-<meta name="twitter:description" content="90-second quiz. AI-matched business idea. Full launch plan for €7.">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--purple:#7c3aed;--pink:#e8417a;--purple-light:#a78bfa;--green:#5dcaa5}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#fff;overflow-x:hidden;line-height:1.6}
-.bg{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 15% 20%,#1a0a2e 0%,transparent 55%),radial-gradient(ellipse at 85% 10%,#2d0a1e 0%,transparent 45%),radial-gradient(ellipse at 50% 90%,#0a1a3e 0%,transparent 50%),#0a0a0f;pointer-events:none}
+html{scroll-behavior:smooth}
+:root{
+  --purple:#7c3aed;--pink:#e8417a;--purple-light:#a78bfa;--green:#5dcaa5;
+  --bg:#08080e;--border:rgba(255,255,255,0.08);
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:#fff;overflow-x:hidden;line-height:1.5;-webkit-font-smoothing:antialiased}
+
+/* ── ANIMATED BG ── */
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;animation:float 14s ease-in-out infinite}
+.orb1{width:700px;height:700px;background:radial-gradient(circle,#3b1278,transparent 65%);top:-250px;left:-180px;animation-delay:0s}
+.orb2{width:550px;height:550px;background:radial-gradient(circle,#6d1040,transparent 65%);top:-80px;right:-120px;animation-delay:-5s}
+.orb3{width:450px;height:450px;background:radial-gradient(circle,#0d2060,transparent 65%);bottom:-150px;left:35%;animation-delay:-9s}
+@keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-44px) scale(1.04)}}
 .z{position:relative;z-index:1}
-a{color:inherit}
 
 /* ── NAV ── */
-nav{display:flex;align-items:center;justify-content:space-between;padding:18px 48px;border-bottom:1px solid rgba(255,255,255,0.07);position:sticky;top:0;background:rgba(10,10,15,0.85);backdrop-filter:blur(20px);z-index:100}
-.logo{font-size:17px;font-weight:700;letter-spacing:-.01em;text-decoration:none}
-.nav-right{display:flex;align-items:center;gap:20px}
-.nav-link{font-size:14px;color:rgba(255,255,255,0.45);text-decoration:none;transition:.2s}
-.nav-link:hover{color:#fff}
-.btn{display:inline-block;padding:11px 26px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;white-space:nowrap}
-.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(124,58,237,0.45)}
-.btn-lg{padding:17px 44px;font-size:17px;border-radius:14px;box-shadow:0 8px 32px rgba(124,58,237,0.35)}
-.btn-lg:hover{box-shadow:0 16px 48px rgba(124,58,237,0.55);transform:translateY(-3px)}
-.btn-outline{background:transparent;border:1.5px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.7)}
-.btn-outline:hover{border-color:#fff;color:#fff;transform:none;box-shadow:none}
+nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 36px;
+  position:sticky;top:0;z-index:100;
+  background:rgba(8,8,14,0.75);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.logo{font-size:17px;font-weight:800;letter-spacing:-.02em;text-decoration:none;color:#fff}
+.logo span{background:linear-gradient(135deg,#a78bfa,#e8417a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-cta{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:10px 22px;border-radius:10px;border:none;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  color:#fff;font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;
+  transition:all .2s;white-space:nowrap;
+}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(124,58,237,.45)}
 
 /* ── HERO ── */
-.hero{text-align:center;padding:88px 24px 72px;max-width:860px;margin:0 auto}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:100px;background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.25);font-size:12px;font-weight:700;color:var(--purple-light);margin-bottom:28px;letter-spacing:.05em;text-transform:uppercase}
-.hero h1{font-size:clamp(36px,5.5vw,68px);font-weight:900;line-height:1.06;letter-spacing:-.03em;margin-bottom:22px}
-.grad{background:linear-gradient(135deg,#c4b5fd,#e8417a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:clamp(16px,2vw,20px);color:rgba(255,255,255,0.5);max-width:580px;margin:0 auto 40px;line-height:1.65}
-.hero-note{margin-top:14px;font-size:13px;color:rgba(255,255,255,0.28);display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
-.hero-note span{display:flex;align-items:center;gap:5px}
+.hero{
+  min-height:calc(100dvh - 57px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:40px 20px 60px;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 16px;border-radius:100px;
+  background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.28);
+  font-size:12px;font-weight:700;color:var(--purple-light);
+  margin-bottom:30px;letter-spacing:.05em;text-transform:uppercase;
+}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s ease-in-out infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.25;transform:scale(.6)}}
 
-/* ── LIVE COUNTER ── */
-.live-bar{background:rgba(255,255,255,0.03);border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);padding:14px 24px;display:flex;align-items:center;justify-content:center;gap:36px;flex-wrap:wrap}
-.live-item{font-size:13px;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:7px}
-.live-item strong{color:#fff;font-size:15px;font-weight:800}
-.live-dot{width:7px;height:7px;border-radius:50%;background:#5dcaa5;animation:pulse 2s ease-in-out infinite;flex-shrink:0}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+.hero h1{
+  font-size:clamp(42px,7.5vw,84px);
+  font-weight:900;line-height:1.03;letter-spacing:-.04em;
+  margin-bottom:22px;max-width:820px;
+}
+.grad{background:linear-gradient(135deg,#c4b5fd 20%,#e8417a 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-/* ── IS THIS YOU ── */
-.pain-section{padding:80px 24px;max-width:780px;margin:0 auto}
-.pain-section h2{font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.02em;margin-bottom:12px;line-height:1.15}
-.pain-section .sub{font-size:17px;color:rgba(255,255,255,0.45);margin-bottom:40px}
-.pain-list{display:flex;flex-direction:column;gap:14px}
-.pain-item{display:flex;align-items:flex-start;gap:14px;padding:18px 20px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;font-size:15px;color:rgba(255,255,255,0.75);line-height:1.5;transition:.2s}
-.pain-item:hover{border-color:rgba(124,58,237,0.3);background:rgba(124,58,237,0.05)}
-.pain-check{font-size:18px;flex-shrink:0;margin-top:1px}
-.pain-cta{margin-top:36px;text-align:center}
-.pain-cta p{font-size:15px;color:rgba(255,255,255,0.45);margin-bottom:18px}
+.hero-sub{
+  font-size:clamp(16px,2.2vw,20px);
+  color:rgba(255,255,255,.42);
+  max-width:420px;margin:0 auto 42px;line-height:1.6;
+}
+
+.cta-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:19px 48px;border-radius:16px;border:none;
+  background:linear-gradient(135deg,#7c3aed,#e8417a);
+  color:#fff;font-size:18px;font-weight:800;cursor:pointer;
+  text-decoration:none;letter-spacing:-.01em;
+  box-shadow:0 8px 48px rgba(124,58,237,.45),inset 0 1px 0 rgba(255,255,255,.15);
+  transition:all .28s cubic-bezier(.22,1,.36,1);
+  position:relative;overflow:hidden;
+}
+.cta-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.12),transparent 60%);
+}
+.cta-btn:hover{transform:translateY(-3px) scale(1.025);box-shadow:0 20px 60px rgba(124,58,237,.55),inset 0 1px 0 rgba(255,255,255,.15)}
+.cta-btn:active{transform:translateY(0) scale(.99)}
+.cta-arrow{transition:transform .2s;display:inline-block}
+.cta-btn:hover .cta-arrow{transform:translateX(5px)}
+
+.hero-trust{
+  margin-top:20px;
+  display:flex;align-items:center;justify-content:center;
+  gap:18px;flex-wrap:wrap;
+  font-size:13px;color:rgba(255,255,255,.22);
+}
+.hero-trust span::before{content:'✓ ';color:var(--green);font-weight:800}
+
+.scroll-hint{
+  margin-top:48px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  font-size:11px;color:rgba(255,255,255,.18);letter-spacing:.1em;text-transform:uppercase;
+  animation:bob 2.8s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+.scroll-hint svg{opacity:.3}
+
+/* ── STATS BAR ── */
+.stats-bar{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,.015);
+}
+.stat{text-align:center;padding:24px 12px;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat-n{font-size:30px;font-weight:900;letter-spacing:-.03em;line-height:1;margin-bottom:5px;background:linear-gradient(135deg,#e2d9f3,#f9a8c5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-l{font-size:12px;color:rgba(255,255,255,.3);font-weight:500}
 
 /* ── HOW IT WORKS ── */
-.section{padding:80px 24px;max-width:1000px;margin:0 auto}
-.label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--purple-light);margin-bottom:12px}
-.h2{font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-bottom:48px}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(255,255,255,0.06);border-radius:20px;overflow:hidden}
-.step{background:#0a0a0f;padding:36px 28px;position:relative}
-.step-n{font-size:11px;font-weight:700;color:var(--purple-light);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px}
-.step-icon{font-size:40px;margin-bottom:18px;display:block}
-.step h3{font-size:20px;font-weight:800;margin-bottom:10px;letter-spacing:-.01em}
-.step p{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.7}
+.section{padding:88px 20px;max-width:1000px;margin:0 auto}
+.s-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--purple-light);text-align:center;margin-bottom:10px}
+.s-h{font-size:clamp(28px,4vw,44px);font-weight:900;letter-spacing:-.03em;line-height:1.1;text-align:center;margin-bottom:52px}
 
-/* ── OFFER STACK ── */
-.offer-section{padding:80px 24px;max-width:860px;margin:0 auto}
-.offer-card{background:linear-gradient(135deg,rgba(124,58,237,0.12),rgba(232,65,122,0.08));border:1px solid rgba(124,58,237,0.25);border-radius:24px;padding:48px 44px}
-.offer-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:36px;flex-wrap:wrap;gap:20px}
-.offer-title{font-size:clamp(24px,3.5vw,36px);font-weight:800;letter-spacing:-.02em;line-height:1.2}
-.offer-price-wrap{text-align:right;flex-shrink:0}
-.offer-was{font-size:14px;color:rgba(255,255,255,0.35);text-decoration:line-through;margin-bottom:4px}
-.offer-price{font-size:52px;font-weight:900;letter-spacing:-.03em;background:linear-gradient(135deg,#a78bfa,#e8417a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
-.offer-once{font-size:13px;color:rgba(255,255,255,0.35);margin-top:4px}
-.offer-items{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:36px}
-.offer-item{display:flex;gap:12px;align-items:flex-start}
-.offer-icon{width:36px;height:36px;border-radius:10px;background:rgba(124,58,237,0.2);border:1px solid rgba(124,58,237,0.3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.offer-item-title{font-size:14px;font-weight:700;margin-bottom:2px}
-.offer-item-val{font-size:12px;color:rgba(255,255,255,0.4)}
-.offer-divider{border:none;border-top:1px solid rgba(255,255,255,0.08);margin:28px 0}
-.offer-vs{display:flex;gap:20px;margin-bottom:32px;flex-wrap:wrap}
-.vs-item{flex:1;min-width:200px;padding:16px 20px;border-radius:12px}
-.vs-them{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2)}
-.vs-us{background:rgba(93,202,165,0.08);border:1px solid rgba(93,202,165,0.2)}
-.vs-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
-.vs-them .vs-label{color:#ef4444}
-.vs-us .vs-label{color:var(--green)}
-.vs-item li{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.8;list-style:none;display:flex;gap:8px;align-items:flex-start}
-.guarantee{display:flex;gap:14px;align-items:flex-start;background:rgba(93,202,165,0.07);border:1px solid rgba(93,202,165,0.2);border-radius:12px;padding:18px 20px}
-.guarantee-icon{font-size:28px;flex-shrink:0}
-.guarantee-text{font-size:14px;color:rgba(255,255,255,0.65);line-height:1.6}
-.guarantee-text strong{color:#fff}
-
-/* ── COMPARISON TABLE ── */
-.comp-section{padding:0 24px 80px;max-width:860px;margin:0 auto}
-.comp-table{width:100%;border-collapse:collapse}
-.comp-table th{font-size:13px;font-weight:700;padding:14px 20px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.08)}
-.comp-table th:first-child{color:rgba(255,255,255,0.4)}
-.comp-table th.hl{color:var(--purple-light);background:rgba(124,58,237,0.08);border-radius:10px 10px 0 0}
-.comp-table td{padding:14px 20px;font-size:14px;border-bottom:1px solid rgba(255,255,255,0.05);color:rgba(255,255,255,0.65)}
-.comp-table td.hl{background:rgba(124,58,237,0.06);color:#fff;font-weight:500}
-.comp-table tr:last-child td{border-bottom:none}
-.tick{color:var(--green);font-weight:700}
-.cross{color:rgba(255,255,255,0.2)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);border-radius:22px;overflow:hidden}
+.step{background:var(--bg);padding:40px 30px}
+.step-n{font-size:11px;font-weight:800;color:var(--purple-light);text-transform:uppercase;letter-spacing:.1em;margin-bottom:22px;opacity:.7}
+.step-ico{font-size:42px;display:block;margin-bottom:16px;line-height:1}
+.step h3{font-size:19px;font-weight:800;margin-bottom:10px;letter-spacing:-.01em}
+.step p{font-size:14px;color:rgba(255,255,255,.42);line-height:1.75}
 
 /* ── TESTIMONIALS ── */
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.testi{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;transition:.2s}
-.testi:hover{border-color:rgba(124,58,237,0.3);transform:translateY(-2px)}
-.stars{color:#f59e0b;font-size:13px;letter-spacing:2px;margin-bottom:14px}
-.testi-text{font-size:14px;color:rgba(255,255,255,0.72);line-height:1.7;margin-bottom:20px}
-.testi-author{display:flex;align-items:center;gap:12px}
-.testi-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:rgba(124,58,237,0.2);border:2px solid rgba(124,58,237,0.3)}
-.testi-name{font-size:14px;font-weight:700}
-.testi-role{font-size:12px;color:rgba(255,255,255,0.35)}
-.testi-result{display:inline-block;margin-top:8px;padding:3px 10px;border-radius:100px;background:rgba(93,202,165,0.15);border:1px solid rgba(93,202,165,0.3);font-size:11px;font-weight:700;color:var(--green)}
+.testi-wrap{padding:0 20px 88px;max-width:1000px;margin:0 auto}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.testi{
+  background:rgba(255,255,255,.03);border:1px solid var(--border);
+  border-radius:20px;padding:26px;transition:all .28s;
+}
+.testi:hover{border-color:rgba(124,58,237,.35);background:rgba(124,58,237,.05);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.3)}
+.stars{font-size:12px;letter-spacing:3px;margin-bottom:16px;color:#f59e0b}
+.testi-text{font-size:14px;color:rgba(255,255,255,.68);line-height:1.75;margin-bottom:20px;font-style:italic}
+.testi-meta{display:flex;align-items:center;gap:11px}
+.testi-av{
+  width:40px;height:40px;border-radius:50%;flex-shrink:0;font-size:18px;
+  background:linear-gradient(135deg,rgba(124,58,237,.35),rgba(232,65,122,.25));
+  border:2px solid rgba(124,58,237,.3);
+  display:flex;align-items:center;justify-content:center;
+}
+.testi-name{font-size:13px;font-weight:700}
+.testi-role{font-size:11px;color:rgba(255,255,255,.28);margin-top:1px}
+.testi-badge{
+  display:inline-block;margin-top:7px;
+  padding:3px 10px;border-radius:100px;
+  background:rgba(93,202,165,.1);border:1px solid rgba(93,202,165,.25);
+  font-size:10px;font-weight:700;color:var(--green);letter-spacing:.04em;
+}
 
-/* ── FAQ ── */
-.faq{display:flex;flex-direction:column;gap:2px;background:rgba(255,255,255,0.04);border-radius:16px;overflow:hidden}
-.faq-item{border-bottom:1px solid rgba(255,255,255,0.06)}
-.faq-item:last-child{border-bottom:none}
-.faq-q{width:100%;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;background:transparent;border:none;color:#fff;font-size:15px;font-weight:600;cursor:pointer;text-align:left;transition:.2s;gap:12px}
-.faq-q:hover{background:rgba(255,255,255,0.03)}
-.faq-q .arr{font-size:18px;color:var(--purple-light);flex-shrink:0;transition:.3s}
-.faq-a{display:none;padding:0 24px 20px;font-size:14px;color:rgba(255,255,255,0.55);line-height:1.75}
-.faq-item.open .faq-q .arr{transform:rotate(45deg)}
-.faq-item.open .faq-a{display:block}
+/* ── OFFER STRIP ── */
+.offer{
+  margin:0 20px 88px;border-radius:24px;
+  background:linear-gradient(135deg,rgba(124,58,237,.14),rgba(232,65,122,.09));
+  border:1px solid rgba(124,58,237,.22);
+  padding:56px 44px;text-align:center;position:relative;overflow:hidden;
+}
+.offer::before{
+  content:'';position:absolute;top:-80px;right:-80px;
+  width:360px;height:360px;border-radius:50%;
+  background:radial-gradient(circle,rgba(124,58,237,.18),transparent 70%);pointer-events:none;
+}
+.offer h2{font-size:clamp(26px,4vw,44px);font-weight:900;letter-spacing:-.03em;margin-bottom:14px}
+.offer-sub{font-size:16px;color:rgba(255,255,255,.42);margin-bottom:32px;max-width:500px;margin-left:auto;margin-right:auto}
+.chips-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:36px}
+.chip{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:9px 17px;border-radius:100px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  font-size:13px;color:rgba(255,255,255,.72);
+}
+.chip::before{content:'✓';color:var(--green);font-weight:800;font-size:11px}
+.price-row{display:flex;align-items:baseline;justify-content:center;gap:12px;margin-bottom:10px}
+.price-was{font-size:18px;color:rgba(255,255,255,.22);text-decoration:line-through}
+.price-now{font-size:60px;font-weight:900;letter-spacing:-.04em;line-height:1;background:linear-gradient(135deg,#a78bfa,#e8417a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.price-meta{font-size:13px;color:rgba(255,255,255,.28);margin-bottom:36px}
+.guarantee{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:12px 20px;border-radius:12px;
+  background:rgba(93,202,165,.08);border:1px solid rgba(93,202,165,.2);
+  font-size:13px;color:rgba(255,255,255,.6);margin-top:16px;
+}
 
 /* ── FINAL CTA ── */
-.final-cta{text-align:center;padding:100px 24px;position:relative;overflow:hidden}
-.cta-blob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:400px;background:radial-gradient(ellipse,rgba(124,58,237,0.18) 0%,transparent 70%);pointer-events:none}
-.final-cta h2{font-size:clamp(32px,5vw,58px);font-weight:900;letter-spacing:-.03em;margin-bottom:16px;line-height:1.08}
-.final-cta p{font-size:18px;color:rgba(255,255,255,0.45);margin-bottom:40px}
-.final-note{margin-top:20px;font-size:13px;color:rgba(255,255,255,0.22)}
+.final{text-align:center;padding:88px 20px 100px;position:relative;overflow:hidden}
+.final-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:350px;background:radial-gradient(ellipse,rgba(124,58,237,.18),transparent 70%);pointer-events:none}
+.final h2{font-size:clamp(36px,6vw,68px);font-weight:900;letter-spacing:-.04em;line-height:1.04;margin-bottom:16px}
+.final p{font-size:18px;color:rgba(255,255,255,.38);margin-bottom:40px}
+.final-note{margin-top:18px;font-size:12px;color:rgba(255,255,255,.18)}
 
 /* ── FOOTER ── */
-footer{border-top:1px solid rgba(255,255,255,0.07);padding:32px 48px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:rgba(255,255,255,0.25)}
-footer a{color:rgba(255,255,255,0.25);text-decoration:none;transition:.2s}
-footer a:hover{color:rgba(255,255,255,0.6)}
-.footer-links{display:flex;gap:24px}
+footer{border-top:1px solid var(--border);padding:28px 36px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:rgba(255,255,255,.2)}
+footer a{color:rgba(255,255,255,.2);text-decoration:none;transition:.2s}
+footer a:hover{color:rgba(255,255,255,.55)}
+.footer-links{display:flex;gap:20px}
 
 /* ── MOBILE ── */
-@media(max-width:768px){
+@media(max-width:720px){
   nav{padding:14px 18px}
-  .nav-link{display:none}
-  .hero{padding:56px 18px 44px}
-  .hero h1{font-size:clamp(30px,8vw,48px)}
-  .hero h1 br{display:none}
-  .hero-sub{font-size:16px}
-  .hero-note{font-size:12px;gap:10px}
-  .eyebrow{font-size:11px}
+  .hero{padding:36px 18px 52px;min-height:calc(100dvh - 53px)}
+  .hero h1{font-size:clamp(38px,10vw,56px);letter-spacing:-.035em}
+  .hero-sub{font-size:16px;margin-bottom:32px;max-width:100%}
+  .cta-btn{padding:17px 36px;font-size:17px;width:100%;max-width:320px;justify-content:center}
+  .hero-trust{font-size:12px;gap:12px}
+  .scroll-hint{display:none}
+  .stats-bar{grid-template-columns:1fr 1fr}
+  .stat{border-bottom:1px solid var(--border)}
+  .stat:nth-child(odd){border-right:1px solid var(--border)}
+  .stat:nth-last-child(-n+2){border-bottom:none}
+  .stat-n{font-size:26px}
+  .section{padding:60px 18px}
+  .s-h{margin-bottom:32px}
   .steps{grid-template-columns:1fr;gap:1px}
-  .offer-card{padding:24px 18px}
-  .offer-items{grid-template-columns:1fr}
-  .offer-price-wrap{text-align:left}
-  .offer-header{flex-direction:column}
-  .offer-price{font-size:40px}
-  .offer-vs{flex-direction:column}
-  .testi-grid{grid-template-columns:1fr}
-  .live-bar{gap:8px;flex-direction:column;align-items:flex-start;padding:14px 18px}
-  .section{padding:56px 18px}
-  .pain-section{padding:56px 18px}
-  .comp-section{padding:0 18px 56px;overflow-x:auto}
-  .comp-table{min-width:480px}
-  footer{flex-direction:column;gap:16px;padding:24px 18px;text-align:center}
-  .footer-links{flex-wrap:wrap;justify-content:center;gap:16px}
-  .final-cta{padding:64px 18px}
-  .final-cta h2 br{display:none}
-  .btn-lg{padding:15px 32px;font-size:16px;width:100%;text-align:center}
-  .h2{font-size:clamp(24px,6vw,36px)}
-  .pain-section h2 br{display:none}
+  .step{padding:30px 22px}
+  .testi-wrap{padding:0 18px 60px}
+  .testi-grid{grid-template-columns:1fr;gap:12px}
+  .offer{margin:0 18px 60px;padding:40px 22px}
+  .offer h2 br{display:none}
+  .chips-row{gap:8px}
+  .chip{font-size:12px;padding:7px 13px}
+  .price-now{font-size:48px}
+  .final{padding:60px 18px 80px}
+  .final h2 br{display:none}
+  footer{flex-direction:column;gap:14px;padding:22px 18px;text-align:center}
+  .footer-links{flex-wrap:wrap;justify-content:center;gap:14px}
+}
+@media(max-width:380px){
+  .hero h1{font-size:34px}
+  .eyebrow{font-size:10px}
 }
 </style>
 <script>
@@ -187,302 +250,151 @@ function ph(e,p){try{if(window.posthog)posthog.capture(e,p||{})}catch(x){}}
 </script>
 </head>
 <body>
-<div class="bg"></div>
+<div class="bg"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
 <div class="z">
 
 <!-- NAV -->
 <nav>
-  <a class="logo" href="/">Get Biz Idea</a>
-  <div class="nav-right">
-    <a class="nav-link" href="#how">How it works</a>
-    <a class="nav-link" href="#reviews">Reviews</a>
-    <a class="btn" href="/quiz.html">Start Free →</a>
-  </div>
+  <a class="logo" href="/">Get <span>Biz Idea</span></a>
+  <a class="nav-cta" href="/quiz.html" onclick="goQuiz(event)">Start free →</a>
 </nav>
 
 <!-- HERO -->
-<div class="hero">
-  <div class="eyebrow">⚡ 2,847 plans matched this week</div>
-  <h1>Most people spend years<br>searching for the right business.<br><span class="grad">You can skip that part.</span></h1>
-  <p class="hero-sub">Answer 10 questions. AI finds the perfect business for your skills, time, and budget — then hands you a complete 90-day plan to launch it.</p>
-  <a class="btn btn-lg" href="/quiz.html">Find My Business Idea →</a>
-  <div class="hero-note">
-    <span>✓ Free to start</span>
-    <span>✓ No account needed</span>
-    <span>✓ Results in 30 seconds</span>
-    <span>✓ Full plan €7 one-time</span>
+<section class="hero">
+  <div class="eyebrow">
+    <div class="live-dot"></div>
+    <span id="live-n">2,847</span> plans matched this week
   </div>
-</div>
+  <h1>Which business<br>should you<br><span class="grad">actually start?</span></h1>
+  <p class="hero-sub">90-second AI quiz. Your personalised match + complete launch plan.</p>
+  <a class="cta-btn" href="/quiz.html" onclick="goQuiz(event)">
+    Find my business <span class="cta-arrow">→</span>
+  </a>
+  <div class="hero-trust">
+    <span>Free to start</span>
+    <span>90 seconds</span>
+    <span>No account needed</span>
+    <span>Full plan €7</span>
+  </div>
+  <div class="scroll-hint">
+    <svg width="16" height="24" viewBox="0 0 16 24" fill="none"><rect x="1" y="1" width="14" height="22" rx="7" stroke="white" stroke-width="1.5"/><circle cx="8" cy="7" r="2" fill="white"/></svg>
+    scroll
+  </div>
+</section>
 
-<!-- LIVE BAR -->
-<div class="live-bar">
-  <div class="live-item"><div class="live-dot"></div> <strong>14</strong> people getting their match right now</div>
-  <div class="live-item">📍 <strong>38 countries</strong> represented</div>
-  <div class="live-item">⭐ <strong>4.8 / 5</strong> average rating</div>
-  <div class="live-item">💰 <strong>€7</strong> · one-time · no subscription</div>
-</div>
-
-<!-- IS THIS YOU -->
-<div class="pain-section" id="pain">
-  <div class="label">Sound familiar?</div>
-  <h2 class="h2" style="margin-bottom:10px">You want to start a business.<br>You just don't know which one.</h2>
-  <p class="sub">If any of these hit home — you're in the right place.</p>
-  <div class="pain-list">
-    <div class="pain-item"><div class="pain-check">😩</div><div>You've had "I should start a business" in your head for months (or years) — but you're still in the same spot.</div></div>
-    <div class="pain-item"><div class="pain-check">🌀</div><div>You've watched 50+ YouTube videos, read threads, followed entrepreneurs — and still have no clear answer about what to actually do.</div></div>
-    <div class="pain-item"><div class="pain-check">😰</div><div>You're afraid to pick the wrong idea and waste months (and money) on something that won't work.</div></div>
-    <div class="pain-item"><div class="pain-check">📋</div><div>You know you have skills people would pay for — but you have no idea how to turn that into an actual business with clients and income.</div></div>
-    <div class="pain-item"><div class="pain-check">⏰</div><div>You don't have unlimited time or a big budget. You need something realistic — that fits your actual life.</div></div>
-  </div>
-  <div class="pain-cta">
-    <p>You don't need another blog post. You need a plan built specifically for you.</p>
-    <a class="btn btn-lg" href="/quiz.html">Get My Plan in 90 Seconds →</a>
-  </div>
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-n">2,847</div><div class="stat-l">Plans this week</div></div>
+  <div class="stat"><div class="stat-n">38</div><div class="stat-l">Countries</div></div>
+  <div class="stat"><div class="stat-n">€7</div><div class="stat-l">One-time price</div></div>
+  <div class="stat"><div class="stat-n">4.8★</div><div class="stat-l">Average rating</div></div>
 </div>
 
 <!-- HOW IT WORKS -->
-<div class="section" id="how">
-  <div class="label" style="text-align:center">How it works</div>
-  <h2 class="h2" style="text-align:center">Three steps. Under two minutes.</h2>
+<div class="section">
+  <div class="s-label">How it works</div>
+  <h2 class="s-h">Three steps. Under two minutes.</h2>
   <div class="steps">
     <div class="step">
       <div class="step-n">Step 01</div>
-      <span class="step-icon">🎯</span>
+      <span class="step-ico">🎯</span>
       <h3>Answer 10 questions</h3>
-      <p>Your age, location, time available, starting budget, strengths, interests. No sign-up. Takes 90 seconds. Completely free.</p>
+      <p>Age, location, time available, budget, strengths. No sign-up. No email. Completely free. Takes 90 seconds.</p>
     </div>
     <div class="step">
       <div class="step-n">Step 02</div>
-      <span class="step-icon">🤖</span>
+      <span class="step-ico">🤖</span>
       <h3>AI finds your match</h3>
-      <p>Our AI scans 2,400+ business models and picks the one that fits your specific situation — not a generic suggestion, a personalised match.</p>
+      <p>Scans 2,400+ business models and picks the one that fits your specific situation — not a generic suggestion.</p>
     </div>
     <div class="step">
       <div class="step-n">Step 03</div>
-      <span class="step-icon">🚀</span>
+      <span class="step-ico">🚀</span>
       <h3>Launch with your plan</h3>
-      <p>Unlock the full 90-day action plan. Day 1 tasks, exact scripts to send clients, pricing strategy, tools — everything specific to your business.</p>
+      <p>Day-1 tasks, first client scripts, pricing, 90-day roadmap. Everything you need to actually start.</p>
     </div>
   </div>
-</div>
-
-<!-- OFFER STACK -->
-<div class="offer-section" id="offer">
-  <div class="label">What you get</div>
-  <div class="offer-card">
-    <div class="offer-header">
-      <div>
-        <h2 class="offer-title">Your complete business<br>launch package</h2>
-        <p style="font-size:15px;color:rgba(255,255,255,0.45);margin-top:10px">Everything a business consultant would charge €500+ for.</p>
-      </div>
-      <div class="offer-price-wrap">
-        <div class="offer-was">Value: €497</div>
-        <div class="offer-price">€7</div>
-        <div class="offer-once">one-time · instant access</div>
-      </div>
-    </div>
-
-    <div class="offer-items">
-      <div class="offer-item">
-        <div class="offer-icon">🎯</div>
-        <div>
-          <div class="offer-item-title">AI Business Match</div>
-          <div class="offer-item-val">Personalised to your life, not generic advice</div>
-        </div>
-      </div>
-      <div class="offer-item">
-        <div class="offer-icon">✉️</div>
-        <div>
-          <div class="offer-item-title">First Client Script</div>
-          <div class="offer-item-val">Copy-paste message — send it today</div>
-        </div>
-      </div>
-      <div class="offer-item">
-        <div class="offer-icon">📅</div>
-        <div>
-          <div class="offer-item-title">90-Day Action Plan</div>
-          <div class="offer-item-val">Day-by-day tasks for weeks 1–12</div>
-        </div>
-      </div>
-      <div class="offer-item">
-        <div class="offer-icon">💰</div>
-        <div>
-          <div class="offer-item-title">Pricing Strategy</div>
-          <div class="offer-item-val">3 packages + when to raise prices</div>
-        </div>
-      </div>
-      <div class="offer-item">
-        <div class="offer-icon">📊</div>
-        <div>
-          <div class="offer-item-title">Income Projections</div>
-          <div class="offer-item-val">Months 1, 3, 6, 12 — realistic numbers</div>
-        </div>
-      </div>
-      <div class="offer-item">
-        <div class="offer-icon">🛠️</div>
-        <div>
-          <div class="offer-item-title">Tools & Setup</div>
-          <div class="offer-item-val">Exact tools, costs, how to start</div>
-        </div>
-      </div>
-      <div class="offer-item">
-        <div class="offer-icon">⚠️</div>
-        <div>
-          <div class="offer-item-title">Top 3 Mistakes</div>
-          <div class="offer-item-val">What kills beginners in your niche</div>
-        </div>
-      </div>
-      <div class="offer-item">
-        <div class="offer-icon">📈</div>
-        <div>
-          <div class="offer-item-title">Scaling Roadmap</div>
-          <div class="offer-item-val">M1 → M4 → M12 → Year 2 milestones</div>
-        </div>
-      </div>
-    </div>
-
-    <hr class="offer-divider">
-
-    <div class="offer-vs">
-      <div class="vs-item vs-them">
-        <div class="vs-label">❌ Without Get Biz Idea</div>
-        <ul>
-          <li>🔴 Months of indecision and research</li>
-          <li>🔴 Generic YouTube advice that doesn't fit you</li>
-          <li>🔴 Wrong idea → wasted time and money</li>
-          <li>🔴 No clear plan → you never actually start</li>
-        </ul>
-      </div>
-      <div class="vs-item vs-us">
-        <div class="vs-label">✅ With Get Biz Idea</div>
-        <ul>
-          <li>🟢 Clear match in 90 seconds</li>
-          <li>🟢 Plan built around your actual life</li>
-          <li>🟢 Day 1 task you can do today</li>
-          <li>🟢 First client possible within 7 days</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="guarantee">
-      <div class="guarantee-icon">🛡️</div>
-      <div class="guarantee-text"><strong>7-day money-back guarantee.</strong> If you're not happy with your plan for any reason, reply to your confirmation email and we'll refund you instantly. No questions asked. Zero risk.</div>
-    </div>
-
-    <div style="text-align:center;margin-top:32px">
-      <a class="btn btn-lg" href="/quiz.html">Get My Business Plan →</a>
-      <p style="margin-top:12px;font-size:13px;color:rgba(255,255,255,0.25)">Try free first · Full plan unlocks for €7 · Instant access</p>
-    </div>
-  </div>
-</div>
-
-<!-- COMPARISON TABLE -->
-<div class="comp-section">
-  <div class="label" style="text-align:center;margin-bottom:14px">How we compare</div>
-  <h2 class="h2" style="text-align:center;margin-bottom:32px">€7 vs. the alternatives</h2>
-  <table class="comp-table">
-    <thead>
-      <tr>
-        <th>What you need</th>
-        <th>Business consultant</th>
-        <th>Online course</th>
-        <th class="hl">Get Biz Idea</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>Personalised to your situation</td><td class="tick">✓</td><td class="cross">✗</td><td class="hl tick">✓</td></tr>
-      <tr><td>Ready in minutes</td><td class="cross">✗ weeks</td><td class="cross">✗ months</td><td class="hl tick">✓ 90 seconds</td></tr>
-      <tr><td>First client scripts</td><td class="tick">✓</td><td class="cross">✗</td><td class="hl tick">✓</td></tr>
-      <tr><td>90-day action plan</td><td class="tick">✓</td><td class="cross">✗</td><td class="hl tick">✓</td></tr>
-      <tr><td>Pricing strategy</td><td class="tick">✓</td><td class="cross">✗</td><td class="hl tick">✓</td></tr>
-      <tr><td>Price</td><td style="color:#ef4444;font-weight:600">€500–5,000</td><td style="color:#f59e0b;font-weight:600">€200–2,000</td><td class="hl" style="color:var(--green);font-weight:700">€7</td></tr>
-    </tbody>
-  </table>
 </div>
 
 <!-- TESTIMONIALS -->
-<div class="section" id="reviews">
-  <div class="label" style="text-align:center">Reviews</div>
-  <h2 class="h2" style="text-align:center">Real people. Real results.</h2>
+<div class="testi-wrap">
   <div class="testi-grid">
     <div class="testi">
       <div class="stars">★★★★★</div>
-      <div class="testi-text">"I'd been going back and forth on ideas for 2 years. After 90 seconds I had a match that actually made sense for my situation — not just a generic suggestion. The outreach script worked on day one."</div>
-      <div class="testi-author">
+      <p class="testi-text">"I spent 2 years going in circles. 90 seconds here gave me more clarity than all that searching combined. The outreach script worked on day one."</p>
+      <div class="testi-meta">
         <div class="testi-av">👩</div>
         <div>
           <div class="testi-name">Sarah M.</div>
-          <div class="testi-role">Flower shop owner</div>
-          <div class="testi-result">First client in 4 days</div>
+          <div class="testi-role">Former office manager</div>
+          <div class="testi-badge">First client in 4 days</div>
         </div>
       </div>
     </div>
     <div class="testi">
       <div class="stars">★★★★★</div>
-      <div class="testi-text">"The copy-paste script alone was worth 100× the price. Sent 20 messages on day one, got 3 replies, closed my first client within a week. I was shocked it worked so fast."</div>
-      <div class="testi-author">
+      <p class="testi-text">"The copy-paste script alone was worth 100× the price. Sent 20 messages on day one, got 3 replies, closed my first client within a week."</p>
+      <div class="testi-meta">
         <div class="testi-av">👨</div>
         <div>
           <div class="testi-name">James C.</div>
           <div class="testi-role">Freelance consultant</div>
-          <div class="testi-result">€1,200 first month</div>
+          <div class="testi-badge">€1,200 first month</div>
         </div>
       </div>
     </div>
     <div class="testi">
       <div class="stars">★★★★★</div>
-      <div class="testi-text">"I was scared to start and kept making excuses. The plan broke everything into small steps I could actually do. By month 2 I had 4 regular clients and replaced my part-time job income."</div>
-      <div class="testi-author">
+      <p class="testi-text">"Everything was broken into steps I could actually do. By month 2 I had 4 regular clients and replaced my part-time job income completely."</p>
+      <div class="testi-meta">
         <div class="testi-av">👩</div>
         <div>
           <div class="testi-name">Emily R.</div>
-          <div class="testi-role">Owner, FreshStart Cleaning</div>
-          <div class="testi-result">Quit part-time job in month 3</div>
+          <div class="testi-role">Stay-at-home mum</div>
+          <div class="testi-badge">Quit part-time job month 3</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- FAQ -->
-<div class="section" id="faq">
-  <div class="label" style="text-align:center">FAQ</div>
-  <h2 class="h2" style="text-align:center;margin-bottom:32px">Common questions</h2>
-  <div class="faq">
-    <div class="faq-item">
-      <button class="faq-q" onclick="this.parentNode.classList.toggle('open')">Is the free preview actually useful, or is it just a teaser? <span class="arr">+</span></button>
-      <div class="faq-a">The free preview shows you your #1 business match, why it fits you, income projections, and 2 alternative ideas. It's genuinely useful — enough to know if the match is right before you pay anything.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="this.parentNode.classList.toggle('open')">What if I don't like my business match? <span class="arr">+</span></button>
-      <div class="faq-a">You see your match for free before paying. If it's not right, don't pay. If you unlock the full plan and still aren't happy, we refund you within 7 days — no questions asked.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="this.parentNode.classList.toggle('open')">Is this for complete beginners or people with experience? <span class="arr">+</span></button>
-      <div class="faq-a">Both. The AI adjusts the plan based on your answers. A complete beginner gets a simple, low-risk idea with step-by-step guidance. Someone with experience gets a more ambitious match with faster scaling tactics.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="this.parentNode.classList.toggle('open')">How is this different from ChatGPT? <span class="arr">+</span></button>
-      <div class="faq-a">ChatGPT gives generic advice. We give you a plan built specifically around your age, location, time, budget, strengths, and goals — with real income projections, copy-paste scripts, and day-by-day tasks. The difference between a generic template and a custom consultant.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="this.parentNode.classList.toggle('open')">What if I have zero business experience? <span class="arr">+</span></button>
-      <div class="faq-a">That's exactly who this is for. The plan is written assuming you're starting from scratch — it tells you what to do on day 1, what to say to your first potential client, how to price your services, and what mistakes to avoid.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="this.parentNode.classList.toggle('open')">Is €7 really the full price? What's the catch? <span class="arr">+</span></button>
-      <div class="faq-a">Yes, €7 is the full price. One-time payment, instant access, no subscription, no upsells. We keep the price low because we want people to actually start — not feel like they spent their whole budget on a plan.</div>
-    </div>
+<!-- OFFER -->
+<div class="offer">
+  <h2>Everything a consultant charges<br><span class="grad">€500 for. You pay €7.</span></h2>
+  <p class="offer-sub">One payment. Instant access. No subscription ever.</p>
+  <div class="chips-row">
+    <span class="chip">AI business match</span>
+    <span class="chip">90-day action plan</span>
+    <span class="chip">First client script</span>
+    <span class="chip">Pricing strategy</span>
+    <span class="chip">Income projections</span>
+    <span class="chip">Top 3 mistakes</span>
+    <span class="chip">Tools & setup guide</span>
+    <span class="chip">Scaling roadmap</span>
   </div>
+  <div class="price-row">
+    <span class="price-was">€497</span>
+    <span class="price-now">€7</span>
+  </div>
+  <p class="price-meta">one-time payment · instant access · no subscription</p>
+  <a class="cta-btn" href="/quiz.html" onclick="goQuiz(event)" style="display:inline-flex">
+    Get my plan for €7 <span class="cta-arrow">→</span>
+  </a>
+  <div class="guarantee">
+    🛡️ 7-day money-back guarantee — no questions asked
+  </div>
+  <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,.18)">Free preview first — pay only if you love your match</div>
 </div>
 
 <!-- FINAL CTA -->
-<div class="final-cta">
-  <div class="cta-blob"></div>
+<div class="final">
+  <div class="final-glow"></div>
   <h2>Your business idea is<br><span class="grad">90 seconds away.</span></h2>
   <p>Stop thinking about it. Find out which business fits your life — free.</p>
-  <a class="btn btn-lg" href="/quiz.html">Find My Business Idea →</a>
-  <p class="final-note">Free preview · No email required to start · Full plan €7 · 7-day money-back guarantee</p>
+  <a class="cta-btn" href="/quiz.html" onclick="goQuiz(event)">
+    Find my business <span class="cta-arrow">→</span>
+  </a>
+  <p class="final-note">Free preview · No email to start · Full plan €7 · 7-day guarantee</p>
 </div>
 
 <!-- FOOTER -->
@@ -490,16 +402,30 @@ function ph(e,p){try{if(window.posthog)posthog.capture(e,p||{})}catch(x){}}
   <div>© 2026 Get Biz Idea · getbizidea.com</div>
   <div class="footer-links">
     <a href="mailto:hello@getbizidea.com">hello@getbizidea.com</a>
-    <a href="/privacy">Privacy</a>
-    <a href="/terms">Terms</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
   </div>
 </footer>
 
 </div>
 <script>
-document.querySelectorAll('a[href*="getbizidea.com"]').forEach(function(a){
-  a.addEventListener('click',function(){ph('landing_cta_clicked',{cta_text:this.textContent.trim()});});
-});
+function goQuiz(e){
+  e.preventDefault();
+  ph('landing_cta_clicked',{text:e.currentTarget.textContent.trim()});
+  document.body.style.transition='opacity .25s';
+  document.body.style.opacity='0';
+  setTimeout(()=>{window.location.href='/quiz.html'},260);
+}
+// Live count drift
+(function(){
+  const el=document.getElementById('live-n');
+  if(!el)return;
+  let n=2847;
+  setInterval(()=>{n+=Math.floor(Math.random()*5)-1;el.textContent=n.toLocaleString('en')},5000);
+})();
+// Scroll tracking
+let tracked=false;
+window.addEventListener('scroll',()=>{if(!tracked&&window.scrollY>300){tracked=true;ph('landing_scrolled')}},{passive:true});
 </script>
 </body>
 </html>
