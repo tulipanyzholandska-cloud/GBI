@@ -61,8 +61,8 @@ export default async function handler(req, res) {
       }
 
       if (email && resultId) {
-        const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://app.getbizidea.com';
-        const magicLink = `${baseUrl}/?unlocked=true&rid=${resultId}`;
+        const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://getbizidea.com';
+        const magicLink = `${baseUrl}/quiz.html?unlocked=true&rid=${resultId}`;
 
         const subject = type === 'tripwire'
           ? 'Your 30-Day Action Plan is ready'

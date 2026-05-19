@@ -65,7 +65,7 @@ const SEQUENCE = [
 
 export async function scheduleDripEmails(email, resultId, baseUrl) {
   if (!process.env.BREVO_API_KEY || !email) return { ok: false, error: 'missing config' };
-  const magicLink = `${baseUrl}/?unlocked=true&rid=${resultId}`;
+  const magicLink = `${baseUrl}/quiz.html?unlocked=true&rid=${resultId}`;
   const now = Date.now();
   const results = [];
 

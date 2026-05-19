@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
   const { resultId, email } = req.body;
-  const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://app.getbizidea.com';
+  const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://getbizidea.com';
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -19,8 +19,8 @@ export default async function handler(req, res) {
       mode: 'payment',
       metadata: { resultId: resultId || '', email: email || '' },
       customer_email: email || undefined,
-      success_url: `${baseUrl}/?unlocked=true&rid=${resultId}`,
-      cancel_url: `${baseUrl}/?rid=${resultId}`,
+      success_url: `${baseUrl}/quiz.html?unlocked=true&rid=${resultId}`,
+      cancel_url: `${baseUrl}/quiz.html?rid=${resultId}`,
     });
     res.json({ url: session.url });
   } catch (err) {

@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
   const { resultId, email } = req.body;
-  const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://app.getbizidea.com';
+  const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://getbizidea.com';
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
       metadata: { resultId: resultId || '', email: email || '', type: 'tripwire' },
       customer_email: email || undefined,
       success_url: `${baseUrl}/plan.html?rid=${resultId}&tw=1`,
-      cancel_url: `${baseUrl}/?rid=${resultId}`,
+      cancel_url: `${baseUrl}/quiz.html?rid=${resultId}`,
     });
     res.json({ url: session.url });
   } catch (err) {

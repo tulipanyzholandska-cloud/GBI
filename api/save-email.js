@@ -17,7 +17,7 @@ const emailWrap = (body) => `<!DOCTYPE html>
 
 async function scheduleReminders(email, resultId, ideaName, baseUrl) {
   if (!process.env.BREVO_API_KEY) return;
-  const link = `${baseUrl}/?rid=${resultId}`;
+  const link = `${baseUrl}/quiz.html?rid=${resultId}`;
 
   const reminders = [
     {
@@ -104,7 +104,7 @@ export default async function handler(req, res) {
       await supabase.from('results').update({ email }).eq('id', resultId);
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://app.getbizidea.com';
+    const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://getbizidea.com';
 
     // Schedule 24h + 72h reminders (fire-and-forget)
     scheduleReminders(email, resultId, ideaName, baseUrl);

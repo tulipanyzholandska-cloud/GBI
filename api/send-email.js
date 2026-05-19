@@ -27,7 +27,7 @@ export default async function handler(req, res) {
       Your result includes a full income forecast and 3 business ideas matched to your profile. Unlock the complete 90-day action plan to start building today.
     </p>
     <div style="text-align:center">
-      <a href="https://app.getbizidea.com/?rid=${resultId}" 
+      <a href="https://getbizidea.com/?rid=${resultId}" 
          style="background:#e8417a;color:#fff;padding:14px 32px;border-radius:10px;text-decoration:none;font-weight:700;font-size:16px;display:inline-block">
         View My Business Plan →
       </a>
@@ -44,7 +44,7 @@ export default async function handler(req, res) {
       <li>Top mistakes to avoid</li>
     </ul>
     <div style="text-align:center;margin-top:20px">
-      <a href="https://app.getbizidea.com/?rid=${resultId}" 
+      <a href="https://getbizidea.com/?rid=${resultId}" 
          style="background:rgba(124,58,237,0.3);color:#a78bfa;padding:12px 28px;border-radius:10px;text-decoration:none;font-weight:600;font-size:14px;display:inline-block;border:1px solid rgba(124,58,237,0.5)">
         Unlock Full Plan · 19 €
       </a>
