@@ -152,18 +152,32 @@ footer a:hover{color:rgba(255,255,255,0.6)}
 @media(max-width:768px){
   nav{padding:14px 18px}
   .nav-link{display:none}
-  .hero{padding:60px 18px 50px}
+  .hero{padding:56px 18px 44px}
+  .hero h1{font-size:clamp(30px,8vw,48px)}
+  .hero h1 br{display:none}
+  .hero-sub{font-size:16px}
+  .hero-note{font-size:12px;gap:10px}
+  .eyebrow{font-size:11px}
   .steps{grid-template-columns:1fr;gap:1px}
-  .offer-card{padding:28px 22px}
+  .offer-card{padding:24px 18px}
   .offer-items{grid-template-columns:1fr}
   .offer-price-wrap{text-align:left}
   .offer-header{flex-direction:column}
+  .offer-price{font-size:40px}
+  .offer-vs{flex-direction:column}
   .testi-grid{grid-template-columns:1fr}
-  .live-bar{gap:14px}
-  .section{padding:60px 18px}
-  .comp-section{padding:0 18px 60px}
+  .live-bar{gap:8px;flex-direction:column;align-items:flex-start;padding:14px 18px}
+  .section{padding:56px 18px}
+  .pain-section{padding:56px 18px}
+  .comp-section{padding:0 18px 56px;overflow-x:auto}
+  .comp-table{min-width:480px}
   footer{flex-direction:column;gap:16px;padding:24px 18px;text-align:center}
-  .final-cta{padding:70px 18px}
+  .footer-links{flex-wrap:wrap;justify-content:center;gap:16px}
+  .final-cta{padding:64px 18px}
+  .final-cta h2 br{display:none}
+  .btn-lg{padding:15px 32px;font-size:16px;width:100%;text-align:center}
+  .h2{font-size:clamp(24px,6vw,36px)}
+  .pain-section h2 br{display:none}
 }
 </style>
 <script>
@@ -182,7 +196,7 @@ function ph(e,p){try{if(window.posthog)posthog.capture(e,p||{})}catch(x){}}
   <div class="nav-right">
     <a class="nav-link" href="#how">How it works</a>
     <a class="nav-link" href="#reviews">Reviews</a>
-    <a class="btn" href="https://app.getbizidea.com">Start Free →</a>
+    <a class="btn" href="https://app.getbizidea.com/quiz.html">Start Free →</a>
   </div>
 </nav>
 
@@ -191,7 +205,7 @@ function ph(e,p){try{if(window.posthog)posthog.capture(e,p||{})}catch(x){}}
   <div class="eyebrow">⚡ 2,847 plans matched this week</div>
   <h1>Most people spend years<br>searching for the right business.<br><span class="grad">You can skip that part.</span></h1>
   <p class="hero-sub">Answer 10 questions. AI finds the perfect business for your skills, time, and budget — then hands you a complete 90-day plan to launch it.</p>
-  <a class="btn btn-lg" href="https://app.getbizidea.com">Find My Business Idea →</a>
+  <a class="btn btn-lg" href="https://app.getbizidea.com/quiz.html">Find My Business Idea →</a>
   <div class="hero-note">
     <span>✓ Free to start</span>
     <span>✓ No account needed</span>
@@ -222,7 +236,7 @@ function ph(e,p){try{if(window.posthog)posthog.capture(e,p||{})}catch(x){}}
   </div>
   <div class="pain-cta">
     <p>You don't need another blog post. You need a plan built specifically for you.</p>
-    <a class="btn btn-lg" href="https://app.getbizidea.com">Get My Plan in 90 Seconds →</a>
+    <a class="btn btn-lg" href="https://app.getbizidea.com/quiz.html">Get My Plan in 90 Seconds →</a>
   </div>
 </div>
 
@@ -356,7 +370,7 @@ function ph(e,p){try{if(window.posthog)posthog.capture(e,p||{})}catch(x){}}
     </div>
 
     <div style="text-align:center;margin-top:32px">
-      <a class="btn btn-lg" href="https://app.getbizidea.com">Get My Business Plan →</a>
+      <a class="btn btn-lg" href="https://app.getbizidea.com/quiz.html">Get My Business Plan →</a>
       <p style="margin-top:12px;font-size:13px;color:rgba(255,255,255,0.25)">Try free first · Full plan unlocks for €7 · Instant access</p>
     </div>
   </div>
@@ -467,7 +481,7 @@ function ph(e,p){try{if(window.posthog)posthog.capture(e,p||{})}catch(x){}}
   <div class="cta-blob"></div>
   <h2>Your business idea is<br><span class="grad">90 seconds away.</span></h2>
   <p>Stop thinking about it. Find out which business fits your life — free.</p>
-  <a class="btn btn-lg" href="https://app.getbizidea.com">Find My Business Idea →</a>
+  <a class="btn btn-lg" href="https://app.getbizidea.com/quiz.html">Find My Business Idea →</a>
   <p class="final-note">Free preview · No email required to start · Full plan €7 · 7-day money-back guarantee</p>
 </div>
 
