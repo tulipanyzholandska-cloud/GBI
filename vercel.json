@@ -8,12 +8,6 @@
     {
       "source": "/(.*)",
       "destination": "https://getbizidea.com/$1",
-      "permanent": false,
-      "has": [{ "type": "host", "value": "app.getbizidea.com" }]
-    },
-    {
-      "source": "/(.*)",
-      "destination": "https://getbizidea.com/$1",
       "permanent": true,
       "has": [{ "type": "host", "value": "www.getbizidea.com" }]
     },
