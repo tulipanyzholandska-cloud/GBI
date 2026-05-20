@@ -875,6 +875,12 @@ function devUnlock(){
     await Promise.all(blocks.map(async block => {
       const placeholder = placeholders[block];
       try {
+        // Check DB cache first (blocks saved after first generation)
+        const cachedBlock = planData?.blocks?.[block];
+        if(cachedBlock) {
+          renderBlock(block, cachedBlock, placeholder);
+          return;
+        }
         const resp = await fetch('/api/generate-block', {
           method:'POST',
           headers:{'Content-Type':'application/json'},
@@ -882,11 +888,17 @@ function devUnlock(){
             block,
             quizData: window._lastQuizData,
             ideaName: planData?.top_idea?.name || '',
-            language: window._lastQuizData?.language || 'en'
+            language: window._lastQuizData?.language || 'en',
+            rid: _rid
           })
         });
         const result = await resp.json();
-        if(result.data) renderBlock(block, result.data, placeholder);
+        if(result.data) {
+          // Update local planData cache so repeated calls within same session skip fetch
+          if(!planData.blocks) planData.blocks = {};
+          planData.blocks[block] = result.data;
+          renderBlock(block, result.data, placeholder);
+        }
       } catch(e) {
         placeholder.innerHTML='<div style="color:rgba(255,0,0,0.5);font-size:12px;padding:10px">Error generating part '+block+'</div>';
       }
@@ -894,6 +906,35 @@ function devUnlock(){
     // Mark complete + release in-flight guard
     window._gbiBlocksRendered=true;
     window._gbiBlocksInFlight=false;
+    // Restore saved checkbox state after all blocks rendered
+    setTimeout(restoreCheckboxState, 100);
+  }
+
+  function saveCheckboxState(){
+    const rid=resultId||new URLSearchParams(window.location.search).get('rid')||localStorage.getItem('gbi_rid')||'';
+    if(!rid)return;
+    const checks={};
+    document.querySelectorAll('.prem-cb').forEach((cb,i)=>{if(cb.dataset.done)checks[i]=1;});
+    localStorage.setItem('gbi_checks_'+rid,JSON.stringify(checks));
+  }
+
+  function restoreCheckboxState(){
+    const rid=resultId||new URLSearchParams(window.location.search).get('rid')||localStorage.getItem('gbi_rid')||'';
+    if(!rid)return;
+    let checks={};
+    try{checks=JSON.parse(localStorage.getItem('gbi_checks_'+rid)||'{}');}catch(e){}
+    const cbs=document.querySelectorAll('.prem-cb');
+    cbs.forEach((cb,i)=>{
+      if(checks[i]){
+        cb.dataset.done='1';cb.textContent='✓';
+        cb.style.background='#5dcaa5';cb.style.borderColor='#5dcaa5';
+        const row=cb.closest('.prem-check');
+        if(row){const t=row.querySelector('.prem-check-title');if(t){t.style.opacity='0.4';t.style.textDecoration='line-through';}}
+      }
+    });
+    const tot=cbs.length,dn=Object.keys(checks).length;
+    const pb=document.getElementById('prog-bar');if(pb)pb.style.width=(tot>0?dn/tot*100:0)+'%';
+    const pt=document.getElementById('prog-text');if(pt)pt.textContent=dn+' / '+tot+' steps';
   }
 
   function renderBlock(block, data, el){
@@ -904,7 +945,7 @@ function devUnlock(){
     const SCR=t=>`<div class="prem-script">${t}</div>`;
     const SUB=t=>`<div class="prem-subject">${t}</div>`;
     const BADGE=(t,bg,c)=>`<div class="prem-badge" style="background:${bg};color:${c}">${t}</div>`;
-    const CHK=(title,sub)=>`<div class="prem-check" onclick="var cb=this.querySelector('.prem-cb');var done=cb.dataset.done;cb.dataset.done=done?'':'1';cb.textContent=done?'':'✓';cb.style.background=done?'transparent':'#5dcaa5';cb.style.borderColor=done?'rgba(255,255,255,0.2)':'#5dcaa5';this.querySelector('.prem-check-title').style.opacity=done?'1':'0.4';this.querySelector('.prem-check-title').style.textDecoration=done?'none':'line-through';var tot=document.querySelectorAll('.prem-cb').length,dn=document.querySelectorAll('.prem-cb[data-done]').length;var pb=document.getElementById('prog-bar');if(pb)pb.style.width=(dn/tot*100)+'%';var pt=document.getElementById('prog-text');if(pt)pt.textContent=dn+' / '+tot+' steps';"><div class="prem-cb"></div><div><div class="prem-check-title">${title}</div><div class="prem-check-sub">${sub}</div></div></div>`;
+    const CHK=(title,sub)=>`<div class="prem-check" onclick="var cb=this.querySelector('.prem-cb');var done=cb.dataset.done;cb.dataset.done=done?'':'1';cb.textContent=done?'':'✓';cb.style.background=done?'transparent':'#5dcaa5';cb.style.borderColor=done?'rgba(255,255,255,0.2)':'#5dcaa5';this.querySelector('.prem-check-title').style.opacity=done?'1':'0.4';this.querySelector('.prem-check-title').style.textDecoration=done?'none':'line-through';var tot=document.querySelectorAll('.prem-cb').length,dn=document.querySelectorAll('.prem-cb[data-done]').length;var pb=document.getElementById('prog-bar');if(pb)pb.style.width=(dn/tot*100)+'%';var pt=document.getElementById('prog-text');if(pt)pt.textContent=dn+' / '+tot+' steps';saveCheckboxState();"><div class="prem-cb"></div><div><div class="prem-check-title">${title}</div><div class="prem-check-sub">${sub}</div></div></div>`;
 
     if(block===1){
       const ip=data.income_projection||{};

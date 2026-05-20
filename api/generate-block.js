@@ -1,4 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
+import { createClient } from '@supabase/supabase-js';
 
 const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const LANG_MAP = { en: 'English', cs: 'Czech', sk: 'Slovak', de: 'German' };
@@ -10,7 +11,18 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).end();
 
-  const { block, quizData, ideaName, language } = req.body;
+  const { block, quizData, ideaName, language, rid } = req.body;
+
+  // Return cached block from DB if available (saves Claude API tokens)
+  if (rid) {
+    try {
+      const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+      const { data: row } = await supabase.from('results').select('plan').eq('id', rid).single();
+      if (row?.plan?.blocks?.[block]) {
+        return res.json({ block, data: row.plan.blocks[block], cached: true });
+      }
+    } catch (_) { /* ignore cache miss, generate fresh */ }
+  }
   // FORCE English output for all blocks — language buttons removed
   const formal = 'CRITICAL: Every single word MUST be in English (US). ZERO Czech/Slovak/German/non-English words allowed — not even one. If the business name or context appears in another language, translate it and continue in English. No exceptions. ';
   const ctx = `Business: "${ideaName}", Person: age ${quizData.age}, location type ${quizData.location}, ${quizData.time}/week, budget ${quizData.budget}, strengths: ${quizData.strengths}, interests: ${quizData.interests}, timeline to first income: ${quizData.income}, main obstacle to overcome: ${quizData.risk}`;
@@ -51,6 +63,19 @@ export default async function handler(req, res) {
 
     const raw = msg.content[0].text.replace(/```json|```/g, '').trim();
     const data = JSON.parse(raw);
+
+    // Persist block into plan.blocks[N] so future visits skip Claude
+    if (rid) {
+      try {
+        const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+        const { data: row } = await supabase.from('results').select('plan').eq('id', rid).single();
+        if (row) {
+          const updatedPlan = { ...row.plan, blocks: { ...(row.plan?.blocks || {}), [block]: data } };
+          await supabase.from('results').update({ plan: updatedPlan }).eq('id', rid);
+        }
+      } catch (e) { console.error('Block cache save error:', e.message); }
+    }
+
     res.json({ block, data });
   } catch (err) {
     console.error('Block', block, err.message);
