@@ -200,8 +200,8 @@ nav{
 .sec-h.center{text-align:center}
 
 /* ── REVEAL ── */
-.reveal{opacity:0;transform:translateY(32px);transition:opacity .65s ease,transform .65s ease}
-.reveal.in{opacity:1;transform:none}
+.js-ready .reveal{opacity:0;transform:translateY(32px);transition:opacity .65s ease,transform .65s ease}
+.js-ready .reveal.in{opacity:1;transform:none}
 .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
 
 /* ── HOW IT WORKS ── */
@@ -567,6 +567,9 @@ function ph(e,p){try{if(window.posthog)posthog.capture(e,p||{})}catch(x){}}
 </div>
 
 <script>
+// Enable reveal animations only after JS is confirmed running
+document.documentElement.classList.add('js-ready');
+
 function goQuiz(e){
   e.preventDefault();
   ph('landing_cta_clicked',{text:e.currentTarget.textContent.trim().slice(0,40)});
