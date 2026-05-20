@@ -15,12 +15,13 @@ export default async function handler(req, res) {
     if (error || !data) return res.status(404).json({ error: 'Not found' });
     // Only return full plan if paid; otherwise just basic preview
     const isPaid = data.paid === true;
-    res.json({
-      plan: data.plan,
-      email: data.email,
-      quiz_data: data.quiz_data,
-      paid: isPaid
-    });
+    // Gate premium content — strip full_plan and blocks for unpaid users
+    let plan = data.plan;
+    if (!isPaid && plan) {
+      const { full_plan, blocks, ...freePlan } = plan;
+      plan = freePlan;
+    }
+    res.json({ plan, email: data.email, quiz_data: data.quiz_data, paid: isPaid });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

@@ -97,10 +97,14 @@ export default async function handler(req, res) {
     const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
     if (resultId) {
-      // Check if already paid — don't send reminders to paying customers
-      const { data } = await supabase.from('results').select('paid').eq('id', resultId).single();
+      const { data } = await supabase.from('results').select('email, paid').eq('id', resultId).single();
+      // Don't send reminders to paying customers
       if (data?.paid) return res.json({ ok: true, skipped: 'already paid' });
-
+      // Don't schedule reminders again if email already saved (dedup)
+      if (data?.email) {
+        await supabase.from('results').update({ email }).eq('id', resultId);
+        return res.json({ ok: true, skipped: 'already scheduled' });
+      }
       await supabase.from('results').update({ email }).eq('id', resultId);
     }
 

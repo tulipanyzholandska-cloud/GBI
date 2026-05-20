@@ -3,7 +3,7 @@
 
 const SENDER = { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' };
 
-const wrap = (title, body, magicLink) => `
+const wrap = (title, body, magicLink, unsubLink) => `
 <!DOCTYPE html><html><head><meta charset="UTF-8"></head>
 <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:600px;margin:0 auto;padding:20px;background:#0a0a0f;color:#fff">
   <div style="text-align:center;margin-bottom:24px">
@@ -17,8 +17,9 @@ const wrap = (title, body, magicLink) => `
     </div>
   </div>
   <p style="color:rgba(255,255,255,0.25);font-size:11px;text-align:center;margin:14px 0 0">
-    Get Biz Idea · app.getbizidea.com<br>
-    You can reply to this email — we read every reply.
+    Get Biz Idea · getbizidea.com<br>
+    You can reply to this email — we read every reply.<br>
+    <a href="${unsubLink}" style="color:rgba(255,255,255,0.2);text-decoration:underline">Unsubscribe</a>
   </p>
 </body></html>`;
 
@@ -66,6 +67,7 @@ const SEQUENCE = [
 export async function scheduleDripEmails(email, resultId, baseUrl) {
   if (!process.env.BREVO_API_KEY || !email) return { ok: false, error: 'missing config' };
   const magicLink = `${baseUrl}/quiz.html?unlocked=true&rid=${resultId}`;
+  const unsubLink = `${baseUrl}/api/unsubscribe?rid=${resultId}&email=${encodeURIComponent(email)}`;
   const now = Date.now();
   const results = [];
 
@@ -79,7 +81,7 @@ export async function scheduleDripEmails(email, resultId, baseUrl) {
           sender: SENDER,
           to: [{ email }],
           subject: step.subject,
-          htmlContent: wrap(step.title, step.body, magicLink),
+          htmlContent: wrap(step.title, step.body, magicLink, unsubLink),
           scheduledAt,
           tags: ['gbi-drip', `day-${step.day}`]
         })

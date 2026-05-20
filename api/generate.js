@@ -11,6 +11,13 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).end();
 
+  // Basic origin check to prevent external abuse of Claude API
+  const origin = req.headers.origin || req.headers.referer || '';
+  const allowed = ['getbizidea.com', 'localhost', '127.0.0.1', 'vercel.app'];
+  if (origin && !allowed.some(h => origin.includes(h))) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+
   const { quizData } = req.body;
   // FORCE English output for all users — language buttons removed
   const lang = 'English';

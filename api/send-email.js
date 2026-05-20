@@ -46,7 +46,7 @@ export default async function handler(req, res) {
     <div style="text-align:center;margin-top:20px">
       <a href="https://getbizidea.com/?rid=${resultId}" 
          style="background:rgba(124,58,237,0.3);color:#a78bfa;padding:12px 28px;border-radius:10px;text-decoration:none;font-weight:600;font-size:14px;display:inline-block;border:1px solid rgba(124,58,237,0.5)">
-        Unlock Full Plan · 19 €
+        Unlock Full Plan · €7
       </a>
     </div>
   </div>

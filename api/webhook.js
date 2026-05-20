@@ -48,11 +48,15 @@ export default async function handler(req, res) {
       // IDEMPOTENCY: check if already paid (don't re-send emails on repeated unlocks)
       let alreadyPaid = false;
       if (resultId) {
-        const { data: existing } = await supabase.from('results').select('paid').eq('id', resultId).single();
-        alreadyPaid = existing?.paid === true;
-        if (!alreadyPaid) {
-          await supabase.from('results').update({ paid: true, email }).eq('id', resultId);
-        }
+        // Atomic update: only succeeds if paid is currently false — prevents race condition with Stripe retries
+        const { data: updated } = await supabase
+          .from('results')
+          .update({ paid: true, email })
+          .eq('id', resultId)
+          .eq('paid', false)
+          .select('id')
+          .single();
+        alreadyPaid = !updated;
       }
 
       if (alreadyPaid) {
