@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GBI Admin</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0A0A0A;color:#fff;min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* LOGIN */
+#login{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
+.login-box{background:#111;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:40px;width:100%;max-width:380px}
+.login-box h1{font-size:20px;font-weight:800;margin-bottom:6px}
+.login-box p{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:28px}
+input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:15px;outline:none;margin-bottom:12px}
+input:focus{border-color:#E8417A}
+button{width:100%;padding:13px;border-radius:10px;border:none;background:#E8417A;color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:background .2s}
+button:hover{background:#C93368}
+.err{font-size:13px;color:#E8417A;margin-top:8px;text-align:center}
+
+/* DASHBOARD */
+#dashboard{display:none;padding:32px}
+nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
+nav h1{font-size:20px;font-weight:800}
+.logout{font-size:13px;color:rgba(255,255,255,.35);cursor:pointer;padding:8px 16px;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:none;color:rgba(255,255,255,.4)}
+.logout:hover{border-color:rgba(255,255,255,.2);color:#fff}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
+.stat{background:#111;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:24px}
+.stat-v{font-size:36px;font-weight:900;letter-spacing:-.04em;margin-bottom:4px}
+.stat-l{font-size:12px;color:rgba(255,255,255,.35)}
+.green{color:#22C55E}
+.pink{color:#E8417A}
+
+/* RESEND TOOL */
+.resend-box{background:#111;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:24px;margin-bottom:24px}
+.resend-box h2{font-size:15px;font-weight:700;margin-bottom:12px}
+.resend-row{display:flex;gap:10px}
+.resend-row input{margin:0;flex:1}
+.resend-row button{width:auto;padding:12px 20px;font-size:14px;white-space:nowrap}
+.resend-msg{font-size:13px;margin-top:10px;padding:10px 14px;border-radius:8px;display:none}
+.resend-msg.ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:#22C55E}
+.resend-msg.err{background:rgba(232,65,122,.1);border:1px solid rgba(232,65,122,.2);color:#E8417A}
+
+/* TABLE */
+.tbl-wrap{background:#111;border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden}
+.tbl-head{padding:16px 24px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between}
+.tbl-head h2{font-size:15px;font-weight:700}
+.filter-row{display:flex;gap:8px}
+.filter-btn{padding:6px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.45);font-size:12px;cursor:pointer;transition:all .2s}
+.filter-btn.on{background:rgba(232,65,122,.15);border-color:rgba(232,65,122,.35);color:#E8417A}
+table{width:100%;border-collapse:collapse}
+th{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.3);padding:10px 20px;text-align:left;border-bottom:1px solid rgba(255,255,255,.05)}
+td{padding:14px 20px;font-size:13px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.02)}
+.badge-paid{display:inline-block;padding:3px 10px;border-radius:100px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);font-size:11px;font-weight:700;color:#22C55E}
+.badge-free{display:inline-block;padding:3px 10px;border-radius:100px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);font-size:11px;color:rgba(255,255,255,.3)}
+.link-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#E8417A;text-decoration:none;padding:5px 10px;border-radius:6px;border:1px solid rgba(232,65,122,.25);background:rgba(232,65,122,.08);transition:background .2s}
+.link-btn:hover{background:rgba(232,65,122,.18)}
+.copy-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:rgba(255,255,255,.4);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:5px 10px;border-radius:6px;cursor:pointer;transition:all .2s}
+.copy-btn:hover{color:#fff;border-color:rgba(255,255,255,.2)}
+.email-cell{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.biz-cell{max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:rgba(255,255,255,.7)}
+.date-cell{color:rgba(255,255,255,.35);white-space:nowrap}
+.actions{display:flex;gap:6px;align-items:center}
+.empty{text-align:center;padding:48px;color:rgba(255,255,255,.25);font-size:14px}
+.loading{text-align:center;padding:48px;color:rgba(255,255,255,.3);font-size:14px}
+
+@media(max-width:768px){
+  #dashboard{padding:16px}
+  .stats{grid-template-columns:1fr}
+  .tbl-wrap{overflow-x:auto}
+  table{min-width:700px}
+  .resend-row{flex-direction:column}
+  .resend-row button{width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="login-box">
+    <h1>GBI Admin</h1>
+    <p>Enter your admin password to continue</p>
+    <input type="password" id="pwd" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button onclick="doLogin()">Sign in</button>
+    <div class="err" id="login-err"></div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <nav>
+    <h1>📊 Get Biz Idea — Admin</h1>
+    <button class="logout" onclick="logout()">Sign out</button>
+  </nav>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-v green" id="s-revenue">—</div>
+      <div class="stat-l">Total revenue (€7 × paid)</div>
+    </div>
+    <div class="stat">
+      <div class="stat-v pink" id="s-paid">—</div>
+      <div class="stat-l">Paid orders</div>
+    </div>
+    <div class="stat">
+      <div class="stat-v" id="s-total">—</div>
+      <div class="stat-l">Total quiz completions</div>
+    </div>
+  </div>
+
+  <!-- RESEND TOOL -->
+  <div class="resend-box">
+    <h2>🔗 Resend magic link to customer</h2>
+    <div class="resend-row">
+      <input type="email" id="resend-email" placeholder="customer@email.com">
+      <button onclick="doResend()">Resend link</button>
+    </div>
+    <div class="resend-msg" id="resend-msg"></div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="tbl-wrap">
+    <div class="tbl-head">
+      <h2>Orders</h2>
+      <div class="filter-row">
+        <button class="filter-btn on" onclick="setFilter('all',this)">All</button>
+        <button class="filter-btn" onclick="setFilter('paid',this)">Paid only</button>
+        <button class="filter-btn" onclick="setFilter('free',this)">Free only</button>
+      </div>
+    </div>
+    <div id="tbl-body"><div class="loading">Loading…</div></div>
+  </div>
+</div>
+
+<script>
+let TOKEN = '';
+let ALL_ORDERS = [];
+let FILTER = 'all';
+
+function doLogin() {
+  const pwd = document.getElementById('pwd').value.trim();
+  if (!pwd) return;
+  TOKEN = pwd;
+  fetchData();
+}
+
+function logout() {
+  TOKEN = '';
+  ALL_ORDERS = [];
+  document.getElementById('login').style.display = 'flex';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('pwd').value = '';
+}
+
+async function fetchData() {
+  try {
+    const r = await fetch('/api/admin', { headers: { 'Authorization': 'Bearer ' + TOKEN } });
+    if (r.status === 401) {
+      document.getElementById('login-err').textContent = 'Wrong password';
+      return;
+    }
+    const data = await r.json();
+    if (data.error) { document.getElementById('login-err').textContent = data.error; return; }
+
+    // Show dashboard
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    document.getElementById('login-err').textContent = '';
+
+    ALL_ORDERS = data.orders || [];
+    document.getElementById('s-revenue').textContent = '€' + (data.stats.revenue_eur || 0).toLocaleString();
+    document.getElementById('s-paid').textContent = data.stats.paid || 0;
+    document.getElementById('s-total').textContent = data.stats.total || 0;
+
+    renderTable();
+  } catch(e) {
+    document.getElementById('login-err').textContent = 'Connection error';
+  }
+}
+
+function setFilter(f, btn) {
+  FILTER = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  renderTable();
+}
+
+function renderTable() {
+  const orders = ALL_ORDERS.filter(o => {
+    if (FILTER === 'paid') return o.paid;
+    if (FILTER === 'free') return !o.paid;
+    return true;
+  });
+
+  if (!orders.length) {
+    document.getElementById('tbl-body').innerHTML = '<div class="empty">No orders found</div>';
+    return;
+  }
+
+  const rows = orders.map(o => {
+    const date = new Date(o.created_at);
+    const dateStr = date.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+    const timeStr = date.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+    return `<tr>
+      <td class="date-cell">${dateStr}<br><span style="font-size:11px">${timeStr}</span></td>
+      <td class="email-cell" title="${o.email}">${o.email}</td>
+      <td class="biz-cell" title="${o.business}">${o.business}</td>
+      <td>${o.location}</td>
+      <td>${o.paid ? '<span class="badge-paid">PAID</span>' : '<span class="badge-free">free</span>'}</td>
+      <td class="actions">
+        <a class="link-btn" href="${o.magic_link}" target="_blank">Open</a>
+        <button class="copy-btn" onclick="copyLink('${o.magic_link}',this)">Copy</button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('tbl-body').innerHTML = `
+    <table>
+      <thead><tr>
+        <th>Date</th><th>Email</th><th>Business</th><th>Location</th><th>Status</th><th>Link</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+function copyLink(link, btn) {
+  navigator.clipboard.writeText(link).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.style.color = '#22C55E';
+    setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 2000);
+  });
+}
+
+async function doResend() {
+  const email = document.getElementById('resend-email').value.trim();
+  const msg = document.getElementById('resend-msg');
+  if (!email || !email.includes('@')) {
+    showMsg('Enter a valid email address', 'err');
+    return;
+  }
+  try {
+    const r = await fetch('/api/resend', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    const d = await r.json();
+    if (r.ok) {
+      showMsg('✓ Email sent (if they have a paid plan)', 'ok');
+      document.getElementById('resend-email').value = '';
+    } else {
+      showMsg(d.error || 'Failed', 'err');
+    }
+  } catch(e) {
+    showMsg('Connection error', 'err');
+  }
+}
+
+function showMsg(text, type) {
+  const el = document.getElementById('resend-msg');
+  el.textContent = text;
+  el.className = 'resend-msg ' + type;
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 4000);
+}
+</script>
+</body>
+</html>
