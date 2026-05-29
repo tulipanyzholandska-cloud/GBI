@@ -1,112 +1,193 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>GBI Admin</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0A0A0A;color:#fff;min-height:100vh;-webkit-font-smoothing:antialiased}
 
-/* LOGIN */
+/* ── LOGIN ─────────────────────────────────── */
 #login{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
 .login-box{background:#111;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:40px;width:100%;max-width:380px}
 .login-box h1{font-size:20px;font-weight:800;margin-bottom:6px}
 .login-box p{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:28px}
-input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:15px;outline:none;margin-bottom:12px}
-input:focus{border-color:#E8417A}
+
+/* ── INPUTS & BUTTONS ──────────────────────── */
+input,select{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:15px;outline:none;margin-bottom:12px;-webkit-appearance:none}
+input:focus,select:focus{border-color:#E8417A}
 button{width:100%;padding:13px;border-radius:10px;border:none;background:#E8417A;color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:background .2s}
 button:hover{background:#C93368}
 .err{font-size:13px;color:#E8417A;margin-top:8px;text-align:center}
 
-/* DASHBOARD */
-#dashboard{display:none;padding:32px}
-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
-nav h1{font-size:20px;font-weight:800}
-.logout{font-size:13px;color:rgba(255,255,255,.35);cursor:pointer;padding:8px 16px;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:none;color:rgba(255,255,255,.4)}
-.logout:hover{border-color:rgba(255,255,255,.2);color:#fff}
+/* ── DASHBOARD LAYOUT ──────────────────────── */
+#dashboard{display:none;padding:0 0 60px}
+.dash-nav{display:flex;align-items:center;justify-content:space-between;padding:20px 32px;border-bottom:1px solid rgba(255,255,255,.06);position:sticky;top:0;background:#0A0A0Aee;backdrop-filter:blur(8px);z-index:100}
+.dash-nav-left{display:flex;align-items:center;gap:20px}
+.dash-nav h1{font-size:17px;font-weight:800}
+.updated{font-size:11px;color:rgba(255,255,255,.25)}
+.nav-btns{display:flex;gap:8px;align-items:center}
+.period-btn{font-size:12px;color:rgba(255,255,255,.35);cursor:pointer;padding:6px 12px;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:none;width:auto;transition:all .2s}
+.period-btn.on{background:rgba(232,65,122,.15);border-color:rgba(232,65,122,.35);color:#E8417A}
+.btn-sm{font-size:12px;color:rgba(255,255,255,.4);background:none;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px 14px;width:auto;cursor:pointer}
+.btn-sm:hover{color:#fff;border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.05)}
+.dash-body{padding:28px 32px;display:flex;flex-direction:column;gap:24px}
 
-/* STATS */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
-.stat{background:#111;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:24px}
-.stat-v{font-size:36px;font-weight:900;letter-spacing:-.04em;margin-bottom:4px}
-.stat-l{font-size:12px;color:rgba(255,255,255,.35)}
-.green{color:#22C55E}
-.pink{color:#E8417A}
+/* ── STAT TILES ────────────────────────────── */
+.stat-row{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.stat-tile{background:#111;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:20px 18px;position:relative;overflow:hidden}
+.stat-tile::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent,transparent)}
+.stat-tile.green::before{background:linear-gradient(90deg,#22C55E,#16A34A)}
+.stat-tile.pink::before{background:linear-gradient(90deg,#E8417A,#C93368)}
+.stat-tile.blue::before{background:linear-gradient(90deg,#60A5FA,#3B82F6)}
+.stat-tile.yellow::before{background:linear-gradient(90deg,#F59E0B,#D97706)}
+.stat-tile.purple::before{background:linear-gradient(90deg,#A78BFA,#7C3AED)}
+.stat-tile.teal::before{background:linear-gradient(90deg,#2DD4BF,#0D9488)}
+.stat-v{font-size:30px;font-weight:900;letter-spacing:-.04em;line-height:1.1;margin-bottom:4px}
+.stat-l{font-size:11px;color:rgba(255,255,255,.35);font-weight:500;text-transform:uppercase;letter-spacing:.06em}
+.stat-delta{font-size:11px;margin-top:6px}
+.delta-up{color:#22C55E}
+.delta-dn{color:#E8417A}
+.stat-v.green{color:#22C55E}
+.stat-v.pink{color:#E8417A}
+.stat-v.blue{color:#60A5FA}
+.stat-v.yellow{color:#F59E0B}
+.stat-v.purple{color:#A78BFA}
+.stat-v.teal{color:#2DD4BF}
 
-/* TRAFFIC PANEL */
-.traffic-panel{background:#111;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:24px;margin-bottom:24px}
-.traffic-panel h2{font-size:15px;font-weight:700;margin-bottom:16px}
-.tp-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
-.tp-block{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:16px}
-.tp-block h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.35);margin-bottom:10px}
-.tp-row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px}
-.tp-row:last-child{border-bottom:none}
-.tp-label{color:rgba(255,255,255,.45)}
-.tp-val{font-weight:600;font-size:13px}
-.tp-ok{color:#22C55E}
-.tp-warn{color:#F59E0B}
-.tp-link{font-size:12px;color:#E8417A;text-decoration:none;display:inline-flex;align-items:center;gap:4px;margin-top:8px;padding:5px 10px;border:1px solid rgba(232,65,122,.25);border-radius:6px;background:rgba(232,65,122,.08)}
-.tp-link:hover{background:rgba(232,65,122,.18)}
-.tp-note{font-size:12px;color:rgba(255,255,255,.35);line-height:1.5;margin-top:6px}
-.tp-math{font-size:13px;line-height:1.8}
-.tp-math b{color:#fff}
-.tp-math .dim{color:rgba(255,255,255,.35)}
-@media(max-width:768px){.tp-grid{grid-template-columns:1fr}}
+/* ── CARD ───────────────────────────────────── */
+.card{background:#111;border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden}
+.card-head{padding:18px 22px 0;display:flex;align-items:center;justify-content:space-between}
+.card-head h2{font-size:14px;font-weight:700}
+.card-sub{font-size:11px;color:rgba(255,255,255,.3);margin-top:2px}
+.card-body{padding:20px 22px}
+.chart-wrap{position:relative;height:220px}
+.chart-wrap-lg{position:relative;height:260px}
 
-/* RESEND TOOL */
-.resend-box{background:#111;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:24px;margin-bottom:24px}
-.resend-box h2{font-size:15px;font-weight:700;margin-bottom:12px}
-.resend-row{display:flex;gap:10px}
-.resend-row input{margin:0;flex:1}
-.resend-row button{width:auto;padding:12px 20px;font-size:14px;white-space:nowrap}
+/* ── GRID LAYOUTS ───────────────────────────── */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.grid-6040{display:grid;grid-template-columns:3fr 2fr;gap:16px}
+
+/* ── FUNNEL ─────────────────────────────────── */
+.funnel-step{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.funnel-step:last-child{border-bottom:none}
+.funnel-bar-wrap{flex:1;height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden}
+.funnel-bar{height:100%;border-radius:4px;transition:width .8s ease}
+.funnel-label{font-size:13px;color:rgba(255,255,255,.6);min-width:120px}
+.funnel-val{font-size:13px;font-weight:700;min-width:36px;text-align:right}
+.funnel-pct{font-size:11px;color:rgba(255,255,255,.3);min-width:38px;text-align:right}
+
+/* ── COUNTRY ROWS ────────────────────────────── */
+.country-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.country-row:last-child{border-bottom:none}
+.country-name{font-size:13px;color:rgba(255,255,255,.7);min-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.country-bar-wrap{flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.country-bar{height:100%;border-radius:3px;background:#60A5FA;transition:width .8s ease}
+.country-count{font-size:12px;color:rgba(255,255,255,.4);min-width:28px;text-align:right}
+
+/* ── AD TRACKER ─────────────────────────────── */
+.ad-tracker{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.ad-inputs{padding:22px;border-right:1px solid rgba(255,255,255,.06)}
+.ad-results{padding:22px;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start}
+.ad-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.35);margin-bottom:6px;display:block}
+.ad-input{padding:10px 14px;border-radius:9px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#fff;font-size:14px;width:100%;margin-bottom:14px;outline:none}
+.ad-input:focus{border-color:#E8417A}
+.ad-metric{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:14px}
+.ad-metric-v{font-size:22px;font-weight:800;letter-spacing:-.03em;margin-bottom:2px}
+.ad-metric-l{font-size:10px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.07em}
+.ad-note{font-size:11px;color:rgba(255,255,255,.25);margin-top:12px;line-height:1.5;grid-column:1/-1}
+.good{color:#22C55E}
+.warn{color:#F59E0B}
+.bad{color:#E8417A}
+
+/* ── POSTHOG CONNECT ────────────────────────── */
+.ph-connect{padding:22px;display:flex;flex-direction:column;gap:14px}
+.ph-form{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start}
+.ph-form input{margin-bottom:0;font-size:13px;padding:10px 14px}
+.ph-form button{width:auto;padding:10px 18px;font-size:13px;white-space:nowrap}
+.ph-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.ph-stat{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:14px}
+.ph-stat-v{font-size:22px;font-weight:800;letter-spacing:-.03em}
+.ph-stat-l{font-size:10px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.07em;margin-top:2px}
+.ph-hint{font-size:12px;color:rgba(255,255,255,.3);line-height:1.5}
+.ph-link{color:#E8417A;text-decoration:none}
+.ph-link:hover{text-decoration:underline}
+.ph-events{display:flex;flex-wrap:wrap;gap:8px}
+.ph-event{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px 12px;font-size:12px}
+.ph-event b{display:block;font-size:15px;font-weight:700}
+.ph-event span{color:rgba(255,255,255,.4)}
+
+/* ── RESEND ─────────────────────────────────── */
+.resend-row{display:flex;gap:10px;align-items:flex-start}
+.resend-row input{margin:0;flex:1;font-size:14px;padding:10px 14px}
+.resend-row button{width:auto;padding:10px 18px;font-size:14px;white-space:nowrap}
 .resend-msg{font-size:13px;margin-top:10px;padding:10px 14px;border-radius:8px;display:none}
 .resend-msg.ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:#22C55E}
 .resend-msg.err{background:rgba(232,65,122,.1);border:1px solid rgba(232,65,122,.2);color:#E8417A}
 
-/* TABLE */
-.tbl-wrap{background:#111;border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden}
-.tbl-head{padding:16px 24px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between}
-.tbl-head h2{font-size:15px;font-weight:700}
+/* ── ORDERS TABLE ───────────────────────────── */
+.tbl-head{padding:16px 22px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between}
+.tbl-head h2{font-size:14px;font-weight:700}
 .filter-row{display:flex;gap:8px}
-.filter-btn{padding:6px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.45);font-size:12px;cursor:pointer;transition:all .2s}
+.filter-btn{padding:5px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.4);font-size:12px;cursor:pointer;width:auto;transition:all .2s}
 .filter-btn.on{background:rgba(232,65,122,.15);border-color:rgba(232,65,122,.35);color:#E8417A}
 table{width:100%;border-collapse:collapse}
-th{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.3);padding:10px 20px;text-align:left;border-bottom:1px solid rgba(255,255,255,.05)}
-td{padding:14px 20px;font-size:13px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle}
+th{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.3);padding:10px 18px;text-align:left;border-bottom:1px solid rgba(255,255,255,.05)}
+td{padding:13px 18px;font-size:13px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:rgba(255,255,255,.02)}
-.badge-paid{display:inline-block;padding:3px 10px;border-radius:100px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);font-size:11px;font-weight:700;color:#22C55E}
-.badge-free{display:inline-block;padding:3px 10px;border-radius:100px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);font-size:11px;color:rgba(255,255,255,.3)}
-.link-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#E8417A;text-decoration:none;padding:5px 10px;border-radius:6px;border:1px solid rgba(232,65,122,.25);background:rgba(232,65,122,.08);transition:background .2s}
+.badge-paid{display:inline-block;padding:2px 9px;border-radius:100px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);font-size:11px;font-weight:700;color:#22C55E}
+.badge-free{display:inline-block;padding:2px 9px;border-radius:100px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);font-size:11px;color:rgba(255,255,255,.3)}
+.link-btn{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#E8417A;text-decoration:none;padding:4px 9px;border-radius:6px;border:1px solid rgba(232,65,122,.25);background:rgba(232,65,122,.08)}
 .link-btn:hover{background:rgba(232,65,122,.18)}
-.copy-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:rgba(255,255,255,.4);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:5px 10px;border-radius:6px;cursor:pointer;transition:all .2s}
+.copy-btn{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:rgba(255,255,255,.4);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:4px 9px;border-radius:6px;cursor:pointer}
 .copy-btn:hover{color:#fff;border-color:rgba(255,255,255,.2)}
 .email-cell{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .biz-cell{max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:rgba(255,255,255,.7)}
-.date-cell{color:rgba(255,255,255,.35);white-space:nowrap}
-.actions{display:flex;gap:6px;align-items:center}
-.empty{text-align:center;padding:48px;color:rgba(255,255,255,.25);font-size:14px}
-.seq-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04)}
-.seq-item.seq-last{border-bottom:none}
-.seq-day{font-size:11px;font-weight:700;min-width:36px;padding:3px 8px;border-radius:6px;background:rgba(232,65,122,.15);color:#e8417a;text-align:center}
-.seq-day.seq-paid{background:rgba(34,197,94,.12);color:#22C55E}
-.seq-sub{font-size:13px;color:rgba(255,255,255,.65)}
-.loading{text-align:center;padding:48px;color:rgba(255,255,255,.3);font-size:14px}
+.date-cell{color:rgba(255,255,255,.35);white-space:nowrap;font-size:12px}
+.actions-cell{display:flex;gap:6px}
+.empty{text-align:center;padding:40px;color:rgba(255,255,255,.25);font-size:14px}
+.loading{text-align:center;padding:40px;color:rgba(255,255,255,.3);font-size:14px}
 
+/* ── TABS ───────────────────────────────────── */
+.tab-row{display:flex;gap:4px;padding:16px 22px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.tab-btn{padding:8px 16px;border-radius:8px 8px 0 0;border:none;background:transparent;color:rgba(255,255,255,.35);font-size:13px;font-weight:600;cursor:pointer;width:auto;border-bottom:2px solid transparent;transition:all .2s}
+.tab-btn.on{color:#fff;border-bottom-color:#E8417A}
+
+/* ── SEQ ─────────────────────────────────────── */
+.seq-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.seq-col-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.3);margin-bottom:10px}
+.seq-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.seq-item:last-child{border-bottom:none}
+.seq-day{font-size:11px;font-weight:700;min-width:36px;padding:3px 8px;border-radius:6px;background:rgba(232,65,122,.15);color:#e8417a;text-align:center}
+.seq-day.paid{background:rgba(34,197,94,.12);color:#22C55E}
+.seq-sub{font-size:13px;color:rgba(255,255,255,.6)}
+
+@media(max-width:1024px){
+  .stat-row{grid-template-columns:repeat(3,1fr)}
+  .grid-3{grid-template-columns:1fr 1fr}
+  .grid-6040{grid-template-columns:1fr}
+  .ph-stats{grid-template-columns:repeat(2,1fr)}
+}
 @media(max-width:768px){
-  #dashboard{padding:16px}
-  .stats{grid-template-columns:1fr}
+  .dash-body{padding:16px}
+  .dash-nav{padding:14px 16px}
+  .stat-row{grid-template-columns:repeat(2,1fr)}
+  .grid-2,.grid-3,.grid-6040{grid-template-columns:1fr}
+  .ad-tracker{grid-template-columns:1fr}
+  .ad-inputs{border-right:none;border-bottom:1px solid rgba(255,255,255,.06)}
+  .seq-grid{grid-template-columns:1fr}
+  table{min-width:660px}
   .tbl-wrap{overflow-x:auto}
-  table{min-width:700px}
-  .resend-row{flex-direction:column}
-  .resend-row button{width:100%}
 }
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- ══ LOGIN ═══════════════════════════════════════════════════ -->
 <div id="login">
   <div class="login-box">
     <h1>GBI Admin</h1>
@@ -117,189 +198,567 @@ tr:hover td{background:rgba(255,255,255,.02)}
   </div>
 </div>
 
-<!-- DASHBOARD -->
+<!-- ══ DASHBOARD ════════════════════════════════════════════════ -->
 <div id="dashboard">
-  <nav>
-    <h1>📊 Get Biz Idea — Admin</h1>
-    <button class="logout" onclick="logout()">Sign out</button>
-  </nav>
 
-  <!-- STATS -->
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-v green" id="s-revenue">—</div>
-      <div class="stat-l">Est. revenue (€7 × paid)</div>
+  <div class="dash-nav">
+    <div class="dash-nav-left">
+      <h1>📊 Get Biz Idea</h1>
+      <span class="updated" id="updated-at"></span>
     </div>
-    <div class="stat">
-      <div class="stat-v pink" id="s-paid">—</div>
-      <div class="stat-l">Paid orders</div>
-    </div>
-    <div class="stat">
-      <div class="stat-v" id="s-total">—</div>
-      <div class="stat-l">Total quiz completions</div>
+    <div class="nav-btns">
+      <button class="period-btn on" onclick="setPeriod(30,this)">30 dní</button>
+      <button class="period-btn" onclick="setPeriod(7,this)">7 dní</button>
+      <button class="period-btn" onclick="setPeriod(0,this)">Vše</button>
+      <button class="btn-sm" onclick="fetchData()">↻ Refresh</button>
+      <button class="btn-sm" onclick="logout()">Odhlásit</button>
     </div>
   </div>
 
-  <!-- TRAFFIC PANEL -->
-  <div class="traffic-panel">
-    <h2>📣 Paid Traffic — přehled</h2>
-    <div class="tp-grid">
+  <div class="dash-body">
 
-      <!-- PIXEL STATUS -->
-      <div class="tp-block">
-        <h3>Meta Pixel — stav</h3>
-        <div class="tp-row"><span class="tp-label">Pixel ID</span><span class="tp-val">992472496604900</span></div>
-        <div class="tp-row"><span class="tp-label">PageView</span><span class="tp-val tp-ok">✓ index + quiz</span></div>
-        <div class="tp-row"><span class="tp-label">Lead</span><span class="tp-val tp-ok">✓ po zadání e-mailu</span></div>
-        <div class="tp-row"><span class="tp-label">InitiateCheckout</span><span class="tp-val tp-ok">✓ klik na platbu (7 €)</span></div>
-        <div class="tp-row"><span class="tp-label">Purchase</span><span class="tp-val tp-ok">✓ po otevření paid plánu</span></div>
-        <div class="tp-row"><span class="tp-label">Dedup Purchase</span><span class="tp-val tp-ok">✓ localStorage per RID</span></div>
-        <div class="tp-row"><span class="tp-label">Test-order ochrana</span><span class="tp-val tp-ok">✓ PIN 2810 = is_test</span></div>
-        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-          <a class="tp-link" href="https://business.facebook.com/events_manager" target="_blank">→ Events Manager</a>
-          <a class="tp-link" href="https://business.facebook.com/events_manager/test-events" target="_blank">→ Test Events</a>
-        </div>
-        <p class="tp-note">Ověř funnel: otevři Test Events, dej tam URL getbizidea.com a projdi kvíz. Musíš vidět PageView → Lead → InitiateCheckout → Purchase.</p>
+    <!-- STAT TILES -->
+    <div class="stat-row">
+      <div class="stat-tile green">
+        <div class="stat-v green" id="s-revenue">—</div>
+        <div class="stat-l">Celkový příjem</div>
+        <div class="stat-delta" id="s-revenue-d"></div>
       </div>
+      <div class="stat-tile pink">
+        <div class="stat-v pink" id="s-paid">—</div>
+        <div class="stat-l">Placených objednávek</div>
+        <div class="stat-delta" id="s-paid-d"></div>
+      </div>
+      <div class="stat-tile blue">
+        <div class="stat-v blue" id="s-leads">—</div>
+        <div class="stat-l">Leads (e-maily)</div>
+        <div class="stat-delta" id="s-leads-d"></div>
+      </div>
+      <div class="stat-tile yellow">
+        <div class="stat-v yellow" id="s-cr">—</div>
+        <div class="stat-l">Konverzní poměr</div>
+      </div>
+      <div class="stat-tile purple">
+        <div class="stat-v purple" id="s-emailrate">—</div>
+        <div class="stat-l">E-mail capture rate</div>
+      </div>
+      <div class="stat-tile teal">
+        <div class="stat-v teal" id="s-roas">—</div>
+        <div class="stat-l">ROAS (z ad trackeru)</div>
+      </div>
+    </div>
 
-      <!-- AD ECONOMICS -->
-      <div class="tp-block">
-        <h3>Ekonomika reklamy</h3>
-        <div class="tp-math">
-          <b>Produkt:</b> 7 € <span class="dim">(net ~5,6 € po Stripe 2 %)</span><br>
-          <br>
-          <b>Break-even CPP:</b> 5,60 €<br>
-          <span class="dim">→ reálný CPP u cold traffic: 15–40 €</span><br>
-          <span class="dim">→ první týden = kupuješ data, ne profit</span><br>
-          <br>
-          <b>Budget týden 1:</b> max 50 €<br>
-          <span class="dim">→ 1 kampaň · 1 ad set · 3 creativy</span><br>
-          <span class="dim">→ ~7 €/den · nechej běžet min. 5 dní</span><br>
-          <br>
-          <b>Cíl kampaně:</b> <span class="tp-warn">Leads</span> (ne Purchase)<br>
-          <span class="dim">→ přepni na Purchase až při 50+ Lead/týden</span><br>
-          <br>
-          <b>Upsell (chybí):</b> <span class="tp-warn">⚠ 27 € tier</span><br>
-          <span class="dim">→ bez upsell jsou ads těžko profitabilní</span>
+    <!-- REVENUE CHART -->
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2>Příjmy & objednávky v čase</h2>
+          <div class="card-sub">Za posledních 30 dní</div>
         </div>
       </div>
+      <div class="card-body">
+        <div class="chart-wrap-lg"><canvas id="chart-revenue"></canvas></div>
+      </div>
+    </div>
 
-      <!-- KPIs -->
-      <div class="tp-block">
-        <h3>Co sledovat</h3>
-        <div class="tp-row"><span class="tp-label">CPL (cost per lead)</span><span class="tp-val tp-warn">cíl &lt; 2 €</span></div>
-        <div class="tp-row"><span class="tp-label">Lead→Pay CR</span><span class="tp-val tp-warn">cíl &gt; 5 %</span></div>
-        <div class="tp-row"><span class="tp-label">CPP (cost per purchase)</span><span class="tp-val tp-warn">cíl &lt; 10 €</span></div>
-        <div class="tp-row"><span class="tp-label">ROAS (7 € produkt)</span><span class="tp-val tp-warn">cíl &gt; 1,5×</span></div>
-        <div class="tp-row"><span class="tp-label">Frekvence (reach/impr)</span><span class="tp-val">kill nad 3,5×</span></div>
-        <div style="margin-top:10px">
-          <a class="tp-link" href="https://us.posthog.com" target="_blank">→ PostHog</a>
-          <p class="tp-note" style="margin-top:8px">PostHog klíč: phc_BoaH…Qrg6 (host: us.i.posthog.com)<br>Eventy: quiz_completed · plan_generated · email_captured · checkout_started · plan_unlocked</p>
-        </div>
-        <div style="margin-top:10px">
-          <h3 style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.35);margin-bottom:8px">Kdy reklamy zastavit</h3>
-          <p class="tp-note">CPP &gt; 20 € po 100 € spend → pauza, testuj nový hook.<br>CTR &lt; 1 % → vyměň creative.<br>Frekvence &gt; 3,5 → rozšiř audience nebo zastav.</p>
+    <!-- FUNNEL + COUNTRIES + IDEAS -->
+    <div class="grid-3">
+
+      <!-- FUNNEL -->
+      <div class="card">
+        <div class="card-head"><h2>Konverzní funnel</h2></div>
+        <div class="card-body" id="funnel-body">
+          <div class="loading">Načítám…</div>
         </div>
       </div>
 
-    </div>
-  </div>
-
-  <!-- RESEND TOOL -->
-  <div class="resend-box">
-    <h2>🔗 Resend magic link to customer</h2>
-    <div class="resend-row">
-      <input type="email" id="resend-email" placeholder="customer@email.com">
-      <button onclick="doResend()">Resend link</button>
-    </div>
-    <div class="resend-msg" id="resend-msg"></div>
-  </div>
-
-  <!-- EMAIL SEQUENCE -->
-  <div class="resend-box" style="margin-bottom:24px">
-    <h2>📧 Automated email sequence</h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px">
-      <div>
-        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.35);margin-bottom:10px">Pre-purchase (gave email, didn't pay)</div>
-        <div class="seq-item"><span class="seq-day">D+0</span><span class="seq-sub">Your business idea is ready</span></div>
-        <div class="seq-item"><span class="seq-day">D+1</span><span class="seq-sub">👀 Your plan is still waiting</span></div>
-        <div class="seq-item seq-last"><span class="seq-day">D+3</span><span class="seq-sub">⏳ Last reminder — expires soon</span></div>
+      <!-- COUNTRIES -->
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h2>Země</h2>
+            <div class="card-sub">Odkud chodí uživatelé</div>
+          </div>
+        </div>
+        <div class="card-body" id="country-body">
+          <div class="loading">Načítám…</div>
+        </div>
       </div>
-      <div>
-        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.35);margin-bottom:10px">Post-purchase (paid customer)</div>
-        <div class="seq-item"><span class="seq-day seq-paid">D+0</span><span class="seq-sub">🎉 Your full plan is unlocked</span></div>
-        <div class="seq-item"><span class="seq-day seq-paid">D+1</span><span class="seq-sub">✓ Day 1 — first action today</span></div>
-        <div class="seq-item"><span class="seq-day seq-paid">D+3</span><span class="seq-sub">🔥 Day 3 check-in</span></div>
-        <div class="seq-item"><span class="seq-day seq-paid">D+7</span><span class="seq-sub">🎯 Week 1 milestone</span></div>
-        <div class="seq-item"><span class="seq-day seq-paid">D+14</span><span class="seq-sub">💬 Day 14 — the hard part</span></div>
-        <div class="seq-item"><span class="seq-day seq-paid">D+30</span><span class="seq-sub">🏆 Month 1 done</span></div>
-        <div class="seq-item"><span class="seq-day seq-paid">D+60</span><span class="seq-sub">💰 Day 60 milestone</span></div>
-        <div class="seq-item seq-last"><span class="seq-day seq-paid">D+90</span><span class="seq-sub">🎉 90-day plan complete</span></div>
-      </div>
-    </div>
-    <div style="font-size:12px;color:rgba(255,255,255,.25);margin-top:14px">All emails sent automatically via Brevo · 10 emails total per customer</div>
-  </div>
 
-  <!-- TABLE -->
-  <div class="tbl-wrap">
-    <div class="tbl-head">
-      <h2>Orders</h2>
-      <div class="filter-row">
-        <button class="filter-btn on" onclick="setFilter('all',this)">All</button>
-        <button class="filter-btn" onclick="setFilter('paid',this)">Paid only</button>
-        <button class="filter-btn" onclick="setFilter('free',this)">Free only</button>
+      <!-- TOP IDEAS -->
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h2>Top business nápady</h2>
+            <div class="card-sub">Pouze platící zákazníci</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="chart-wrap"><canvas id="chart-ideas"></canvas></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- AD SPEND TRACKER + POSTHOG -->
+    <div class="grid-2">
+
+      <!-- AD TRACKER -->
+      <div class="card">
+        <div class="card-head"><h2>💰 Ad Spend Tracker</h2></div>
+        <div class="ad-tracker">
+          <div class="ad-inputs">
+            <label class="ad-label">Celkový spend na Meta Ads (€)</label>
+            <input class="ad-input" id="ad-spend" type="number" placeholder="0" oninput="calcRoas()">
+            <label class="ad-label">Výnos z reklamy — přibližně (€)</label>
+            <input class="ad-input" id="ad-revenue" type="number" placeholder="automaticky z databáze" oninput="calcRoas()">
+            <label class="ad-label">Počet leadů z reklamy (odhadem)</label>
+            <input class="ad-input" id="ad-leads" type="number" placeholder="0" oninput="calcRoas()">
+            <label class="ad-label">Počet plateb z reklamy (odhadem)</label>
+            <input class="ad-input" id="ad-purchases" type="number" placeholder="0" oninput="calcRoas()">
+          </div>
+          <div class="ad-results">
+            <div class="ad-metric">
+              <div class="ad-metric-v" id="ar-roas">—</div>
+              <div class="ad-metric-l">ROAS</div>
+            </div>
+            <div class="ad-metric">
+              <div class="ad-metric-v" id="ar-cpp">—</div>
+              <div class="ad-metric-l">CPP (€/nákup)</div>
+            </div>
+            <div class="ad-metric">
+              <div class="ad-metric-v" id="ar-cpl">—</div>
+              <div class="ad-metric-l">CPL (€/lead)</div>
+            </div>
+            <div class="ad-metric">
+              <div class="ad-metric-v" id="ar-be">5,60 €</div>
+              <div class="ad-metric-l">Break-even CPP</div>
+            </div>
+            <div class="ad-note" id="ar-note">Zadej čísla vlevo — vypočítám ROAS, CPP a CPL.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- POSTHOG -->
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h2>📈 PostHog — live traffic</h2>
+            <div class="card-sub" id="ph-status-label">Zadej Personal API Key pro live data</div>
+          </div>
+          <button class="btn-sm" id="ph-reset-btn" onclick="phReset()" style="display:none">Odpojit</button>
+        </div>
+
+        <div id="ph-connect-box" class="ph-connect">
+          <div class="ph-hint">
+            Personal API Key získáš na
+            <a class="ph-link" href="https://us.posthog.com/settings/user-api-keys" target="_blank">posthog.com → Settings → Personal API Keys</a>.
+            Klíč se uloží jen lokálně (localStorage).
+          </div>
+          <div class="ph-form">
+            <input id="ph-key-in" placeholder="phx_xxxxxxxxxx" style="margin:0;font-size:13px;padding:10px 14px">
+            <input id="ph-proj-in" placeholder="Project ID (číslo)" style="margin:0;font-size:13px;padding:10px 14px;max-width:160px">
+            <button onclick="phConnect()" style="padding:10px 18px;font-size:13px;width:auto">Připojit</button>
+          </div>
+          <div class="ph-hint" style="color:rgba(255,255,255,.2)">
+            Project ID najdeš v URL: us.posthog.com/project/<b style="color:rgba(255,255,255,.45)">XXXXX</b>/…<br>
+            Tvůj project key (ingestion): <code style="font-size:11px;color:#E8417A">phc_BoaH…QrG6</code>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <a class="link-btn" href="https://us.posthog.com" target="_blank">→ PostHog dashboard</a>
+            <a class="link-btn" href="https://us.posthog.com/settings/user-api-keys" target="_blank">→ API keys</a>
+          </div>
+        </div>
+
+        <div id="ph-data-box" class="ph-connect" style="display:none">
+          <div class="ph-stats" id="ph-stats-grid">
+            <div class="ph-stat"><div class="ph-stat-v" id="ph-pv">—</div><div class="ph-stat-l">Pageviews (30d)</div></div>
+            <div class="ph-stat"><div class="ph-stat-v" id="ph-sess">—</div><div class="ph-stat-l">Sessions (30d)</div></div>
+            <div class="ph-stat"><div class="ph-stat-v" id="ph-qc">—</div><div class="ph-stat-l">Quiz completed</div></div>
+            <div class="ph-stat"><div class="ph-stat-v" id="ph-ec">—</div><div class="ph-stat-l">Email captured</div></div>
+          </div>
+          <div style="font-size:11px;color:rgba(255,255,255,.2)">Data z PostHog, posledních 30 dní · aktualizováno každý load</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <a class="link-btn" href="https://us.posthog.com" target="_blank">→ PostHog dashboard</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- EMAIL SEQUENCE -->
+    <div class="card">
+      <div class="card-head"><h2>📧 Automatická e-mailová sekvence</h2></div>
+      <div class="card-body">
+        <div class="seq-grid">
+          <div>
+            <div class="seq-col-label">Pre-purchase (email zadán, nezaplatil)</div>
+            <div class="seq-item"><span class="seq-day">D+0</span><span class="seq-sub">Your business idea is ready</span></div>
+            <div class="seq-item"><span class="seq-day">D+1</span><span class="seq-sub">👀 Your plan is still waiting</span></div>
+            <div class="seq-item"><span class="seq-day">D+3</span><span class="seq-sub">⏳ Last reminder — expires soon</span></div>
+          </div>
+          <div>
+            <div class="seq-col-label">Post-purchase (zaplatil)</div>
+            <div class="seq-item"><span class="seq-day paid">D+0</span><span class="seq-sub">🎉 Your full plan is unlocked</span></div>
+            <div class="seq-item"><span class="seq-day paid">D+1</span><span class="seq-sub">✓ Day 1 — first action today</span></div>
+            <div class="seq-item"><span class="seq-day paid">D+3</span><span class="seq-sub">🔥 Day 3 check-in</span></div>
+            <div class="seq-item"><span class="seq-day paid">D+7</span><span class="seq-sub">🎯 Week 1 milestone</span></div>
+            <div class="seq-item"><span class="seq-day paid">D+14</span><span class="seq-sub">💬 Day 14 — the hard part</span></div>
+            <div class="seq-item"><span class="seq-day paid">D+30</span><span class="seq-sub">🏆 Month 1 done</span></div>
+            <div class="seq-item"><span class="seq-day paid">D+60</span><span class="seq-sub">💰 Day 60 milestone</span></div>
+            <div class="seq-item"><span class="seq-day paid">D+90</span><span class="seq-sub">🎉 90-day plan complete</span></div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:rgba(255,255,255,.2);margin-top:16px">Odesíláno automaticky přes Brevo · 11 e-mailů celkem na zákazníka</div>
       </div>
     </div>
-    <div id="tbl-body"><div class="loading">Loading…</div></div>
-  </div>
-</div>
+
+    <!-- RESEND TOOL -->
+    <div class="card">
+      <div class="card-head"><h2>🔗 Znovu odeslat magic link</h2></div>
+      <div class="card-body">
+        <div class="resend-row">
+          <input type="email" id="resend-email" placeholder="zakaznik@email.com" style="margin:0">
+          <button onclick="doResend()" style="width:auto;padding:10px 18px;font-size:14px">Odeslat link</button>
+        </div>
+        <div class="resend-msg" id="resend-msg"></div>
+      </div>
+    </div>
+
+    <!-- ORDERS TABLE -->
+    <div class="card">
+      <div class="tbl-head">
+        <h2>Objednávky</h2>
+        <div class="filter-row">
+          <button class="filter-btn on" onclick="setFilter('all',this)">Vše</button>
+          <button class="filter-btn" onclick="setFilter('paid',this)">Paid</button>
+          <button class="filter-btn" onclick="setFilter('free',this)">Free</button>
+        </div>
+      </div>
+      <div id="tbl-body"><div class="loading">Načítám…</div></div>
+    </div>
+
+  </div><!-- /dash-body -->
+</div><!-- /dashboard -->
 
 <script>
+// ── STATE ───────────────────────────────────────────────────────
 let TOKEN = '';
-let ALL_ORDERS = [];
+let DATA = null;
 let FILTER = 'all';
+let PERIOD = 30;
+let chartRevenue = null, chartIdeas = null;
 
+// ── LOGIN ────────────────────────────────────────────────────────
 function doLogin() {
   const pwd = document.getElementById('pwd').value.trim();
   if (!pwd) return;
   TOKEN = pwd;
+  document.getElementById('login-err').textContent = '';
   fetchData();
 }
-
 function logout() {
-  TOKEN = '';
-  ALL_ORDERS = [];
+  TOKEN = ''; DATA = null;
   document.getElementById('login').style.display = 'flex';
   document.getElementById('dashboard').style.display = 'none';
   document.getElementById('pwd').value = '';
 }
 
+// ── FETCH ────────────────────────────────────────────────────────
 async function fetchData() {
   try {
     const r = await fetch('/api/admin', { headers: { 'Authorization': 'Bearer ' + TOKEN } });
-    if (r.status === 401) {
-      document.getElementById('login-err').textContent = 'Wrong password';
-      return;
-    }
-    const data = await r.json();
-    if (data.error) { document.getElementById('login-err').textContent = data.error; return; }
-
-    // Show dashboard
+    if (r.status === 401) { document.getElementById('login-err').textContent = 'Špatné heslo'; return; }
+    const d = await r.json();
+    if (d.error) { document.getElementById('login-err').textContent = d.error; return; }
+    DATA = d;
     document.getElementById('login').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
-    document.getElementById('login-err').textContent = '';
-
-    ALL_ORDERS = data.orders || [];
-    document.getElementById('s-revenue').textContent = '€' + (data.stats.revenue_eur || 0).toLocaleString();
-    document.getElementById('s-paid').textContent = data.stats.paid || 0;
-    document.getElementById('s-total').textContent = data.stats.total || 0;
-
-    renderTable();
+    document.getElementById('updated-at').textContent = 'Aktualizováno ' + new Date().toLocaleTimeString('cs-CZ');
+    render();
+    loadAdTracker();
+    initPostHog();
   } catch(e) {
-    document.getElementById('login-err').textContent = 'Connection error';
+    document.getElementById('login-err').textContent = 'Chyba připojení';
   }
 }
 
+function setPeriod(p, btn) {
+  PERIOD = p;
+  document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  if (DATA) render();
+}
+
+// ── RENDER ALL ───────────────────────────────────────────────────
+function render() {
+  renderStats();
+  renderRevenueChart();
+  renderFunnel();
+  renderCountries();
+  renderIdeasChart();
+  renderTable();
+  calcRoas();
+}
+
+// ── STATS ────────────────────────────────────────────────────────
+function renderStats() {
+  const s = DATA.stats;
+  set('s-revenue', '€' + (s.revenue_eur || 0).toLocaleString('cs-CZ'));
+  set('s-paid', s.paid || 0);
+  set('s-leads', s.with_email || 0);
+  set('s-cr', (s.conv_rate || 0) + ' %');
+  set('s-emailrate', (s.email_rate || 0) + ' %');
+  // ROAS from localStorage
+  const spend = parseFloat(localStorage.getItem('gbi_ad_spend') || '0');
+  const roas = spend > 0 ? (s.revenue_eur / spend).toFixed(2) + '×' : '—';
+  set('s-roas', roas);
+}
+function set(id, v) { const el = document.getElementById(id); if (el) el.textContent = v; }
+
+// ── REVENUE CHART ─────────────────────────────────────────────────
+function renderRevenueChart() {
+  const days = DATA.by_day || [];
+  const labels = days.map(d => {
+    const dt = new Date(d.date);
+    return dt.toLocaleDateString('cs-CZ', { day:'numeric', month:'short' });
+  });
+  const revData = days.map(d => d.revenue);
+  const totData = days.map(d => d.total);
+
+  const ctx = document.getElementById('chart-revenue').getContext('2d');
+  if (chartRevenue) chartRevenue.destroy();
+  chartRevenue = new Chart(ctx, {
+    data: {
+      labels,
+      datasets: [
+        {
+          type: 'bar',
+          label: 'Objednávky',
+          data: totData,
+          backgroundColor: 'rgba(96,165,250,.25)',
+          borderColor: 'rgba(96,165,250,.5)',
+          borderWidth: 1,
+          yAxisID: 'yOrders',
+          borderRadius: 3,
+        },
+        {
+          type: 'line',
+          label: 'Příjem (€)',
+          data: revData,
+          borderColor: '#22C55E',
+          backgroundColor: 'rgba(34,197,94,.08)',
+          fill: true,
+          tension: .35,
+          pointRadius: 3,
+          pointBackgroundColor: '#22C55E',
+          yAxisID: 'yRevenue',
+          borderWidth: 2,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { labels: { color: 'rgba(255,255,255,.5)', font: { size: 12 } } },
+        tooltip: { backgroundColor: '#1a1a1a', titleColor: '#fff', bodyColor: 'rgba(255,255,255,.7)', borderColor: 'rgba(255,255,255,.1)', borderWidth: 1 }
+      },
+      scales: {
+        x: { ticks: { color: 'rgba(255,255,255,.3)', font: { size: 11 }, maxTicksLimit: 10 }, grid: { color: 'rgba(255,255,255,.04)' } },
+        yRevenue: { type: 'linear', position: 'left', ticks: { color: '#22C55E', font: { size: 11 }, callback: v => '€' + v }, grid: { color: 'rgba(255,255,255,.04)' } },
+        yOrders: { type: 'linear', position: 'right', ticks: { color: 'rgba(96,165,250,.7)', font: { size: 11 }, stepSize: 1 }, grid: { display: false } }
+      }
+    }
+  });
+}
+
+// ── FUNNEL ────────────────────────────────────────────────────────
+function renderFunnel() {
+  const funnel = DATA.funnel || [];
+  const max = funnel[0]?.count || 1;
+  const colors = ['#E8417A', '#60A5FA', '#22C55E'];
+  const html = funnel.map((f, i) => `
+    <div class="funnel-step">
+      <span class="funnel-label">${f.label}</span>
+      <div class="funnel-bar-wrap">
+        <div class="funnel-bar" style="width:${(f.count/max*100).toFixed(1)}%;background:${colors[i]}"></div>
+      </div>
+      <span class="funnel-val">${f.count}</span>
+      <span class="funnel-pct">${f.pct} %</span>
+    </div>`).join('');
+  document.getElementById('funnel-body').innerHTML = html || '<div class="empty">Žádná data</div>';
+}
+
+// ── COUNTRIES ─────────────────────────────────────────────────────
+function renderCountries() {
+  const list = DATA.by_country || [];
+  const max = list[0]?.count || 1;
+  const html = list.map(c => `
+    <div class="country-row">
+      <span class="country-name">${c.label}</span>
+      <div class="country-bar-wrap"><div class="country-bar" style="width:${(c.count/max*100).toFixed(1)}%"></div></div>
+      <span class="country-count">${c.count}</span>
+    </div>`).join('');
+  document.getElementById('country-body').innerHTML = html || '<div class="empty">Žádná data</div>';
+}
+
+// ── TOP IDEAS DOUGHNUT ────────────────────────────────────────────
+function renderIdeasChart() {
+  const ideas = (DATA.top_ideas || []).slice(0, 6);
+  if (!ideas.length) return;
+  const palette = ['#E8417A','#60A5FA','#22C55E','#F59E0B','#A78BFA','#2DD4BF'];
+  const ctx = document.getElementById('chart-ideas').getContext('2d');
+  if (chartIdeas) chartIdeas.destroy();
+  chartIdeas = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ideas.map(i => i.label),
+      datasets: [{ data: ideas.map(i => i.count), backgroundColor: palette, borderColor: '#111', borderWidth: 2 }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '65%',
+      plugins: {
+        legend: { position: 'bottom', labels: { color: 'rgba(255,255,255,.5)', font: { size: 11 }, padding: 10, boxWidth: 12 } },
+        tooltip: { backgroundColor: '#1a1a1a', titleColor: '#fff', bodyColor: 'rgba(255,255,255,.7)', borderColor: 'rgba(255,255,255,.1)', borderWidth: 1 }
+      }
+    }
+  });
+}
+
+// ── AD TRACKER ────────────────────────────────────────────────────
+function loadAdTracker() {
+  const spend = localStorage.getItem('gbi_ad_spend') || '';
+  const leads = localStorage.getItem('gbi_ad_leads') || '';
+  const purchases = localStorage.getItem('gbi_ad_purchases') || '';
+  if (spend) document.getElementById('ad-spend').value = spend;
+  if (leads) document.getElementById('ad-leads').value = leads;
+  if (purchases) document.getElementById('ad-purchases').value = purchases;
+  calcRoas();
+}
+
+function calcRoas() {
+  const spend = parseFloat(document.getElementById('ad-spend').value) || 0;
+  const manualRev = parseFloat(document.getElementById('ad-revenue').value);
+  const leads = parseFloat(document.getElementById('ad-leads').value) || 0;
+  const purchases = parseFloat(document.getElementById('ad-purchases').value) || 0;
+  const revenue = !isNaN(manualRev) ? manualRev : (DATA?.stats?.revenue_eur || 0);
+
+  // Persist
+  if (spend) localStorage.setItem('gbi_ad_spend', spend);
+  if (leads) localStorage.setItem('gbi_ad_leads', leads);
+  if (purchases) localStorage.setItem('gbi_ad_purchases', purchases);
+
+  const roas = spend > 0 ? (revenue / spend) : null;
+  const cpp = purchases > 0 ? (spend / purchases) : null;
+  const cpl = leads > 0 ? (spend / leads) : null;
+
+  function clr(v, good, warn) {
+    if (v === null) return '';
+    if (v >= good) return 'good';
+    if (v >= warn) return 'warn';
+    return 'bad';
+  }
+
+  setMetric('ar-roas', roas !== null ? roas.toFixed(2) + '×' : '—', clr(roas, 1.5, 0.8));
+  setMetric('ar-cpp', cpp !== null ? '€' + cpp.toFixed(2) : '—', cpp !== null ? clr(10 - cpp + 5, 5, 0) : '');
+  setMetric('ar-cpl', cpl !== null ? '€' + cpl.toFixed(2) : '—', cpl !== null ? clr(2 - cpl + 1, 1, 0) : '');
+
+  // ROAS tile
+  set('s-roas', roas !== null ? roas.toFixed(2) + '×' : '—');
+
+  // Note
+  let note = '';
+  if (!spend) {
+    note = 'Zadej čísla vlevo — vypočítám ROAS, CPP a CPL.';
+  } else if (roas !== null && roas < 1) {
+    note = '⚠️ ROAS pod 1.0 — utratíš víc než vyděláš. Zkus nový hook nebo zastav reklamy.';
+  } else if (roas !== null && roas >= 2) {
+    note = '✅ ROAS ' + roas.toFixed(2) + '× — škáluj! Zdvojnásob spend, sleduj frekvenci.';
+  } else if (roas !== null) {
+    note = 'ROAS ' + roas.toFixed(2) + '×. Break-even je ~0.8× (Stripe fees). Cíl: 2×+. Testuj nový creative.';
+  }
+  document.getElementById('ar-note').textContent = note;
+}
+
+function setMetric(id, val, cls) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = val;
+  el.className = 'ad-metric-v ' + (cls || '');
+}
+
+// ── POSTHOG ───────────────────────────────────────────────────────
+function initPostHog() {
+  const key = localStorage.getItem('gbi_ph_key');
+  const proj = localStorage.getItem('gbi_ph_proj');
+  if (key && proj) {
+    document.getElementById('ph-key-in').value = key;
+    document.getElementById('ph-proj-in').value = proj;
+    fetchPostHog(key, proj);
+  }
+}
+
+async function phConnect() {
+  const key = document.getElementById('ph-key-in').value.trim();
+  const proj = document.getElementById('ph-proj-in').value.trim();
+  if (!key || !proj) { alert('Zadej Personal API Key i Project ID'); return; }
+  localStorage.setItem('gbi_ph_key', key);
+  localStorage.setItem('gbi_ph_proj', proj);
+  fetchPostHog(key, proj);
+}
+
+async function phReset() {
+  localStorage.removeItem('gbi_ph_key');
+  localStorage.removeItem('gbi_ph_proj');
+  document.getElementById('ph-connect-box').style.display = 'block';
+  document.getElementById('ph-data-box').style.display = 'none';
+  document.getElementById('ph-reset-btn').style.display = 'none';
+  document.getElementById('ph-status-label').textContent = 'Zadej Personal API Key pro live data';
+}
+
+async function phQuery(key, projId, eventName) {
+  const from = new Date(); from.setDate(from.getDate() - 30);
+  const url = `https://us.posthog.com/api/projects/${projId}/insights/trend/?` + new URLSearchParams({
+    events: JSON.stringify([{ id: eventName, type: 'events' }]),
+    date_from: from.toISOString().slice(0, 10),
+    interval: 'day',
+  });
+  const r = await fetch(url, { headers: { Authorization: 'Bearer ' + key } });
+  if (!r.ok) throw new Error('PostHog ' + r.status);
+  const d = await r.json();
+  const counts = d.result?.[0]?.data || [];
+  return counts.reduce((a, b) => a + b, 0);
+}
+
+async function fetchPostHog(key, proj) {
+  document.getElementById('ph-status-label').textContent = 'Načítám z PostHog…';
+  try {
+    const [pv, sess, qc, ec] = await Promise.all([
+      phQuery(key, proj, '$pageview'),
+      phQuery(key, proj, '$session'),
+      phQuery(key, proj, 'quiz_completed'),
+      phQuery(key, proj, 'email_captured'),
+    ]);
+    set('ph-pv', pv.toLocaleString('cs-CZ'));
+    set('ph-sess', sess.toLocaleString('cs-CZ'));
+    set('ph-qc', qc.toLocaleString('cs-CZ'));
+    set('ph-ec', ec.toLocaleString('cs-CZ'));
+    document.getElementById('ph-connect-box').style.display = 'none';
+    document.getElementById('ph-data-box').style.display = 'flex';
+    document.getElementById('ph-reset-btn').style.display = 'block';
+    document.getElementById('ph-status-label').textContent = 'Posledních 30 dní · live';
+  } catch(e) {
+    document.getElementById('ph-status-label').textContent = 'Chyba: ' + e.message + '. Zkontroluj key/project ID.';
+    document.getElementById('ph-connect-box').style.display = 'block';
+    document.getElementById('ph-data-box').style.display = 'none';
+  }
+}
+
+// ── ORDERS TABLE ──────────────────────────────────────────────────
 function setFilter(f, btn) {
   FILTER = f;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
@@ -308,59 +767,47 @@ function setFilter(f, btn) {
 }
 
 function renderTable() {
-  const orders = ALL_ORDERS.filter(o => {
+  const orders = (DATA.orders || []).filter(o => {
     if (FILTER === 'paid') return o.paid;
     if (FILTER === 'free') return !o.paid;
     return true;
   });
-
   if (!orders.length) {
-    document.getElementById('tbl-body').innerHTML = '<div class="empty">No orders found</div>';
+    document.getElementById('tbl-body').innerHTML = '<div class="empty">Žádné záznamy</div>';
     return;
   }
-
   const rows = orders.map(o => {
-    const date = new Date(o.created_at);
-    const dateStr = date.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
-    const timeStr = date.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+    const dt = new Date(o.created_at);
+    const ds = dt.toLocaleDateString('cs-CZ', { day:'2-digit', month:'short', year:'numeric' });
+    const ts = dt.toLocaleTimeString('cs-CZ', { hour:'2-digit', minute:'2-digit' });
     return `<tr>
-      <td class="date-cell">${dateStr}<br><span style="font-size:11px">${timeStr}</span></td>
+      <td class="date-cell">${ds}<br>${ts}</td>
       <td class="email-cell" title="${o.email}">${o.email}</td>
       <td class="biz-cell" title="${o.business}">${o.business}</td>
       <td>${o.location}</td>
       <td>${o.paid ? '<span class="badge-paid">PAID</span>' : '<span class="badge-free">free</span>'}</td>
-      <td class="actions">
-        <a class="link-btn" href="${o.magic_link}" target="_blank">Open</a>
-        <button class="copy-btn" onclick="copyLink('${o.magic_link}',this)">Copy</button>
-      </td>
+      <td><div class="actions-cell"><a class="link-btn" href="${o.magic_link}" target="_blank">Otevřít</a><button class="copy-btn" onclick="copyLink('${o.magic_link}',this)">Kopírovat</button></div></td>
     </tr>`;
   }).join('');
-
-  document.getElementById('tbl-body').innerHTML = `
-    <table>
-      <thead><tr>
-        <th>Date</th><th>Email</th><th>Business</th><th>Location</th><th>Status</th><th>Link</th>
-      </tr></thead>
-      <tbody>${rows}</tbody>
-    </table>`;
+  document.getElementById('tbl-body').innerHTML = `<div class="tbl-wrap"><table>
+    <thead><tr><th>Datum</th><th>E-mail</th><th>Business</th><th>Země</th><th>Status</th><th>Link</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table></div>`;
 }
 
 function copyLink(link, btn) {
   navigator.clipboard.writeText(link).then(() => {
     const orig = btn.textContent;
-    btn.textContent = 'Copied!';
+    btn.textContent = '✓ Zkopírováno';
     btn.style.color = '#22C55E';
     setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 2000);
   });
 }
 
+// ── RESEND ────────────────────────────────────────────────────────
 async function doResend() {
   const email = document.getElementById('resend-email').value.trim();
-  const msg = document.getElementById('resend-msg');
-  if (!email || !email.includes('@')) {
-    showMsg('Enter a valid email address', 'err');
-    return;
-  }
+  if (!email || !email.includes('@')) { showMsg('Zadej platný e-mail', 'err'); return; }
   try {
     const r = await fetch('/api/resend', {
       method: 'POST',
@@ -368,17 +815,10 @@ async function doResend() {
       body: JSON.stringify({ email })
     });
     const d = await r.json();
-    if (r.ok) {
-      showMsg('✓ Email sent (if they have a paid plan)', 'ok');
-      document.getElementById('resend-email').value = '';
-    } else {
-      showMsg(d.error || 'Failed', 'err');
-    }
-  } catch(e) {
-    showMsg('Connection error', 'err');
-  }
+    if (r.ok) { showMsg('✓ E-mail odeslán (pokud mají paid plán)', 'ok'); document.getElementById('resend-email').value = ''; }
+    else { showMsg(d.error || 'Chyba', 'err'); }
+  } catch(e) { showMsg('Chyba připojení', 'err'); }
 }
-
 function showMsg(text, type) {
   const el = document.getElementById('resend-msg');
   el.textContent = text;
@@ -386,6 +826,9 @@ function showMsg(text, type) {
   el.style.display = 'block';
   setTimeout(() => el.style.display = 'none', 4000);
 }
+
+// ── INIT ──────────────────────────────────────────────────────────
+document.getElementById('pwd').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 </script>
 </body>
 </html>
