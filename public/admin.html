@@ -34,6 +34,26 @@ nav h1{font-size:20px;font-weight:800}
 .green{color:#22C55E}
 .pink{color:#E8417A}
 
+/* TRAFFIC PANEL */
+.traffic-panel{background:#111;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:24px;margin-bottom:24px}
+.traffic-panel h2{font-size:15px;font-weight:700;margin-bottom:16px}
+.tp-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.tp-block{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:16px}
+.tp-block h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.35);margin-bottom:10px}
+.tp-row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px}
+.tp-row:last-child{border-bottom:none}
+.tp-label{color:rgba(255,255,255,.45)}
+.tp-val{font-weight:600;font-size:13px}
+.tp-ok{color:#22C55E}
+.tp-warn{color:#F59E0B}
+.tp-link{font-size:12px;color:#E8417A;text-decoration:none;display:inline-flex;align-items:center;gap:4px;margin-top:8px;padding:5px 10px;border:1px solid rgba(232,65,122,.25);border-radius:6px;background:rgba(232,65,122,.08)}
+.tp-link:hover{background:rgba(232,65,122,.18)}
+.tp-note{font-size:12px;color:rgba(255,255,255,.35);line-height:1.5;margin-top:6px}
+.tp-math{font-size:13px;line-height:1.8}
+.tp-math b{color:#fff}
+.tp-math .dim{color:rgba(255,255,255,.35)}
+@media(max-width:768px){.tp-grid{grid-template-columns:1fr}}
+
 /* RESEND TOOL */
 .resend-box{background:#111;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:24px;margin-bottom:24px}
 .resend-box h2{font-size:15px;font-weight:700;margin-bottom:12px}
@@ -117,6 +137,71 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <div class="stat">
       <div class="stat-v" id="s-total">—</div>
       <div class="stat-l">Total quiz completions</div>
+    </div>
+  </div>
+
+  <!-- TRAFFIC PANEL -->
+  <div class="traffic-panel">
+    <h2>📣 Paid Traffic — přehled</h2>
+    <div class="tp-grid">
+
+      <!-- PIXEL STATUS -->
+      <div class="tp-block">
+        <h3>Meta Pixel — stav</h3>
+        <div class="tp-row"><span class="tp-label">Pixel ID</span><span class="tp-val">992472496604900</span></div>
+        <div class="tp-row"><span class="tp-label">PageView</span><span class="tp-val tp-ok">✓ index + quiz</span></div>
+        <div class="tp-row"><span class="tp-label">Lead</span><span class="tp-val tp-ok">✓ po zadání e-mailu</span></div>
+        <div class="tp-row"><span class="tp-label">InitiateCheckout</span><span class="tp-val tp-ok">✓ klik na platbu (7 €)</span></div>
+        <div class="tp-row"><span class="tp-label">Purchase</span><span class="tp-val tp-ok">✓ po otevření paid plánu</span></div>
+        <div class="tp-row"><span class="tp-label">Dedup Purchase</span><span class="tp-val tp-ok">✓ localStorage per RID</span></div>
+        <div class="tp-row"><span class="tp-label">Test-order ochrana</span><span class="tp-val tp-ok">✓ PIN 2810 = is_test</span></div>
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+          <a class="tp-link" href="https://business.facebook.com/events_manager" target="_blank">→ Events Manager</a>
+          <a class="tp-link" href="https://business.facebook.com/events_manager/test-events" target="_blank">→ Test Events</a>
+        </div>
+        <p class="tp-note">Ověř funnel: otevři Test Events, dej tam URL getbizidea.com a projdi kvíz. Musíš vidět PageView → Lead → InitiateCheckout → Purchase.</p>
+      </div>
+
+      <!-- AD ECONOMICS -->
+      <div class="tp-block">
+        <h3>Ekonomika reklamy</h3>
+        <div class="tp-math">
+          <b>Produkt:</b> 7 € <span class="dim">(net ~5,6 € po Stripe 2 %)</span><br>
+          <br>
+          <b>Break-even CPP:</b> 5,60 €<br>
+          <span class="dim">→ reálný CPP u cold traffic: 15–40 €</span><br>
+          <span class="dim">→ první týden = kupuješ data, ne profit</span><br>
+          <br>
+          <b>Budget týden 1:</b> max 50 €<br>
+          <span class="dim">→ 1 kampaň · 1 ad set · 3 creativy</span><br>
+          <span class="dim">→ ~7 €/den · nechej běžet min. 5 dní</span><br>
+          <br>
+          <b>Cíl kampaně:</b> <span class="tp-warn">Leads</span> (ne Purchase)<br>
+          <span class="dim">→ přepni na Purchase až při 50+ Lead/týden</span><br>
+          <br>
+          <b>Upsell (chybí):</b> <span class="tp-warn">⚠ 27 € tier</span><br>
+          <span class="dim">→ bez upsell jsou ads těžko profitabilní</span>
+        </div>
+      </div>
+
+      <!-- KPIs -->
+      <div class="tp-block">
+        <h3>Co sledovat</h3>
+        <div class="tp-row"><span class="tp-label">CPL (cost per lead)</span><span class="tp-val tp-warn">cíl &lt; 2 €</span></div>
+        <div class="tp-row"><span class="tp-label">Lead→Pay CR</span><span class="tp-val tp-warn">cíl &gt; 5 %</span></div>
+        <div class="tp-row"><span class="tp-label">CPP (cost per purchase)</span><span class="tp-val tp-warn">cíl &lt; 10 €</span></div>
+        <div class="tp-row"><span class="tp-label">ROAS (7 € produkt)</span><span class="tp-val tp-warn">cíl &gt; 1,5×</span></div>
+        <div class="tp-row"><span class="tp-label">Frekvence (reach/impr)</span><span class="tp-val">kill nad 3,5×</span></div>
+        <div style="margin-top:10px">
+          <a class="tp-link" href="https://us.posthog.com" target="_blank">→ PostHog</a>
+          <p class="tp-note" style="margin-top:8px">PostHog klíč: phc_BoaH…Qrg6 (host: us.i.posthog.com)<br>Eventy: quiz_completed · plan_generated · email_captured · checkout_started · plan_unlocked</p>
+        </div>
+        <div style="margin-top:10px">
+          <h3 style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.35);margin-bottom:8px">Kdy reklamy zastavit</h3>
+          <p class="tp-note">CPP &gt; 20 € po 100 € spend → pauza, testuj nový hook.<br>CTR &lt; 1 % → vyměň creative.<br>Frekvence &gt; 3,5 → rozšiř audience nebo zastav.</p>
+        </div>
+      </div>
+
     </div>
   </div>
 
