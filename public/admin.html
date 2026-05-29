@@ -152,6 +152,53 @@ tr:hover td{background:rgba(255,255,255,.02)}
 .empty{text-align:center;padding:40px;color:rgba(255,255,255,.25);font-size:14px}
 .loading{text-align:center;padding:40px;color:rgba(255,255,255,.3);font-size:14px}
 
+/* ── SCORECARD ──────────────────────────────── */
+.sc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.sc-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:16px;position:relative;overflow:hidden}
+.sc-card::after{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--c,rgba(255,255,255,.1))}
+.sc-card.green{--c:#22C55E}.sc-card.yellow{--c:#F59E0B}.sc-card.red{--c:#E8417A}.sc-card.gray{--c:rgba(255,255,255,.15)}
+.sc-name{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.35);margin-bottom:8px}
+.sc-val{font-size:26px;font-weight:900;letter-spacing:-.04em;line-height:1;margin-bottom:4px}
+.sc-row{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.sc-target{font-size:11px;color:rgba(255,255,255,.3)}
+.sc-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px}
+.sc-badge.green{background:rgba(34,197,94,.15);color:#22C55E}
+.sc-badge.yellow{background:rgba(245,158,11,.15);color:#F59E0B}
+.sc-badge.red{background:rgba(232,65,122,.15);color:#E8417A}
+.sc-badge.gray{background:rgba(255,255,255,.07);color:rgba(255,255,255,.4)}
+.sc-desc{font-size:11px;color:rgba(255,255,255,.25);margin-top:6px;line-height:1.4}
+
+/* ── PHASES ──────────────────────────────────── */
+.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden}
+.phase{padding:22px;border-right:1px solid rgba(255,255,255,.07);position:relative}
+.phase:last-child{border-right:none}
+.phase-num{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.25);margin-bottom:6px}
+.phase-title{font-size:15px;font-weight:800;margin-bottom:4px}
+.phase-period{font-size:11px;color:rgba(255,255,255,.35);margin-bottom:14px}
+.phase-goal{font-size:13px;font-weight:700;margin-bottom:12px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.04)}
+.phase-items{list-style:none;display:flex;flex-direction:column;gap:7px}
+.phase-items li{font-size:12px;color:rgba(255,255,255,.55);padding-left:16px;position:relative;line-height:1.4}
+.phase-items li::before{content:'→';position:absolute;left:0;color:rgba(255,255,255,.25)}
+.phase-items li b{color:rgba(255,255,255,.85)}
+.phase-active{background:rgba(232,65,122,.05)}
+.phase-active .phase-num{color:#E8417A}
+.phase-kpis{margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06);display:flex;flex-wrap:wrap;gap:6px}
+.kpi-tag{font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(255,255,255,.05);color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.07)}
+
+/* ── WEEKLY FOCUS ─────────────────────────────── */
+.focus-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.focus-col h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.3);margin-bottom:12px}
+.focus-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.focus-item:last-child{border-bottom:none}
+.focus-icon{font-size:14px;min-width:20px;margin-top:1px}
+.focus-text{font-size:12px;color:rgba(255,255,255,.6);line-height:1.45}
+.focus-text b{color:#fff;display:block;font-size:13px;margin-bottom:1px}
+.focus-alert{background:rgba(232,65,122,.07);border:1px solid rgba(232,65,122,.15);border-radius:10px;padding:14px 16px;font-size:12px;color:rgba(255,255,255,.6);line-height:1.5}
+.focus-alert b{color:#E8417A}
+
+@media(max-width:1024px){.sc-grid{grid-template-columns:repeat(2,1fr)}.phases{grid-template-columns:1fr}.phase{border-right:none;border-bottom:1px solid rgba(255,255,255,.07)}.phase:last-child{border-bottom:none}.focus-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.sc-grid{grid-template-columns:1fr 1fr}.focus-grid{grid-template-columns:1fr}}
+
 /* ── TABS ───────────────────────────────────── */
 .tab-row{display:flex;gap:4px;padding:16px 22px 0;border-bottom:1px solid rgba(255,255,255,.06)}
 .tab-btn{padding:8px 16px;border-radius:8px 8px 0 0;border:none;background:transparent;color:rgba(255,255,255,.35);font-size:13px;font-weight:600;cursor:pointer;width:auto;border-bottom:2px solid transparent;transition:all .2s}
@@ -247,6 +294,126 @@ tr:hover td{background:rgba(255,255,255,.02)}
         <div class="stat-l">ROAS (z ad trackeru)</div>
       </div>
     </div>
+
+    <!-- ══ PLÁN & KLÍČOVÉ METRIKY ══════════════════════════════ -->
+    <div class="card">
+      <div class="card-head" style="padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.06)">
+        <div><h2>🎯 Plán & klíčové metriky</h2><div class="card-sub">Co sledovat, kde jsi teď a co udělat příští týden</div></div>
+      </div>
+
+      <!-- SCORECARD -->
+      <div class="card-body" style="padding-bottom:0">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.3);margin-bottom:12px">Scorecard — aktuální stav vs cíl</div>
+        <div class="sc-grid" id="scorecard">
+          <!-- rendered by JS -->
+        </div>
+      </div>
+
+      <!-- FÁZE RŮSTU -->
+      <div class="card-body" style="padding-top:0;padding-bottom:0">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.3);margin-bottom:12px">Fáze růstu</div>
+        <div class="phases">
+
+          <div class="phase phase-active">
+            <div class="phase-num">Fáze 1 — nyní</div>
+            <div class="phase-title">Validace</div>
+            <div class="phase-period">Týdny 1–4</div>
+            <div class="phase-goal">🎯 Cíl: 20 platících zákazníků</div>
+            <ul class="phase-items">
+              <li><b>Organický obsah</b> — 1 video/den, 3 různé hooky</li>
+              <li><b>Bio link</b> → getbizidea.com, jasné CTA</li>
+              <li><b>Odpovídej na komentáře</b> — algoritmus odměňuje engagement</li>
+              <li><b>Sleduj CR</b> — pokud pod 3 %, uprav pricing page</li>
+              <li><b>Zatím NEškáluj ads</b> — nejdřív ověř funnel</li>
+            </ul>
+            <div class="phase-kpis">
+              <span class="kpi-tag">CR &gt; 3 %</span>
+              <span class="kpi-tag">Email rate &gt; 25 %</span>
+              <span class="kpi-tag">20 paid</span>
+              <span class="kpi-tag">0 ad spend</span>
+            </div>
+          </div>
+
+          <div class="phase">
+            <div class="phase-num">Fáze 2</div>
+            <div class="phase-title">Placený traffic</div>
+            <div class="phase-period">Měsíce 2–3</div>
+            <div class="phase-goal">🎯 Cíl: €500/měsíc</div>
+            <ul class="phase-items">
+              <li><b>Meta ads</b> €50/týden, 3 creativy, broad audience</li>
+              <li><b>Optimalizace kampaně</b> — kill creative s CTR &lt; 1 %</li>
+              <li><b>Přidat upsell €27</b> — bez něj je ROAS těžko &gt; 1.5×</li>
+              <li><b>Email sekvence</b> — sleduj open rate D+1 recovery</li>
+              <li><b>Retargeting</b> — lidi co nedokončili kvíz</li>
+            </ul>
+            <div class="phase-kpis">
+              <span class="kpi-tag">ROAS &gt; 1.5×</span>
+              <span class="kpi-tag">CPP &lt; 10 €</span>
+              <span class="kpi-tag">€500/měs</span>
+              <span class="kpi-tag">upsell live</span>
+            </div>
+          </div>
+
+          <div class="phase">
+            <div class="phase-num">Fáze 3</div>
+            <div class="phase-title">Škálování</div>
+            <div class="phase-period">Měsíce 4+</div>
+            <div class="phase-goal">🎯 Cíl: €2 000+/měsíc</div>
+            <ul class="phase-items">
+              <li><b>Zvýšit ads</b> na €200/týden — jen pokud ROAS &gt; 2×</li>
+              <li><b>Lookalike audience</b> ze seznam platících</li>
+              <li><b>A/B test pricing</b> — €9 vs €7 (malá změna, velký dopad)</li>
+              <li><b>Affiliate program</b> — micro-influenceři za % z prodeje</li>
+              <li><b>LTV budování</b> — monthly newsletter, community</li>
+            </ul>
+            <div class="phase-kpis">
+              <span class="kpi-tag">ROAS &gt; 2×</span>
+              <span class="kpi-tag">LTV &gt; 15 €</span>
+              <span class="kpi-tag">€2k/měs</span>
+              <span class="kpi-tag">CAC &lt; 5 €</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- WEEKLY FOCUS -->
+      <div class="card-body">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.3);margin-bottom:12px">Co dělat každý týden</div>
+        <div class="focus-grid">
+
+          <div class="focus-col">
+            <h3>Pondělí — přehled</h3>
+            <div class="focus-item"><span class="focus-icon">📊</span><div class="focus-text"><b>Zkontroluj tento dashboard</b>Kolik paid, CR%, ROAS za minulý týden</div></div>
+            <div class="focus-item"><span class="focus-icon">📧</span><div class="focus-text"><b>Open rate e-mailů</b>Přejdi do Breva — funguje D+1 recovery email?</div></div>
+            <div class="focus-item"><span class="focus-icon">🔍</span><div class="focus-text"><b>PostHog funnel</b>Kde lidi odcházejí — quiz? pricing page? checkout?</div></div>
+            <div class="focus-item"><span class="focus-icon">💬</span><div class="focus-text"><b>Přečti komentáře</b>Co lidi říkají? Námitky = témata pro příští videa</div></div>
+          </div>
+
+          <div class="focus-col">
+            <h3>Středa — obsah</h3>
+            <div class="focus-item"><span class="focus-icon">🎬</span><div class="focus-text"><b>3 videa týdně minimum</b>Středa + pátek + neděle jsou peak dny na IG/TikTok</div></div>
+            <div class="focus-item"><span class="focus-icon">🎣</span><div class="focus-text"><b>Testuj nový hook každý týden</b>První 3 sekundy = vše. Měň jen hook, zbytek nech</div></div>
+            <div class="focus-item"><span class="focus-icon">♻️</span><div class="focus-text"><b>Recykluj vítěze</b>Video s 10k+ views? Dej ho do ads jako creative</div></div>
+            <div class="focus-item"><span class="focus-icon">🔗</span><div class="focus-text"><b>Bio link funguje?</b>Klikni a projdi celý kvíz — zkontroluj funnel</div></div>
+          </div>
+
+          <div class="focus-col">
+            <h3>Pátek — rozhodnutí</h3>
+            <div class="focus-item"><span class="focus-icon">⚡</span><div class="focus-text"><b>Kill nebo škáluj creative</b>CTR &lt; 1 % po 3 dnech → zastavit. CTR &gt; 3 % → zdvojnásobit budget</div></div>
+            <div class="focus-item"><span class="focus-icon">📈</span><div class="focus-text"><b>Uprav targeting?</b>Frekvence &gt; 3.5 → nové publikum nebo nové kreativy</div></div>
+            <div class="focus-item"><span class="focus-icon">🧪</span><div class="focus-text"><b>Jeden experiment týdně</b>Pricing, CTA text, kvíz délka, e-mail subject line</div></div>
+            <div class="focus-item"><span class="focus-icon">💰</span><div class="focus-text"><b>Zapiš spend do Ad Trackeru</b>Níže — ROAS se automaticky přepočítá</div></div>
+          </div>
+
+        </div>
+
+        <div class="focus-alert" style="margin-top:16px">
+          <b>⚠️ Největší páka teď:</b> Přidat upsell €27 po zaplacení. Při 20 % uptake z každé 7€ objednávky → průměrná hodnota zákazníka roste na 12.40 € (+77 %). Teprve pak se Meta ads stávají profitabilními při CPP 8–12 €.
+        </div>
+      </div>
+
+    </div><!-- /plán -->
 
     <!-- REVENUE CHART -->
     <div class="card">
@@ -492,6 +659,7 @@ function setPeriod(p, btn) {
 
 // ── RENDER ALL ───────────────────────────────────────────────────
 function render() {
+  renderScorecard();
   renderStats();
   renderRevenueChart();
   renderFunnel();
@@ -499,6 +667,107 @@ function render() {
   renderIdeasChart();
   renderTable();
   calcRoas();
+}
+
+// ── SCORECARD ─────────────────────────────────────────────────────
+function renderScorecard() {
+  const s = DATA.stats;
+  const spend = parseFloat(localStorage.getItem('gbi_ad_spend') || '0');
+  const adPurchases = parseFloat(localStorage.getItem('gbi_ad_purchases') || '0');
+  const roas = spend > 0 ? s.revenue_eur / spend : null;
+  const cpp = adPurchases > 0 ? spend / adPurchases : null;
+
+  function status(val, good, warn, invert) {
+    if (val === null || val === undefined) return 'gray';
+    if (!invert) return val >= good ? 'green' : val >= warn ? 'yellow' : 'red';
+    return val <= good ? 'green' : val <= warn ? 'yellow' : 'red';
+  }
+
+  const cards = [
+    {
+      name: 'Konverzní poměr',
+      val: s.conv_rate + ' %',
+      raw: s.conv_rate,
+      target: 'Cíl: > 5 %',
+      st: status(s.conv_rate, 5, 2),
+      badge: s.conv_rate >= 5 ? '✓ OK' : s.conv_rate >= 2 ? 'Sledovat' : '⚠ Nízký',
+      desc: 'Kolik % ze všech dokončených kvízů zaplatí. Pod 2 % → uprav pricing page nebo CTA.',
+    },
+    {
+      name: 'Email capture rate',
+      val: s.email_rate + ' %',
+      raw: s.email_rate,
+      target: 'Cíl: > 30 %',
+      st: status(s.email_rate, 30, 15),
+      badge: s.email_rate >= 30 ? '✓ OK' : s.email_rate >= 15 ? 'Sledovat' : '⚠ Nízký',
+      desc: 'Kolik % dokončí kvíz A zadá e-mail. Pod 15 % → zlepši copy na výsledkové stránce.',
+    },
+    {
+      name: 'ROAS',
+      val: roas !== null ? roas.toFixed(2) + '×' : '—',
+      raw: roas,
+      target: 'Cíl: > 2.0×',
+      st: roas !== null ? status(roas, 2, 1) : 'gray',
+      badge: roas === null ? 'Zadej spend' : roas >= 2 ? '✓ Škáluj' : roas >= 1 ? 'Break-even' : '⚠ Ztráta',
+      desc: 'Return on Ad Spend. Vypočítáno z Ad Trackeru níže. Zadej kolik jsi utratil na Meta.',
+    },
+    {
+      name: 'CPP (cena/nákup)',
+      val: cpp !== null ? '€' + cpp.toFixed(2) : '—',
+      raw: cpp,
+      target: 'Cíl: < 10 €',
+      st: cpp !== null ? status(cpp, 10, 15, true) : 'gray',
+      badge: cpp === null ? 'Zadej data' : cpp <= 10 ? '✓ OK' : cpp <= 15 ? 'Sledovat' : '⚠ Vysoký',
+      desc: 'Cost Per Purchase z Meta Ads. Při produktu 7 € musí být CPP pod 5.60 € pro profit.',
+    },
+    {
+      name: 'Celkový příjem',
+      val: '€' + (s.revenue_eur || 0),
+      raw: s.revenue_eur,
+      target: 'Fáze 1 cíl: €140',
+      st: status(s.revenue_eur, 140, 50),
+      badge: s.revenue_eur >= 140 ? '✓ Fáze 1' : s.revenue_eur >= 50 ? 'Rozjezd' : 'Začínáme',
+      desc: 'Celkový příjem (7 € × paid). Fáze 1 = €140 (20 zákazníků). Fáze 2 = €500/měs.',
+    },
+    {
+      name: 'Platící zákazníci',
+      val: s.paid || 0,
+      raw: s.paid,
+      target: 'Fáze 1 cíl: 20',
+      st: status(s.paid, 20, 5),
+      badge: s.paid >= 20 ? '✓ Fáze 1' : s.paid >= 5 ? 'Rozjezd' : 'Začínáme',
+      desc: 'Celkový počet platících. Při 20 začni testovat Meta ads s €50/týden.',
+    },
+    {
+      name: 'Leads (e-maily)',
+      val: s.with_email || 0,
+      raw: s.with_email,
+      target: 'Cíl: 100 aktivních',
+      st: status(s.with_email, 100, 30),
+      badge: s.with_email >= 100 ? '✓ Lista roste' : s.with_email >= 30 ? 'Budujeme' : 'Začínáme',
+      desc: 'E-mailová lista = největší aktivum. 100+ leadů → spusť A/B test subject lines v Brevu.',
+    },
+    {
+      name: 'Avg. revenue/day',
+      val: (() => { const days = DATA.by_day?.filter(d=>d.revenue>0).length || 1; return '€'+(s.revenue_eur/Math.max(days,1)).toFixed(2); })(),
+      raw: null,
+      target: 'Cíl Fáze 2: €17/den',
+      st: (() => { const d = DATA.by_day?.filter(d=>d.revenue>0).length||1; const v=s.revenue_eur/d; return status(v,17,5); })(),
+      badge: (() => { const d=DATA.by_day?.filter(d=>d.revenue>0).length||1; const v=s.revenue_eur/d; return v>=17?'✓ Fáze 2':v>=5?'Sledovat':'Budujeme'; })(),
+      desc: 'Průměrný denní příjem (jen dny s aktivitou). €17/den = €500/měs (Fáze 2 cíl).',
+    },
+  ];
+
+  document.getElementById('scorecard').innerHTML = cards.map(c => `
+    <div class="sc-card ${c.st}">
+      <div class="sc-name">${c.name}</div>
+      <div class="sc-val">${c.val}</div>
+      <div class="sc-row">
+        <span class="sc-target">${c.target}</span>
+        <span class="sc-badge ${c.st}">${c.badge}</span>
+      </div>
+      <div class="sc-desc">${c.desc}</div>
+    </div>`).join('');
 }
 
 // ── STATS ────────────────────────────────────────────────────────
@@ -667,8 +936,9 @@ function calcRoas() {
   setMetric('ar-cpp', cpp !== null ? '€' + cpp.toFixed(2) : '—', cpp !== null ? clr(10 - cpp + 5, 5, 0) : '');
   setMetric('ar-cpl', cpl !== null ? '€' + cpl.toFixed(2) : '—', cpl !== null ? clr(2 - cpl + 1, 1, 0) : '');
 
-  // ROAS tile
+  // ROAS tile + scorecard refresh
   set('s-roas', roas !== null ? roas.toFixed(2) + '×' : '—');
+  if (DATA) renderScorecard();
 
   // Note
   let note = '';
