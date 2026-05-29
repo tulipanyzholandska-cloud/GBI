@@ -276,8 +276,8 @@ tr:hover td{background:rgba(255,255,255,.02)}
       <div class="card">
         <div class="card-head">
           <div>
-            <h2>Země</h2>
-            <div class="card-sub">Odkud chodí uživatelé</div>
+            <h2>Kde žijí uživatelé</h2>
+            <div class="card-sub">Typ lokality (odpověď z kvízu)</div>
           </div>
         </div>
         <div class="card-body" id="country-body">
@@ -721,17 +721,17 @@ async function phReset() {
 }
 
 async function phQuery(key, projId, eventName) {
-  const from = new Date(); from.setDate(from.getDate() - 30);
-  const url = `https://us.posthog.com/api/projects/${projId}/insights/trend/?` + new URLSearchParams({
-    events: JSON.stringify([{ id: eventName, type: 'events' }]),
-    date_from: from.toISOString().slice(0, 10),
-    interval: 'day',
+  // PostHog HogQL query — works with personal API key via POST
+  const query = `SELECT count() FROM events WHERE event = '${eventName}' AND timestamp >= now() - interval 30 day`;
+  const r = await fetch(`https://us.posthog.com/api/projects/${projId}/query/`, {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + key, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query: { kind: 'HogQLQuery', query } })
   });
-  const r = await fetch(url, { headers: { Authorization: 'Bearer ' + key } });
   if (!r.ok) throw new Error('PostHog ' + r.status);
   const d = await r.json();
-  const counts = d.result?.[0]?.data || [];
-  return counts.reduce((a, b) => a + b, 0);
+  // HogQL returns { results: [[count]] }
+  return d.results?.[0]?.[0] ?? 0;
 }
 
 async function fetchPostHog(key, proj) {
