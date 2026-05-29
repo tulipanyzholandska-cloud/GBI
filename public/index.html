@@ -184,19 +184,30 @@ section{padding:96px 0}
 .step h3{font-size:18px;font-weight:800;margin-bottom:10px;letter-spacing:-.02em}
 .step p{font-size:14px;color:var(--t2);line-height:1.75}
 
-/* TESTIMONIALS */
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px}
-.testi{background:var(--c1);border:1px solid var(--brd);border-radius:20px;padding:30px;transition:border-color .22s,transform .22s}
-.testi:hover{border-color:rgba(232,65,122,.3);transform:translateY(-4px)}
-.t-stars{color:#FBBF24;font-size:12px;letter-spacing:2px;margin-bottom:16px}
-.t-quote{font-size:22px;color:var(--pink);opacity:.5;font-family:Georgia,serif;line-height:1;margin-bottom:12px}
-.t-text{font-size:14px;color:var(--t2);line-height:1.8;margin-bottom:24px}
-.t-meta{display:flex;align-items:center;gap:13px}
-.t-av{width:46px;height:46px;border-radius:50%;overflow:hidden;border:2px solid var(--brd);flex-shrink:0}
-.t-av img{width:100%;height:100%;object-fit:cover}
-.t-name{font-size:13px;font-weight:700;margin-bottom:3px}
-.t-role{font-size:11px;color:var(--t3)}
-.t-badge{margin-top:5px;display:inline-block;padding:3px 9px;border-radius:100px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);font-size:10px;font-weight:700;color:var(--green)}
+/* TESTIMONIALS — editorial / Masterclass style */
+.testi-hero{max-width:800px;margin:72px auto 80px;text-align:center}
+.testi-mark{font-family:Georgia,'Times New Roman',serif;font-size:120px;line-height:.7;color:var(--pink);opacity:.22;margin-bottom:24px;display:block;user-select:none}
+.testi-hero-q{font-size:clamp(22px,3.2vw,34px);font-weight:600;line-height:1.42;letter-spacing:-.025em;color:#fff;margin-bottom:36px}
+.testi-byline{display:flex;align-items:center;justify-content:center;gap:18px}
+.testi-line{width:40px;height:1px;background:rgba(255,255,255,.18)}
+.testi-name{font-size:14px;font-weight:700;color:#fff;letter-spacing:.01em}
+.testi-role{font-size:12px;color:var(--t3);margin-top:3px}
+
+.testi-pair{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--brd)}
+.testi-half{padding:52px 48px;position:relative}
+.testi-half:first-child{border-right:1px solid var(--brd)}
+.testi-half-mark{font-family:Georgia,'Times New Roman',serif;font-size:56px;line-height:.8;color:var(--pink);opacity:.18;margin-bottom:20px;display:block}
+.testi-half-q{font-size:17px;line-height:1.72;color:rgba(255,255,255,.72);margin-bottom:28px;font-weight:400}
+.testi-half-name{font-size:13px;font-weight:700;color:#fff}
+.testi-half-role{font-size:11px;color:var(--t3);margin-top:4px}
+
+@media(max-width:768px){
+  .testi-hero{margin:48px auto 56px}
+  .testi-mark{font-size:80px}
+  .testi-pair{grid-template-columns:1fr}
+  .testi-half{padding:36px 24px}
+  .testi-half:first-child{border-right:none;border-bottom:1px solid var(--brd)}
+}
 
 /* OFFER */
 .offer-card{background:var(--c1);border:1px solid var(--brd);border-radius:24px;padding:72px 56px;text-align:center;position:relative;overflow:hidden;margin-top:56px}
@@ -241,7 +252,7 @@ footer a:hover{color:var(--t1)}
 
 /* MOBILE */
 @media(max-width:768px){
-  nav{padding:0 18px}
+  nav{padding:0 20px}
   .hero{padding:56px 18px 72px}
   .hero-h{letter-spacing:-.04em}
   .cta-btn{padding:18px 36px;font-size:17px;width:100%;max-width:320px;justify-content:center}
@@ -385,54 +396,44 @@ function ph(e,p){try{posthog.capture(e,p||{})}catch(x){}}
   </section>
 </div>
 
-<!-- TESTIMONIALS -->
+<!-- TESTIMONIALS — editorial style -->
 <div class="wrap">
   <section style="padding-top:0">
     <div class="rv">
       <div class="s-tag">Real results</div>
       <h2 class="s-h">They stopped overthinking.<br>They started.</h2>
     </div>
-    <div class="testi-grid">
-      <div class="testi rv d1">
-        <div class="t-stars">★★★★★</div>
-        <div class="t-quote">"</div>
-        <p class="t-text">I spent 2 years going in circles trying to figure out what business to start. 90 seconds here gave me more clarity than all that searching combined. The outreach script worked on day one.</p>
-        <div class="t-meta">
-          <div class="t-av"><img src="https://i.pravatar.cc/92?img=47" alt="Sarah M." loading="lazy" width="46" height="46"></div>
-          <div>
-            <div class="t-name">Sarah Mitchell</div>
-            <div class="t-role">Former office manager, UK</div>
-            <div class="t-badge">First client in 4 days</div>
-          </div>
+
+    <!-- Hero quote -->
+    <div class="testi-hero rv d1">
+      <span class="testi-mark">"</span>
+      <p class="testi-hero-q">I spent two years going in circles trying to figure out what business to start. Ninety seconds here gave me more clarity than all that searching combined.</p>
+      <div class="testi-byline">
+        <div class="testi-line"></div>
+        <div>
+          <div class="testi-name">S. M.</div>
+          <div class="testi-role">Former office manager · United Kingdom</div>
         </div>
-      </div>
-      <div class="testi rv d2">
-        <div class="t-stars">★★★★★</div>
-        <div class="t-quote">"</div>
-        <p class="t-text">The copy-paste outreach script alone was worth 100× the price. Sent 20 messages on day one, got 3 replies, and closed my first paying client within a week. Genuinely life-changing for €7.</p>
-        <div class="t-meta">
-          <div class="t-av"><img src="https://i.pravatar.cc/92?img=33" alt="James C." loading="lazy" width="46" height="46"></div>
-          <div>
-            <div class="t-name">James Carter</div>
-            <div class="t-role">Freelance consultant, IE</div>
-            <div class="t-badge">€1,200 in first month</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi rv d3">
-        <div class="t-stars">★★★★★</div>
-        <div class="t-quote">"</div>
-        <p class="t-text">I used Get Biz Idea to launch my cleaning business. The plan gave me everything — pricing, where to find clients, how to look professional from day one. By month 3 I quit my part-time job.</p>
-        <div class="t-meta">
-          <div class="t-av"><img src="https://i.pravatar.cc/92?img=44" alt="Emily R." loading="lazy" width="46" height="46"></div>
-          <div>
-            <div class="t-name">Emily Roberts</div>
-            <div class="t-role">Business owner, DE</div>
-            <div class="t-badge">Quit job in month 3</div>
-          </div>
-        </div>
+        <div class="testi-line"></div>
       </div>
     </div>
+
+    <!-- Two smaller quotes -->
+    <div class="testi-pair rv d2">
+      <div class="testi-half">
+        <span class="testi-half-mark">"</span>
+        <p class="testi-half-q">The outreach script alone was worth 100× the price. I sent messages on day one and closed my first paying client within a week.</p>
+        <div class="testi-half-name">J. C.</div>
+        <div class="testi-half-role">Freelance consultant · Ireland</div>
+      </div>
+      <div class="testi-half">
+        <span class="testi-half-mark">"</span>
+        <p class="testi-half-q">The plan gave me everything — pricing, where to find clients, how to look professional from day one. I didn't have to figure anything out myself.</p>
+        <div class="testi-half-name">E. R.</div>
+        <div class="testi-half-role">Cleaning business owner · Germany</div>
+      </div>
+    </div>
+
   </section>
 </div>
 
