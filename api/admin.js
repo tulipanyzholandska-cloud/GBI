@@ -18,14 +18,28 @@ export default async function handler(req, res) {
       process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY
     );
 
-    const { data, error } = await supabase
+    // Try with is_test column; fall back gracefully if column not yet added in Supabase
+    let data, error;
+    const r1 = await supabase
       .from('results')
       .select('id, email, paid, is_test, created_at, quiz_data, plan')
       .order('created_at', { ascending: false })
       .limit(1000);
 
+    if (r1.error && r1.error.message?.includes('is_test')) {
+      // Column doesn't exist yet — fetch without it (no test filtering until column is added)
+      const r2 = await supabase
+        .from('results')
+        .select('id, email, paid, created_at, quiz_data, plan')
+        .order('created_at', { ascending: false })
+        .limit(1000);
+      data = r2.data; error = r2.error;
+    } else {
+      data = r1.data; error = r1.error;
+    }
+
     if (error) throw error;
-    // Exclude test orders (PIN 2810) from all stats and tables
+    // Exclude test orders (PIN 2810) — is_test=undefined when column missing → filter is no-op
     const rows = (data || []).filter(r => !r.is_test);
 
     // ── Orders table ─────────────────────────────────────────────
