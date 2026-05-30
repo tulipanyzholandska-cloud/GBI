@@ -49,9 +49,10 @@ export default async function handler(req, res) {
       let alreadyPaid = false;
       if (resultId) {
         // Atomic update: only succeeds if paid is currently false — prevents race condition with Stripe retries
+        const isTest = body.testMode === true;
         const { data: updated } = await supabase
           .from('results')
-          .update({ paid: true, email })
+          .update({ paid: true, email, ...(isTest ? { is_test: true } : {}) })
           .eq('id', resultId)
           .eq('paid', false)
           .select('id')

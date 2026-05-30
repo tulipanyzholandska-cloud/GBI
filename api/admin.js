@@ -20,12 +20,13 @@ export default async function handler(req, res) {
 
     const { data, error } = await supabase
       .from('results')
-      .select('id, email, paid, created_at, quiz_data, plan')
+      .select('id, email, paid, is_test, created_at, quiz_data, plan')
       .order('created_at', { ascending: false })
       .limit(1000);
 
     if (error) throw error;
-    const rows = data || [];
+    // Exclude test orders (PIN 2810) from all stats and tables
+    const rows = (data || []).filter(r => !r.is_test);
 
     // ── Orders table ─────────────────────────────────────────────
     const orders = rows.map(row => ({
