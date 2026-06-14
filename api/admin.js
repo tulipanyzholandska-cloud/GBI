@@ -14,7 +14,30 @@ export default async function handler(req, res) {
   }
 
   try {
-    const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY);
+    // TEMP DIAGNOSTIC — isolate fetch error
+    const diagUrl = (process.env.SUPABASE_URL || '').slice(0, 40);
+    const diagKey = process.env.SUPABASE_ANON_KEY ? 'SET' : 'MISSING';
+    if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
+      return res.status(200).json({ diag: `Env missing — URL:${diagUrl} KEY:${diagKey}` });
+    }
+
+    let fetchDiag;
+    try {
+      const testUrl = `${process.env.SUPABASE_URL}/rest/v1/results?select=id&limit=1`;
+      const testRes = await fetch(testUrl, {
+        headers: {
+          'apikey': process.env.SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY}`,
+        }
+      });
+      const body = await testRes.text();
+      fetchDiag = { ok: testRes.ok, status: testRes.status, body: body.slice(0, 200) };
+    } catch (fetchErr) {
+      fetchDiag = { threw: true, message: fetchErr.message, cause: String(fetchErr.cause) };
+    }
+    return res.status(200).json({ diag: fetchDiag, url: diagUrl, key: diagKey });
+
+    const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
     const { data, error } = await supabase
       .from('results')
