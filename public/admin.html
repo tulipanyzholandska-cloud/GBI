@@ -537,14 +537,31 @@ tr:hover td{background:rgba(255,255,255,.02)}
           </div>
         </div>
 
-        <div id="ph-data-box" class="ph-connect" style="display:none">
+        <div id="ph-data-box" class="ph-connect" style="display:none;flex-direction:column;gap:20px">
+
+          <!-- Top KPIs -->
           <div class="ph-stats" id="ph-stats-grid">
             <div class="ph-stat"><div class="ph-stat-v" id="ph-pv">—</div><div class="ph-stat-l">Pageviews (30d)</div></div>
             <div class="ph-stat"><div class="ph-stat-v" id="ph-sess">—</div><div class="ph-stat-l">Sessions (30d)</div></div>
             <div class="ph-stat"><div class="ph-stat-v" id="ph-qc">—</div><div class="ph-stat-l">Quiz completed</div></div>
             <div class="ph-stat"><div class="ph-stat-v" id="ph-ec">—</div><div class="ph-stat-l">Email captured</div></div>
+            <div class="ph-stat"><div class="ph-stat-v" id="ph-cs">—</div><div class="ph-stat-l">Checkout started</div></div>
+            <div class="ph-stat"><div class="ph-stat-v" id="ph-pu">—</div><div class="ph-stat-l">Plan unlocked</div></div>
           </div>
-          <div style="font-size:11px;color:rgba(255,255,255,.2)">Data z PostHog, posledních 30 dní · aktualizováno každý load</div>
+
+          <!-- Funnel -->
+          <div>
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.3);margin-bottom:12px">Konverzní funnel</div>
+            <div id="ph-funnel"></div>
+          </div>
+
+          <!-- Auto-recommendation -->
+          <div id="ph-recommendation" style="display:none;background:rgba(232,65,122,.08);border:1px solid rgba(232,65,122,.25);border-radius:10px;padding:16px">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#E8417A;margin-bottom:6px">💡 Doporučení</div>
+            <div id="ph-rec-text" style="font-size:13px;color:rgba(255,255,255,.8);line-height:1.6"></div>
+          </div>
+
+          <div style="font-size:11px;color:rgba(255,255,255,.2)">PostHog · posledních 30 dní · live</div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
             <a class="link-btn" href="https://us.posthog.com" target="_blank">→ PostHog dashboard</a>
           </div>
@@ -1007,16 +1024,25 @@ async function phQuery(key, projId, eventName) {
 async function fetchPostHog(key, proj) {
   document.getElementById('ph-status-label').textContent = 'Načítám z PostHog…';
   try {
-    const [pv, sess, qc, ec] = await Promise.all([
+    const [pv, sess, qc, ec, cs, pu] = await Promise.all([
       phQuery(key, proj, '$pageview'),
       phQuery(key, proj, '$session'),
       phQuery(key, proj, 'quiz_completed'),
       phQuery(key, proj, 'email_captured'),
+      phQuery(key, proj, 'checkout_started'),
+      phQuery(key, proj, 'plan_unlocked'),
     ]);
-    set('ph-pv', pv.toLocaleString('cs-CZ'));
-    set('ph-sess', sess.toLocaleString('cs-CZ'));
-    set('ph-qc', qc.toLocaleString('cs-CZ'));
-    set('ph-ec', ec.toLocaleString('cs-CZ'));
+
+    set('ph-pv',  pv.toLocaleString('cs-CZ'));
+    set('ph-sess',sess.toLocaleString('cs-CZ'));
+    set('ph-qc',  qc.toLocaleString('cs-CZ'));
+    set('ph-ec',  ec.toLocaleString('cs-CZ'));
+    set('ph-cs',  cs.toLocaleString('cs-CZ'));
+    set('ph-pu',  pu.toLocaleString('cs-CZ'));
+
+    renderPhFunnel(pv, qc, ec, cs, pu);
+    renderPhRecommendation(pv, qc, ec, cs, pu);
+
     document.getElementById('ph-connect-box').style.display = 'none';
     document.getElementById('ph-data-box').style.display = 'flex';
     document.getElementById('ph-reset-btn').style.display = 'block';
@@ -1025,6 +1051,68 @@ async function fetchPostHog(key, proj) {
     document.getElementById('ph-status-label').textContent = 'Chyba: ' + e.message + '. Zkontroluj key/project ID.';
     document.getElementById('ph-connect-box').style.display = 'block';
     document.getElementById('ph-data-box').style.display = 'none';
+  }
+}
+
+function renderPhFunnel(pv, qc, ec, cs, pu) {
+  const steps = [
+    { label: 'Pageview',         val: pv, color: '#6366F1' },
+    { label: 'Quiz completed',   val: qc, color: '#8B5CF6' },
+    { label: 'Email captured',   val: ec, color: '#E8417A' },
+    { label: 'Checkout started', val: cs, color: '#F59E0B' },
+    { label: 'Plan unlocked',    val: pu, color: '#10B981' },
+  ];
+  const max = pv || 1;
+  let html = '';
+  steps.forEach((s, i) => {
+    const pct = max ? Math.round(s.val / max * 100) : 0;
+    const dropPct = i > 0 && steps[i-1].val
+      ? Math.round(s.val / steps[i-1].val * 100)
+      : null;
+    const dropLabel = dropPct !== null
+      ? `<span style="font-size:10px;color:${dropPct < 40 ? '#EF4444' : dropPct < 65 ? '#F59E0B' : '#10B981'}">${dropPct}% z předchozího</span>`
+      : '';
+    html += `<div class="funnel-step">
+      <div class="funnel-label">${s.label}</div>
+      <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${pct}%;background:${s.color}"></div></div>
+      <div class="funnel-val">${s.val.toLocaleString('cs-CZ')}</div>
+      <div class="funnel-pct">${dropLabel}</div>
+    </div>`;
+  });
+  document.getElementById('ph-funnel').innerHTML = html;
+}
+
+function renderPhRecommendation(pv, qc, ec, cs, pu) {
+  const steps = [
+    { from: 'Pageview→Quiz',          rate: pv  ? qc/pv  : null, threshold: 0.30,
+      msg: '🎯 Jen '+Math.round((pv?qc/pv:0)*100)+'% návštěvníků dokončí quiz. Zkrať quiz nebo zlepši úvodní hook — první otázka rozhoduje.' },
+    { from: 'Quiz→Email',             rate: qc  ? ec/qc  : null, threshold: 0.50,
+      msg: '📧 Jen '+Math.round((qc?ec/qc:0)*100)+'% dokončí quiz ale nezadá email. Volný preview není dost lákavý — přidej konkrétnější ukázku obsahu.' },
+    { from: 'Email→Checkout',         rate: ec  ? cs/ec  : null, threshold: 0.35,
+      msg: '💳 Jen '+Math.round((ec?cs/ec:0)*100)+'% zadá email ale neklikne na platbu. Cena nebo copywriting nepřesvědčuje — zkus změnit headline na platební stránce.' },
+    { from: 'Checkout→Unlocked',      rate: cs  ? pu/cs  : null, threshold: 0.60,
+      msg: '🚨 Jen '+Math.round((cs?pu/cs:0)*100)+'% zahájí checkout ale nezaplatí. Problém v Stripe checkoutu — zkontroluj flow, přidej trust badge nebo snižte tření.' },
+  ];
+
+  // Find the worst step (lowest rate vs threshold)
+  let worst = null;
+  let worstGap = 0;
+  steps.forEach(s => {
+    if (s.rate === null) return;
+    const gap = s.threshold - s.rate;
+    if (gap > worstGap) { worstGap = gap; worst = s; }
+  });
+
+  const box = document.getElementById('ph-recommendation');
+  const txt = document.getElementById('ph-rec-text');
+  if (worst && worstGap > 0.05) {
+    txt.textContent = worst.msg;
+    box.style.display = 'block';
+  } else if (pu > 0) {
+    txt.textContent = '✅ Funnel vypadá zdravě. Škáluj traffic — všechny konverze jsou nad benchmarkem.';
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
   }
 }
 
