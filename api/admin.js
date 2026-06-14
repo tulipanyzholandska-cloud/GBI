@@ -35,7 +35,7 @@ export default async function handler(req, res) {
     } catch (fetchErr) {
       fetchDiag = { threw: true, message: fetchErr.message, cause: String(fetchErr.cause) };
     }
-    return res.status(200).json({ diag: fetchDiag, url: diagUrl, key: diagKey });
+    return res.status(200).json({ error: `DIAG url=${diagUrl} key=${diagKey} fetch=${JSON.stringify(fetchDiag)}` });
 
     const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
