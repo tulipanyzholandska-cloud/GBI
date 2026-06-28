@@ -4,6 +4,25 @@ import { createClient } from '@supabase/supabase-js';
 const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const LANG_MAP = { en: 'English', cs: 'Czech', sk: 'Slovak', de: 'German' };
 
+// Extract first complete balanced JSON object from text (ignores trailing garbage)
+function extractFirstJson(text) {
+  const start = text.indexOf('{');
+  if (start === -1) return null;
+  let depth = 0;
+  let inString = false;
+  let escape = false;
+  for (let i = start; i < text.length; i++) {
+    const ch = text[i];
+    if (escape) { escape = false; continue; }
+    if (ch === '\\' && inString) { escape = true; continue; }
+    if (ch === '"') { inString = !inString; continue; }
+    if (inString) continue;
+    if (ch === '{') depth++;
+    else if (ch === '}') { depth--; if (depth === 0) return text.slice(start, i + 1); }
+  }
+  return null;
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -31,7 +50,7 @@ JSON (fill ALL fields, be specific and concrete):
   try {
     const msg = await claude.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 4096,
+      max_tokens: 8000,
       system: systemPrompt,
       messages: [{ role: 'user', content: userPrompt }]
     });
@@ -42,12 +61,12 @@ JSON (fill ALL fields, be specific and concrete):
       return res.status(200).json({ error: 'RAW_CONTENT:' + JSON.stringify(msg.content).slice(0, 300) });
     }
     const cleaned = textBlock.text.replace(/```json|```/g, '').trim();
-    // Extract first JSON object (handles any prefix text the model might add)
-    const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
+    // Extract first COMPLETE balanced JSON object (stops at first matching close brace)
+    const jsonStr = extractFirstJson(cleaned);
+    if (!jsonStr) {
       return res.status(200).json({ error: 'NO_JSON:' + cleaned.slice(0, 300) });
     }
-    const plan = JSON.parse(jsonMatch[0]);
+    const plan = JSON.parse(jsonStr);
 
     let resultId = null;
     let dbError = null;
