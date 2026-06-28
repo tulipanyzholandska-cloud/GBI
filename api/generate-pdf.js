@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     const fp = plan.full_plan;
 
     const msg = await claude.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
+      model: 'claude-sonnet-4-6',
       max_tokens: 1500,
       messages: [{ role: 'user', content: `Create a concise 30-day action plan for someone starting: "${idea}".
 

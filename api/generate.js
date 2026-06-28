@@ -28,21 +28,9 @@ export default async function handler(req, res) {
 JSON (fill ALL fields, be specific and concrete):
 {"top_idea":{"name":"","tagline":"","market_size":"","why_now":"","fit_reasons":["","",""],"income_forecast":{"month_3_low":0,"month_3_high":0,"month_6_low":0,"month_6_high":0,"month_12_low":0,"month_12_high":0,"month_12_math":"X clients x Y€ = Z€","explanation":""},"difficulty":3,"difficulty_reason":"","your_advantage":""},"full_plan":{"first_customer":{"platform":"","subject":"","message":"","followup_message":"","expected_response_rate":"","daily_outreach_target":20},"pricing":{"starter":{"name":"","price":"","price_number":0,"what_included":""},"main":{"name":"","price":"","price_number":0,"what_included":""},"premium":{"name":"","price":"","price_number":0,"what_included":""},"reasoning":"","when_to_raise":"","psychology":""},"action_plan":{"days_1_7":["","",""],"days_8_30":["","",""],"days_31_90":["",""]},"scripts":{"cold_outreach":"","follow_up":"","closing":"","upsell":""},"tools":[{"name":"","url":"","purpose":"","cost":""},{"name":"","url":"","purpose":"","cost":""},{"name":"","url":"","purpose":"","cost":""},{"name":"","url":"","purpose":"","cost":""}],"top_mistakes":[{"mistake":"","how_to_avoid":""},{"mistake":"","how_to_avoid":""},{"mistake":"","how_to_avoid":""}],"main_objection":{"objection":"","reframe":""}},"other_ideas":[{"name":"","tagline":"","fit_score":0,"monthly_potential":""},{"name":"","tagline":"","fit_score":0,"monthly_potential":""}]}`;
 
-  // TEMP: list available models for diagnosis
-  try {
-    const modelsResp = await fetch('https://api.anthropic.com/v1/models', {
-      headers: { 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' }
-    });
-    const modelsData = await modelsResp.json();
-    const ids = (modelsData.data||[]).map(m=>m.id).join(', ');
-    return res.status(200).json({ error: `MODELS(${modelsResp.status}): ${ids || JSON.stringify(modelsData).slice(0,300)}` });
-  } catch(me) {
-    return res.status(200).json({ error: `MODELS_ERR: ${me.message}` });
-  }
-
   try {
     const msg = await claude.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
+      model: 'claude-sonnet-4-6',
       max_tokens: 3500,
       system: systemPrompt,
       messages: [{ role: 'user', content: userPrompt }]
