@@ -34,9 +34,10 @@ JSON (fill ALL fields, be specific and concrete):
       headers: { 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' }
     });
     const modelsData = await modelsResp.json();
-    return res.json({ diag: 'models', models: modelsData });
+    const ids = (modelsData.data||[]).map(m=>m.id).join(', ');
+    return res.status(200).json({ error: `MODELS(${modelsResp.status}): ${ids || JSON.stringify(modelsData).slice(0,300)}` });
   } catch(me) {
-    return res.json({ diag: 'models_error', error: me.message });
+    return res.status(200).json({ error: `MODELS_ERR: ${me.message}` });
   }
 
   try {
