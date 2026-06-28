@@ -42,6 +42,70 @@ export default async function handler(req, res) {
     const email = session.customer_email || session.metadata?.email;
     const type = session.metadata?.type;
 
+    // ── UPSELL PAYMENT (€27 Launch Week) ──────────────────────────────────────
+    if (type === 'upsell') {
+      try {
+        const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+        const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://getbizidea.com';
+
+        if (resultId) {
+          const { data: row } = await supabase.from('results').select('plan').eq('id', resultId).single();
+          if (row && !row.plan?.upsell_paid) {
+            const updatedPlan = { ...row.plan, upsell_paid: true };
+            await supabase.from('results').update({ plan: updatedPlan }).eq('id', resultId);
+          }
+        }
+
+        if (email && resultId) {
+          const magicLink = `${baseUrl}/quiz.html?unlocked=true&rid=${resultId}&upsell=1`;
+          const htmlContent = `<!DOCTYPE html><html><head><meta charset="UTF-8"></head>
+<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:600px;margin:0 auto;padding:20px;background:#0a0a0f;color:#fff">
+  <div style="text-align:center;margin-bottom:32px">
+    <h1 style="color:#fff;font-size:24px;font-weight:700;margin:0">Get Biz Idea</h1>
+    <p style="color:rgba(255,255,255,0.5);margin:6px 0 0;font-size:14px">Your Launch Week is ready</p>
+  </div>
+  <div style="background:linear-gradient(135deg,rgba(232,65,122,0.2),rgba(124,58,237,0.15));border:1px solid rgba(232,65,122,0.3);border-radius:16px;padding:28px;margin-bottom:24px;text-align:center">
+    <div style="font-size:32px;margin-bottom:12px">🚀</div>
+    <h2 style="color:#fff;font-size:20px;font-weight:700;margin:0 0 10px">Your Launch Week plan is ready!</h2>
+    <p style="color:rgba(255,255,255,0.65);font-size:14px;line-height:1.6;margin:0 0 24px">
+      Your personalized 7-day schedule is generating now. Click below to see your day-by-day launch plan.
+    </p>
+    <a href="${magicLink}" style="display:inline-block;padding:14px 32px;border-radius:12px;background:linear-gradient(135deg,#e8417a,#7c3aed);color:#fff;font-size:16px;font-weight:700;text-decoration:none">
+      Open My Launch Week →
+    </a>
+  </div>
+  <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;margin-bottom:24px">
+    <h3 style="font-size:14px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:.06em;margin:0 0 14px">What's in your Launch Week</h3>
+    <div style="font-size:14px;color:rgba(255,255,255,0.8);line-height:2.2">
+      ✦ &nbsp;Day-by-day schedule — morning, afternoon, evening tasks<br>
+      ✦ &nbsp;Daily script — exact words to use each day<br>
+      ✦ &nbsp;Daily win — know when you've crushed it<br>
+      ✦ &nbsp;Week 1 milestone: your first paid client
+    </div>
+  </div>
+  <p style="color:rgba(255,255,255,0.25);font-size:11px;text-align:center;margin:0">
+    Get Biz Idea · getbizidea.com<br>
+    You received this because you purchased Launch Week.
+  </p>
+</body></html>`;
+          fetch('https://api.brevo.com/v3/smtp/email', {
+            method: 'POST',
+            headers: { 'api-key': process.env.BREVO_API_KEY, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              sender: { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' },
+              to: [{ email }],
+              subject: '🚀 Your Launch Week plan is generating now',
+              htmlContent
+            })
+          }).catch(e => console.error('Upsell email error:', e.message));
+        }
+      } catch (err) {
+        console.error('Upsell webhook error:', err.message);
+      }
+      return res.json({ received: true });
+    }
+
+    // ── MAIN PLAN PAYMENT (€7) ─────────────────────────────────────────────────
     try {
       const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 

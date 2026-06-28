@@ -11,7 +11,7 @@ export default async function handler(req, res) {
 
   try {
     const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
-    const { data, error } = await supabase.from('results').select('plan, email, quiz_data, paid').eq('id', rid).single();
+    const { data, error } = await supabase.from('results').select('plan, email, quiz_data, paid, is_test').eq('id', rid).single();
     if (error || !data) return res.status(404).json({ error: 'Not found' });
     // Only return full plan if paid; otherwise just basic preview
     const isPaid = data.paid === true;
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
       const { full_plan, blocks, ...freePlan } = plan;
       plan = freePlan;
     }
-    res.json({ plan, email: data.email, quiz_data: data.quiz_data, paid: isPaid });
+    res.json({ plan, email: data.email, quiz_data: data.quiz_data, paid: isPaid, is_test: data.is_test || false });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

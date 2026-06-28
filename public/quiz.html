@@ -612,14 +612,43 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
   <!-- Premium content container - filled dynamically by generateBlocks() after unlock -->
   <div id="rc-paid" style="display:none"></div>
 
-  <!-- UPSELL -->
-  <div id="upsell-block" style="display:none;background:linear-gradient(135deg,rgba(232,65,122,0.15),rgba(124,58,237,0.1));border:1px solid rgba(232,65,122,0.3);border-radius:16px;padding:22px;margin-bottom:16px;text-align:center">
-    <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:#e8417a;margin-bottom:10px">🚀 special offer — limited time</div>
-    <div style="font-size:17px;font-weight:700;margin-bottom:8px;line-height:1.3">Want to go even further?</div>
-    <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:16px;line-height:1.5">Upgrade to <strong style="color:#fff">Business Kit za 19 €</strong> — email scripts, pricing calculator, client templates and 7-day email coaching sequence.</div>
-    <button onclick="startUpsell()" style="width:100%;max-width:280px;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,#e8417a,#7c3aed);color:#fff;font-size:15px;font-weight:700;cursor:pointer">Upgrade to Business Kit · 19 €</button>
-    <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:8px">Or continue with what you have — the plan is enough to start</div>
+  <!-- UPSELL OFFER (shown 3s after blocks load, only if not yet purchased) -->
+  <div id="upsell-block" style="display:none">
+    <div style="background:linear-gradient(135deg,rgba(232,65,122,0.18),rgba(124,58,237,0.12));border:1px solid rgba(232,65,122,0.35);border-radius:20px;overflow:hidden;margin-bottom:16px">
+      <!-- Top badge strip -->
+      <div style="background:linear-gradient(90deg,#e8417a,#7c3aed);padding:8px 22px;display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#fff">🚀 Launch Week · Upgrade</span>
+        <span style="font-size:12px;color:rgba(255,255,255,0.85)">Available for the next 24h</span>
+      </div>
+      <div style="padding:24px 22px">
+        <!-- Headline -->
+        <h3 style="font-size:22px;font-weight:800;line-height:1.25;margin:0 0 10px;letter-spacing:-.02em">Your First 7 Days,<br>Hour by Hour</h3>
+        <p style="font-size:14px;color:rgba(255,255,255,0.65);line-height:1.6;margin:0 0 20px">You have the 90-day roadmap. Now get your exact personal schedule for Week 1 — what to do each morning, afternoon and evening to land your <strong style="color:#fff">first paying client</strong>.</p>
+        <!-- Value bullets -->
+        <div style="background:rgba(0,0,0,0.25);border-radius:12px;padding:16px 18px;margin-bottom:20px">
+          <div style="font-size:13px;color:rgba(255,255,255,0.85);line-height:2.1">
+            <div>✦ &nbsp;<strong>7-day daily schedule</strong> — morning · afternoon · evening tasks</div>
+            <div>✦ &nbsp;<strong>Copy-paste scripts</strong> for each day's key action</div>
+            <div>✦ &nbsp;<strong>Daily win</strong> — one metric that tells you today was a success</div>
+            <div>✦ &nbsp;<strong>Week 1 milestone</strong> — your first paying client booked</div>
+          </div>
+        </div>
+        <!-- Pricing + CTA -->
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.4);text-decoration:line-through;margin-bottom:2px">Regular €47</div>
+            <div style="font-size:32px;font-weight:800;line-height:1;letter-spacing:-.02em">€27</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px">one-time · instant access</div>
+          </div>
+          <button onclick="startUpsell()" style="flex:1;min-width:200px;padding:16px 24px;border-radius:14px;border:none;background:linear-gradient(135deg,#e8417a,#7c3aed);color:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 8px 28px rgba(232,65,122,0.35)" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 36px rgba(232,65,122,0.5)'" onmouseout="this.style.transform='';this.style.boxShadow='0 8px 28px rgba(232,65,122,0.35)'">Get Launch Week · €27 →</button>
+        </div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.28);margin-top:12px;text-align:center">Or continue with your 90-day plan — it's everything you need to start</div>
+      </div>
+    </div>
   </div>
+
+  <!-- LAUNCH WEEK CONTENT (shown after upsell purchased) -->
+  <div id="launch-week-block" style="display:none"></div>
 
 </div></div><script>let currentStep=1,selectedLang='en',resultId=null,planData=null,userEmail=null;function setLang(l,b){selectedLang=l;document.querySelectorAll('.lang-btn').forEach(x=>x.classList.remove('on'));b.classList.add('on')}let tfCurrent=1;const TF_TOTAL=10;const TF_SINGLE=['age','loc','life','time','budget','btype','inc','risk'];const TF_GRP={1:'age',2:'loc',3:'life',4:'time',5:'budget',6:'str',7:'int',8:'btype',9:'inc',10:'risk'};
 function tfNext(){if(tfCurrent>=TF_TOTAL){generate();return;}const g=TF_GRP[tfCurrent];if(g&&document.querySelectorAll('[data-g="'+g+'"].on').length===0){const chips=document.getElementById('g-'+g);if(chips){chips.animate([{transform:'translateX(-5px)'},{transform:'translateX(5px)'},{transform:'translateX(-3px)'},{transform:'translateX(0)'}],{duration:280});chips.querySelectorAll('.chip').forEach(c=>{c.style.borderColor='#ef4444';setTimeout(()=>c.style.borderColor='',1800)});}return;}const cur=document.getElementById('tfq-'+tfCurrent);if(cur){cur.style.transition='opacity .2s,transform .2s';cur.style.opacity='0';cur.style.transform='translateY(-18px)';setTimeout(()=>{cur.style.display='none';cur.style.opacity='';cur.style.transform='';cur.classList.remove('active');tfCurrent++;const nxt=document.getElementById('tfq-'+tfCurrent);if(nxt){nxt.style.display='block';nxt.classList.add('active');}updateTfProgress();},200);}}
@@ -660,7 +689,7 @@ async function generate(){const quizData={age:get('age'),location:get('loc'),lif
     if(pc) pc.textContent = d.full_plan.first_customer;
     if(pd){const _d17=((d.full_plan.action_plan||{}).days_1_7||(d.full_plan.checklist||{}).day1||[]);pd.innerHTML=_d17.slice(0,2).map((s,i)=>'<div style="display:flex;gap:8px;margin-bottom:6px;font-size:13px;color:rgba(255,255,255,0.8)"><span style="color:#6366F1;font-weight:700">'+(i+1)+'.</span>'+(typeof s==='object'?s.task:s)+'</div>').join('');}
     if(pp) pp.textContent = d.full_plan.pricing.recommended_price;
-  } catch(e) { console.log('preview err', e); }window._currentPlanData=d;document.getElementById('r-others').innerHTML=(d.other_ideas||[]).map((o,idx)=>'<div onclick="switchToOtherIdea('+idx+')" style="background:rgba(255,255,255,0.04);border-radius:12px;border:1px solid rgba(255,255,255,0.08);padding:14px;margin-bottom:8px;cursor:pointer;transition:all .2s;position:relative" onmouseover="this.style.borderColor=\'rgba(167,139,250,0.5)\';this.style.background=\'rgba(124,58,237,0.08)\';this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.borderColor=\'rgba(255,255,255,0.08)\';this.style.background=\'rgba(255,255,255,0.04)\';this.style.transform=\'\'"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px"><div style="font-size:14px;font-weight:700;line-height:1.3">'+o.name+'</div><div style="font-size:11px;color:#a78bfa;font-weight:700;white-space:nowrap;padding:3px 8px;background:rgba(124,58,237,0.15);border-radius:100px">Match '+Math.max(75,o.fit_score)+'%</div></div><div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5;margin-bottom:10px">'+o.tagline+'</div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px"><span style="color:rgba(255,255,255,0.4)">💰 '+(o.monthly_potential||'')+'</span><span style="color:#a78bfa;font-weight:700">Tap to switch →</span></div></div>').join('');setTimeout(()=>{const dots=document.getElementById('radar-dots');if(dots)dots.style.opacity='1'},1200);if(isPaid)showPaidContent(fp)}function showPaidContent(fp){document.getElementById('email-gate').style.display='none';document.getElementById('locked-card').style.display='none';document.getElementById('level2-reveal').style.display='none';document.getElementById('rc-paid').style.display='block';/* upsell-block hidden for now */const fc = fp.first_customer;
+  } catch(e) { console.log('preview err', e); }window._currentPlanData=d;document.getElementById('r-others').innerHTML=(d.other_ideas||[]).map((o,idx)=>'<div onclick="switchToOtherIdea('+idx+')" style="background:rgba(255,255,255,0.04);border-radius:12px;border:1px solid rgba(255,255,255,0.08);padding:14px;margin-bottom:8px;cursor:pointer;transition:all .2s;position:relative" onmouseover="this.style.borderColor=\'rgba(167,139,250,0.5)\';this.style.background=\'rgba(124,58,237,0.08)\';this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.borderColor=\'rgba(255,255,255,0.08)\';this.style.background=\'rgba(255,255,255,0.04)\';this.style.transform=\'\'"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px"><div style="font-size:14px;font-weight:700;line-height:1.3">'+o.name+'</div><div style="font-size:11px;color:#a78bfa;font-weight:700;white-space:nowrap;padding:3px 8px;background:rgba(124,58,237,0.15);border-radius:100px">Match '+Math.max(75,o.fit_score)+'%</div></div><div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5;margin-bottom:10px">'+o.tagline+'</div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px"><span style="color:rgba(255,255,255,0.4)">💰 '+(o.monthly_potential||'')+'</span><span style="color:#a78bfa;font-weight:700">Tap to switch →</span></div></div>').join('');setTimeout(()=>{const dots=document.getElementById('radar-dots');if(dots)dots.style.opacity='1'},1200);if(isPaid)showPaidContent(fp)}function showPaidContent(fp){document.getElementById('email-gate').style.display='none';document.getElementById('locked-card').style.display='none';document.getElementById('level2-reveal').style.display='none';document.getElementById('rc-paid').style.display='block';const fc = fp.first_customer;
   if(typeof fc === 'object') {
     document.getElementById('r-firstcust').innerHTML =
       '<strong>Platform:</strong> '+fc.platform+'<br><br>'+
@@ -849,7 +878,105 @@ function initCalculator(){
   calc();
 }
 window.addEventListener('DOMContentLoaded',()=>{const p=new URLSearchParams(window.location.search);const storedRid=localStorage.getItem('gbi_rid');const storedEmail=localStorage.getItem('gbi_email');if(storedEmail)userEmail=storedEmail;if(p.get('unlocked')==='true'&&p.get('rid')){loadResult(p.get('rid'))}else if(p.get('rid')){loadResult(p.get('rid'))}else if(storedRid&&!resultId){/* restore session if user returns to root */resultId=storedRid;}if(p.get('dev')==='1'){window._devMode=true;}const isLocalhost=window.location.hostname==='localhost'||window.location.hostname==='127.0.0.1';if(!isLocalhost&&!p.get('dev')){document.querySelectorAll('.dev-btn').forEach(el=>el.style.display='none');}});async function loadResult(rid){try{document.getElementById('quiz-section').style.display='none';document.getElementById('loading-section').style.display='flex';const resp=await fetch("/api/result?rid="+rid);const data=await resp.json();if(data.plan){resultId=rid;planData=data.plan;userEmail=data.email||userEmail;window._lastQuizData=data.quiz_data||window._lastQuizData||{language:'en'};if(data.paid===true){/* PAID: show full premium */try{if(!data.is_test&&!localStorage.getItem('gbi_fb_purchase_'+rid)){fbqt('Purchase',{value:7,currency:'EUR',content_name:data.plan?.top_idea?.name||'business_plan'});localStorage.setItem('gbi_fb_purchase_'+rid,'1');}}catch(x){}renderResult(data.plan,false);setStage(2);setStage(3);setTimeout(()=>{generateBlocks();},300);}else{/* NOT PAID: show free preview + email gate + payment */renderResult(data.plan,false);if(userEmail)setStage(2);}}else{document.getElementById('loading-section').style.display='none';document.getElementById('quiz-section').style.display='flex';alert('Could not load your plan. Please complete the quiz again.')}}catch(e){console.error('loadResult error:',e);document.getElementById('loading-section').style.display='none';document.getElementById('quiz-section').style.display='flex';alert('Error loading plan: '+e.message)}}
-async function startUpsell(){try{const resp=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resultId,email:userEmail,product:'upsell'})});const{url}=await resp.json();window.location.href=url}catch(e){alert('Payment error. Please try again.')}}
+async function startUpsell(){
+    ph('upsell_checkout_started',{idea:planData?.top_idea?.name,method:'banner'});
+    try{
+      const resp=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resultId,email:userEmail,product:'upsell'})});
+      const{url,error}=await resp.json();
+      if(error)throw new Error(error);
+      window.location.href=url;
+    }catch(e){alert('Payment error: '+e.message+'. Please try again.')}
+  }
+  function showUpsellBanner(){
+    const ub=document.getElementById('upsell-block');
+    if(ub&&ub.style.display==='none'){
+      ub.style.display='block';
+      ub.style.opacity='0';ub.style.transform='translateY(20px)';
+      requestAnimationFrame(()=>{ub.style.transition='all .6s cubic-bezier(.22,1,.36,1)';ub.style.opacity='1';ub.style.transform='none';});
+      ph('upsell_banner_shown',{idea:planData?.top_idea?.name});
+      // Smooth scroll so banner is visible without jarring jump
+      setTimeout(()=>{ub.scrollIntoView({behavior:'smooth',block:'nearest'});},600);
+    }
+  }
+  async function showLaunchWeekContent(){
+    const lb=document.getElementById('launch-week-block');
+    const ub=document.getElementById('upsell-block');
+    if(!lb)return;
+    if(ub)ub.style.display='none';
+    lb.style.display='block';
+    // Show cached content if available
+    const cached=planData?.blocks?.[5];
+    if(cached){renderLaunchWeek(cached);return;}
+    // Otherwise generate it
+    const _rid=resultId||new URLSearchParams(window.location.search).get('rid')||localStorage.getItem('gbi_rid')||'';
+    lb.innerHTML=`<div style="background:linear-gradient(135deg,rgba(232,65,122,0.15),rgba(124,58,237,0.1));border:1px solid rgba(232,65,122,0.3);border-radius:16px;padding:28px;text-align:center;margin-bottom:16px">
+      <div style="width:36px;height:36px;border-radius:50%;border:3px solid rgba(232,65,122,0.3);border-top-color:#e8417a;animation:spin 1s linear infinite;margin:0 auto 16px"></div>
+      <div style="font-size:16px;font-weight:700;margin-bottom:6px">Personalizing your Launch Week…</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.5)">Building your 7-day schedule based on your specific business</div>
+    </div>`;
+    lb.scrollIntoView({behavior:'smooth',block:'start'});
+    try{
+      const resp=await fetch('/api/generate-block',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({block:5,quizData:window._lastQuizData,ideaName:planData?.top_idea?.name||'',language:'en',rid:_rid})});
+      const result=await resp.json();
+      if(result.data){
+        if(!planData.blocks)planData.blocks={};
+        planData.blocks[5]=result.data;
+        renderLaunchWeek(result.data);
+      }else{lb.innerHTML='<div style="color:rgba(255,0,0,0.5);font-size:13px;padding:16px">Error generating Launch Week: '+(result.error||'unknown')+'</div>';}
+    }catch(e){lb.innerHTML='<div style="color:rgba(255,0,0,0.5);font-size:13px;padding:16px">Error: '+e.message+'</div>';}
+  }
+  function renderLaunchWeek(d){
+    const lb=document.getElementById('launch-week-block');
+    if(!lb)return;
+    const dayColors=['#e8417a','#a78bfa','#5dcaa5','#fbbf24','#7c3aed','#e8417a','#5dcaa5'];
+    const timeSlots=[
+      {key:'morning',label:'Morning',icon:'🌅'},
+      {key:'afternoon',label:'Afternoon',icon:'☀️'},
+      {key:'evening',label:'Evening',icon:'🌙'}
+    ];
+    lb.innerHTML=`
+    <div style="background:linear-gradient(135deg,rgba(232,65,122,0.18),rgba(124,58,237,0.12));border:1px solid rgba(232,65,122,0.35);border-radius:20px;overflow:hidden;margin-bottom:16px">
+      <div style="background:linear-gradient(90deg,#e8417a,#7c3aed);padding:12px 22px">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.7);margin-bottom:2px">🚀 Launch Week</div>
+        <div style="font-size:20px;font-weight:800;color:#fff">${d.week_title||'Your First 7 Days'}</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.75);margin-top:4px">Goal: ${d.week_goal||''}</div>
+      </div>
+      <div style="padding:20px 22px">
+        ${d.daily_mantra?`<div style="background:rgba(0,0,0,0.25);border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:rgba(255,255,255,0.7);line-height:1.5;font-style:italic;text-align:center">"${d.daily_mantra}"</div>`:''}
+        ${(d.days||[]).map((day,i)=>`
+        <div style="border:1px solid rgba(${dayColors[i]==='#e8417a'?'232,65,122':'124,58,237'},0.25);border-radius:14px;margin-bottom:14px;overflow:hidden">
+          <!-- Day header -->
+          <div style="background:rgba(255,255,255,0.04);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.06)">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="width:32px;height:32px;border-radius:50%;background:${dayColors[i]};color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">${day.day}</div>
+              <div>
+                <div style="font-size:15px;font-weight:700;line-height:1.2">${day.theme||'Day '+day.day}</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-top:2px">Today's win: ${day.daily_win||''}</div>
+              </div>
+            </div>
+            ${day.todays_number?`<div style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.7);white-space:nowrap">${day.todays_number}</div>`:''}
+          </div>
+          <!-- Time slots -->
+          ${timeSlots.map(slot=>{const s=day[slot.key]||{};if(!s.task)return '';return `
+          <div style="padding:12px 16px;border-bottom:0.5px solid rgba(255,255,255,0.05)">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+              <span style="font-size:14px">${slot.icon}</span>
+              <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.45)">${slot.label}${s.duration_min?' · '+s.duration_min+'min':''}</span>
+            </div>
+            <div style="font-size:14px;color:rgba(255,255,255,0.85);font-weight:600;margin-bottom:${s.script?'8px':'0'};line-height:1.4">${s.task}</div>
+            ${s.script?`<div style="background:rgba(124,58,237,0.12);border-left:3px solid #7c3aed;border-radius:0 8px 8px 0;padding:10px 12px;font-size:12px;color:rgba(255,255,255,0.75);line-height:1.7;font-style:italic">${s.script}</div>`:''}
+          </div>`;}).join('')}
+        </div>`).join('')}
+        ${d.week1_milestone?`<div style="background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);border-radius:12px;padding:16px;text-align:center">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#5dcaa5;margin-bottom:6px">🎯 Week 1 Milestone</div>
+          <div style="font-size:16px;font-weight:700">${d.week1_milestone}</div>
+          ${d.celebration?`<div style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:6px">${d.celebration}</div>`:''}
+        </div>`:''}
+      </div>
+    </div>`;
+    lb.scrollIntoView({behavior:'smooth',block:'start'});
+    ph('launch_week_rendered',{idea:planData?.top_idea?.name});
+  }
 function setStage(n){const s2=document.getElementById('stage-2');const s3=document.getElementById('stage-3');if(n>=2&&s2){s2.style.background='rgba(34,197,94,0.15)';s2.style.borderColor='rgba(34,197,94,0.3)';s2.style.color='#5dcaa5';s2.children[0].textContent='✓';s2.children[0].style.opacity='1'}if(n>=3&&s3){s3.style.background='linear-gradient(135deg,rgba(124,58,237,0.25),rgba(232,65,122,0.15))';s3.style.borderColor='rgba(167,139,250,0.5)';s3.style.color='#a78bfa';s3.children[0].textContent='✓';s3.children[0].style.opacity='1'}}
 function openUnlockModal(mode){ph('unlock_modal_opened',{mode:mode||'main',idea:planData?.top_idea?.name});window._unlockMode=mode||'main';const m=document.getElementById('unlock-modal');if(m){m.style.display='flex';/* Pre-fill email if known */const me=document.getElementById('modal-email');if(me){const prefill=userEmail||document.getElementById('gate-email')?.value||localStorage.getItem('gbi_email')||'';me.value=prefill;/* Focus email if empty, else focus PIN */setTimeout(()=>{if(!prefill){me.focus()}else{const inp=document.getElementById('pin-input');if(inp)inp.focus()}},100)}}}
 function getModalEmail(){const me=document.getElementById('modal-email');const val=me?.value?.trim()||'';if(!val||!val.includes('@')||!val.includes('.')||val.length<5){if(me){me.style.borderColor='#ef4444';me.focus();const hint=document.getElementById('modal-email-hint');if(hint){hint.innerHTML='<span style="color:#ef4444;font-weight:700">⚠️ Please enter a valid email address.</span>';setTimeout(()=>{hint.innerHTML="💌 We'll send your <strong style='color:#a78bfa'>magic link</strong> here — bookmark to return anytime + 7-day action guide.";me.style.borderColor='rgba(255,255,255,0.15)'},3000)}}return null}userEmail=val;localStorage.setItem('gbi_email',val);if(resultId){fetch('/api/save-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resultId,email:val,ideaName:planData?.top_idea?.name||''})}).catch(()=>{})}return val}
@@ -876,7 +1003,6 @@ function devUnlock(){
     const _rid=resultId||new URLSearchParams(window.location.search).get('rid')||localStorage.getItem('gbi_rid')||'';const _ml=_rid?(window.location.origin+'/quiz.html?unlocked=true&rid='+_rid):'';
     paidSection.innerHTML=`<div style="background:linear-gradient(135deg,rgba(34,197,94,0.18),rgba(124,58,237,0.12));border:1px solid rgba(34,197,94,0.3);border-radius:18px;padding:22px;margin-bottom:16px"><div style="text-align:center;margin-bottom:${_ml?'18px':'0'}"><div style="display:inline-flex;align-items:center;gap:8px;padding:4px 14px;border-radius:100px;background:rgba(34,197,94,0.2);font-size:11px;font-weight:700;color:#5dcaa5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">✓ Full Access Granted</div><h2 style="font-size:22px;font-weight:800;margin-bottom:6px">🎉 Your complete 90-day plan is ready</h2><p style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.5;margin:0">${_ml?'Bookmark this page or save your magic link below to return anytime.':'Bookmark this page to return anytime.'}</p></div>${_ml?`<div style="background:rgba(0,0,0,0.3);border:1px solid rgba(167,139,250,0.25);border-radius:12px;padding:14px"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#a78bfa;margin-bottom:8px">🔗 Your Magic Link (save this!)</div><div style="display:flex;gap:8px;align-items:center"><input id="magic-link-input" type="text" readonly value="${_ml}" style="flex:1;min-width:0;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(0,0,0,0.4);color:rgba(255,255,255,0.85);font-size:12px;font-family:monospace;outline:none" onclick="this.select()"><button onclick="navigator.clipboard.writeText('${_ml}').then(()=>{this.textContent='✓ Copied!';this.style.background='rgba(34,197,94,0.3)';setTimeout(()=>{this.textContent='Copy';this.style.background='rgba(124,58,237,0.3)'},1800)})" style="padding:10px 16px;background:rgba(124,58,237,0.3);border:1px solid #7c3aed;border-radius:8px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap">Copy</button></div><div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:8px;line-height:1.5">📧 We'll also email this to <strong style="color:rgba(255,255,255,0.7)">${userEmail||'you'}</strong> shortly. Check spam if it doesn't arrive in 5 min.</div></div>`:''}</div>`;
     document.getElementById('locked-card').style.display='none';
-    /* upsell-block hidden for now */
 
     const blocks = [1,2,3,4];
     // Create all placeholders FIRST (so order is preserved while parallel fetches happen)
@@ -928,6 +1054,16 @@ function devUnlock(){
     window._gbiBlocksInFlight=false;
     // Restore saved checkbox state after all blocks rendered
     setTimeout(restoreCheckboxState, 100);
+    // Show upsell section (3-second delay for better UX — user reads the plan first)
+    const _upsellAlreadyPaid = planData?.upsell_paid === true;
+    const _justPaidUpsell = new URLSearchParams(window.location.search).get('upsell')==='1';
+    if (_upsellAlreadyPaid || _justPaidUpsell) {
+      // User already has Launch Week — generate & show content
+      setTimeout(()=>showLaunchWeekContent(), 800);
+    } else {
+      // Show upsell offer after 3 seconds
+      setTimeout(()=>showUpsellBanner(), 3000);
+    }
   }
 
   function saveCheckboxState(){
