@@ -888,6 +888,7 @@ async function startUpsell(){
     }catch(e){alert('Payment error: '+e.message+'. Please try again.')}
   }
   function showUpsellBanner(){
+    return; // upsell not ready — hidden until launch
     const ub=document.getElementById('upsell-block');
     if(ub&&ub.style.display==='none'){
       ub.style.display='block';
