@@ -38,11 +38,15 @@ JSON (fill ALL fields, be specific and concrete):
 
     // Find text block (skip thinking blocks from extended-thinking models)
     const textBlock = msg.content.find(b => b.type === 'text');
-    if (!textBlock) throw new Error('No text block in response');
+    if (!textBlock) {
+      return res.status(200).json({ error: 'RAW_CONTENT:' + JSON.stringify(msg.content).slice(0, 300) });
+    }
     const cleaned = textBlock.text.replace(/```json|```/g, '').trim();
     // Extract first JSON object (handles any prefix text the model might add)
     const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error('No JSON in response: ' + cleaned.slice(0, 100));
+    if (!jsonMatch) {
+      return res.status(200).json({ error: 'NO_JSON:' + cleaned.slice(0, 300) });
+    }
     const plan = JSON.parse(jsonMatch[0]);
 
     let resultId = null;
