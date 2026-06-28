@@ -30,8 +30,8 @@ JSON (fill ALL fields, be specific and concrete):
 
   try {
     const msg = await claude.messages.create({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 3500,
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 4096,
       system: systemPrompt,
       messages: [{ role: 'user', content: userPrompt }]
     });
