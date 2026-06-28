@@ -61,7 +61,9 @@ export default async function handler(req, res) {
       messages: [{ role: 'user', content: b.prompt }]
     });
 
-    const raw = msg.content[0].text.replace(/```json|```/g, '').trim();
+    const textBlock = msg.content.find(b => b.type === 'text');
+    if (!textBlock) throw new Error('No text block in response');
+    const raw = textBlock.text.replace(/```json|```/g, '').trim();
     const data = JSON.parse(raw);
 
     // Persist block into plan.blocks[N] so future visits skip Claude

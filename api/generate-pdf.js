@@ -36,7 +36,9 @@ Return ONLY valid JSON:
 {"title":"","subtitle":"","week1":{"title":"","tasks":["",""]},"week2":{"title":"","tasks":["",""]},"week3":{"title":"","tasks":["",""]},"week4":{"title":"","tasks":["",""]},"first_client_script":"","daily_habit":"","success_metric":""}` }]
     });
 
-    const pdf = JSON.parse(msg.content[0].text.replace(/```json|```/g, '').trim());
+    const textBlock = msg.content.find(b => b.type === 'text');
+    if (!textBlock) throw new Error('No text block in response');
+    const pdf = JSON.parse(textBlock.text.replace(/```json|```/g, '').trim());
     res.json({ ok: true, idea, pdf });
   } catch (err) {
     res.status(500).json({ error: err.message });

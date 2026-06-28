@@ -36,7 +36,10 @@ JSON (fill ALL fields, be specific and concrete):
       messages: [{ role: 'user', content: userPrompt }]
     });
 
-    const raw = msg.content[0].text.replace(/```json|```/g, '').trim();
+    // Find text block (skip thinking blocks from extended-thinking models)
+    const textBlock = msg.content.find(b => b.type === 'text');
+    if (!textBlock) throw new Error('No text block in response');
+    const raw = textBlock.text.replace(/```json|```/g, '').trim();
     const plan = JSON.parse(raw);
 
     let resultId = null;
