@@ -1045,9 +1045,12 @@ function devUnlock(){
           if(!planData.blocks) planData.blocks = {};
           planData.blocks[block] = result.data;
           renderBlock(block, result.data, placeholder);
+        } else {
+          // Server returned error (API timeout, Claude error etc.) — show retry button
+          placeholder.innerHTML='<div style="padding:16px;text-align:center"><div style="color:rgba(255,100,100,0.7);font-size:13px;margin-bottom:10px">Part '+block+' failed to load. '+(result.error||'')+'</div><button onclick="window._gbiBlocksRendered=false;window._gbiBlocksInFlight=false;generateBlocks()" style="padding:8px 18px;background:rgba(124,58,237,0.3);border:1px solid #7c3aed;border-radius:8px;color:#fff;font-size:13px;cursor:pointer">↺ Retry</button></div>';
         }
       } catch(e) {
-        placeholder.innerHTML='<div style="color:rgba(255,0,0,0.5);font-size:12px;padding:10px">Error generating part '+block+'</div>';
+        placeholder.innerHTML='<div style="padding:16px;text-align:center"><div style="color:rgba(255,100,100,0.7);font-size:13px;margin-bottom:10px">Part '+block+' failed to load.</div><button onclick="window._gbiBlocksRendered=false;window._gbiBlocksInFlight=false;generateBlocks()" style="padding:8px 18px;background:rgba(124,58,237,0.3);border:1px solid #7c3aed;border-radius:8px;color:#fff;font-size:13px;cursor:pointer">↺ Retry</button></div>';
       }
     }));
     // Mark complete + release in-flight guard
