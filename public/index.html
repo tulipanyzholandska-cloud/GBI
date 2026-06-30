@@ -107,23 +107,57 @@ nav{position:sticky;top:0;z-index:100;height:62px;padding:0 48px;display:flex;al
 .nav-btn:hover{background:var(--pink-d);transform:translateY(-1px)}
 
 /* HERO */
-.hero{padding:80px 24px 96px;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:700px;height:600px;background:radial-gradient(ellipse,rgba(232,65,122,.14) 0%,transparent 65%);pointer-events:none}
+.hero{padding:72px 0 64px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-160px;right:-80px;width:700px;height:600px;background:radial-gradient(ellipse,rgba(232,65,122,.1) 0%,transparent 65%);pointer-events:none}
+.hero-inner{display:grid;grid-template-columns:1fr 440px;gap:56px;align-items:center}
+.hero-left{z-index:1}
+.hero-right{z-index:1}
 
 .proof-bar{
   display:inline-flex;align-items:center;gap:8px;
-  padding:8px 18px;border-radius:100px;margin-bottom:36px;
+  padding:8px 18px;border-radius:100px;margin-bottom:32px;
   background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.18);
   font-size:13px;color:rgba(255,255,255,.65);
 }
-.proof-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.8s infinite}
+.proof-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.8s infinite;flex-shrink:0}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 .proof-bar strong{color:var(--green)}
 
-.hero-h{font-size:clamp(44px,8.5vw,96px);font-weight:900;letter-spacing:-.055em;line-height:.97;margin-bottom:26px;max-width:860px;margin-left:auto;margin-right:auto}
+.hero-h{font-size:clamp(40px,5.5vw,72px);font-weight:900;letter-spacing:-.055em;line-height:.97;margin-bottom:22px}
 .hero-h em{font-style:normal;color:var(--pink)}
 
-.hero-sub{font-size:clamp(16px,1.9vw,20px);color:var(--t2);max-width:460px;margin:0 auto 48px;line-height:1.65}
+.hero-sub{font-size:clamp(16px,1.7vw,19px);color:var(--t2);max-width:480px;margin:0 0 40px;line-height:1.65}
+
+/* PLAN MOCKUP VISUAL */
+.plan-mock{background:var(--c1);border:1px solid rgba(255,255,255,.1);border-radius:20px;overflow:hidden;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.5)}
+.plan-mock-head{padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;background:rgba(255,255,255,.02)}
+.plan-mock-label-top{font-size:10px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.plan-mock-title-text{font-size:16px;font-weight:800;letter-spacing:-.02em}
+.plan-mock-badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:100px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);font-size:11px;font-weight:700;color:#5dcaa5;white-space:nowrap;margin-top:3px;flex-shrink:0}
+.plan-mock-body{padding:18px 22px}
+.plan-mock-slabel{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.28);margin-bottom:10px;margin-top:2px}
+.plan-mock-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.plan-mock-ml{font-size:11px;color:rgba(255,255,255,.38);min-width:52px}
+.plan-mock-bar{flex:1;height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden}
+.plan-mock-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#7c3aed,var(--pink))}
+.plan-mock-mv{font-size:12px;font-weight:700;min-width:52px;text-align:right;color:rgba(255,255,255,.65)}
+.plan-mock-mv.hi{color:#5dcaa5;font-size:13px}
+.plan-mock-sep{height:1px;background:rgba(255,255,255,.06);margin:14px 0}
+.plan-mock-task{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.6);padding:4px 0;line-height:1.4}
+.plan-mock-check{color:#5dcaa5;font-size:10px;font-weight:800;flex-shrink:0;width:14px;text-align:center}
+.plan-mock-blur-wrap{position:relative}
+.plan-mock-blur-wrap .plan-mock-task{filter:blur(3.5px);user-select:none}
+.plan-mock-overlay{position:absolute;inset:0;background:linear-gradient(transparent 0%,rgba(20,20,20,.92) 50%);display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px}
+.plan-mock-unlock{font-size:12px;font-weight:700;color:var(--pink);cursor:pointer;letter-spacing:.01em}
+
+@media(max-width:960px){
+  .hero-inner{grid-template-columns:1fr 360px;gap:36px}
+}
+@media(max-width:760px){
+  .hero{padding:48px 0 40px}
+  .hero-inner{grid-template-columns:1fr;gap:32px}
+  .hero-sub{margin-bottom:32px}
+}
 
 /* PRIMARY CTA BUTTON */
 .cta-btn{
@@ -328,13 +362,14 @@ footer a:hover{color:var(--t1)}
 .tick-after{font-size:13px;color:rgba(255,255,255,.82);font-weight:600}
 
 /* ===== HOMEPAGE QUIZ ===== */
-#quiz-section{min-height:calc(100vh - 140px);display:flex;align-items:center;justify-content:center;position:relative}
+#quiz-section{padding:80px 24px 96px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;background:linear-gradient(180deg,rgba(124,58,237,.04) 0%,transparent 100%);border-top:1px solid rgba(255,255,255,.06)}
+#quiz-section-label{text-align:center;margin-bottom:48px}
 #tf-bar-wrap{position:fixed;top:104px;left:0;right:0;height:3px;background:rgba(255,255,255,0.07);z-index:99}
 #tf-bar-fill{height:100%;background:linear-gradient(90deg,#7c3aed,#E8417A);width:5%;transition:width .5s cubic-bezier(.4,0,.2,1)}
-#tf-wrap{width:100%;max-width:640px;padding:0 44px 40px;position:relative}
-#tf-proof{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:100px;margin-bottom:32px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:12px;color:rgba(255,255,255,.55)}
-#tf-proof-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 1.8s infinite;flex-shrink:0}
-@media(max-width:600px){#tf-wrap{padding:0 20px 40px}#quiz-section{min-height:calc(100vh - 104px);align-items:flex-start;padding-top:32px}}
+#tf-wrap{width:100%;max-width:600px;position:relative}
+#tf-proof{display:none}
+#tf-proof-dot{display:none}
+@media(max-width:600px){#quiz-section{padding:56px 0 64px}}
 #tf-meta{font-size:12px;font-weight:600;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:36px}
 .tf-q{display:none}.tf-q.active{display:block;animation:tfIn .38s cubic-bezier(.22,1,.36,1)}
 @keyframes tfIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
@@ -364,7 +399,7 @@ footer a:hover{color:var(--t1)}
 .ld-step.ld-done::before{content:'✓';color:#5dcaa5;font-weight:700;font-size:14px}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:600px){
-  #tf-wrap{padding:40px 20px 90px}
+  #tf-wrap{padding:0 20px 40px}
   .tf-qtxt{font-size:24px}
   .tf-sub{font-size:14px;margin-bottom:22px}
   .tf-chips .chip{padding:11px 16px;font-size:14px}
@@ -403,8 +438,66 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
 <!-- NAV -->
 <nav>
   <a class="logo" href="/">Get<span>Biz</span>Idea</a>
-  <button class="nav-btn" onclick="document.getElementById('quiz-section').scrollIntoView({behavior:'smooth'})">Start free →</button>
+  <button class="nav-btn" onclick="scrollToQuiz()">Start free →</button>
 </nav>
+
+<!-- HERO -->
+<section class="hero" id="hero-section">
+  <div class="wrap hero-inner">
+
+    <!-- LEFT: copy -->
+    <div class="hero-left rv">
+      <div class="proof-bar">
+        <span class="proof-dot"></span>
+        <span><strong id="live-n">4,247</strong> plans generated this week &nbsp;·&nbsp; ★★★★★ 4.8/5</span>
+      </div>
+      <h1 class="hero-h">Find the business idea<br><em>made for your life</em></h1>
+      <p class="hero-sub">Answer 10 quick questions. Get a personalised business plan matched to your skills, schedule, and budget — in 90 seconds. Free to start.</p>
+      <button class="cta-btn" onclick="scrollToQuiz()">
+        Find My Business Idea <span class="cta-ic">→</span>
+      </button>
+      <div class="trust" style="margin-top:20px;justify-content:flex-start">
+        <span class="trust-i"><span class="ck">✓</span> Free to start</span>
+        <span class="trust-i"><span class="ck">✓</span> 90 seconds</span>
+        <span class="trust-i"><span class="ck">✓</span> No account needed</span>
+        <span class="trust-i"><span class="ck">✓</span> 30-day money back</span>
+      </div>
+    </div>
+
+    <!-- RIGHT: plan mockup -->
+    <div class="hero-right rv d1">
+      <div class="plan-mock">
+        <div class="plan-mock-head">
+          <div>
+            <div class="plan-mock-label-top">Your business match</div>
+            <div class="plan-mock-title-text">UX &amp; Product Consulting</div>
+          </div>
+          <div class="plan-mock-badge">94% match</div>
+        </div>
+        <div class="plan-mock-body">
+          <div class="plan-mock-slabel">Income projection</div>
+          <div class="plan-mock-row"><span class="plan-mock-ml">Month 1</span><div class="plan-mock-bar"><div class="plan-mock-fill" style="width:14%"></div></div><span class="plan-mock-mv">€1,200</span></div>
+          <div class="plan-mock-row"><span class="plan-mock-ml">Month 3</span><div class="plan-mock-bar"><div class="plan-mock-fill" style="width:32%"></div></div><span class="plan-mock-mv">€2,800</span></div>
+          <div class="plan-mock-row"><span class="plan-mock-ml">Month 6</span><div class="plan-mock-bar"><div class="plan-mock-fill" style="width:55%"></div></div><span class="plan-mock-mv">€4,500</span></div>
+          <div class="plan-mock-row"><span class="plan-mock-ml">Month 12</span><div class="plan-mock-bar"><div class="plan-mock-fill" style="width:84%"></div></div><span class="plan-mock-mv hi">€7,000</span></div>
+          <div class="plan-mock-sep"></div>
+          <div class="plan-mock-slabel">Day 1 action plan</div>
+          <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Update LinkedIn headline to attract SaaS clients</div>
+          <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Build list of 30 target companies on Crunchbase</div>
+          <div class="plan-mock-blur-wrap" style="position:relative">
+            <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Send 10 personalised outreach messages</div>
+            <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Set up free Calendly booking link</div>
+            <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Create a one-page case study from past work</div>
+            <div class="plan-mock-overlay">
+              <span class="plan-mock-unlock" onclick="scrollToQuiz()">Get your personalised plan →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 <!-- SCROLLING TICKER — doubts → reality -->
 <div id="ticker-wrap">
@@ -437,11 +530,15 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
   </div>
 </div>
 
-<!-- QUIZ — visible immediately above the fold -->
+<!-- QUIZ — appears just below the fold, scrolled to when user clicks CTA -->
 <div id="quiz-section">
+  <div id="quiz-section-label">
+    <div class="s-tag" style="margin-bottom:8px">Take the free quiz</div>
+    <h2 style="font-size:clamp(26px,3.5vw,38px);font-weight:900;letter-spacing:-.04em;line-height:1.1">Answer 10 questions.<br>Get your personalised plan.</h2>
+  </div>
   <div id="tf-bar-wrap"><div id="tf-bar-fill"></div></div>
   <div id="tf-wrap">
-    <div id="tf-proof"><span id="tf-proof-dot"></span> <strong style="color:rgba(255,255,255,.8)">4,247</strong> plans generated this week &nbsp;·&nbsp; ★★★★★ 4.8/5 &nbsp;·&nbsp; Free · 90 seconds</div>
+    <div id="tf-proof"><span id="tf-proof-dot"></span></div>
     <div id="tf-meta">Question <strong style="color:#fff">1</strong> <span style="color:rgba(255,255,255,0.25)">/ 10</span></div>
     <div id="tf-slides">
 
@@ -978,6 +1075,13 @@ async function generate(){
     overlay.style.display='none';
     alert('Something went wrong: '+e.message);
   }
+}
+
+function scrollToQuiz(){
+  document.getElementById('quiz-section').scrollIntoView({behavior:'smooth'});
+}
+function startQuiz(){
+  scrollToQuiz();
 }
 
 function sTab(el,panelId){
