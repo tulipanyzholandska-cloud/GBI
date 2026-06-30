@@ -285,8 +285,20 @@ footer a:hover{color:var(--t1)}
 .urg-prog{width:100px;height:5px;background:rgba(255,255,255,.2);border-radius:3px;overflow:hidden;display:inline-block;vertical-align:middle;margin:0 4px}
 .urg-prog-fill{height:100%;background:rgba(255,255,255,.9);border-radius:3px;width:42%}
 
+/* ===== TICKER STRIP ===== */
+#ticker-wrap{overflow:hidden;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);padding:10px 0;position:relative}
+#ticker-wrap::before,#ticker-wrap::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none}
+#ticker-wrap::before{left:0;background:linear-gradient(90deg,#0a0a0a,transparent)}
+#ticker-wrap::after{right:0;background:linear-gradient(-90deg,#0a0a0a,transparent)}
+.ticker-track{display:flex;gap:0;width:max-content;animation:ticker 38s linear infinite}
+.ticker-track:hover{animation-play-state:paused}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.tick{display:inline-flex;align-items:center;gap:8px;padding:0 36px;font-size:13px;color:rgba(255,255,255,.5);white-space:nowrap;border-right:1px solid rgba(255,255,255,.07)}
+.tick em{font-style:normal;color:rgba(255,255,255,.75);font-weight:500}
+.tick-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
 /* ===== HOMEPAGE QUIZ ===== */
-#quiz-section{min-height:calc(100vh - 104px);display:flex;align-items:center;justify-content:center;position:relative}
+#quiz-section{min-height:calc(100vh - 140px);display:flex;align-items:center;justify-content:center;position:relative}
 #tf-bar-wrap{position:fixed;top:104px;left:0;right:0;height:3px;background:rgba(255,255,255,0.07);z-index:99}
 #tf-bar-fill{height:100%;background:linear-gradient(90deg,#7c3aed,#E8417A);width:5%;transition:width .5s cubic-bezier(.4,0,.2,1)}
 #tf-wrap{width:100%;max-width:640px;padding:0 44px 40px;position:relative}
@@ -363,6 +375,33 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
   <a class="logo" href="/">Get<span>Biz</span>Idea</a>
   <button class="nav-btn" onclick="document.getElementById('quiz-section').scrollIntoView({behavior:'smooth'})">Start free →</button>
 </nav>
+
+<!-- SCROLLING TICKER — motivational social proof -->
+<div id="ticker-wrap">
+  <div class="ticker-track" id="ticker">
+    <span class="tick"><span class="tick-dot" style="background:#22c55e"></span> <em>Maria K.</em> landed her first client 4 days after getting her plan</span>
+    <span class="tick"><span class="tick-dot" style="background:#a78bfa"></span> "The best time to start was yesterday. The next best is now." — James Clear</span>
+    <span class="tick"><span class="tick-dot" style="background:#E8417A"></span> <em>Tom V.</em> made €1,200 in month one with zero experience</span>
+    <span class="tick"><span class="tick-dot" style="background:#fbbf24"></span> "You don't have to be great to start, but you have to start to be great."</span>
+    <span class="tick"><span class="tick-dot" style="background:#22c55e"></span> <em>Sandra R.</em> quit her job 6 months after starting her side business</span>
+    <span class="tick"><span class="tick-dot" style="background:#a78bfa"></span> "Stop waiting for the perfect moment. Take the moment and make it perfect."</span>
+    <span class="tick"><span class="tick-dot" style="background:#E8417A"></span> <em>Peter M.</em> went from 0 to €3,500/month in 90 days</span>
+    <span class="tick"><span class="tick-dot" style="background:#fbbf24"></span> "The secret of getting ahead is getting started." — Mark Twain</span>
+    <span class="tick"><span class="tick-dot" style="background:#22c55e"></span> <em>Anna L.</em> found her niche in 90 seconds — now earns more than her old salary</span>
+    <span class="tick"><span class="tick-dot" style="background:#a78bfa"></span> "Your future self is watching you right now through your memories."</span>
+    <!-- duplicate for seamless loop -->
+    <span class="tick"><span class="tick-dot" style="background:#22c55e"></span> <em>Maria K.</em> landed her first client 4 days after getting her plan</span>
+    <span class="tick"><span class="tick-dot" style="background:#a78bfa"></span> "The best time to start was yesterday. The next best is now." — James Clear</span>
+    <span class="tick"><span class="tick-dot" style="background:#E8417A"></span> <em>Tom V.</em> made €1,200 in month one with zero experience</span>
+    <span class="tick"><span class="tick-dot" style="background:#fbbf24"></span> "You don't have to be great to start, but you have to start to be great."</span>
+    <span class="tick"><span class="tick-dot" style="background:#22c55e"></span> <em>Sandra R.</em> quit her job 6 months after starting her side business</span>
+    <span class="tick"><span class="tick-dot" style="background:#a78bfa"></span> "Stop waiting for the perfect moment. Take the moment and make it perfect."</span>
+    <span class="tick"><span class="tick-dot" style="background:#E8417A"></span> <em>Peter M.</em> went from 0 to €3,500/month in 90 days</span>
+    <span class="tick"><span class="tick-dot" style="background:#fbbf24"></span> "The secret of getting ahead is getting started." — Mark Twain</span>
+    <span class="tick"><span class="tick-dot" style="background:#22c55e"></span> <em>Anna L.</em> found her niche in 90 seconds — now earns more than her old salary</span>
+    <span class="tick"><span class="tick-dot" style="background:#a78bfa"></span> "Your future self is watching you right now through your memories."</span>
+  </div>
+</div>
 
 <!-- QUIZ — visible immediately above the fold -->
 <div id="quiz-section">
