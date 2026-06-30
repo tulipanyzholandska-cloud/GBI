@@ -225,6 +225,32 @@ section{padding:96px 0}
 .p-meta{font-size:13px;color:var(--t3);margin-bottom:44px}
 .guarantee{display:inline-flex;align-items:center;gap:9px;padding:11px 20px;border-radius:10px;background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.18);font-size:13px;color:rgba(255,255,255,.6);margin-top:18px}
 
+/* SAMPLE PLAN */
+.sample-wrap{border:1px solid rgba(255,255,255,.1);border-radius:20px;overflow:hidden;position:relative;margin-top:56px}
+.sample-header{padding:24px 32px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;gap:16px;background:rgba(255,255,255,.02)}
+.sample-match{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);font-size:11px;font-weight:700;color:#5dcaa5;text-transform:uppercase;letter-spacing:.08em}
+.sample-tabs{display:flex;gap:2px;padding:16px 32px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.s-tab{padding:10px 18px;font-size:13px;font-weight:600;color:rgba(255,255,255,.35);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;white-space:nowrap}
+.s-tab.on{color:#fff;border-bottom-color:var(--pink)}
+.sample-body{padding:28px 32px;min-height:260px}
+.s-panel{display:none}.s-panel.on{display:block}
+.sp-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.sp-row:last-child{border-bottom:none}
+.sp-label{font-size:12px;color:rgba(255,255,255,.4);min-width:80px}
+.sp-bar{flex:1;height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden}
+.sp-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#7c3aed,var(--pink))}
+.sp-val{font-size:13px;font-weight:700;min-width:110px;text-align:right}
+.script-box{background:rgba(124,58,237,.08);border-left:3px solid rgba(124,58,237,.5);border-radius:0 8px 8px 0;padding:16px 20px;font-size:13px;line-height:1.75;color:rgba(255,255,255,.78);font-style:italic}
+.task-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px;color:rgba(255,255,255,.78);line-height:1.5}
+.task-item:last-child{border-bottom:none}
+.task-n{width:22px;height:22px;min-width:22px;border-radius:6px;background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.35);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#a78bfa}
+.price-tier{padding:14px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);margin-bottom:10px}
+.price-tier-name{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.4);margin-bottom:4px}
+.price-tier-price{font-size:22px;font-weight:800;letter-spacing:-.03em;margin-bottom:4px}
+.price-tier-desc{font-size:12px;color:rgba(255,255,255,.45);line-height:1.5}
+.sample-fade{position:absolute;bottom:0;left:0;right:0;height:100px;background:linear-gradient(transparent,#0a0a0a);pointer-events:none;display:none}
+@media(max-width:600px){.sample-tabs{overflow-x:auto;padding:12px 20px 0;gap:0}.s-tab{padding:10px 14px;font-size:12px}.sample-body{padding:20px}.sample-header{padding:16px 20px;flex-direction:column;align-items:flex-start}}
+
 /* FAQ */
 .faq{margin-top:56px}
 .faq-item{border-bottom:1px solid var(--brd)}
@@ -278,6 +304,9 @@ footer a:hover{color:var(--t1)}
   .hero-h{font-size:40px}
   .s-h{font-size:30px}
 }
+
+/* Hide all decorative emojis */
+.tf-icon,.prob-ic,.step-ic{display:none}
 
 /* ===== URGENCY BAR ===== */
 #urgency-bar{background:linear-gradient(90deg,#7c3aed,#c2185b);padding:10px 24px;text-align:center;font-size:13px;color:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
@@ -368,7 +397,7 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
 
 <!-- URGENCY BAR -->
 <div id="urgency-bar">
-  🚀 <strong>Launch Pricing: €7</strong> — going to €29 at 10,000 plans &nbsp;·&nbsp; <div class="urg-prog"><div class="urg-prog-fill"></div></div>&nbsp; <span id="urg-count">4,247</span> / 10,000 claimed
+  <strong>Launch Pricing: €7</strong> — going to €29 at 10,000 plans &nbsp;·&nbsp; <div class="urg-prog"><div class="urg-prog-fill"></div></div>&nbsp; <span id="urg-count">4,247</span> / 10,000 claimed
 </div>
 
 <!-- NAV -->
@@ -561,7 +590,7 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
 <!-- LOADING OVERLAY (full-screen, shown during AI generation) -->
 <div id="loading-overlay">
   <div style="width:100%;max-width:420px;text-align:center;padding:0 24px">
-    <div id="ld-icon" style="font-size:52px;margin-bottom:20px;display:block;animation:ldPulse 2.2s ease-in-out infinite">🔍</div>
+    <div id="ld-icon" style="font-size:52px;margin-bottom:20px;display:block;animation:ldPulse 2.2s ease-in-out infinite"></div>
     <h2 id="ld-headline" style="font-size:26px;font-weight:800;margin-bottom:8px;letter-spacing:-.01em;line-height:1.25">Scanning business models…</h2>
     <p style="font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:28px">This usually takes 15–30 seconds</p>
     <div style="width:100%;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;margin-bottom:32px;overflow:hidden"><div id="ld-bar" style="height:100%;background:linear-gradient(90deg,#7c3aed,#E8417A);width:6%;border-radius:2px;transition:width 1.2s cubic-bezier(.4,0,.2,1)"></div></div>
@@ -572,7 +601,7 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
       <div class="ld-step" id="lds-4">Writing your 90-day action plan</div>
       <div class="ld-step" id="lds-5">Finalising your results</div>
     </div>
-    <div style="font-size:12px;color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:100px;padding:7px 18px;display:inline-block">🔥 &nbsp;847 people got their plan this week</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:100px;padding:7px 18px;display:inline-block">847 people got their plan this week</div>
   </div>
 </div>
 
@@ -592,8 +621,8 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
     <div class="stat-l">One-time<br>no subscription</div>
   </div>
   <div class="stat">
-    <div class="stat-n">4.8★</div>
-    <div class="stat-l">Average<br>rating</div>
+    <div class="stat-n">4.8</div>
+    <div class="stat-l">Average rating<br>out of 5</div>
   </div>
 </div>
 
@@ -651,6 +680,80 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
         <p>Day-1 tasks, first client outreach scripts, pricing strategy, income projections, tools list, and a full 90-day roadmap. Everything to actually start — today.</p>
       </div>
     </div>
+  </section>
+</div>
+
+<!-- SAMPLE PLAN -->
+<div class="wrap">
+  <section style="padding-top:0">
+    <div class="rv">
+      <div class="s-tag">Real example</div>
+      <h2 class="s-h">This is what your plan<br>actually looks like.</h2>
+      <p class="s-sub">Real output for a 34-year-old UX designer, 15 hours/week, €500 starting budget.</p>
+    </div>
+    <div class="sample-wrap rv">
+      <div class="sample-header">
+        <div>
+          <div style="font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Your business match</div>
+          <div style="font-size:22px;font-weight:800;letter-spacing:-.02em">UX &amp; Product Consulting</div>
+          <div style="font-size:13px;color:rgba(255,255,255,.5);margin-top:4px;line-height:1.5">Turn your design experience into a consulting practice for early-stage startups — remote, flexible, no agency needed.</div>
+        </div>
+        <div class="sample-match">94% match</div>
+      </div>
+      <div class="sample-tabs">
+        <button class="s-tab on" onclick="sTab(this,'sp-income')">Income projection</button>
+        <button class="s-tab" onclick="sTab(this,'sp-script')">Outreach script</button>
+        <button class="s-tab" onclick="sTab(this,'sp-day1')">Day 1 tasks</button>
+        <button class="s-tab" onclick="sTab(this,'sp-pricing')">Pricing</button>
+      </div>
+      <div class="sample-body">
+
+        <div class="s-panel on" id="sp-income">
+          <div style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:16px">Realistic projections based on your profile — conservative estimate</div>
+          <div class="sp-row"><span class="sp-label">Month 1</span><div class="sp-bar"><div class="sp-fill" style="width:12%"></div></div><span class="sp-val" style="color:rgba(255,255,255,.6)">€800 – €1,200</span></div>
+          <div class="sp-row"><span class="sp-label">Month 2</span><div class="sp-bar"><div class="sp-fill" style="width:20%"></div></div><span class="sp-val" style="color:rgba(255,255,255,.7)">€1,500 – €2,000</span></div>
+          <div class="sp-row"><span class="sp-label">Month 3</span><div class="sp-bar"><div class="sp-fill" style="width:32%"></div></div><span class="sp-val" style="color:rgba(255,255,255,.8)">€2,400 – €3,200</span></div>
+          <div class="sp-row"><span class="sp-label">Month 6</span><div class="sp-bar"><div class="sp-fill" style="width:52%"></div></div><span class="sp-val">€3,800 – €5,000</span></div>
+          <div class="sp-row"><span class="sp-label">Month 12</span><div class="sp-bar"><div class="sp-fill" style="width:80%"></div></div><span class="sp-val" style="color:#5dcaa5;font-size:15px">€5,500 – €8,000</span></div>
+          <div style="margin-top:16px;font-size:12px;color:rgba(255,255,255,.3)">2 retainer clients × €2,000 + 2 project clients × €1,500 = €7,000/month by month 12</div>
+        </div>
+
+        <div class="s-panel" id="sp-script">
+          <div style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:14px">Copy-paste ready. Personalised for your niche and strengths.</div>
+          <div class="script-box">Subject: Quick question about your onboarding flow<br><br>Hi [Name],<br><br>I came across [Company] while looking at early-stage SaaS tools in the productivity space. Your product looks solid — but I noticed your onboarding drops users before they reach the first "aha moment".<br><br>I'm a UX consultant who helps startups like yours fix exactly this. My last client cut their drop-off rate by 34% in 6 weeks.<br><br>Would it make sense to jump on a 20-minute call this week? No pitch — just a quick look at your current flow and I'll tell you what I'd fix first.<br><br>— [Your name]</div>
+          <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,.3)">Expected response rate: 8–14% · Daily target: send to 20 contacts</div>
+        </div>
+
+        <div class="s-panel" id="sp-day1">
+          <div style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:14px">Your first day. Estimated total time: 3 hours.</div>
+          <div class="task-item"><div class="task-n">1</div><div><strong>Update LinkedIn headline</strong> — change to "UX Consultant for Early-Stage SaaS · Helping startups improve activation and retention" · <span style="color:rgba(255,255,255,.4)">30 min · Tool: LinkedIn</span></div></div>
+          <div class="task-item"><div class="task-n">2</div><div><strong>Build a list of 30 target companies</strong> — find Series A SaaS startups with 5–30 employees on Crunchbase and LinkedIn Sales Navigator · <span style="color:rgba(255,255,255,.4)">60 min · Tool: Crunchbase (free tier)</span></div></div>
+          <div class="task-item"><div class="task-n">3</div><div><strong>Send first 10 outreach messages</strong> — use the script from your plan, personalise the company name and one specific detail · <span style="color:rgba(255,255,255,.4)">60 min · Tool: LinkedIn / email</span></div></div>
+          <div class="task-item"><div class="task-n">4</div><div><strong>Set up a free Calendly link</strong> — 30-minute "Discovery Call" slot so interested prospects can book directly · <span style="color:rgba(255,255,255,.4)">20 min · Tool: Calendly (free)</span></div></div>
+        </div>
+
+        <div class="s-panel" id="sp-pricing">
+          <div style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:14px">Three tiers. Start with Starter to get first clients, move to Retainer within 60 days.</div>
+          <div class="price-tier">
+            <div class="price-tier-name">Starter</div>
+            <div class="price-tier-price">€500 <span style="font-size:14px;font-weight:400;color:rgba(255,255,255,.4)">/project</span></div>
+            <div class="price-tier-desc">UX audit + 3 prioritised recommendations. One-time. Perfect for getting your first 3 testimonials.</div>
+          </div>
+          <div class="price-tier" style="border-color:rgba(124,58,237,.35);background:rgba(124,58,237,.06)">
+            <div class="price-tier-name" style="color:#a78bfa">Main — recommended</div>
+            <div class="price-tier-price">€1,500 <span style="font-size:14px;font-weight:400;color:rgba(255,255,255,.4)">/month</span></div>
+            <div class="price-tier-desc">Monthly retainer. 2 design sprints + weekly check-in. This is your core revenue — aim for 2 retainer clients.</div>
+          </div>
+          <div class="price-tier">
+            <div class="price-tier-name">Premium</div>
+            <div class="price-tier-price">€3,500 <span style="font-size:14px;font-weight:400;color:rgba(255,255,255,.4)">/month</span></div>
+            <div class="price-tier-desc">Full embedded consulting. 3 days/week. Full product design ownership. For funded startups with real UX needs.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <p class="rv" style="text-align:center;font-size:13px;color:rgba(255,255,255,.3);margin-top:20px">Your plan will be built for your specific answers — different business, different scripts, different projections.</p>
   </section>
 </div>
 
@@ -733,7 +836,7 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
         Get my plan for €7 <span class="cta-ic">→</span>
       </button>
       <br>
-      <div class="guarantee">🛡️ Get a plan you'd actually follow — or your money back within 30 days. No questions asked.</div>
+      <div class="guarantee">30-day money-back guarantee — get a plan you'd actually follow, or we refund you. No questions asked.</div>
       <p style="margin-top:14px;font-size:12px;color:var(--t3)">Free preview first — pay only if you love your business match</p>
     </div>
   </section>
@@ -875,6 +978,13 @@ async function generate(){
     overlay.style.display='none';
     alert('Something went wrong: '+e.message);
   }
+}
+
+function sTab(el,panelId){
+  el.closest('.sample-tabs').querySelectorAll('.s-tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  el.closest('.sample-wrap').querySelectorAll('.s-panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById(panelId).classList.add('on');
 }
 
 function toggleFaq(btn){
