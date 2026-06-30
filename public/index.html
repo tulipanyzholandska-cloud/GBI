@@ -293,9 +293,10 @@ footer a:hover{color:var(--t1)}
 .ticker-track{display:flex;gap:0;width:max-content;animation:ticker 38s linear infinite}
 .ticker-track:hover{animation-play-state:paused}
 @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.tick{display:inline-flex;align-items:center;gap:8px;padding:0 36px;font-size:13px;color:rgba(255,255,255,.5);white-space:nowrap;border-right:1px solid rgba(255,255,255,.07)}
-.tick em{font-style:normal;color:rgba(255,255,255,.75);font-weight:500}
-.tick-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.tick{display:inline-flex;align-items:center;gap:10px;padding:0 40px;white-space:nowrap;border-right:1px solid rgba(255,255,255,.06)}
+.tick-before{font-size:13px;color:rgba(255,255,255,.42)}
+.tick-arrow{font-size:14px;color:var(--pink);font-weight:700;flex-shrink:0}
+.tick-after{font-size:13px;color:rgba(255,255,255,.82);font-weight:600}
 
 /* ===== HOMEPAGE QUIZ ===== */
 #quiz-section{min-height:calc(100vh - 140px);display:flex;align-items:center;justify-content:center;position:relative}
@@ -376,30 +377,26 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
   <button class="nav-btn" onclick="document.getElementById('quiz-section').scrollIntoView({behavior:'smooth'})">Start free →</button>
 </nav>
 
-<!-- SCROLLING TICKER — motivational social proof -->
+<!-- SCROLLING TICKER — doubts → reality -->
 <div id="ticker-wrap">
-  <div class="ticker-track" id="ticker">
-    <span class="tick"><span class="tick-dot" style="background:#22c55e"></span> <em>Maria K.</em> landed her first client 4 days after getting her plan</span>
-    <span class="tick"><span class="tick-dot" style="background:#a78bfa"></span> "The best time to start was yesterday. The next best is now." — James Clear</span>
-    <span class="tick"><span class="tick-dot" style="background:#E8417A"></span> <em>Tom V.</em> made €1,200 in month one with zero experience</span>
-    <span class="tick"><span class="tick-dot" style="background:#fbbf24"></span> "You don't have to be great to start, but you have to start to be great."</span>
-    <span class="tick"><span class="tick-dot" style="background:#22c55e"></span> <em>Sandra R.</em> quit her job 6 months after starting her side business</span>
-    <span class="tick"><span class="tick-dot" style="background:#a78bfa"></span> "Stop waiting for the perfect moment. Take the moment and make it perfect."</span>
-    <span class="tick"><span class="tick-dot" style="background:#E8417A"></span> <em>Peter M.</em> went from 0 to €3,500/month in 90 days</span>
-    <span class="tick"><span class="tick-dot" style="background:#fbbf24"></span> "The secret of getting ahead is getting started." — Mark Twain</span>
-    <span class="tick"><span class="tick-dot" style="background:#22c55e"></span> <em>Anna L.</em> found her niche in 90 seconds — now earns more than her old salary</span>
-    <span class="tick"><span class="tick-dot" style="background:#a78bfa"></span> "Your future self is watching you right now through your memories."</span>
+  <div class="ticker-track">
+    <span class="tick"><span class="tick-before">😟 "No one will pay me for this"</span><span class="tick-arrow">→</span><span class="tick-after">€1,200 first month</span></span>
+    <span class="tick"><span class="tick-before">😬 Friends said it was a waste of time</span><span class="tick-arrow">→</span><span class="tick-after">now they ask how I did it</span></span>
+    <span class="tick"><span class="tick-before">😰 "I have no idea where to even start"</span><span class="tick-arrow">→</span><span class="tick-after">first client in 4 days</span></span>
+    <span class="tick"><span class="tick-before">🫤 "I'm not experienced enough"</span><span class="tick-arrow">→</span><span class="tick-after">booked 3 clients before quitting my job</span></span>
+    <span class="tick"><span class="tick-before">😒 "I'll start next month" — for 2 years</span><span class="tick-arrow">→</span><span class="tick-after">started on a Tuesday, made money that Friday</span></span>
+    <span class="tick"><span class="tick-before">😟 "I'm too old to start something new"</span><span class="tick-arrow">→</span><span class="tick-after">47 years old and earning more than ever</span></span>
+    <span class="tick"><span class="tick-before">😬 My partner thought it was risky</span><span class="tick-arrow">→</span><span class="tick-after">we paid off the car in 4 months</span></span>
+    <span class="tick"><span class="tick-before">🫤 "There's already too much competition"</span><span class="tick-arrow">→</span><span class="tick-after">found my niche, fully booked in 6 weeks</span></span>
     <!-- duplicate for seamless loop -->
-    <span class="tick"><span class="tick-dot" style="background:#22c55e"></span> <em>Maria K.</em> landed her first client 4 days after getting her plan</span>
-    <span class="tick"><span class="tick-dot" style="background:#a78bfa"></span> "The best time to start was yesterday. The next best is now." — James Clear</span>
-    <span class="tick"><span class="tick-dot" style="background:#E8417A"></span> <em>Tom V.</em> made €1,200 in month one with zero experience</span>
-    <span class="tick"><span class="tick-dot" style="background:#fbbf24"></span> "You don't have to be great to start, but you have to start to be great."</span>
-    <span class="tick"><span class="tick-dot" style="background:#22c55e"></span> <em>Sandra R.</em> quit her job 6 months after starting her side business</span>
-    <span class="tick"><span class="tick-dot" style="background:#a78bfa"></span> "Stop waiting for the perfect moment. Take the moment and make it perfect."</span>
-    <span class="tick"><span class="tick-dot" style="background:#E8417A"></span> <em>Peter M.</em> went from 0 to €3,500/month in 90 days</span>
-    <span class="tick"><span class="tick-dot" style="background:#fbbf24"></span> "The secret of getting ahead is getting started." — Mark Twain</span>
-    <span class="tick"><span class="tick-dot" style="background:#22c55e"></span> <em>Anna L.</em> found her niche in 90 seconds — now earns more than her old salary</span>
-    <span class="tick"><span class="tick-dot" style="background:#a78bfa"></span> "Your future self is watching you right now through your memories."</span>
+    <span class="tick"><span class="tick-before">😟 "No one will pay me for this"</span><span class="tick-arrow">→</span><span class="tick-after">€1,200 first month</span></span>
+    <span class="tick"><span class="tick-before">😬 Friends said it was a waste of time</span><span class="tick-arrow">→</span><span class="tick-after">now they ask how I did it</span></span>
+    <span class="tick"><span class="tick-before">😰 "I have no idea where to even start"</span><span class="tick-arrow">→</span><span class="tick-after">first client in 4 days</span></span>
+    <span class="tick"><span class="tick-before">🫤 "I'm not experienced enough"</span><span class="tick-arrow">→</span><span class="tick-after">booked 3 clients before quitting my job</span></span>
+    <span class="tick"><span class="tick-before">😒 "I'll start next month" — for 2 years</span><span class="tick-arrow">→</span><span class="tick-after">started on a Tuesday, made money that Friday</span></span>
+    <span class="tick"><span class="tick-before">😟 "I'm too old to start something new"</span><span class="tick-arrow">→</span><span class="tick-after">47 years old and earning more than ever</span></span>
+    <span class="tick"><span class="tick-before">😬 My partner thought it was risky</span><span class="tick-arrow">→</span><span class="tick-after">we paid off the car in 4 months</span></span>
+    <span class="tick"><span class="tick-before">🫤 "There's already too much competition"</span><span class="tick-arrow">→</span><span class="tick-after">found my niche, fully booked in 6 weeks</span></span>
   </div>
 </div>
 
