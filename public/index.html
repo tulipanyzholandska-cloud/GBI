@@ -285,22 +285,14 @@ footer a:hover{color:var(--t1)}
 .urg-prog{width:100px;height:5px;background:rgba(255,255,255,.2);border-radius:3px;overflow:hidden;display:inline-block;vertical-align:middle;margin:0 4px}
 .urg-prog-fill{height:100%;background:rgba(255,255,255,.9);border-radius:3px;width:42%}
 
-/* ===== QUIZ HERO (compact headline above Q1) ===== */
-#quiz-hero{padding:48px 24px 0;text-align:center;position:relative;overflow:hidden}
-#quiz-hero::before{content:'';position:absolute;top:-160px;left:50%;transform:translateX(-50%);width:600px;height:500px;background:radial-gradient(ellipse,rgba(232,65,122,.13) 0%,transparent 65%);pointer-events:none;z-index:0}
-#quiz-hero>*{position:relative;z-index:1}
-.qh-proof{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:100px;margin-bottom:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:12px;color:rgba(255,255,255,.6)}
-.qh-proof-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 1.8s infinite}
-.qh-h{font-size:clamp(32px,6vw,64px);font-weight:900;letter-spacing:-.05em;line-height:1;margin-bottom:10px}
-.qh-h em{font-style:normal;color:var(--pink)}
-.qh-sub{font-size:15px;color:var(--t2);margin-bottom:0;line-height:1.5}
-@media(max-width:600px){#quiz-hero{padding:32px 18px 0}.qh-h{font-size:30px}}
-
 /* ===== HOMEPAGE QUIZ ===== */
-#quiz-section{display:flex;align-items:flex-start;justify-content:center;padding:0;position:relative}
-#tf-bar-wrap{position:fixed;top:62px;left:0;right:0;height:3px;background:rgba(255,255,255,0.07);z-index:99}
+#quiz-section{min-height:calc(100vh - 104px);display:flex;align-items:center;justify-content:center;position:relative}
+#tf-bar-wrap{position:fixed;top:104px;left:0;right:0;height:3px;background:rgba(255,255,255,0.07);z-index:99}
 #tf-bar-fill{height:100%;background:linear-gradient(90deg,#7c3aed,#E8417A);width:5%;transition:width .5s cubic-bezier(.4,0,.2,1)}
-#tf-wrap{width:100%;max-width:660px;padding:32px 44px 80px;position:relative}
+#tf-wrap{width:100%;max-width:640px;padding:0 44px 40px;position:relative}
+#tf-proof{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:100px;margin-bottom:32px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:12px;color:rgba(255,255,255,.55)}
+#tf-proof-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 1.8s infinite;flex-shrink:0}
+@media(max-width:600px){#tf-wrap{padding:0 20px 40px}#quiz-section{min-height:calc(100vh - 104px);align-items:flex-start;padding-top:32px}}
 #tf-meta{font-size:12px;font-weight:600;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:36px}
 .tf-q{display:none}.tf-q.active{display:block;animation:tfIn .38s cubic-bezier(.22,1,.36,1)}
 @keyframes tfIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
@@ -372,20 +364,11 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
   <button class="nav-btn" onclick="document.getElementById('quiz-section').scrollIntoView({behavior:'smooth'})">Start free →</button>
 </nav>
 
-<!-- COMPACT HERO above quiz -->
-<div id="quiz-hero">
-  <div class="qh-proof">
-    <span class="qh-proof-dot"></span>
-    <strong style="color:rgba(255,255,255,.85)" id="urg-count2">4,247</strong> people got their plan this week &nbsp;·&nbsp; ★★★★★ 4.8/5
-  </div>
-  <h1 class="qh-h">What Business Should<br>You <em>Actually</em> Start?</h1>
-  <p class="qh-sub">10 questions → AI matches you → complete personalized plan in 90 seconds</p>
-</div>
-
 <!-- QUIZ — visible immediately above the fold -->
 <div id="quiz-section">
   <div id="tf-bar-wrap"><div id="tf-bar-fill"></div></div>
   <div id="tf-wrap">
+    <div id="tf-proof"><span id="tf-proof-dot"></span> <strong style="color:rgba(255,255,255,.8)">4,247</strong> plans generated this week &nbsp;·&nbsp; ★★★★★ 4.8/5 &nbsp;·&nbsp; Free · 90 seconds</div>
     <div id="tf-meta">Question <strong style="color:#fff">1</strong> <span style="color:rgba(255,255,255,0.25)">/ 10</span></div>
     <div id="tf-slides">
 
