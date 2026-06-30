@@ -373,29 +373,11 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
 <!-- NAV -->
 <nav>
   <a class="logo" href="/">Get<span>Biz</span>Idea</a>
-  <button class="nav-btn" onclick="startQuiz()">Start free →</button>
+  <button class="nav-btn" onclick="document.getElementById('quiz-section').scrollIntoView({behavior:'smooth'})">Start free →</button>
 </nav>
 
-<!-- HERO WELCOME SCREEN (shown first, before quiz) -->
-<div id="hero-welcome">
-  <div class="hw-stars">
-    <span class="hw-stars-s">★★★★★</span> 4.8/5 &nbsp;·&nbsp; 4,200+ entrepreneurs
-  </div>
-  <h1 class="hw-h">What Business Should<br>You <em>Actually</em> Start?</h1>
-  <p class="hw-sub">Answer 5 questions about your skills, time, and budget — our AI builds a complete, personalized business plan in 90 seconds.</p>
-  <button class="cta-btn" onclick="startQuiz()">
-    Find My Business Idea <span class="cta-ic">→</span>
-  </button>
-  <div class="hw-micro">
-    <span><span class="ck">✓</span> Takes 2 minutes</span>
-    <span><span class="ck">✓</span> No account needed</span>
-    <span><span class="ck">✓</span> Free preview</span>
-    <span><span class="ck">✓</span> Full plan €7</span>
-  </div>
-</div>
-
-<!-- QUIZ — hidden until CTA click -->
-<div id="quiz-section" style="display:none">
+<!-- QUIZ — visible immediately above the fold -->
+<div id="quiz-section">
   <div id="tf-bar-wrap"><div id="tf-bar-fill"></div></div>
   <div id="tf-wrap">
     <div id="tf-meta">Question <strong style="color:#fff">1</strong> <span style="color:rgba(255,255,255,0.25)">/ 10</span></div>
