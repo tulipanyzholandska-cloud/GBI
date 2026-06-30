@@ -285,26 +285,22 @@ footer a:hover{color:var(--t1)}
 .urg-prog{width:100px;height:5px;background:rgba(255,255,255,.2);border-radius:3px;overflow:hidden;display:inline-block;vertical-align:middle;margin:0 4px}
 .urg-prog-fill{height:100%;background:rgba(255,255,255,.9);border-radius:3px;width:42%}
 
-/* ===== HERO WELCOME (shown before quiz starts) ===== */
-#hero-welcome{min-height:calc(100vh - 104px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 80px;text-align:center;position:relative;overflow:hidden}
-#hero-welcome::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:700px;height:600px;background:radial-gradient(ellipse,rgba(232,65,122,.15) 0%,transparent 65%);pointer-events:none}
-.hw-stars{display:inline-flex;align-items:center;gap:10px;padding:8px 20px;border-radius:100px;margin-bottom:28px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);font-size:13px;color:rgba(255,255,255,.7)}
-.hw-stars-s{color:#fbbf24;letter-spacing:1px;font-size:15px}
-.hw-h{font-size:clamp(42px,8vw,88px);font-weight:900;letter-spacing:-.055em;line-height:.96;margin-bottom:22px;max-width:820px}
-.hw-h em{font-style:normal;color:var(--pink)}
-.hw-sub{font-size:clamp(16px,2vw,20px);color:var(--t2);max-width:480px;margin:0 auto 44px;line-height:1.65}
-.hw-micro{margin-top:18px;font-size:12px;color:var(--t3);display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
-.hw-micro span{display:flex;align-items:center;gap:5px}
-@media(max-width:600px){
-  #hero-welcome{min-height:calc(100vh - 104px);padding:40px 18px 60px}
-  .hw-micro{gap:10px;font-size:11px}
-}
+/* ===== QUIZ HERO (compact headline above Q1) ===== */
+#quiz-hero{padding:48px 24px 0;text-align:center;position:relative;overflow:hidden}
+#quiz-hero::before{content:'';position:absolute;top:-160px;left:50%;transform:translateX(-50%);width:600px;height:500px;background:radial-gradient(ellipse,rgba(232,65,122,.13) 0%,transparent 65%);pointer-events:none;z-index:0}
+#quiz-hero>*{position:relative;z-index:1}
+.qh-proof{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:100px;margin-bottom:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:12px;color:rgba(255,255,255,.6)}
+.qh-proof-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 1.8s infinite}
+.qh-h{font-size:clamp(32px,6vw,64px);font-weight:900;letter-spacing:-.05em;line-height:1;margin-bottom:10px}
+.qh-h em{font-style:normal;color:var(--pink)}
+.qh-sub{font-size:15px;color:var(--t2);margin-bottom:0;line-height:1.5}
+@media(max-width:600px){#quiz-hero{padding:32px 18px 0}.qh-h{font-size:30px}}
 
 /* ===== HOMEPAGE QUIZ ===== */
-#quiz-section{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:62px 0 0;position:relative}
+#quiz-section{display:flex;align-items:flex-start;justify-content:center;padding:0;position:relative}
 #tf-bar-wrap{position:fixed;top:62px;left:0;right:0;height:3px;background:rgba(255,255,255,0.07);z-index:99}
 #tf-bar-fill{height:100%;background:linear-gradient(90deg,#7c3aed,#E8417A);width:5%;transition:width .5s cubic-bezier(.4,0,.2,1)}
-#tf-wrap{width:100%;max-width:660px;padding:60px 44px 100px;position:relative}
+#tf-wrap{width:100%;max-width:660px;padding:32px 44px 80px;position:relative}
 #tf-meta{font-size:12px;font-weight:600;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:36px}
 .tf-q{display:none}.tf-q.active{display:block;animation:tfIn .38s cubic-bezier(.22,1,.36,1)}
 @keyframes tfIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
@@ -375,6 +371,16 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
   <a class="logo" href="/">Get<span>Biz</span>Idea</a>
   <button class="nav-btn" onclick="document.getElementById('quiz-section').scrollIntoView({behavior:'smooth'})">Start free →</button>
 </nav>
+
+<!-- COMPACT HERO above quiz -->
+<div id="quiz-hero">
+  <div class="qh-proof">
+    <span class="qh-proof-dot"></span>
+    <strong style="color:rgba(255,255,255,.85)" id="urg-count2">4,247</strong> people got their plan this week &nbsp;·&nbsp; ★★★★★ 4.8/5
+  </div>
+  <h1 class="qh-h">What Business Should<br>You <em>Actually</em> Start?</h1>
+  <p class="qh-sub">10 questions → AI matches you → complete personalized plan in 90 seconds</p>
+</div>
 
 <!-- QUIZ — visible immediately above the fold -->
 <div id="quiz-section">
@@ -775,17 +781,6 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
 
 <script>
 document.documentElement.classList.add('js-on');
-
-// ── START QUIZ (from hero welcome screen) ──────────────────────────────────
-function startQuiz(){
-  const hero=document.getElementById('hero-welcome');
-  const quiz=document.getElementById('quiz-section');
-  if(hero){hero.style.transition='opacity .3s';hero.style.opacity='0';setTimeout(()=>{hero.style.display='none';},300);}
-  if(quiz){quiz.style.display='flex';quiz.style.opacity='0';requestAnimationFrame(()=>{quiz.style.transition='opacity .35s';quiz.style.opacity='1';});}
-  ph('quiz_started',{source:'hero_cta'});
-  // Animate urgency bar count slightly to create social proof effect
-  (()=>{const el=document.getElementById('urg-count');if(!el)return;let n=4247;const t=setInterval(()=>{n+=Math.floor(Math.random()*3);el.textContent=n.toLocaleString('en');},8000);setTimeout(()=>clearInterval(t),120000);})();
-}
 
 // ── QUIZ LOGIC ──────────────────────────────────────────────────────────────
 let tfCurrent=1;
