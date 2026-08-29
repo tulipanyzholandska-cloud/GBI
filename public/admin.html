@@ -657,7 +657,13 @@ async function fetchData() {
   try {
     const r = await fetch('/api/admin', { headers: { 'Authorization': 'Bearer ' + TOKEN } });
     if (r.status === 401) { errEl.textContent = 'Špatné heslo (401)'; if(btn){btn.textContent='Sign in';btn.disabled=false;} return; }
-    if (!r.ok) { errEl.textContent = 'Chyba serveru: ' + r.status; if(btn){btn.textContent='Sign in';btn.disabled=false;} return; }
+    if (!r.ok) {
+      let detail = 'Chyba serveru: ' + r.status;
+      try { const ed = await r.json(); if(ed.error) detail += ' — ' + ed.error; if(ed.stack) detail += ' | ' + ed.stack; } catch(_){}
+      errEl.textContent = detail;
+      if(btn){btn.textContent='Sign in';btn.disabled=false;}
+      return;
+    }
     const d = await r.json();
     if (d.error) { errEl.textContent = d.error; if(btn){btn.textContent='Sign in';btn.disabled=false;} return; }
     DATA = d;

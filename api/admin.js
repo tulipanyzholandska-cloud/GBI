@@ -92,6 +92,6 @@ export default async function handler(req, res) {
     });
   } catch (err) {
     console.error('Admin error:', err);
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err.message, stack: err.stack?.split('\n').slice(0,3).join(' | ') });
   }
 }
