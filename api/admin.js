@@ -12,6 +12,10 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
+  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
+    return res.status(500).json({ error: 'Missing env vars: SUPABASE_URL=' + (process.env.SUPABASE_URL ? 'set' : 'MISSING') + ', SUPABASE_ANON_KEY=' + (process.env.SUPABASE_ANON_KEY ? 'set' : 'MISSING') });
+  }
+
   try {
     const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
