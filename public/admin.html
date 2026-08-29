@@ -650,20 +650,26 @@ function logout() {
 
 // ── FETCH ────────────────────────────────────────────────────────
 async function fetchData() {
+  const btn = document.querySelector('#login button');
+  const errEl = document.getElementById('login-err');
+  if (btn) { btn.textContent = 'Načítám…'; btn.disabled = true; }
+  errEl.textContent = '';
   try {
     const r = await fetch('/api/admin', { headers: { 'Authorization': 'Bearer ' + TOKEN } });
-    if (r.status === 401) { document.getElementById('login-err').textContent = 'Špatné heslo'; return; }
+    if (r.status === 401) { errEl.textContent = 'Špatné heslo (401)'; if(btn){btn.textContent='Sign in';btn.disabled=false;} return; }
+    if (!r.ok) { errEl.textContent = 'Chyba serveru: ' + r.status; if(btn){btn.textContent='Sign in';btn.disabled=false;} return; }
     const d = await r.json();
-    if (d.error) { document.getElementById('login-err').textContent = d.error; return; }
+    if (d.error) { errEl.textContent = d.error; if(btn){btn.textContent='Sign in';btn.disabled=false;} return; }
     DATA = d;
     document.getElementById('login').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
     document.getElementById('updated-at').textContent = 'Aktualizováno ' + new Date().toLocaleTimeString('cs-CZ');
-    render();
+    try { render(); } catch(re) { console.error('Render error:', re); }
     loadAdTracker();
     initPostHog();
   } catch(e) {
-    document.getElementById('login-err').textContent = 'Chyba připojení';
+    errEl.textContent = 'Chyba připojení: ' + e.message;
+    if(btn){btn.textContent='Sign in';btn.disabled=false;}
   }
 }
 
