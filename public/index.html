@@ -107,23 +107,57 @@ nav{position:sticky;top:0;z-index:100;height:62px;padding:0 48px;display:flex;al
 .nav-btn:hover{background:var(--pink-d);transform:translateY(-1px)}
 
 /* HERO */
-.hero{padding:80px 24px 96px;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:700px;height:600px;background:radial-gradient(ellipse,rgba(232,65,122,.14) 0%,transparent 65%);pointer-events:none}
+.hero{padding:72px 0 64px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-160px;right:-80px;width:700px;height:600px;background:radial-gradient(ellipse,rgba(232,65,122,.1) 0%,transparent 65%);pointer-events:none}
+.hero-inner{display:grid;grid-template-columns:1fr 440px;gap:56px;align-items:center}
+.hero-left{z-index:1}
+.hero-right{z-index:1}
 
 .proof-bar{
   display:inline-flex;align-items:center;gap:8px;
-  padding:8px 18px;border-radius:100px;margin-bottom:36px;
+  padding:8px 18px;border-radius:100px;margin-bottom:32px;
   background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.18);
   font-size:13px;color:rgba(255,255,255,.65);
 }
-.proof-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.8s infinite}
+.proof-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.8s infinite;flex-shrink:0}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 .proof-bar strong{color:var(--green)}
 
-.hero-h{font-size:clamp(44px,8.5vw,96px);font-weight:900;letter-spacing:-.055em;line-height:.97;margin-bottom:26px;max-width:860px;margin-left:auto;margin-right:auto}
+.hero-h{font-size:clamp(40px,5.5vw,72px);font-weight:900;letter-spacing:-.055em;line-height:.97;margin-bottom:22px}
 .hero-h em{font-style:normal;color:var(--pink)}
 
-.hero-sub{font-size:clamp(16px,1.9vw,20px);color:var(--t2);max-width:460px;margin:0 auto 48px;line-height:1.65}
+.hero-sub{font-size:clamp(16px,1.7vw,19px);color:var(--t2);max-width:480px;margin:0 0 40px;line-height:1.65}
+
+/* PLAN MOCKUP VISUAL */
+.plan-mock{background:var(--c1);border:1px solid rgba(255,255,255,.1);border-radius:20px;overflow:hidden;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.5)}
+.plan-mock-head{padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;background:rgba(255,255,255,.02)}
+.plan-mock-label-top{font-size:10px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.plan-mock-title-text{font-size:16px;font-weight:800;letter-spacing:-.02em}
+.plan-mock-badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:100px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);font-size:11px;font-weight:700;color:#5dcaa5;white-space:nowrap;margin-top:3px;flex-shrink:0}
+.plan-mock-body{padding:18px 22px}
+.plan-mock-slabel{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.28);margin-bottom:10px;margin-top:2px}
+.plan-mock-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.plan-mock-ml{font-size:11px;color:rgba(255,255,255,.38);min-width:52px}
+.plan-mock-bar{flex:1;height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden}
+.plan-mock-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#7c3aed,var(--pink))}
+.plan-mock-mv{font-size:12px;font-weight:700;min-width:52px;text-align:right;color:rgba(255,255,255,.65)}
+.plan-mock-mv.hi{color:#5dcaa5;font-size:13px}
+.plan-mock-sep{height:1px;background:rgba(255,255,255,.06);margin:14px 0}
+.plan-mock-task{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.6);padding:4px 0;line-height:1.4}
+.plan-mock-check{color:#5dcaa5;font-size:10px;font-weight:800;flex-shrink:0;width:14px;text-align:center}
+.plan-mock-blur-wrap{position:relative}
+.plan-mock-blur-wrap .plan-mock-task{filter:blur(3.5px);user-select:none}
+.plan-mock-overlay{position:absolute;inset:0;background:linear-gradient(transparent 0%,rgba(20,20,20,.92) 50%);display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px}
+.plan-mock-unlock{font-size:12px;font-weight:700;color:var(--pink);cursor:pointer;letter-spacing:.01em}
+
+@media(max-width:960px){
+  .hero-inner{grid-template-columns:1fr 360px;gap:36px}
+}
+@media(max-width:760px){
+  .hero{padding:48px 0 40px}
+  .hero-inner{grid-template-columns:1fr;gap:32px}
+  .hero-sub{margin-bottom:32px}
+}
 
 /* PRIMARY CTA BUTTON */
 .cta-btn{
@@ -225,6 +259,32 @@ section{padding:96px 0}
 .p-meta{font-size:13px;color:var(--t3);margin-bottom:44px}
 .guarantee{display:inline-flex;align-items:center;gap:9px;padding:11px 20px;border-radius:10px;background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.18);font-size:13px;color:rgba(255,255,255,.6);margin-top:18px}
 
+/* SAMPLE PLAN */
+.sample-wrap{border:1px solid rgba(255,255,255,.1);border-radius:20px;overflow:hidden;position:relative;margin-top:56px}
+.sample-header{padding:24px 32px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;gap:16px;background:rgba(255,255,255,.02)}
+.sample-match{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);font-size:11px;font-weight:700;color:#5dcaa5;text-transform:uppercase;letter-spacing:.08em}
+.sample-tabs{display:flex;gap:2px;padding:16px 32px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.s-tab{padding:10px 18px;font-size:13px;font-weight:600;color:rgba(255,255,255,.35);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;white-space:nowrap}
+.s-tab.on{color:#fff;border-bottom-color:var(--pink)}
+.sample-body{padding:28px 32px;min-height:260px}
+.s-panel{display:none}.s-panel.on{display:block}
+.sp-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.sp-row:last-child{border-bottom:none}
+.sp-label{font-size:12px;color:rgba(255,255,255,.4);min-width:80px}
+.sp-bar{flex:1;height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden}
+.sp-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#7c3aed,var(--pink))}
+.sp-val{font-size:13px;font-weight:700;min-width:110px;text-align:right}
+.script-box{background:rgba(124,58,237,.08);border-left:3px solid rgba(124,58,237,.5);border-radius:0 8px 8px 0;padding:16px 20px;font-size:13px;line-height:1.75;color:rgba(255,255,255,.78);font-style:italic}
+.task-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px;color:rgba(255,255,255,.78);line-height:1.5}
+.task-item:last-child{border-bottom:none}
+.task-n{width:22px;height:22px;min-width:22px;border-radius:6px;background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.35);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#a78bfa}
+.price-tier{padding:14px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);margin-bottom:10px}
+.price-tier-name{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.4);margin-bottom:4px}
+.price-tier-price{font-size:22px;font-weight:800;letter-spacing:-.03em;margin-bottom:4px}
+.price-tier-desc{font-size:12px;color:rgba(255,255,255,.45);line-height:1.5}
+.sample-fade{position:absolute;bottom:0;left:0;right:0;height:100px;background:linear-gradient(transparent,#0a0a0a);pointer-events:none;display:none}
+@media(max-width:600px){.sample-tabs{overflow-x:auto;padding:12px 20px 0;gap:0}.s-tab{padding:10px 14px;font-size:12px}.sample-body{padding:20px}.sample-header{padding:16px 20px;flex-direction:column;align-items:flex-start}}
+
 /* FAQ */
 .faq{margin-top:56px}
 .faq-item{border-bottom:1px solid var(--brd)}
@@ -278,6 +338,72 @@ footer a:hover{color:var(--t1)}
   .hero-h{font-size:40px}
   .s-h{font-size:30px}
 }
+
+/* Hide all decorative emojis */
+.tf-icon,.prob-ic,.step-ic{display:none}
+
+/* ===== URGENCY BAR ===== */
+#urgency-bar{background:linear-gradient(90deg,#7c3aed,#c2185b);padding:10px 24px;text-align:center;font-size:13px;color:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+#urgency-bar strong{color:#fff;font-weight:800}
+.urg-prog{width:100px;height:5px;background:rgba(255,255,255,.2);border-radius:3px;overflow:hidden;display:inline-block;vertical-align:middle;margin:0 4px}
+.urg-prog-fill{height:100%;background:rgba(255,255,255,.9);border-radius:3px;width:42%}
+
+/* ===== TICKER STRIP ===== */
+#ticker-wrap{overflow:hidden;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);padding:10px 0;position:relative}
+#ticker-wrap::before,#ticker-wrap::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none}
+#ticker-wrap::before{left:0;background:linear-gradient(90deg,#0a0a0a,transparent)}
+#ticker-wrap::after{right:0;background:linear-gradient(-90deg,#0a0a0a,transparent)}
+.ticker-track{display:flex;gap:0;width:max-content;animation:ticker 38s linear infinite}
+.ticker-track:hover{animation-play-state:paused}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.tick{display:inline-flex;align-items:center;gap:10px;padding:0 40px;white-space:nowrap;border-right:1px solid rgba(255,255,255,.06)}
+.tick-before{font-size:13px;color:rgba(255,255,255,.42)}
+.tick-arrow{font-size:14px;color:var(--pink);font-weight:700;flex-shrink:0}
+.tick-after{font-size:13px;color:rgba(255,255,255,.82);font-weight:600}
+
+/* ===== HOMEPAGE QUIZ ===== */
+#quiz-section{padding:80px 24px 96px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;background:linear-gradient(180deg,rgba(124,58,237,.04) 0%,transparent 100%);border-top:1px solid rgba(255,255,255,.06)}
+#quiz-section-label{text-align:center;margin-bottom:48px}
+#tf-bar-wrap{position:fixed;top:104px;left:0;right:0;height:3px;background:rgba(255,255,255,0.07);z-index:99}
+#tf-bar-fill{height:100%;background:linear-gradient(90deg,#7c3aed,#E8417A);width:5%;transition:width .5s cubic-bezier(.4,0,.2,1)}
+#tf-wrap{width:100%;max-width:600px;position:relative}
+#tf-proof{display:none}
+#tf-proof-dot{display:none}
+@media(max-width:600px){#quiz-section{padding:56px 0 64px}}
+#tf-meta{font-size:12px;font-weight:600;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:36px}
+.tf-q{display:none}.tf-q.active{display:block;animation:tfIn .38s cubic-bezier(.22,1,.36,1)}
+@keyframes tfIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.tf-icon{font-size:40px;margin-bottom:18px;line-height:1;display:block}
+.tf-qtxt{font-size:34px;font-weight:800;line-height:1.2;margin-bottom:12px;letter-spacing:-.02em}
+.tf-sub{font-size:15px;color:rgba(255,255,255,0.45);margin-bottom:32px;line-height:1.5}
+.tf-chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
+.tf-chips .chip{padding:13px 22px;font-size:15px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.15);transition:all .18s;background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.8);cursor:pointer;user-select:none}
+.tf-chips .chip:hover{border-color:#7c3aed;background:rgba(124,58,237,0.12);color:#fff;transform:translateY(-2px)}
+.tf-chips .chip.on{background:rgba(124,58,237,0.3);border-color:#a78bfa;color:#fff;transform:scale(1.04);box-shadow:0 0 0 3px rgba(124,58,237,0.2)}
+.tf-continue{display:none;margin-top:8px;padding:15px 36px;border-radius:12px;border:none;background:linear-gradient(135deg,#7c3aed,#E8417A);color:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s}
+.tf-continue.visible{display:inline-block;animation:tfIn .3s ease}
+.tf-continue:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,0.4)}
+#tf-footer{position:fixed;bottom:28px;left:0;right:0;display:flex;justify-content:center;z-index:50}
+#tf-back-btn{padding:10px 22px;border-radius:10px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.45);font-size:14px;cursor:pointer;transition:all .2s}
+#tf-back-btn:hover{border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.8)}
+#tf-back-btn.tf-hidden{visibility:hidden;pointer-events:none}
+.tf-no-email{font-size:12px;color:rgba(255,255,255,0.2);margin-top:20px}
+/* Loading overlay */
+#loading-overlay{display:none;position:fixed;inset:0;background:#0a0a0f;z-index:300;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px}
+@keyframes ldPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.ld-step{font-size:14px;color:rgba(255,255,255,0.2);display:flex;align-items:center;gap:10px;padding:2px 0;transition:all .4s}
+.ld-step::before{content:'·';width:18px;text-align:center;font-size:20px;flex-shrink:0;color:rgba(255,255,255,0.15)}
+.ld-step.ld-active{color:#fff;font-weight:600}
+.ld-step.ld-active::before{content:'';width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);border-top-color:#a78bfa;animation:spin .7s linear infinite;display:inline-block;flex-shrink:0;margin:1px}
+.ld-step.ld-done{color:rgba(255,255,255,0.55)}
+.ld-step.ld-done::before{content:'✓';color:#5dcaa5;font-weight:700;font-size:14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:600px){
+  #tf-wrap{padding:0 20px 40px}
+  .tf-qtxt{font-size:24px}
+  .tf-sub{font-size:14px;margin-bottom:22px}
+  .tf-chips .chip{padding:11px 16px;font-size:14px}
+}
 </style>
 <script>
 !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]);t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys getNextSurveyStep onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
@@ -304,39 +430,280 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
 </head>
 <body>
 
+<!-- URGENCY BAR -->
+<div id="urgency-bar">
+  <strong>Launch Pricing: €7</strong> — going to €29 at 10,000 plans &nbsp;·&nbsp; <div class="urg-prog"><div class="urg-prog-fill"></div></div>&nbsp; <span id="urg-count">4,247</span> / 10,000 claimed
+</div>
+
 <!-- NAV -->
 <nav>
   <a class="logo" href="/">Get<span>Biz</span>Idea</a>
-  <a class="nav-btn" href="/quiz.html" onclick="goQuiz(event)">Start free →</a>
+  <button class="nav-btn" onclick="scrollToQuiz()">Start free →</button>
 </nav>
 
 <!-- HERO -->
-<div class="hero">
-  <div class="proof-bar">
-    <div class="proof-dot"></div>
-    <span><strong id="live-n">2,847</strong> people found their idea this week</span>
+<section class="hero" id="hero-section">
+  <div class="wrap hero-inner">
+
+    <!-- LEFT: copy -->
+    <div class="hero-left rv">
+      <div class="proof-bar">
+        <span class="proof-dot"></span>
+        <span><strong id="live-n">4,247</strong> plans generated this week &nbsp;·&nbsp; ★★★★★ 4.8/5</span>
+      </div>
+      <h1 class="hero-h">Find the business idea<br><em>made for your life</em></h1>
+      <p class="hero-sub">Answer 10 quick questions. Get a personalised business plan matched to your skills, schedule, and budget — in 90 seconds. Free to start.</p>
+      <button class="cta-btn" onclick="scrollToQuiz()">
+        Find My Business Idea <span class="cta-ic">→</span>
+      </button>
+      <div class="trust" style="margin-top:20px;justify-content:flex-start">
+        <span class="trust-i"><span class="ck">✓</span> Free to start</span>
+        <span class="trust-i"><span class="ck">✓</span> 90 seconds</span>
+        <span class="trust-i"><span class="ck">✓</span> No account needed</span>
+        <span class="trust-i"><span class="ck">✓</span> 30-day money back</span>
+      </div>
+    </div>
+
+    <!-- RIGHT: plan mockup -->
+    <div class="hero-right rv d1">
+      <div class="plan-mock">
+        <div class="plan-mock-head">
+          <div>
+            <div class="plan-mock-label-top">Your business match</div>
+            <div class="plan-mock-title-text">UX &amp; Product Consulting</div>
+          </div>
+          <div class="plan-mock-badge">94% match</div>
+        </div>
+        <div class="plan-mock-body">
+          <div class="plan-mock-slabel">Income projection</div>
+          <div class="plan-mock-row"><span class="plan-mock-ml">Month 1</span><div class="plan-mock-bar"><div class="plan-mock-fill" style="width:14%"></div></div><span class="plan-mock-mv">€1,200</span></div>
+          <div class="plan-mock-row"><span class="plan-mock-ml">Month 3</span><div class="plan-mock-bar"><div class="plan-mock-fill" style="width:32%"></div></div><span class="plan-mock-mv">€2,800</span></div>
+          <div class="plan-mock-row"><span class="plan-mock-ml">Month 6</span><div class="plan-mock-bar"><div class="plan-mock-fill" style="width:55%"></div></div><span class="plan-mock-mv">€4,500</span></div>
+          <div class="plan-mock-row"><span class="plan-mock-ml">Month 12</span><div class="plan-mock-bar"><div class="plan-mock-fill" style="width:84%"></div></div><span class="plan-mock-mv hi">€7,000</span></div>
+          <div class="plan-mock-sep"></div>
+          <div class="plan-mock-slabel">Day 1 action plan</div>
+          <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Update LinkedIn headline to attract SaaS clients</div>
+          <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Build list of 30 target companies on Crunchbase</div>
+          <div class="plan-mock-blur-wrap" style="position:relative">
+            <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Send 10 personalised outreach messages</div>
+            <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Set up free Calendly booking link</div>
+            <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Create a one-page case study from past work</div>
+            <div class="plan-mock-overlay">
+              <span class="plan-mock-unlock" onclick="scrollToQuiz()">Get your personalised plan →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
+</section>
 
-  <h1 class="hero-h">
-    Stop guessing.<br>Find the business<br>you were <em>made for.</em>
-  </h1>
-
-  <p class="hero-sub">90-second quiz. AI picks the business that fits your skills, time, and budget. Complete launch plan included.</p>
-
-  <a class="cta-btn" href="/quiz.html" onclick="goQuiz(event)">
-    Find my business <span class="cta-ic">→</span>
-  </a>
-
-  <div class="trust">
-    <span class="trust-i"><span class="ck">✓</span> Free preview</span>
-    <span class="trust-i"><span class="ck">✓</span> 90 seconds</span>
-    <span class="trust-i"><span class="ck">✓</span> No account needed</span>
-    <span class="trust-i"><span class="ck">✓</span> Full plan just €7</span>
-    <span class="trust-i"><span class="ck">✓</span> 7-day money-back</span>
+<!-- SCROLLING TICKER — doubts → reality -->
+<div id="ticker-wrap">
+  <div class="ticker-track">
+    <span class="tick"><span class="tick-before">9–5 was fun</span><span class="tick-arrow">→</span><span class="tick-after">but planning your own time is more fun</span></span>
+    <span class="tick"><span class="tick-before">Friends said it was nonsense</span><span class="tick-arrow">→</span><span class="tick-after">until they started asking how I did it</span></span>
+    <span class="tick"><span class="tick-before">I said "I'll start next month" for two years</span><span class="tick-arrow">→</span><span class="tick-after">started on a Tuesday, made money that Friday</span></span>
+    <span class="tick"><span class="tick-before">Had to ask permission for a day off</span><span class="tick-arrow">→</span><span class="tick-after">now I set my own schedule</span></span>
+    <span class="tick"><span class="tick-before">My partner thought it was too risky</span><span class="tick-arrow">→</span><span class="tick-after">we paid off the car in 4 months</span></span>
+    <span class="tick"><span class="tick-before">"At least it's a stable job"</span><span class="tick-arrow">→</span><span class="tick-after">my income is less stable now — it keeps going up</span></span>
+    <span class="tick"><span class="tick-before">Mondays used to feel heavy</span><span class="tick-arrow">→</span><span class="tick-after">now I actually look forward to them</span></span>
+    <span class="tick"><span class="tick-before">"No one will pay me for this"</span><span class="tick-arrow">→</span><span class="tick-after">three clients in the first week</span></span>
+    <span class="tick"><span class="tick-before">I had no idea what business to start</span><span class="tick-arrow">→</span><span class="tick-after">90 seconds later I had a plan</span></span>
+    <span class="tick"><span class="tick-before">Spent two years overthinking it</span><span class="tick-arrow">→</span><span class="tick-after">wish I'd started sooner</span></span>
+    <span class="tick"><span class="tick-before">"There's too much competition"</span><span class="tick-arrow">→</span><span class="tick-after">found my niche, fully booked in 6 weeks</span></span>
+    <span class="tick"><span class="tick-before">Was waiting to feel ready</span><span class="tick-arrow">→</span><span class="tick-after">the readiness came after I started</span></span>
+    <!-- duplicate for seamless loop -->
+    <span class="tick"><span class="tick-before">9–5 was fun</span><span class="tick-arrow">→</span><span class="tick-after">but planning your own time is more fun</span></span>
+    <span class="tick"><span class="tick-before">Friends said it was nonsense</span><span class="tick-arrow">→</span><span class="tick-after">until they started asking how I did it</span></span>
+    <span class="tick"><span class="tick-before">I said "I'll start next month" for two years</span><span class="tick-arrow">→</span><span class="tick-after">started on a Tuesday, made money that Friday</span></span>
+    <span class="tick"><span class="tick-before">Had to ask permission for a day off</span><span class="tick-arrow">→</span><span class="tick-after">now I set my own schedule</span></span>
+    <span class="tick"><span class="tick-before">My partner thought it was too risky</span><span class="tick-arrow">→</span><span class="tick-after">we paid off the car in 4 months</span></span>
+    <span class="tick"><span class="tick-before">"At least it's a stable job"</span><span class="tick-arrow">→</span><span class="tick-after">my income is less stable now — it keeps going up</span></span>
+    <span class="tick"><span class="tick-before">Mondays used to feel heavy</span><span class="tick-arrow">→</span><span class="tick-after">now I actually look forward to them</span></span>
+    <span class="tick"><span class="tick-before">"No one will pay me for this"</span><span class="tick-arrow">→</span><span class="tick-after">three clients in the first week</span></span>
+    <span class="tick"><span class="tick-before">I had no idea what business to start</span><span class="tick-arrow">→</span><span class="tick-after">90 seconds later I had a plan</span></span>
+    <span class="tick"><span class="tick-before">Spent two years overthinking it</span><span class="tick-arrow">→</span><span class="tick-after">wish I'd started sooner</span></span>
+    <span class="tick"><span class="tick-before">"There's too much competition"</span><span class="tick-arrow">→</span><span class="tick-after">found my niche, fully booked in 6 weeks</span></span>
+    <span class="tick"><span class="tick-before">Was waiting to feel ready</span><span class="tick-arrow">→</span><span class="tick-after">the readiness came after I started</span></span>
   </div>
 </div>
 
-<!-- STATS -->
+<!-- QUIZ — appears just below the fold, scrolled to when user clicks CTA -->
+<div id="quiz-section">
+  <div id="quiz-section-label">
+    <div class="s-tag" style="margin-bottom:8px">Take the free quiz</div>
+    <h2 style="font-size:clamp(26px,3.5vw,38px);font-weight:900;letter-spacing:-.04em;line-height:1.1">Answer 10 questions.<br>Get your personalised plan.</h2>
+  </div>
+  <div id="tf-bar-wrap"><div id="tf-bar-fill"></div></div>
+  <div id="tf-wrap">
+    <div id="tf-proof"><span id="tf-proof-dot"></span></div>
+    <div id="tf-meta">Question <strong style="color:#fff">1</strong> <span style="color:rgba(255,255,255,0.25)">/ 10</span></div>
+    <div id="tf-slides">
+
+      <div class="tf-q active" id="tfq-1" data-q="1">
+        <span class="tf-icon">🎂</span>
+        <h2 class="tf-qtxt">How old are you?</h2>
+        <p class="tf-sub">Helps us match ideas to your life stage</p>
+        <div class="chips tf-chips" id="g-age">
+          <span class="chip" data-g="age">18–24</span>
+          <span class="chip" data-g="age">25–34</span>
+          <span class="chip" data-g="age">35–44</span>
+          <span class="chip" data-g="age">45–54</span>
+          <span class="chip" data-g="age">55+</span>
+        </div>
+      </div>
+
+      <div class="tf-q" id="tfq-2" data-q="2">
+        <span class="tf-icon">📍</span>
+        <h2 class="tf-qtxt">Where are you based?</h2>
+        <p class="tf-sub">Local market size affects your options</p>
+        <div class="chips tf-chips" id="g-loc">
+          <span class="chip" data-g="loc">Big city</span>
+          <span class="chip" data-g="loc">Smaller city</span>
+          <span class="chip" data-g="loc">Village</span>
+          <span class="chip" data-g="loc">I travel a lot</span>
+          <span class="chip" data-g="loc">Abroad / expat</span>
+        </div>
+      </div>
+
+      <div class="tf-q" id="tfq-3" data-q="3">
+        <span class="tf-icon">🎯</span>
+        <h2 class="tf-qtxt">What kind of business lifestyle?</h2>
+        <p class="tf-sub">Your ideal work style matters most</p>
+        <div class="chips tf-chips" id="g-life">
+          <span class="chip" data-g="life">Calm &amp; stable income</span>
+          <span class="chip" data-g="life">Dynamic &amp; active</span>
+          <span class="chip" data-g="life">Remote / laptop lifestyle</span>
+          <span class="chip" data-g="life">Creative work</span>
+          <span class="chip" data-g="life">Working with people</span>
+          <span class="chip" data-g="life">In the field / outdoors</span>
+        </div>
+      </div>
+
+      <div class="tf-q" id="tfq-4" data-q="4">
+        <span class="tf-icon">⏰</span>
+        <h2 class="tf-qtxt">Hours per week you can commit?</h2>
+        <p class="tf-sub">Be realistic — this shapes everything</p>
+        <div class="chips tf-chips" id="g-time">
+          <span class="chip" data-g="time">5–10 h</span>
+          <span class="chip" data-g="time">10–20 h</span>
+          <span class="chip" data-g="time">20–40 h</span>
+          <span class="chip" data-g="time">Full-time</span>
+        </div>
+      </div>
+
+      <div class="tf-q" id="tfq-5" data-q="5">
+        <span class="tf-icon">💰</span>
+        <h2 class="tf-qtxt">Starting budget?</h2>
+        <p class="tf-sub">We'll only match ideas you can start today</p>
+        <div class="chips tf-chips" id="g-budget">
+          <span class="chip" data-g="budget">0–200 €</span>
+          <span class="chip" data-g="budget">200–1 000 €</span>
+          <span class="chip" data-g="budget">1 000–5 000 €</span>
+          <span class="chip" data-g="budget">5 000+ €</span>
+        </div>
+      </div>
+
+      <div class="tf-q" id="tfq-6" data-q="6">
+        <span class="tf-icon">💪</span>
+        <h2 class="tf-qtxt">What are your strengths?</h2>
+        <p class="tf-sub">Pick all that feel true — no wrong answers</p>
+        <div class="chips tf-chips" id="g-str">
+          <span class="chip" data-g="str">Communication</span>
+          <span class="chip" data-g="str">Creativity</span>
+          <span class="chip" data-g="str">Analytical thinking</span>
+          <span class="chip" data-g="str">Technical skills</span>
+          <span class="chip" data-g="str">Organisation</span>
+          <span class="chip" data-g="str">Sales &amp; persuasion</span>
+          <span class="chip" data-g="str">Fast learner</span>
+        </div>
+        <button class="tf-continue" id="tf-cont-6" onclick="tfNext()">Continue →</button>
+      </div>
+
+      <div class="tf-q" id="tfq-7" data-q="7">
+        <span class="tf-icon">❤️</span>
+        <h2 class="tf-qtxt">What do you enjoy most?</h2>
+        <p class="tf-sub">Your passion = your unfair advantage in business</p>
+        <div class="chips tf-chips" id="g-int">
+          <span class="chip" data-g="int">Sport</span>
+          <span class="chip" data-g="int">Food &amp; gastronomy</span>
+          <span class="chip" data-g="int">Travel</span>
+          <span class="chip" data-g="int">IT &amp; technology</span>
+          <span class="chip" data-g="int">Fashion &amp; style</span>
+          <span class="chip" data-g="int">Finance &amp; investing</span>
+          <span class="chip" data-g="int">Nature &amp; gardening</span>
+          <span class="chip" data-g="int">Creative content</span>
+          <span class="chip" data-g="int">Cars / moto</span>
+          <span class="chip" data-g="int">Health &amp; fitness</span>
+        </div>
+        <button class="tf-continue" id="tf-cont-7" onclick="tfNext()">Continue →</button>
+      </div>
+
+      <div class="tf-q" id="tfq-8" data-q="8">
+        <span class="tf-icon">🌐</span>
+        <h2 class="tf-qtxt">Online or offline business?</h2>
+        <p class="tf-sub">Or a mix — there's no wrong choice here</p>
+        <div class="chips tf-chips" id="g-btype">
+          <span class="chip" data-g="btype">Online business</span>
+          <span class="chip" data-g="btype">Offline business</span>
+          <span class="chip" data-g="btype">Combination</span>
+        </div>
+      </div>
+
+      <div class="tf-q" id="tfq-9" data-q="9">
+        <span class="tf-icon">🚀</span>
+        <h2 class="tf-qtxt">When do you want to start earning?</h2>
+        <p class="tf-sub">This shapes how aggressive your action plan will be</p>
+        <div class="chips tf-chips" id="g-inc">
+          <span class="chip" data-g="inc">ASAP – this month</span>
+          <span class="chip" data-g="inc">In 1–3 months</span>
+          <span class="chip" data-g="inc">In 3–6 months</span>
+          <span class="chip" data-g="inc">No rush, doing this right</span>
+        </div>
+      </div>
+
+      <div class="tf-q" id="tfq-10" data-q="10">
+        <span class="tf-icon">🧱</span>
+        <h2 class="tf-qtxt">What's holding you back most?</h2>
+        <p class="tf-sub">Be honest — we'll address it directly in your plan</p>
+        <div class="chips tf-chips" id="g-risk">
+          <span class="chip" data-g="risk">Not knowing where to start</span>
+          <span class="chip" data-g="risk">Finding first clients</span>
+          <span class="chip" data-g="risk">Lack of time</span>
+          <span class="chip" data-g="risk">Lack of confidence</span>
+        </div>
+        <p class="tf-no-email">✓ No email required — instant AI results</p>
+      </div>
+
+    </div>
+  </div>
+  <div id="tf-footer">
+    <button id="tf-back-btn" class="tf-hidden" onclick="tfBack()">↑ Back</button>
+  </div>
+</div>
+
+<!-- LOADING OVERLAY (full-screen, shown during AI generation) -->
+<div id="loading-overlay">
+  <div style="width:100%;max-width:420px;text-align:center;padding:0 24px">
+    <div id="ld-icon" style="font-size:52px;margin-bottom:20px;display:block;animation:ldPulse 2.2s ease-in-out infinite"></div>
+    <h2 id="ld-headline" style="font-size:26px;font-weight:800;margin-bottom:8px;letter-spacing:-.01em;line-height:1.25">Scanning business models…</h2>
+    <p style="font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:28px">This usually takes 15–30 seconds</p>
+    <div style="width:100%;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;margin-bottom:32px;overflow:hidden"><div id="ld-bar" style="height:100%;background:linear-gradient(90deg,#7c3aed,#E8417A);width:6%;border-radius:2px;transition:width 1.2s cubic-bezier(.4,0,.2,1)"></div></div>
+    <div style="display:flex;flex-direction:column;gap:10px;text-align:left;margin-bottom:28px">
+      <div class="ld-step" id="lds-1">Scanning 2,400+ business models</div>
+      <div class="ld-step" id="lds-2">Matching ideas to your profile</div>
+      <div class="ld-step" id="lds-3">Calculating income projections</div>
+      <div class="ld-step" id="lds-4">Writing your 90-day action plan</div>
+      <div class="ld-step" id="lds-5">Finalising your results</div>
+    </div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:100px;padding:7px 18px;display:inline-block">847 people got their plan this week</div>
+  </div>
+</div>
+
+<!-- STATS + REST OF PAGE (below the quiz) -->
+<div id="how-it-works"></div>
 <div class="stats">
   <div class="stat">
     <div class="stat-n" data-count="2847">2,847</div>
@@ -351,8 +718,8 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
     <div class="stat-l">One-time<br>no subscription</div>
   </div>
   <div class="stat">
-    <div class="stat-n">4.8★</div>
-    <div class="stat-l">Average<br>rating</div>
+    <div class="stat-n">4.8</div>
+    <div class="stat-l">Average rating<br>out of 5</div>
   </div>
 </div>
 
@@ -413,6 +780,80 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
   </section>
 </div>
 
+<!-- SAMPLE PLAN -->
+<div class="wrap">
+  <section style="padding-top:0">
+    <div class="rv">
+      <div class="s-tag">Real example</div>
+      <h2 class="s-h">This is what your plan<br>actually looks like.</h2>
+      <p class="s-sub">Real output for a 34-year-old UX designer, 15 hours/week, €500 starting budget.</p>
+    </div>
+    <div class="sample-wrap rv">
+      <div class="sample-header">
+        <div>
+          <div style="font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Your business match</div>
+          <div style="font-size:22px;font-weight:800;letter-spacing:-.02em">UX &amp; Product Consulting</div>
+          <div style="font-size:13px;color:rgba(255,255,255,.5);margin-top:4px;line-height:1.5">Turn your design experience into a consulting practice for early-stage startups — remote, flexible, no agency needed.</div>
+        </div>
+        <div class="sample-match">94% match</div>
+      </div>
+      <div class="sample-tabs">
+        <button class="s-tab on" onclick="sTab(this,'sp-income')">Income projection</button>
+        <button class="s-tab" onclick="sTab(this,'sp-script')">Outreach script</button>
+        <button class="s-tab" onclick="sTab(this,'sp-day1')">Day 1 tasks</button>
+        <button class="s-tab" onclick="sTab(this,'sp-pricing')">Pricing</button>
+      </div>
+      <div class="sample-body">
+
+        <div class="s-panel on" id="sp-income">
+          <div style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:16px">Realistic projections based on your profile — conservative estimate</div>
+          <div class="sp-row"><span class="sp-label">Month 1</span><div class="sp-bar"><div class="sp-fill" style="width:12%"></div></div><span class="sp-val" style="color:rgba(255,255,255,.6)">€800 – €1,200</span></div>
+          <div class="sp-row"><span class="sp-label">Month 2</span><div class="sp-bar"><div class="sp-fill" style="width:20%"></div></div><span class="sp-val" style="color:rgba(255,255,255,.7)">€1,500 – €2,000</span></div>
+          <div class="sp-row"><span class="sp-label">Month 3</span><div class="sp-bar"><div class="sp-fill" style="width:32%"></div></div><span class="sp-val" style="color:rgba(255,255,255,.8)">€2,400 – €3,200</span></div>
+          <div class="sp-row"><span class="sp-label">Month 6</span><div class="sp-bar"><div class="sp-fill" style="width:52%"></div></div><span class="sp-val">€3,800 – €5,000</span></div>
+          <div class="sp-row"><span class="sp-label">Month 12</span><div class="sp-bar"><div class="sp-fill" style="width:80%"></div></div><span class="sp-val" style="color:#5dcaa5;font-size:15px">€5,500 – €8,000</span></div>
+          <div style="margin-top:16px;font-size:12px;color:rgba(255,255,255,.3)">2 retainer clients × €2,000 + 2 project clients × €1,500 = €7,000/month by month 12</div>
+        </div>
+
+        <div class="s-panel" id="sp-script">
+          <div style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:14px">Copy-paste ready. Personalised for your niche and strengths.</div>
+          <div class="script-box">Subject: Quick question about your onboarding flow<br><br>Hi [Name],<br><br>I came across [Company] while looking at early-stage SaaS tools in the productivity space. Your product looks solid — but I noticed your onboarding drops users before they reach the first "aha moment".<br><br>I'm a UX consultant who helps startups like yours fix exactly this. My last client cut their drop-off rate by 34% in 6 weeks.<br><br>Would it make sense to jump on a 20-minute call this week? No pitch — just a quick look at your current flow and I'll tell you what I'd fix first.<br><br>— [Your name]</div>
+          <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,.3)">Expected response rate: 8–14% · Daily target: send to 20 contacts</div>
+        </div>
+
+        <div class="s-panel" id="sp-day1">
+          <div style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:14px">Your first day. Estimated total time: 3 hours.</div>
+          <div class="task-item"><div class="task-n">1</div><div><strong>Update LinkedIn headline</strong> — change to "UX Consultant for Early-Stage SaaS · Helping startups improve activation and retention" · <span style="color:rgba(255,255,255,.4)">30 min · Tool: LinkedIn</span></div></div>
+          <div class="task-item"><div class="task-n">2</div><div><strong>Build a list of 30 target companies</strong> — find Series A SaaS startups with 5–30 employees on Crunchbase and LinkedIn Sales Navigator · <span style="color:rgba(255,255,255,.4)">60 min · Tool: Crunchbase (free tier)</span></div></div>
+          <div class="task-item"><div class="task-n">3</div><div><strong>Send first 10 outreach messages</strong> — use the script from your plan, personalise the company name and one specific detail · <span style="color:rgba(255,255,255,.4)">60 min · Tool: LinkedIn / email</span></div></div>
+          <div class="task-item"><div class="task-n">4</div><div><strong>Set up a free Calendly link</strong> — 30-minute "Discovery Call" slot so interested prospects can book directly · <span style="color:rgba(255,255,255,.4)">20 min · Tool: Calendly (free)</span></div></div>
+        </div>
+
+        <div class="s-panel" id="sp-pricing">
+          <div style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:14px">Three tiers. Start with Starter to get first clients, move to Retainer within 60 days.</div>
+          <div class="price-tier">
+            <div class="price-tier-name">Starter</div>
+            <div class="price-tier-price">€500 <span style="font-size:14px;font-weight:400;color:rgba(255,255,255,.4)">/project</span></div>
+            <div class="price-tier-desc">UX audit + 3 prioritised recommendations. One-time. Perfect for getting your first 3 testimonials.</div>
+          </div>
+          <div class="price-tier" style="border-color:rgba(124,58,237,.35);background:rgba(124,58,237,.06)">
+            <div class="price-tier-name" style="color:#a78bfa">Main — recommended</div>
+            <div class="price-tier-price">€1,500 <span style="font-size:14px;font-weight:400;color:rgba(255,255,255,.4)">/month</span></div>
+            <div class="price-tier-desc">Monthly retainer. 2 design sprints + weekly check-in. This is your core revenue — aim for 2 retainer clients.</div>
+          </div>
+          <div class="price-tier">
+            <div class="price-tier-name">Premium</div>
+            <div class="price-tier-price">€3,500 <span style="font-size:14px;font-weight:400;color:rgba(255,255,255,.4)">/month</span></div>
+            <div class="price-tier-desc">Full embedded consulting. 3 days/week. Full product design ownership. For funded startups with real UX needs.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <p class="rv" style="text-align:center;font-size:13px;color:rgba(255,255,255,.3);margin-top:20px">Your plan will be built for your specific answers — different business, different scripts, different projections.</p>
+  </section>
+</div>
+
 <!-- TESTIMONIALS — editorial style -->
 <div class="wrap">
   <section style="padding-top:0">
@@ -459,10 +900,24 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
   <section style="padding-top:0">
     <div class="rv">
       <div class="s-tag">What you get</div>
-      <h2 class="s-h">A business consultant charges €500<br>for this. You pay <em style="color:var(--pink)">€7.</em></h2>
+      <h2 class="s-h">Everything to launch your business.<br>For the price of a <em style="color:var(--pink)">coffee.</em></h2>
     </div>
     <div class="offer-card rv">
-      <p class="offer-sub" style="margin-bottom:44px">One payment. Instant access. Yours forever.</p>
+      <!-- Price anchor comparison -->
+      <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:40px">
+        <div style="text-align:center;padding:16px 24px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08)">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:6px">Business consultant</div>
+          <div style="font-size:26px;font-weight:800;text-decoration:line-through;color:var(--t3)">€200–500<span style="font-size:14px">/hr</span></div>
+        </div>
+        <div style="text-align:center;padding:16px 24px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08)">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:6px">Business plan course</div>
+          <div style="font-size:26px;font-weight:800;text-decoration:line-through;color:var(--t3)">€197</div>
+        </div>
+        <div style="text-align:center;padding:16px 24px;border-radius:12px;background:rgba(232,65,122,0.12);border:1px solid rgba(232,65,122,0.35)">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--pink);margin-bottom:6px">GetBizIdea today</div>
+          <div style="font-size:42px;font-weight:900;color:#fff;letter-spacing:-.04em;line-height:1">€7</div>
+        </div>
+      </div>
       <div class="feats">
         <div class="feat"><div class="feat-ck">✓</div>Your AI-matched business idea</div>
         <div class="feat"><div class="feat-ck">✓</div>Full 90-day action plan</div>
@@ -473,16 +928,12 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
         <div class="feat"><div class="feat-ck">✓</div>Top 3 mistakes to avoid</div>
         <div class="feat"><div class="feat-ck">✓</div>Tools &amp; setup checklist</div>
       </div>
-      <div class="price-row">
-        <span class="p-was">€497</span>
-        <span class="p-now">€7</span>
-      </div>
-      <p class="p-meta">one-time · instant access · no subscription · no recurring fees</p>
-      <a class="cta-btn" href="/quiz.html" onclick="goQuiz(event)" style="display:inline-flex">
+      <p class="p-meta" style="margin:0 0 36px">one-time · instant access · no subscription · no recurring fees</p>
+      <button class="cta-btn" onclick="startQuiz()" style="display:inline-flex">
         Get my plan for €7 <span class="cta-ic">→</span>
-      </a>
+      </button>
       <br>
-      <div class="guarantee">🛡️ 7-day money-back guarantee — no questions asked</div>
+      <div class="guarantee">30-day money-back guarantee — get a plan you'd actually follow, or we refund you. No questions asked.</div>
       <p style="margin-top:14px;font-size:12px;color:var(--t3)">Free preview first — pay only if you love your business match</p>
     </div>
   </section>
@@ -539,10 +990,10 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
 <div class="final rv">
   <h2>Your business is<br><em>90 seconds away.</em></h2>
   <p>Stop overthinking. Find out exactly which business fits your life — free.</p>
-  <a class="cta-btn" href="/quiz.html" onclick="goQuiz(event)">
-    Take the free quiz <span class="cta-ic">→</span>
-  </a>
-  <p class="final-note">Free preview · No email required · Full plan €7 · 7-day money-back guarantee</p>
+  <button class="cta-btn" onclick="startQuiz()" style="border:none;cursor:pointer">
+    Find My Business Idea <span class="cta-ic">→</span>
+  </button>
+  <p class="final-note">Free preview · No account required · Full plan €7 · 30-day money-back guarantee</p>
 </div>
 
 <!-- FOOTER -->
@@ -558,12 +1009,86 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
 <script>
 document.documentElement.classList.add('js-on');
 
-function goQuiz(e){
-  e.preventDefault();
-  ph('landing_cta_clicked',{text:e.currentTarget.textContent.trim().slice(0,40)});
-  document.body.style.transition='opacity .25s';
-  document.body.style.opacity='0';
-  setTimeout(()=>{window.location.href='/quiz.html'},260);
+// ── QUIZ LOGIC ──────────────────────────────────────────────────────────────
+let tfCurrent=1;
+const TF_TOTAL=10;
+const TF_SINGLE=['age','loc','life','time','budget','btype','inc','risk'];
+const TF_GRP={1:'age',2:'loc',3:'life',4:'time',5:'budget',6:'str',7:'int',8:'btype',9:'inc',10:'risk'};
+
+function tfNext(){
+  if(tfCurrent>=TF_TOTAL){generate();return;}
+  const g=TF_GRP[tfCurrent];
+  if(g&&document.querySelectorAll('[data-g="'+g+'"].on').length===0){
+    const chips=document.getElementById('g-'+g);
+    if(chips){chips.animate([{transform:'translateX(-5px)'},{transform:'translateX(5px)'},{transform:'translateX(-3px)'},{transform:'translateX(0)'}],{duration:280});chips.querySelectorAll('.chip').forEach(c=>{c.style.borderColor='#ef4444';setTimeout(()=>c.style.borderColor='',1800)});}
+    return;
+  }
+  const cur=document.getElementById('tfq-'+tfCurrent);
+  if(cur){cur.style.transition='opacity .2s,transform .2s';cur.style.opacity='0';cur.style.transform='translateY(-18px)';setTimeout(()=>{cur.style.display='none';cur.style.opacity='';cur.style.transform='';cur.classList.remove('active');tfCurrent++;const nxt=document.getElementById('tfq-'+tfCurrent);if(nxt){nxt.style.display='block';nxt.classList.add('active');}updateTfProgress();},200);}
+}
+function tfBack(){
+  if(tfCurrent<=1)return;
+  const cur=document.getElementById('tfq-'+tfCurrent);
+  if(cur){cur.style.transition='opacity .18s,transform .18s';cur.style.opacity='0';cur.style.transform='translateY(18px)';setTimeout(()=>{cur.style.display='none';cur.style.opacity='';cur.style.transform='';cur.classList.remove('active');tfCurrent--;const prv=document.getElementById('tfq-'+tfCurrent);if(prv){prv.style.display='block';prv.classList.add('active');}updateTfProgress();},170);}
+}
+function updateTfProgress(){
+  const pct=Math.max(5,Math.round((tfCurrent-1)/TF_TOTAL*100));
+  const fill=document.getElementById('tf-bar-fill');if(fill)fill.style.width=pct+'%';
+  const meta=document.getElementById('tf-meta');if(meta)meta.innerHTML='Question <strong style="color:#fff">'+tfCurrent+'</strong> <span style="color:rgba(255,255,255,0.25)">/ '+TF_TOTAL+'</span>';
+  const back=document.getElementById('tf-back-btn');if(back)back.className=tfCurrent<=1?'tf-hidden':'';
+}
+document.querySelectorAll('.chip').forEach(c=>{
+  c.addEventListener('click',()=>{
+    const g=c.dataset.g;
+    if(TF_SINGLE.includes(g)){document.querySelectorAll('[data-g="'+g+'"]').forEach(x=>x.classList.remove('on'));c.classList.add('on');window._autoAdv&&clearTimeout(window._autoAdv);window._autoAdv=setTimeout(tfNext,420);}
+    else{c.classList.toggle('on');const qEl=c.closest('.tf-q');if(qEl){const contId='tf-cont-'+qEl.dataset.q;const cont=document.getElementById(contId);if(cont)cont.className=qEl.querySelectorAll('.chip.on').length>0?'tf-continue visible':'tf-continue';}}
+  });
+});
+function get(g){return[...document.querySelectorAll('[data-g="'+g+'"].on')].map(x=>x.textContent).join(', ')||'not specified'}
+
+function startLoadingAnim(){
+  const steps=[{id:'lds-1',icon:'🔍',text:'Scanning 2,400+ business models…',pct:18},{id:'lds-2',icon:'🎯',text:'Matching ideas to your profile…',pct:38},{id:'lds-3',icon:'📊',text:'Calculating income projections…',pct:58},{id:'lds-4',icon:'📋',text:'Writing your 90-day action plan…',pct:78},{id:'lds-5',icon:'✨',text:'Finalising your results…',pct:91}];
+  const bar=document.getElementById('ld-bar');const icon=document.getElementById('ld-icon');const headline=document.getElementById('ld-headline');
+  const delays=[0,4000,8000,13000,19000];
+  steps.forEach((s,idx)=>{window['_ld'+idx]=setTimeout(()=>{steps.forEach((ss,ii)=>{const el=document.getElementById(ss.id);if(!el)return;el.className=ii<idx?'ld-step ld-done':ii===idx?'ld-step ld-active':'ld-step';});if(bar)bar.style.width=s.pct+'%';if(icon)icon.textContent=s.icon;if(headline)headline.textContent=s.text;},delays[idx]);});
+}
+
+async function generate(){
+  const quizData={age:get('age'),location:get('loc'),lifestyle:get('life'),time:get('time'),budget:get('budget'),strengths:get('str'),interests:get('int'),btype:get('btype'),income:get('inc'),risk:get('risk'),language:'en'};
+  ph('quiz_completed',{age:quizData.age,location:quizData.location,time:quizData.time,budget:quizData.budget});
+  // Show loading overlay
+  const overlay=document.getElementById('loading-overlay');
+  overlay.style.display='flex';
+  startLoadingAnim();
+  try{
+    const controller=new AbortController();
+    const tid=setTimeout(()=>controller.abort(),110000);
+    const resp=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({quizData}),signal:controller.signal});
+    clearTimeout(tid);
+    const data=await resp.json();
+    if(!data.plan)throw new Error(data.error||'No plan returned');
+    // Redirect to quiz.html for results
+    const rid=data.resultId||'';
+    if(rid)localStorage.setItem('gbi_rid',rid);
+    window.location.href='/quiz.html?rid='+rid+(data.plan?'&fresh=1':'');
+  }catch(e){
+    overlay.style.display='none';
+    alert('Something went wrong: '+e.message);
+  }
+}
+
+function scrollToQuiz(){
+  document.getElementById('quiz-section').scrollIntoView({behavior:'smooth'});
+}
+function startQuiz(){
+  scrollToQuiz();
+}
+
+function sTab(el,panelId){
+  el.closest('.sample-tabs').querySelectorAll('.s-tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  el.closest('.sample-wrap').querySelectorAll('.s-panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById(panelId).classList.add('on');
 }
 
 function toggleFaq(btn){
