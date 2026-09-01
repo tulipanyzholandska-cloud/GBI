@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ready-Made Business Plans · Get Biz Idea</title>
+<meta name="description" content="10 proven business plans ready to execute. Each includes a complete 90-day roadmap, first-client scripts, pricing strategy, and daily action plan.">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#fff;min-height:100vh}
+.bg{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 20% 50%,#1a0a2e 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,#2d0a1e 0%,transparent 50%),#0a0a0f}
+.content{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:0 20px}
+nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:0}
+.logo{font-size:18px;font-weight:600;color:#fff;text-decoration:none}
+.nav-btn{padding:8px 20px;border-radius:8px;border:1.5px solid #e8417a;color:#e8417a;font-size:14px;font-weight:500;cursor:pointer;background:transparent;text-decoration:none}
+.hero{text-align:center;padding:56px 0 48px}
+.hero-badge{display:inline-block;padding:5px 16px;border-radius:100px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.3);font-size:11px;font-weight:700;color:#a78bfa;text-transform:uppercase;letter-spacing:.1em;margin-bottom:20px}
+.hero h1{font-size:clamp(32px,5vw,52px);font-weight:900;letter-spacing:-.03em;line-height:1.05;margin-bottom:16px}
+.hero h1 em{font-style:normal;color:#e8417a}
+.hero p{font-size:17px;color:rgba(255,255,255,0.6);max-width:560px;margin:0 auto 36px;line-height:1.6}
+.includes{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-bottom:48px}
+.inc-item{display:flex;align-items:center;gap:7px;font-size:13px;color:rgba(255,255,255,0.65)}
+.ck{color:#5dcaa5;font-weight:700}
+.plans-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-bottom:72px}
+.plan-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:24px;display:flex;flex-direction:column;gap:14px;transition:border-color .2s,transform .2s}
+.plan-card:hover{border-color:rgba(124,58,237,0.4);transform:translateY(-3px)}
+.plan-card.featured{background:linear-gradient(135deg,rgba(124,58,237,0.12),rgba(232,65,122,0.08));border-color:rgba(124,58,237,0.35)}
+.plan-tag{display:inline-block;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.tag-popular{background:rgba(232,65,122,0.2);color:#f472a8;border:1px solid rgba(232,65,122,0.3)}
+.tag-new{background:rgba(34,197,94,0.15);color:#5dcaa5;border:1px solid rgba(34,197,94,0.25)}
+.tag-hot{background:rgba(251,146,60,0.15);color:#fb923c;border:1px solid rgba(251,146,60,0.25)}
+.plan-name{font-size:18px;font-weight:800;line-height:1.25}
+.plan-tagline{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.5}
+.plan-income{font-size:13px;font-weight:600;color:#a78bfa}
+.plan-includes{list-style:none;display:flex;flex-direction:column;gap:5px}
+.plan-includes li{font-size:12px;color:rgba(255,255,255,0.65);display:flex;align-items:flex-start;gap:6px}
+.plan-includes li::before{content:'✓';color:#5dcaa5;font-weight:700;flex-shrink:0;margin-top:1px}
+.plan-footer{margin-top:auto;display:flex;align-items:center;gap:12px}
+.plan-price{font-size:22px;font-weight:900}
+.plan-price-old{font-size:13px;color:rgba(255,255,255,0.3);text-decoration:line-through}
+.btn-buy{flex:1;padding:12px;border-radius:10px;border:none;background:linear-gradient(135deg,#7c3aed,#e8417a);color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .2s,transform .15s}
+.btn-buy:hover{opacity:.9;transform:translateY(-1px)}
+.btn-demo{padding:12px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.6);font-size:13px;cursor:pointer;text-decoration:none;transition:border-color .2s}
+.btn-demo:hover{border-color:rgba(255,255,255,0.3);color:#fff}
+/* Email modal */
+#buy-modal{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.75);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px}
+#buy-modal-inner{background:#0f0f18;border:1px solid rgba(124,58,237,0.3);border-radius:20px;padding:32px;max-width:400px;width:100%;position:relative}
+#buy-modal-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.06);border:none;color:rgba(255,255,255,0.5);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#buy-modal h3{font-size:20px;font-weight:800;margin-bottom:6px;line-height:1.2}
+#buy-modal p{font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:20px;line-height:1.5}
+.modal-input{width:100%;padding:13px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.15);background:rgba(0,0,0,0.4);color:#fff;font-size:14px;outline:none;font-family:inherit;margin-bottom:12px;transition:border-color .15s}
+.modal-input:focus{border-color:#7c3aed}
+.modal-btn{width:100%;padding:15px;border-radius:11px;border:none;background:linear-gradient(135deg,#7c3aed,#e8417a);color:#fff;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(124,58,237,0.35)}
+.modal-trust{text-align:center;font-size:11px;color:rgba(255,255,255,0.35);margin-top:10px}
+/* Success banner */
+#success-banner{display:none;background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(34,197,94,0.08));border:1px solid rgba(34,197,94,0.3);border-radius:14px;padding:20px 24px;margin-bottom:32px;text-align:center}
+#success-banner h3{font-size:18px;font-weight:800;color:#5dcaa5;margin-bottom:6px}
+#success-banner p{font-size:13px;color:rgba(255,255,255,0.65)}
+/* Bottom CTA */
+.bottom-cta{text-align:center;padding:48px 0 64px;border-top:1px solid rgba(255,255,255,0.07)}
+.bottom-cta h2{font-size:28px;font-weight:800;margin-bottom:10px}
+.bottom-cta p{font-size:15px;color:rgba(255,255,255,0.55);margin-bottom:28px}
+.btn-primary{display:inline-block;padding:16px 36px;border-radius:12px;border:none;background:linear-gradient(135deg,#7c3aed,#e8417a);color:#fff;font-size:16px;font-weight:700;cursor:pointer;text-decoration:none;box-shadow:0 8px 28px rgba(124,58,237,0.4)}
+@media(max-width:600px){.hero h1{font-size:30px}.plans-grid{grid-template-columns:1fr}.hero p{font-size:15px}}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="content">
+  <nav>
+    <a class="logo" href="/">Get Biz Idea</a>
+    <a class="nav-btn" href="/quiz.html">Get my personalized plan →</a>
+  </nav>
+
+  <div id="success-banner">
+    <h3>Purchase confirmed — check your inbox</h3>
+    <p id="success-msg">Your plan has been sent to your email. Check spam if you don't see it within 2 minutes.</p>
+  </div>
+
+  <div class="hero">
+    <div class="hero-badge">Ready-Made Plans</div>
+    <h1>10 proven business models,<br><em>ready to execute</em></h1>
+    <p>Skip the research. Each plan is a complete 90-day roadmap built around a validated business model — first client, pricing, tools, scripts, and daily tasks.</p>
+    <div class="includes">
+      <span class="inc-item"><span class="ck">✓</span> 90-day day-by-day action plan</span>
+      <span class="inc-item"><span class="ck">✓</span> First-client outreach scripts</span>
+      <span class="inc-item"><span class="ck">✓</span> Pricing strategy + positioning</span>
+      <span class="inc-item"><span class="ck">✓</span> Tools + setup checklist</span>
+      <span class="inc-item"><span class="ck">✓</span> Common mistakes to avoid</span>
+      <span class="inc-item"><span class="ck">✓</span> Delivered instantly by email</span>
+    </div>
+  </div>
+
+  <div class="plans-grid">
+
+    <div class="plan-card featured">
+      <div><span class="plan-tag tag-popular">Most Popular</span></div>
+      <div class="plan-name">LinkedIn Ghostwriting Agency</div>
+      <div class="plan-tagline">Write thought-leadership posts for busy founders and executives. No degree, no experience needed — just writing.</div>
+      <div class="plan-income">€1,500–€4,000/month potential</div>
+      <ul class="plan-includes">
+        <li>Cold outreach templates that convert</li>
+        <li>Pricing: from €300/month retainer</li>
+        <li>How to land 3 clients in 30 days</li>
+        <li>Content calendar + writing system</li>
+      </ul>
+      <div class="plan-footer">
+        <span class="plan-price">€17</span>
+        <button class="btn-buy" onclick="openBuyModal('linkedin-ghostwriting','LinkedIn Ghostwriting Agency',17)">Buy now →</button>
+        <a class="btn-demo" href="/quiz.html?demo=1">Preview</a>
+      </div>
+    </div>
+
+    <div class="plan-card">
+      <div><span class="plan-tag tag-hot">Hot</span></div>
+      <div class="plan-name">Local SEO Agency</div>
+      <div class="plan-tagline">Help local businesses rank on Google Maps and get more walk-in customers. Recurring revenue model.</div>
+      <div class="plan-income">€2,000–€6,000/month potential</div>
+      <ul class="plan-includes">
+        <li>Google Business Profile optimization system</li>
+        <li>Pricing: €350–€800/month per client</li>
+        <li>Cold email + phone outreach scripts</li>
+        <li>Reporting templates for clients</li>
+      </ul>
+      <div class="plan-footer">
+        <span class="plan-price">€17</span>
+        <button class="btn-buy" onclick="openBuyModal('local-seo','Local SEO Agency',17)">Buy now →</button>
+        <a class="btn-demo" href="/quiz.html?demo=1">Preview</a>
+      </div>
+    </div>
+
+    <div class="plan-card">
+      <div><span class="plan-tag tag-new">New</span></div>
+      <div class="plan-name">Etsy Digital Products</div>
+      <div class="plan-tagline">Sell printables, templates, and digital art on Etsy. One-time work, passive recurring income.</div>
+      <div class="plan-income">€500–€3,000/month potential</div>
+      <ul class="plan-includes">
+        <li>Top 20 proven product categories</li>
+        <li>SEO keywords that drive organic traffic</li>
+        <li>Canva templates to create products fast</li>
+        <li>Pricing + bundle strategy</li>
+      </ul>
+      <div class="plan-footer">
+        <span class="plan-price">€17</span>
+        <button class="btn-buy" onclick="openBuyModal('etsy-digital','Etsy Digital Products',17)">Buy now →</button>
+        <a class="btn-demo" href="/quiz.html?demo=1">Preview</a>
+      </div>
+    </div>
+
+    <div class="plan-card">
+      <div><span class="plan-tag tag-hot">Hot</span></div>
+      <div class="plan-name">Social Media Management</div>
+      <div class="plan-tagline">Manage Instagram, Facebook, and TikTok for small businesses. High demand, low competition locally.</div>
+      <div class="plan-income">€1,200–€4,500/month potential</div>
+      <ul class="plan-includes">
+        <li>Client acquisition playbook</li>
+        <li>Pricing: from €250/month per client</li>
+        <li>Content scheduling system</li>
+        <li>Client onboarding + reporting pack</li>
+      </ul>
+      <div class="plan-footer">
+        <span class="plan-price">€17</span>
+        <button class="btn-buy" onclick="openBuyModal('social-media-mgmt','Social Media Management Agency',17)">Buy now →</button>
+        <a class="btn-demo" href="/quiz.html?demo=1">Preview</a>
+      </div>
+    </div>
+
+    <div class="plan-card">
+      <div><span class="plan-tag tag-new">New</span></div>
+      <div class="plan-name">Virtual Assistant Agency</div>
+      <div class="plan-tagline">Provide admin, email, and operations support to online businesses. Work from anywhere, start with zero investment.</div>
+      <div class="plan-income">€800–€3,000/month potential</div>
+      <ul class="plan-includes">
+        <li>Best platforms to find first clients</li>
+        <li>Service packages and pricing guide</li>
+        <li>Onboarding workflow templates</li>
+        <li>How to scale with subcontractors</li>
+      </ul>
+      <div class="plan-footer">
+        <span class="plan-price">€17</span>
+        <button class="btn-buy" onclick="openBuyModal('virtual-assistant','Virtual Assistant Agency',17)">Buy now →</button>
+        <a class="btn-demo" href="/quiz.html?demo=1">Preview</a>
+      </div>
+    </div>
+
+    <div class="plan-card">
+      <div><span class="plan-tag tag-popular">Beginner Friendly</span></div>
+      <div class="plan-name">Online Tutoring Business</div>
+      <div class="plan-tagline">Teach what you know: school subjects, languages, music, fitness, or software. Build a roster of recurring students.</div>
+      <div class="plan-income">€600–€2,500/month potential</div>
+      <ul class="plan-includes">
+        <li>Platforms: Superprof, Preply, direct booking</li>
+        <li>How to price your sessions + packages</li>
+        <li>Profile optimization for more bookings</li>
+        <li>Student retention + referral system</li>
+      </ul>
+      <div class="plan-footer">
+        <span class="plan-price">€17</span>
+        <button class="btn-buy" onclick="openBuyModal('online-tutoring','Online Tutoring Business',17)">Buy now →</button>
+        <a class="btn-demo" href="/quiz.html?demo=1">Preview</a>
+      </div>
+    </div>
+
+    <div class="plan-card">
+      <div><span class="plan-tag tag-hot">High Income</span></div>
+      <div class="plan-name">B2B Cold Email Agency</div>
+      <div class="plan-tagline">Generate leads for software companies and agencies using cold email outreach. Fully remote, no prior experience needed.</div>
+      <div class="plan-income">€2,000–€8,000/month potential</div>
+      <ul class="plan-includes">
+        <li>Cold email sequences that get replies</li>
+        <li>Tools: Apollo, Instantly, Smartlead setup</li>
+        <li>Pricing: retainer + performance model</li>
+        <li>How to close your first client in 14 days</li>
+      </ul>
+      <div class="plan-footer">
+        <span class="plan-price">€17</span>
+        <button class="btn-buy" onclick="openBuyModal('cold-email-agency','B2B Cold Email Agency',17)">Buy now →</button>
+        <a class="btn-demo" href="/quiz.html?demo=1">Preview</a>
+      </div>
+    </div>
+
+    <div class="plan-card">
+      <div><span class="plan-tag tag-new">Trending</span></div>
+      <div class="plan-name">YouTube Automation Channel</div>
+      <div class="plan-tagline">Build faceless YouTube channels with outsourced content. Monetise through AdSense, sponsorships, and affiliate deals.</div>
+      <div class="plan-income">€500–€5,000/month potential</div>
+      <ul class="plan-includes">
+        <li>Top 10 niche selection framework</li>
+        <li>Outsourcing: scriptwriters, editors, VO</li>
+        <li>Monetization timeline + milestones</li>
+        <li>Growth hacks to reach 1k subscribers fast</li>
+      </ul>
+      <div class="plan-footer">
+        <span class="plan-price">€17</span>
+        <button class="btn-buy" onclick="openBuyModal('youtube-automation','YouTube Automation Channel',17)">Buy now →</button>
+        <a class="btn-demo" href="/quiz.html?demo=1">Preview</a>
+      </div>
+    </div>
+
+    <div class="plan-card">
+      <div><span class="plan-tag tag-popular">Lifestyle Friendly</span></div>
+      <div class="plan-name">Amazon FBA Private Label</div>
+      <div class="plan-tagline">Source a product, brand it, and sell it on Amazon. Build a real e-commerce asset with passive income potential.</div>
+      <div class="plan-income">€1,000–€10,000/month potential</div>
+      <ul class="plan-includes">
+        <li>Product research: Jungle Scout / Helium 10</li>
+        <li>Supplier sourcing from Alibaba</li>
+        <li>Listing optimization + PPC strategy</li>
+        <li>Launch sequence to hit first reviews</li>
+      </ul>
+      <div class="plan-footer">
+        <span class="plan-price">€17</span>
+        <button class="btn-buy" onclick="openBuyModal('amazon-fba','Amazon FBA Private Label',17)">Buy now →</button>
+        <a class="btn-demo" href="/quiz.html?demo=1">Preview</a>
+      </div>
+    </div>
+
+    <div class="plan-card">
+      <div><span class="plan-tag tag-new">Low Cost Start</span></div>
+      <div class="plan-name">Podcast Production Agency</div>
+      <div class="plan-tagline">Edit, produce, and grow podcasts for brands and entrepreneurs. Creative work, recurring clients, no audience needed.</div>
+      <div class="plan-income">€1,000–€3,500/month potential</div>
+      <ul class="plan-includes">
+        <li>Service packages: editing, show notes, clips</li>
+        <li>Pricing: €200–€600 per episode package</li>
+        <li>Where to find first 5 clients quickly</li>
+        <li>Production workflow + quality checklist</li>
+      </ul>
+      <div class="plan-footer">
+        <span class="plan-price">€17</span>
+        <button class="btn-buy" onclick="openBuyModal('podcast-production','Podcast Production Agency',17)">Buy now →</button>
+        <a class="btn-demo" href="/quiz.html?demo=1">Preview</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bottom-cta">
+    <h2>Want a plan built just for you?</h2>
+    <p>Take our 90-second quiz and get a personalized business match based on your skills, time, and budget.</p>
+    <a class="btn-primary" href="/quiz.html">Get My Personalized Plan — Free →</a>
+  </div>
+</div>
+
+<!-- Buy Modal -->
+<div id="buy-modal">
+  <div id="buy-modal-inner">
+    <button id="buy-modal-close" onclick="closeBuyModal()">×</button>
+    <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#a78bfa;margin-bottom:10px">Instant Access</div>
+    <h3 id="buy-modal-title">LinkedIn Ghostwriting Agency</h3>
+    <p id="buy-modal-desc">Complete 90-day business launch plan — delivered to your inbox in 60 seconds after purchase.</p>
+    <input type="email" id="buy-email" class="modal-input" placeholder="your@email.com" autocomplete="email" inputmode="email" onkeydown="if(event.key==='Enter')confirmBuy()">
+    <input type="text" id="buy-hp" name="website" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;pointer-events:none" tabindex="-1">
+    <button class="modal-btn" onclick="confirmBuy()">Pay €<span id="buy-modal-price">17</span> · Get Instant Access →</button>
+    <div class="modal-trust">🔒 Stripe-secured · VISA · MC · AMEX · 30-day money back</div>
+  </div>
+</div>
+
+<script>
+let _buyPlanId='', _buyPlanName='', _buyPlanPrice=17;
+
+function openBuyModal(planId, planName, price){
+  _buyPlanId=planId; _buyPlanName=planName; _buyPlanPrice=price;
+  document.getElementById('buy-modal-title').textContent=planName;
+  document.getElementById('buy-modal-price').textContent=price;
+  const m=document.getElementById('buy-modal');
+  m.style.display='flex';
+  const inp=document.getElementById('buy-email');
+  const saved=localStorage.getItem('gbi_email')||'';
+  if(inp){inp.value=saved;setTimeout(()=>{if(!saved)inp.focus();},100)}
+}
+
+function closeBuyModal(){
+  document.getElementById('buy-modal').style.display='none';
+}
+
+async function confirmBuy(){
+  if(document.getElementById('buy-hp')?.value)return;
+  const inp=document.getElementById('buy-email');
+  const email=inp?.value?.trim()||'';
+  if(!email||!email.includes('@')){
+    if(inp){inp.style.borderColor='#ef4444';inp.focus();setTimeout(()=>inp.style.borderColor='rgba(255,255,255,0.15)',2000)}
+    return;
+  }
+  localStorage.setItem('gbi_email',email);
+  const btn=document.querySelector('.modal-btn');
+  if(btn){btn.textContent='Redirecting to payment…';btn.disabled=true}
+  try{
+    const resp=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({product:'plan',planId:_buyPlanId,planName:_buyPlanName,planPrice:_buyPlanPrice,email})});
+    const data=await resp.json();
+    if(data.url)window.location.href=data.url;
+    else throw new Error(data.error||'Payment failed');
+  }catch(e){
+    alert('Something went wrong: '+e.message);
+    if(btn){btn.textContent='Pay €'+_buyPlanPrice+' · Get Instant Access →';btn.disabled=false}
+  }
+}
+
+// Close modal on backdrop click
+document.getElementById('buy-modal').addEventListener('click',function(e){if(e.target===this)closeBuyModal()});
+
+// Check for purchase success
+window.addEventListener('DOMContentLoaded',()=>{
+  const p=new URLSearchParams(window.location.search);
+  if(p.get('purchased')){
+    const banner=document.getElementById('success-banner');
+    const msg=document.getElementById('success-msg');
+    const email=p.get('email')||'';
+    if(msg&&email)msg.textContent='Your plan has been sent to '+email+'. Check spam if you don\'t see it within 2 minutes.';
+    if(banner)banner.style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+});
+</script>
+</body>
+</html>
