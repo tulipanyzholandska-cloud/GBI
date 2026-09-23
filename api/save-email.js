@@ -59,7 +59,7 @@ async function scheduleReminders(email, resultId, ideaName, baseUrl) {
           </div>
           <div style="text-align:center">
             <a href="${link}" style="display:inline-block;padding:14px 32px;border-radius:12px;background:linear-gradient(135deg,#e8417a,#7c3aed);color:#fff;font-size:16px;font-weight:700;text-decoration:none">Get my plan now →</a>
-            <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-top:10px">€7 one-time · Instant access</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-top:10px">€17 one-time · Instant access</div>
           </div>
         </div>`)
     }

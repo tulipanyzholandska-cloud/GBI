@@ -1,6 +1,7 @@
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 import { scheduleDripEmails } from './_drip-emails.js';
+import { buildPlanEmail } from './_plan-content.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -111,7 +112,33 @@ export default async function handler(req, res) {
       return res.json({ received: true });
     }
 
-    // ── MAIN PLAN PAYMENT (€7) ─────────────────────────────────────────────────
+    // ── READY-MADE PLAN PURCHASE ──────────────────────────────────────────────
+    if (type === 'ready-made-plan') {
+      try {
+        const planId = session.metadata?.planId;
+        const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://getbizidea.com';
+        if (email && planId) {
+          const emailData = buildPlanEmail(planId, email, baseUrl);
+          if (emailData) {
+            fetch('https://api.brevo.com/v3/smtp/email', {
+              method: 'POST',
+              headers: { 'api-key': process.env.BREVO_API_KEY, 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                sender: { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' },
+                to: [{ email }],
+                subject: emailData.subject,
+                htmlContent: emailData.html
+              })
+            }).catch(e => console.error('Ready-made plan email error:', e.message));
+          }
+        }
+      } catch (err) {
+        console.error('Ready-made plan webhook error:', err.message);
+      }
+      return res.json({ received: true });
+    }
+
+    // ── MAIN PLAN PAYMENT (€17) ────────────────────────────────────────────────
     try {
       const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 

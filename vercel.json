@@ -4,6 +4,12 @@
       "maxDuration": 60
     }
   },
+  "crons": [
+    {
+      "path": "/api/keep-alive",
+      "schedule": "0 9 */4 * *"
+    }
+  ],
   "redirects": [
     {
       "source": "/(.*)",
