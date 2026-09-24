@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Plans — GetBizIdea</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23111827'/><text y='24' x='4' font-size='22'>💡</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#F9FAFB;color:#111827;min-height:100vh}
+a{text-decoration:none;color:inherit}
+
+/* NAV */
+nav{height:60px;padding:0 32px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid #E5E7EB;position:sticky;top:0;z-index:50}
+.logo{font-size:18px;font-weight:800;color:#111827;letter-spacing:-.02em}
+.logo span{color:#6366F1}
+.nav-right{display:flex;align-items:center;gap:16px}
+.user-chip{display:flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:100px;border:1.5px solid #E5E7EB;background:#fff;cursor:pointer;font-size:13px;font-weight:600;color:#374151;transition:all .18s}
+.user-chip:hover{border-color:#D1D5DB;background:#F9FAFB}
+.avatar{width:28px;height:28px;border-radius:50%;background:#EEF2FF;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#6366F1;flex-shrink:0}
+.btn-new{padding:9px 18px;border-radius:100px;background:#111827;color:#fff;font-size:13px;font-weight:700;border:none;cursor:pointer;transition:background .18s;font-family:inherit}
+.btn-new:hover{background:#374151}
+
+/* LAYOUT */
+.layout{max-width:1100px;margin:0 auto;padding:40px 24px}
+
+/* GREETING */
+.greeting{margin-bottom:36px}
+.greeting h1{font-size:28px;font-weight:800;letter-spacing:-.04em;line-height:1.1;margin-bottom:6px}
+.greeting p{font-size:15px;color:#6B7280}
+
+/* STATS STRIP */
+.stats-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px}
+.stat-card{background:#fff;border:1px solid #E5E7EB;border-radius:14px;padding:20px 22px}
+.stat-label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#9CA3AF;font-weight:600;margin-bottom:8px}
+.stat-value{font-size:28px;font-weight:900;letter-spacing:-.04em;color:#111827}
+.stat-sub{font-size:12px;color:#9CA3AF;margin-top:4px}
+
+/* UPGRADE BANNER */
+.upgrade-banner{background:#111827;border-radius:16px;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:36px;flex-wrap:wrap}
+.upgrade-banner h3{font-size:17px;font-weight:700;color:#fff;margin-bottom:4px}
+.upgrade-banner p{font-size:14px;color:rgba(255,255,255,.55)}
+.btn-upgrade{padding:11px 22px;border-radius:100px;background:#6366F1;color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:background .18s;font-family:inherit;white-space:nowrap;flex-shrink:0}
+.btn-upgrade:hover{background:#4F46E5}
+
+/* SECTION HEADER */
+.section-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.section-hd h2{font-size:18px;font-weight:700;letter-spacing:-.02em}
+.section-hd a{font-size:13px;color:#6366F1;font-weight:600}
+
+/* PLAN CARDS GRID */
+.plans-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:40px}
+
+.plan-card{background:#fff;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px;cursor:pointer;transition:all .18s;position:relative}
+.plan-card:hover{border-color:#6366F1;box-shadow:0 4px 24px rgba(99,102,241,.12);transform:translateY(-2px)}
+.plan-card-icon{width:44px;height:44px;border-radius:12px;background:#EEF2FF;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px}
+.plan-card-title{font-size:17px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+.plan-card-sub{font-size:13px;color:#6B7280;margin-bottom:16px;line-height:1.5}
+.plan-card-meta{display:flex;align-items:center;gap:12px;font-size:12px;color:#9CA3AF}
+.plan-badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:.03em}
+.badge-new{background:#EEF2FF;color:#6366F1}
+.badge-inprogress{background:#FEF3C7;color:#D97706}
+.badge-done{background:#D1FAE5;color:#059669}
+
+.plan-card-income{font-size:13px;font-weight:700;color:#059669;margin-top:10px}
+
+/* EMPTY STATE */
+.empty-state{background:#fff;border:2px dashed #E5E7EB;border-radius:20px;padding:60px 40px;text-align:center}
+.empty-state .icon{font-size:48px;margin-bottom:16px}
+.empty-state h3{font-size:20px;font-weight:700;margin-bottom:8px}
+.empty-state p{font-size:14px;color:#6B7280;margin-bottom:24px}
+.btn-start{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:100px;background:#111827;color:#fff;font-size:15px;font-weight:700;border:none;cursor:pointer;font-family:inherit;transition:background .18s}
+.btn-start:hover{background:#374151}
+
+/* NEW PLAN CARD */
+.new-plan-card{background:#fff;border:2px dashed #C7D2FE;border-radius:16px;padding:24px;cursor:pointer;transition:all .18s;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:180px;gap:10px;color:#6366F1}
+.new-plan-card:hover{background:#EEF2FF;border-color:#6366F1}
+.new-plan-card .plus{font-size:32px;font-weight:300;line-height:1}
+.new-plan-card p{font-size:14px;font-weight:600}
+
+/* CHECKLIST SECTION */
+.checklist-card{background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:28px}
+.check-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid #F3F4F6}
+.check-item:last-child{border-bottom:none}
+.check-box{width:22px;height:22px;border-radius:6px;border:2px solid #E5E7EB;flex-shrink:0;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.check-box.done{background:#059669;border-color:#059669;color:#fff;font-size:12px}
+.check-box:hover:not(.done){border-color:#6366F1;background:#EEF2FF}
+.check-text{flex:1}
+.check-text strong{display:block;font-size:14px;font-weight:600;margin-bottom:2px}
+.check-text span{font-size:13px;color:#9CA3AF}
+.check-day{font-size:11px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:.06em;background:#F3F4F6;padding:3px 8px;border-radius:6px;flex-shrink:0;margin-top:2px}
+
+/* LOADING */
+#loading-screen{position:fixed;inset:0;background:#F9FAFB;display:flex;align-items:center;justify-content:center;z-index:999}
+.spinner{width:36px;height:36px;border:3px solid #E5E7EB;border-top-color:#6366F1;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* DROPDOWN MENU */
+.user-menu{position:absolute;top:54px;right:24px;background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:8px;box-shadow:0 8px 24px rgba(0,0,0,.1);min-width:180px;display:none;z-index:100}
+.user-menu.open{display:block}
+.user-menu a,.user-menu button{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;font-weight:500;color:#374151;width:100%;text-align:left;background:none;border:none;cursor:pointer;font-family:inherit;transition:background .15s}
+.user-menu a:hover,.user-menu button:hover{background:#F9FAFB}
+.menu-divider{height:1px;background:#F3F4F6;margin:6px 0}
+
+@media(max-width:640px){
+  nav{padding:0 16px}
+  .layout{padding:24px 16px}
+  .stats-strip{grid-template-columns:1fr}
+  .plans-grid{grid-template-columns:1fr}
+  .upgrade-banner{flex-direction:column;text-align:center}
+  .greeting h1{font-size:22px}
+}
+</style>
+</head>
+<body>
+
+<div id="loading-screen"><div class="spinner"></div></div>
+
+<nav>
+  <a href="/" class="logo">GetBiz<span>Idea</span></a>
+  <div class="nav-right">
+    <button class="btn-new" onclick="window.location.href='/'">+ New plan</button>
+    <div class="user-chip" onclick="toggleMenu()" id="user-chip">
+      <div class="avatar" id="user-avatar">?</div>
+      <span id="user-name-short">Account</span>
+    </div>
+  </div>
+</nav>
+
+<div class="user-menu" id="user-menu">
+  <a href="/dashboard.html">📋 My plans</a>
+  <a href="/account.html">⚙️ Account settings</a>
+  <div class="menu-divider"></div>
+  <button onclick="signOut()">🚪 Sign out</button>
+</div>
+
+<div class="layout" id="main-content" style="display:none">
+
+  <!-- Greeting -->
+  <div class="greeting">
+    <h1 id="greeting-text">Good morning 👋</h1>
+    <p>Here are your business plans and progress.</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-strip">
+    <div class="stat-card">
+      <div class="stat-label">Plans saved</div>
+      <div class="stat-value" id="stat-plans">0</div>
+      <div class="stat-sub">out of 1 on free plan</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Tasks completed</div>
+      <div class="stat-value" id="stat-tasks">0</div>
+      <div class="stat-sub">90-day launch checklist</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Potential income</div>
+      <div class="stat-value" id="stat-income">–</div>
+      <div class="stat-sub">monthly estimate</div>
+    </div>
+  </div>
+
+  <!-- Upgrade banner (shown on free plan) -->
+  <div class="upgrade-banner" id="upgrade-banner">
+    <div>
+      <h3>Unlock full access for €9/month</h3>
+      <p>Unlimited plans, AI business coach, financial projections, weekly check-ins</p>
+    </div>
+    <button class="btn-upgrade" onclick="window.location.href='/plans.html'">Upgrade to Pro →</button>
+  </div>
+
+  <!-- Plans section -->
+  <div class="section-hd">
+    <h2>Your business plans</h2>
+  </div>
+
+  <div class="plans-grid" id="plans-grid">
+    <!-- Populated by JS -->
+  </div>
+
+  <!-- Checklist section (shows for first plan) -->
+  <div id="checklist-section" style="display:none">
+    <div class="section-hd" style="margin-top:8px">
+      <h2>90-Day launch checklist</h2>
+      <a href="#" id="checklist-plan-name" style="color:#6B7280;font-weight:500;font-size:13px"></a>
+    </div>
+    <div class="checklist-card">
+      <div id="checklist-items"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+var SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
+var SUPABASE_ANON = 'YOUR_ANON_KEY';
+
+var sb = null;
+var currentUser = null;
+var userPlans = [];
+
+try {
+  sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+} catch(e) {}
+
+function isConfigured() {
+  return SUPABASE_URL !== 'https://YOUR_PROJECT.supabase.co';
+}
+
+// ── BOOT ─────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', async function() {
+  if (!isConfigured()) {
+    // Demo mode — show sample data
+    showDemoMode();
+    return;
+  }
+
+  var { data: { session } } = await sb.auth.getSession();
+  if (!session) {
+    window.location.href = '/login.html';
+    return;
+  }
+  currentUser = session.user;
+  await loadDashboard();
+});
+
+async function loadDashboard() {
+  // Set user info in nav
+  var name = currentUser.user_metadata && currentUser.user_metadata.full_name
+    ? currentUser.user_metadata.full_name
+    : currentUser.email.split('@')[0];
+  var initials = name.split(' ').map(function(n){ return n[0]; }).join('').slice(0,2).toUpperCase();
+  document.getElementById('user-avatar').textContent = initials;
+  document.getElementById('user-name-short').textContent = name.split(' ')[0];
+
+  // Greeting by time of day
+  var h = new Date().getHours();
+  var greet = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+  document.getElementById('greeting-text').textContent = greet + ', ' + name.split(' ')[0] + ' 👋';
+
+  // Load plans from Supabase
+  var { data: plans, error } = await sb
+    .from('user_plans')
+    .select('*')
+    .eq('user_id', currentUser.id)
+    .order('created_at', { ascending: false });
+
+  userPlans = plans || [];
+
+  // Load checklist tasks
+  var { data: tasks } = await sb
+    .from('checklist_tasks')
+    .select('*')
+    .eq('user_id', currentUser.id);
+
+  var doneTasks = tasks ? tasks.filter(function(t){ return t.done; }).length : 0;
+  document.getElementById('stat-plans').textContent = userPlans.length;
+  document.getElementById('stat-tasks').textContent = doneTasks;
+  if (userPlans.length > 0 && userPlans[0].income_range) {
+    document.getElementById('stat-income').textContent = userPlans[0].income_range;
+  }
+
+  renderPlans(userPlans);
+  if (userPlans.length > 0) {
+    renderChecklist(userPlans[0], tasks || []);
+  }
+
+  document.getElementById('loading-screen').style.display = 'none';
+  document.getElementById('main-content').style.display = '';
+}
+
+function renderPlans(plans) {
+  var grid = document.getElementById('plans-grid');
+  grid.innerHTML = '';
+
+  if (plans.length === 0) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="icon">💡</div><h3>No plans yet</h3><p>Take the free quiz and get your personalised 90-day business plan in 90 seconds.</p><button class="btn-start" onclick="window.location.href=\'/\'">Take the free quiz →</button></div>';
+    return;
+  }
+
+  plans.forEach(function(plan) {
+    var card = document.createElement('div');
+    card.className = 'plan-card';
+    card.onclick = function(){ window.location.href = '/plan.html?id=' + plan.id; };
+    var statusBadge = {new:'badge-new',in_progress:'badge-inprogress',launched:'badge-done'}[plan.status||'new'] || 'badge-new';
+    var statusLabel = {new:'New',in_progress:'In progress',launched:'Launched!'}[plan.status||'new'] || 'New';
+    var date = new Date(plan.created_at).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'});
+    card.innerHTML = '<div class="plan-card-icon">' + (plan.icon||'💡') + '</div>' +
+      '<div class="plan-card-title">' + escHtml(plan.business_name||'My Business Plan') + '</div>' +
+      '<div class="plan-card-sub">' + escHtml(plan.description||'Your personalised 90-day launch plan') + '</div>' +
+      '<div class="plan-card-meta">' +
+        '<span class="plan-badge ' + statusBadge + '">' + statusLabel + '</span>' +
+        '<span>' + date + '</span>' +
+      '</div>' +
+      (plan.income_range ? '<div class="plan-card-income">Estimated: ' + plan.income_range + '/mo</div>' : '');
+    grid.appendChild(card);
+  });
+
+  // Add "new plan" card
+  var newCard = document.createElement('div');
+  newCard.className = 'new-plan-card';
+  newCard.onclick = function(){ window.location.href = '/'; };
+  newCard.innerHTML = '<div class="plus">+</div><p>Create new plan</p>';
+  grid.appendChild(newCard);
+}
+
+var DEFAULT_TASKS = [
+  { day: 'Day 1–3', title: 'Define your niche', desc: 'Pick the exact customer segment you will serve first' },
+  { day: 'Day 4–7', title: 'Validate with 5 people', desc: 'Talk to 5 potential customers and confirm the problem is real' },
+  { day: 'Day 8–14', title: 'Set up your online presence', desc: 'Register domain, create social profiles, write your bio' },
+  { day: 'Day 15–21', title: 'Create your first offer', desc: 'Package your service/product with a clear price and outcome' },
+  { day: 'Day 22–30', title: 'Land your first client', desc: 'Reach out to 20 people. Offer a free intro call or pilot deal' },
+  { day: 'Day 31–45', title: 'Deliver and collect testimonial', desc: 'Do excellent work. Ask for a written testimonial' },
+  { day: 'Day 46–60', title: 'Launch referral programme', desc: 'Ask happy clients for 2 referrals each' },
+  { day: 'Day 61–90', title: 'Hit your first €1k month', desc: 'Scale what\'s working. Cut what isn\'t.' }
+];
+
+function renderChecklist(plan, tasks) {
+  document.getElementById('checklist-section').style.display = '';
+  document.getElementById('checklist-plan-name').textContent = plan.business_name || 'Your plan';
+  var container = document.getElementById('checklist-items');
+  container.innerHTML = '';
+
+  DEFAULT_TASKS.forEach(function(task, i) {
+    var savedTask = tasks.find(function(t){ return t.task_index === i; });
+    var done = savedTask && savedTask.done;
+    var el = document.createElement('div');
+    el.className = 'check-item';
+    el.innerHTML = '<div class="check-box ' + (done?'done':'') + '" id="chk-' + i + '" onclick="toggleTask(' + i + ',\'' + (plan.id||'') + '\')">' + (done?'✓':'') + '</div>' +
+      '<div class="check-text"><strong>' + task.title + '</strong><span>' + task.desc + '</span></div>' +
+      '<div class="check-day">' + task.day + '</div>';
+    container.appendChild(el);
+  });
+}
+
+async function toggleTask(idx, planId) {
+  if (!sb || !currentUser) return;
+  var box = document.getElementById('chk-' + idx);
+  var done = !box.classList.contains('done');
+  box.classList.toggle('done', done);
+  box.textContent = done ? '✓' : '';
+
+  await sb.from('checklist_tasks').upsert({
+    user_id: currentUser.id,
+    plan_id: planId,
+    task_index: idx,
+    done: done
+  }, { onConflict: 'user_id,plan_id,task_index' });
+
+  // Update counter
+  var doneCount = document.querySelectorAll('.check-box.done').length;
+  document.getElementById('stat-tasks').textContent = doneCount;
+}
+
+// ── DEMO MODE (no Supabase) ───────────────────────────────────────
+function showDemoMode() {
+  document.getElementById('user-avatar').textContent = 'JN';
+  document.getElementById('user-name-short').textContent = 'Jan';
+  document.getElementById('greeting-text').textContent = 'Good morning, Jan 👋';
+  document.getElementById('stat-plans').textContent = '1';
+  document.getElementById('stat-tasks').textContent = '3';
+  document.getElementById('stat-income').textContent = '€1,200–2,800';
+
+  var demoPlan = {
+    id: 'demo',
+    business_name: 'Freelance Copywriter',
+    description: 'Content strategy and copywriting for SaaS companies in Czech & Slovak markets',
+    icon: '✍️',
+    status: 'in_progress',
+    income_range: '€1,200–2,800',
+    created_at: new Date().toISOString()
+  };
+  renderPlans([demoPlan]);
+  renderChecklist(demoPlan, [
+    {task_index:0,done:true},{task_index:1,done:true},{task_index:2,done:true}
+  ]);
+
+  document.getElementById('loading-screen').style.display = 'none';
+  document.getElementById('main-content').style.display = '';
+}
+
+function toggleMenu() {
+  document.getElementById('user-menu').classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('#user-chip') && !e.target.closest('#user-menu')) {
+    document.getElementById('user-menu').classList.remove('open');
+  }
+});
+
+async function signOut() {
+  if (sb) await sb.auth.signOut();
+  window.location.href = '/';
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
