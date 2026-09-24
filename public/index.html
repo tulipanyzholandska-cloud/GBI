@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://getbizidea.com">
 
 <!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23E8417A'/><text y='24' x='4' font-size='22'>💡</text></svg>">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23111827'/><text y='24' x='4' font-size='22'>💡</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -89,109 +89,123 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 :root{
-  --pink:#E8417A;
-  --pink-d:#C93368;
-  --bg:#0A0A0A;
-  --c1:#141414;
-  --c2:#1C1C1C;
-  --brd:rgba(255,255,255,.08);
-  --t1:#FFFFFF;
-  --t2:rgba(255,255,255,.55);
-  --t3:rgba(255,255,255,.28);
-  --green:#22C55E;
+  --accent:#111827;
+  --accent-d:#374151;
+  --pink:#111827;
+  --pink-d:#374151;
+  --bg:#FFFFFF;
+  --c1:#F9FAFB;
+  --c2:#F3F4F6;
+  --brd:rgba(0,0,0,.08);
+  --t1:#111827;
+  --t2:rgba(0,0,0,.55);
+  --t3:rgba(0,0,0,.38);
+  --green:#059669;
 }
 body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--t1);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
 /* NAV */
-nav{position:sticky;top:0;z-index:100;height:62px;padding:0 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,10,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--brd)}
-.logo{font-size:17px;font-weight:800;color:#fff;text-decoration:none;letter-spacing:-.02em}
-.logo span{color:var(--pink)}
+nav{position:sticky;top:0;z-index:100;height:62px;padding:0 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--brd)}
+.logo{font-size:17px;font-weight:800;color:#111827;text-decoration:none;letter-spacing:-.02em}
+.logo span{color:#111827}
 .nav-links{display:flex;align-items:center;gap:28px}
-.nav-link{font-size:14px;color:rgba(255,255,255,.55);text-decoration:none;font-weight:500;transition:color .18s;letter-spacing:.01em}
-.nav-link:hover{color:#fff}
-.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 26px;border-radius:100px;background:var(--pink);color:#fff;font-size:14px;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:background .18s,transform .15s,box-shadow .18s;letter-spacing:.01em}
-.nav-btn:hover{background:var(--pink-d);transform:translateY(-1px);box-shadow:0 4px 20px rgba(232,65,122,.4)}
+.nav-link{font-size:14px;color:rgba(0,0,0,.45);text-decoration:none;font-weight:500;transition:color .18s;letter-spacing:.01em}
+.nav-link:hover{color:#111827}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 26px;border-radius:100px;background:#111827;color:#fff;font-size:14px;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:background .18s,transform .15s;letter-spacing:.01em}
+.nav-btn:hover{background:#374151;transform:translateY(-1px)}
 @media(max-width:600px){nav{padding:0 18px}.nav-link{display:none}}
 
-/* HERO — hyper3d-style: centered, minimal, massive headline */
-.hero{padding:120px 0 80px;position:relative;overflow:hidden;text-align:center}
-.hero::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);width:1000px;height:800px;background:radial-gradient(ellipse,rgba(124,58,237,.18) 0%,rgba(232,65,122,.09) 38%,transparent 68%);pointer-events:none;z-index:0}
-.hero::after{content:'';position:absolute;bottom:-80px;left:50%;transform:translateX(-50%);width:700px;height:300px;background:radial-gradient(ellipse,rgba(232,65,122,.07) 0%,transparent 70%);pointer-events:none}
-.hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto}
+/* HERO */
+.hero{padding:100px 0 80px;position:relative;overflow:hidden;background:#fff}
+.hero-inner{position:relative;z-index:1;max-width:1040px;margin:0 auto;display:grid;grid-template-columns:1fr 420px;gap:64px;align-items:center}
+.hero-left{text-align:left}
+.hero-right{position:relative}
+
+/* HERO INPUT */
+.hero-input-wrap{display:flex;align-items:center;background:#fff;border:1.5px solid #E5E7EB;border-radius:14px;overflow:hidden;transition:border-color .2s,box-shadow .2s;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.hero-input-wrap:focus-within{border-color:#111827;box-shadow:0 0 0 3px rgba(17,24,39,.08)}
+.hero-input{flex:1;background:none;border:none;outline:none;padding:16px 20px;font-size:16px;color:#111827;font-family:inherit;min-width:0}
+.hero-input::placeholder{color:#9CA3AF}
+.hero-input-btn{padding:10px 20px;margin:7px;border-radius:9px;background:#111827;border:none;color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:background .18s;white-space:nowrap;flex-shrink:0;font-family:inherit}
+.hero-input-btn:hover{background:#374151}
+
+@media(max-width:860px){
+  .hero-inner{grid-template-columns:1fr;gap:48px}
+  .hero-left{text-align:center}
+  .hero-right{display:none}
+  .hero-input-wrap{max-width:420px;margin:0 auto 12px}
+}
 
 .proof-bar{
   display:inline-flex;align-items:center;gap:10px;
-  padding:7px 16px;border-radius:100px;margin-bottom:40px;
-  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
-  font-size:13px;color:rgba(255,255,255,.5);
+  padding:7px 16px;border-radius:100px;margin-bottom:28px;
+  background:#F9FAFB;border:1px solid #E5E7EB;
+  font-size:13px;color:#6B7280;
 }
 .proof-dot{display:none}
-.proof-bar strong{color:rgba(255,255,255,.8);font-weight:600}
-.proof-stars{color:#facc15;letter-spacing:1px;font-size:12px}
+.proof-bar strong{color:#111827;font-weight:600}
+.proof-stars{color:#F59E0B;letter-spacing:1px;font-size:12px}
 
-.hero-h{font-size:clamp(48px,7vw,88px);font-weight:900;letter-spacing:-.055em;line-height:.94;margin-bottom:28px;text-wrap:balance}
-.hero-h em{font-style:normal;color:var(--pink)}
+.hero-h{font-size:clamp(38px,5.5vw,68px);font-weight:900;letter-spacing:-.04em;line-height:.96;margin-bottom:24px;text-wrap:balance;color:#111827}
+.hero-h em{font-style:normal;color:#111827}
 
-.hero-sub{font-size:clamp(16px,1.8vw,20px);color:var(--t2);max-width:540px;margin:0 auto 44px;line-height:1.65}
+.hero-sub{font-size:clamp(15px,1.6vw,18px);color:#6B7280;max-width:480px;margin:0 0 32px;line-height:1.65}
 
 /* PLAN MOCKUP VISUAL */
-.plan-mock{background:var(--c1);border:1px solid rgba(255,255,255,.1);border-radius:20px;overflow:hidden;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.5)}
-.plan-mock-head{padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;background:rgba(255,255,255,.02)}
-.plan-mock-label-top{font-size:10px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
-.plan-mock-title-text{font-size:16px;font-weight:800;letter-spacing:-.02em}
-.plan-mock-badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:100px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);font-size:11px;font-weight:700;color:#5dcaa5;white-space:nowrap;margin-top:3px;flex-shrink:0}
+.plan-mock{background:#fff;border:1px solid #E5E7EB;border-radius:20px;overflow:hidden;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.1),0 4px 16px rgba(0,0,0,.06)}
+.plan-mock-head{padding:18px 22px;border-bottom:1px solid #F3F4F6;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;background:#F9FAFB}
+.plan-mock-label-top{font-size:10px;color:#9CA3AF;text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.plan-mock-title-text{font-size:16px;font-weight:800;letter-spacing:-.02em;color:#111827}
+.plan-mock-badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:100px;background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.2);font-size:11px;font-weight:700;color:#059669;white-space:nowrap;margin-top:3px;flex-shrink:0}
 .plan-mock-body{padding:18px 22px}
-.plan-mock-slabel{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.28);margin-bottom:10px;margin-top:2px}
+.plan-mock-slabel{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#9CA3AF;margin-bottom:10px;margin-top:2px}
 .plan-mock-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
-.plan-mock-ml{font-size:11px;color:rgba(255,255,255,.38);min-width:52px}
-.plan-mock-bar{flex:1;height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden}
-.plan-mock-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#7c3aed,var(--pink))}
-.plan-mock-mv{font-size:12px;font-weight:700;min-width:52px;text-align:right;color:rgba(255,255,255,.65)}
-.plan-mock-mv.hi{color:#5dcaa5;font-size:13px}
-.plan-mock-sep{height:1px;background:rgba(255,255,255,.06);margin:14px 0}
-.plan-mock-task{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.6);padding:4px 0;line-height:1.4}
-.plan-mock-check{color:#5dcaa5;font-size:10px;font-weight:800;flex-shrink:0;width:14px;text-align:center}
+.plan-mock-ml{font-size:11px;color:#9CA3AF;min-width:52px}
+.plan-mock-bar{flex:1;height:4px;background:#F3F4F6;border-radius:2px;overflow:hidden}
+.plan-mock-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#6366F1,#111827)}
+.plan-mock-mv{font-size:12px;font-weight:700;min-width:52px;text-align:right;color:#374151}
+.plan-mock-mv.hi{color:#059669;font-size:13px}
+.plan-mock-sep{height:1px;background:#F3F4F6;margin:14px 0}
+.plan-mock-task{display:flex;align-items:center;gap:8px;font-size:12px;color:#6B7280;padding:4px 0;line-height:1.4}
+.plan-mock-check{color:#059669;font-size:10px;font-weight:800;flex-shrink:0;width:14px;text-align:center}
 .plan-mock-blur-wrap{position:relative}
 .plan-mock-blur-wrap .plan-mock-task{filter:blur(3.5px);user-select:none}
-.plan-mock-overlay{position:absolute;inset:0;background:linear-gradient(transparent 0%,rgba(20,20,20,.92) 50%);display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px}
-.plan-mock-unlock{font-size:12px;font-weight:700;color:var(--pink);cursor:pointer;letter-spacing:.01em}
+.plan-mock-overlay{position:absolute;inset:0;background:linear-gradient(transparent 0%,rgba(255,255,255,.95) 50%);display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px}
+.plan-mock-unlock{font-size:12px;font-weight:700;color:#111827;cursor:pointer;letter-spacing:.01em;text-decoration:underline}
 
 @media(max-width:760px){
-  .hero{padding:72px 0 56px}
-  .hero-h{font-size:clamp(40px,10vw,56px)}
-  .hero-sub{margin-bottom:32px}
+  .hero{padding:64px 0 56px}
+  .hero-h{font-size:clamp(36px,9vw,52px)}
+  .hero-sub{margin-bottom:24px}
 }
 
-/* PRIMARY CTA BUTTON — pill style like hyper3d */
+/* PRIMARY CTA BUTTON */
 .cta-btn{
   display:inline-flex;align-items:center;gap:12px;
-  padding:20px 56px;border-radius:100px;
-  background:var(--pink);color:#fff;
-  font-size:18px;font-weight:700;letter-spacing:-.01em;
+  padding:18px 48px;border-radius:100px;
+  background:#111827;color:#fff;
+  font-size:17px;font-weight:700;letter-spacing:-.01em;
   text-decoration:none;border:none;cursor:pointer;
-  box-shadow:0 0 48px rgba(232,65,122,.4),0 8px 24px rgba(0,0,0,.3);
+  box-shadow:0 4px 16px rgba(0,0,0,.18);
   transition:background .2s,transform .18s,box-shadow .2s;
-  position:relative;overflow:hidden;
 }
-.cta-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.14),transparent);transform:translateX(-100%);animation:sweep 3s 2s infinite}
-@keyframes sweep{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
-.cta-btn:hover{background:var(--pink-d);transform:translateY(-2px);box-shadow:0 0 64px rgba(232,65,122,.55),0 16px 40px rgba(0,0,0,.4)}
+.cta-btn:hover{background:#374151;transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.22)}
 .cta-btn:active{transform:translateY(0)}
 .cta-ic{transition:transform .2s}
 .cta-btn:hover .cta-ic{transform:translateX(5px)}
-/* SECONDARY CTA — for ready-made plans */
+/* SECONDARY CTA */
 .cta-secondary{
   display:inline-flex;align-items:center;gap:10px;
-  padding:20px 40px;border-radius:100px;
-  background:transparent;color:rgba(255,255,255,.8);
-  font-size:17px;font-weight:600;letter-spacing:-.01em;
-  text-decoration:none;border:1.5px solid rgba(255,255,255,.18);cursor:pointer;
+  padding:16px 36px;border-radius:100px;
+  background:transparent;color:#374151;
+  font-size:16px;font-weight:600;letter-spacing:-.01em;
+  text-decoration:none;border:1.5px solid #D1D5DB;cursor:pointer;
   transition:background .2s,border-color .2s,color .2s,transform .18s;
 }
-.cta-secondary:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.35);color:#fff;transform:translateY(-2px)}
-/* TWO-PATH DIVIDER */
-.or-divider{font-size:13px;color:rgba(255,255,255,.25);display:flex;align-items:center;gap:12px;white-space:nowrap}
-.or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.1)}
+.cta-secondary:hover{background:#F9FAFB;border-color:#9CA3AF;color:#111827;transform:translateY(-2px)}
+/* OR DIVIDER */
+.or-divider{font-size:13px;color:#9CA3AF;display:flex;align-items:center;gap:12px;white-space:nowrap}
+.or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:#E5E7EB}
 
 .trust{margin-top:22px;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
 .trust-i{font-size:12px;color:var(--t3);display:flex;align-items:center;gap:5px}
@@ -207,20 +221,20 @@ nav{position:sticky;top:0;z-index:100;height:62px;padding:0 48px;display:flex;al
 }
 
 /* STATS STRIP */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);background:#F9FAFB}
 .stat{padding:28px 12px;text-align:center;border-right:1px solid var(--brd)}
 .stat:last-child{border-right:none}
-.stat-n{font-size:34px;font-weight:900;letter-spacing:-.04em;line-height:1;margin-bottom:6px}
-.stat-l{font-size:12px;color:var(--t3);line-height:1.4}
+.stat-n{font-size:34px;font-weight:900;letter-spacing:-.04em;line-height:1;margin-bottom:6px;color:#111827}
+.stat-l{font-size:12px;color:#6B7280;line-height:1.4}
 
 /* LAYOUT */
 .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
 section{padding:96px 0}
 
 /* SECTION LABELS */
-.s-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--pink);margin-bottom:12px}
-.s-h{font-size:clamp(32px,4.5vw,54px);font-weight:900;letter-spacing:-.045em;line-height:1.04}
-.s-sub{font-size:17px;color:var(--t2);line-height:1.65;margin-top:14px;max-width:560px}
+.s-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#6B7280;margin-bottom:12px}
+.s-h{font-size:clamp(32px,4.5vw,52px);font-weight:900;letter-spacing:-.04em;line-height:1.06;color:#111827}
+.s-sub{font-size:17px;color:#6B7280;line-height:1.65;margin-top:14px;max-width:560px}
 
 /* REVEAL */
 .js-on .rv{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
@@ -229,121 +243,119 @@ section{padding:96px 0}
 
 /* PROBLEM */
 .problems{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
-.prob{background:var(--c1);border:1px solid var(--brd);border-radius:18px;padding:32px 28px}
+.prob{background:#F9FAFB;border:1px solid #E5E7EB;border-radius:18px;padding:32px 28px}
 .prob-ic{font-size:32px;margin-bottom:18px;display:block}
-.prob h3{font-size:17px;font-weight:800;margin-bottom:10px;letter-spacing:-.02em}
-.prob p{font-size:14px;color:var(--t2);line-height:1.75}
+.prob h3{font-size:17px;font-weight:800;margin-bottom:10px;letter-spacing:-.02em;color:#111827}
+.prob p{font-size:14px;color:#6B7280;line-height:1.75}
 
 /* STEPS */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--brd);border:1px solid var(--brd);border-radius:20px;overflow:hidden;margin-top:56px}
-.step{background:var(--c1);padding:44px 36px;transition:background .22s}
-.step:hover{background:var(--c2)}
-.step-n{width:30px;height:30px;border-radius:8px;background:rgba(232,65,122,.12);border:1px solid rgba(232,65,122,.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--pink);margin-bottom:26px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#E5E7EB;border:1px solid #E5E7EB;border-radius:20px;overflow:hidden;margin-top:56px}
+.step{background:#F9FAFB;padding:44px 36px;transition:background .22s}
+.step:hover{background:#F3F4F6}
+.step-n{width:30px;height:30px;border-radius:8px;background:#F3F4F6;border:1px solid #E5E7EB;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#374151;margin-bottom:26px}
 .step-ic{font-size:36px;display:block;margin-bottom:16px}
-.step h3{font-size:18px;font-weight:800;margin-bottom:10px;letter-spacing:-.02em}
-.step p{font-size:14px;color:var(--t2);line-height:1.75}
+.step h3{font-size:18px;font-weight:800;margin-bottom:10px;letter-spacing:-.02em;color:#111827}
+.step p{font-size:14px;color:#6B7280;line-height:1.75}
 
-/* TESTIMONIALS — editorial / Masterclass style */
+/* TESTIMONIALS */
 .testi-hero{max-width:800px;margin:72px auto 80px;text-align:center}
-.testi-mark{font-family:Georgia,'Times New Roman',serif;font-size:120px;line-height:.7;color:var(--pink);opacity:.22;margin-bottom:24px;display:block;user-select:none}
-.testi-hero-q{font-size:clamp(22px,3.2vw,34px);font-weight:600;line-height:1.42;letter-spacing:-.025em;color:#fff;margin-bottom:36px}
+.testi-mark{font-family:Georgia,'Times New Roman',serif;font-size:120px;line-height:.7;color:#111827;opacity:.07;margin-bottom:24px;display:block;user-select:none}
+.testi-hero-q{font-size:clamp(22px,3.2vw,34px);font-weight:600;line-height:1.42;letter-spacing:-.025em;color:#111827;margin-bottom:36px}
 .testi-byline{display:flex;align-items:center;justify-content:center;gap:18px}
-.testi-line{width:40px;height:1px;background:rgba(255,255,255,.18)}
-.testi-name{font-size:14px;font-weight:700;color:#fff;letter-spacing:.01em}
-.testi-role{font-size:12px;color:var(--t3);margin-top:3px}
+.testi-line{width:40px;height:1px;background:#E5E7EB}
+.testi-name{font-size:14px;font-weight:700;color:#111827;letter-spacing:.01em}
+.testi-role{font-size:12px;color:#9CA3AF;margin-top:3px}
 
-.testi-pair{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--brd)}
+.testi-pair{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #E5E7EB}
 .testi-half{padding:52px 48px;position:relative}
-.testi-half:first-child{border-right:1px solid var(--brd)}
-.testi-half-mark{font-family:Georgia,'Times New Roman',serif;font-size:56px;line-height:.8;color:var(--pink);opacity:.18;margin-bottom:20px;display:block}
-.testi-half-q{font-size:17px;line-height:1.72;color:rgba(255,255,255,.72);margin-bottom:28px;font-weight:400}
-.testi-half-name{font-size:13px;font-weight:700;color:#fff}
-.testi-half-role{font-size:11px;color:var(--t3);margin-top:4px}
+.testi-half:first-child{border-right:1px solid #E5E7EB}
+.testi-half-mark{font-family:Georgia,'Times New Roman',serif;font-size:56px;line-height:.8;color:#111827;opacity:.08;margin-bottom:20px;display:block}
+.testi-half-q{font-size:17px;line-height:1.72;color:#374151;margin-bottom:28px;font-weight:400}
+.testi-half-name{font-size:13px;font-weight:700;color:#111827}
+.testi-half-role{font-size:11px;color:#9CA3AF;margin-top:4px}
 
 @media(max-width:768px){
   .testi-hero{margin:48px auto 56px}
   .testi-mark{font-size:80px}
   .testi-pair{grid-template-columns:1fr}
   .testi-half{padding:36px 24px}
-  .testi-half:first-child{border-right:none;border-bottom:1px solid var(--brd)}
+  .testi-half:first-child{border-right:none;border-bottom:1px solid #E5E7EB}
 }
 
 /* OFFER */
-.offer-card{background:var(--c1);border:1px solid var(--brd);border-radius:24px;padding:72px 56px;text-align:center;position:relative;overflow:hidden;margin-top:56px}
-.offer-card::before{content:'';position:absolute;top:-180px;left:50%;transform:translateX(-50%);width:600px;height:500px;background:radial-gradient(ellipse,rgba(232,65,122,.12) 0%,transparent 65%);pointer-events:none}
+.offer-card{background:#111827;border-radius:24px;padding:72px 56px;text-align:center;position:relative;overflow:hidden;margin-top:56px}
 .offer-card>*{position:relative;z-index:1}
-.offer-h{font-size:clamp(26px,3.5vw,46px);font-weight:900;letter-spacing:-.04em;line-height:1.06;margin-bottom:12px}
-.offer-h em{font-style:normal;color:var(--pink)}
-.offer-sub{font-size:17px;color:var(--t2);margin-bottom:44px}
+.offer-h{font-size:clamp(26px,3.5vw,46px);font-weight:900;letter-spacing:-.04em;line-height:1.06;margin-bottom:12px;color:#fff}
+.offer-h em{font-style:normal;color:#A5B4FC}
+.offer-sub{font-size:17px;color:rgba(255,255,255,.6);margin-bottom:44px}
 .feats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:560px;margin:0 auto 52px;text-align:left}
 .feat{display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,.75)}
-.feat-ck{width:20px;height:20px;border-radius:50%;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--green);flex-shrink:0;font-weight:700}
+.feat-ck{width:20px;height:20px;border-radius:50%;background:rgba(5,150,105,.2);border:1px solid rgba(5,150,105,.35);display:flex;align-items:center;justify-content:center;font-size:10px;color:#34D399;flex-shrink:0;font-weight:700}
 .price-row{display:flex;align-items:baseline;justify-content:center;gap:14px;margin-bottom:6px}
-.p-was{font-size:22px;color:var(--t3);text-decoration:line-through}
-.p-now{font-size:88px;font-weight:900;letter-spacing:-.06em;line-height:1;color:var(--t1)}
-.p-meta{font-size:13px;color:var(--t3);margin-bottom:44px}
-.guarantee{display:inline-flex;align-items:center;gap:9px;padding:11px 20px;border-radius:10px;background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.18);font-size:13px;color:rgba(255,255,255,.6);margin-top:18px}
+.p-was{font-size:22px;color:rgba(255,255,255,.3);text-decoration:line-through}
+.p-now{font-size:88px;font-weight:900;letter-spacing:-.06em;line-height:1;color:#fff}
+.p-meta{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:44px}
+.guarantee{display:inline-flex;align-items:center;gap:9px;padding:11px 20px;border-radius:10px;background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.2);font-size:13px;color:rgba(255,255,255,.6);margin-top:18px}
 
 /* SAMPLE PLAN */
-.sample-wrap{border:1px solid rgba(255,255,255,.1);border-radius:20px;overflow:hidden;position:relative;margin-top:56px}
-.sample-header{padding:24px 32px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;gap:16px;background:rgba(255,255,255,.02)}
-.sample-match{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);font-size:11px;font-weight:700;color:#5dcaa5;text-transform:uppercase;letter-spacing:.08em}
-.sample-tabs{display:flex;gap:2px;padding:16px 32px 0;border-bottom:1px solid rgba(255,255,255,.07)}
-.s-tab{padding:10px 18px;font-size:13px;font-weight:600;color:rgba(255,255,255,.35);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;white-space:nowrap}
-.s-tab.on{color:#fff;border-bottom-color:var(--pink)}
+.sample-wrap{border:1px solid #E5E7EB;border-radius:20px;overflow:hidden;position:relative;margin-top:56px;background:#fff}
+.sample-header{padding:24px 32px;border-bottom:1px solid #F3F4F6;display:flex;align-items:center;justify-content:space-between;gap:16px;background:#F9FAFB}
+.sample-match{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.2);font-size:11px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.08em}
+.sample-tabs{display:flex;gap:2px;padding:16px 32px 0;border-bottom:1px solid #F3F4F6}
+.s-tab{padding:10px 18px;font-size:13px;font-weight:600;color:#9CA3AF;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;white-space:nowrap}
+.s-tab.on{color:#111827;border-bottom-color:#111827}
 .sample-body{padding:28px 32px;min-height:260px}
 .s-panel{display:none}.s-panel.on{display:block}
-.sp-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.sp-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #F3F4F6}
 .sp-row:last-child{border-bottom:none}
-.sp-label{font-size:12px;color:rgba(255,255,255,.4);min-width:80px}
-.sp-bar{flex:1;height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden}
-.sp-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#7c3aed,var(--pink))}
-.sp-val{font-size:13px;font-weight:700;min-width:110px;text-align:right}
-.script-box{background:rgba(124,58,237,.08);border-left:3px solid rgba(124,58,237,.5);border-radius:0 8px 8px 0;padding:16px 20px;font-size:13px;line-height:1.75;color:rgba(255,255,255,.78);font-style:italic}
-.task-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px;color:rgba(255,255,255,.78);line-height:1.5}
+.sp-label{font-size:12px;color:#9CA3AF;min-width:80px}
+.sp-bar{flex:1;height:5px;background:#F3F4F6;border-radius:3px;overflow:hidden}
+.sp-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#6366F1,#111827)}
+.sp-val{font-size:13px;font-weight:700;min-width:110px;text-align:right;color:#111827}
+.script-box{background:#F5F3FF;border-left:3px solid #6366F1;border-radius:0 8px 8px 0;padding:16px 20px;font-size:13px;line-height:1.75;color:#374151;font-style:italic}
+.task-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #F3F4F6;font-size:13px;color:#374151;line-height:1.5}
 .task-item:last-child{border-bottom:none}
-.task-n{width:22px;height:22px;min-width:22px;border-radius:6px;background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.35);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#a78bfa}
-.price-tier{padding:14px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);margin-bottom:10px}
-.price-tier-name{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.4);margin-bottom:4px}
-.price-tier-price{font-size:22px;font-weight:800;letter-spacing:-.03em;margin-bottom:4px}
-.price-tier-desc{font-size:12px;color:rgba(255,255,255,.45);line-height:1.5}
-.sample-fade{position:absolute;bottom:0;left:0;right:0;height:100px;background:linear-gradient(transparent,#0a0a0a);pointer-events:none;display:none}
+.task-n{width:22px;height:22px;min-width:22px;border-radius:6px;background:#EEF2FF;border:1px solid #C7D2FE;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#6366F1}
+.price-tier{padding:14px 18px;border-radius:12px;border:1px solid #E5E7EB;background:#F9FAFB;margin-bottom:10px}
+.price-tier-name{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#9CA3AF;margin-bottom:4px}
+.price-tier-price{font-size:22px;font-weight:800;letter-spacing:-.03em;margin-bottom:4px;color:#111827}
+.price-tier-desc{font-size:12px;color:#9CA3AF;line-height:1.5}
+.sample-fade{position:absolute;bottom:0;left:0;right:0;height:100px;background:linear-gradient(transparent,#fff);pointer-events:none;display:none}
 @media(max-width:600px){.sample-tabs{overflow-x:auto;padding:12px 20px 0;gap:0}.s-tab{padding:10px 14px;font-size:12px}.sample-body{padding:20px}.sample-header{padding:16px 20px;flex-direction:column;align-items:flex-start}}
 
 /* FAQ */
 .faq{margin-top:56px}
-.faq-item{border-bottom:1px solid var(--brd)}
-.faq-q{width:100%;padding:24px 0;display:flex;align-items:center;justify-content:space-between;gap:16px;background:none;border:none;color:var(--t1);font-size:16px;font-weight:700;letter-spacing:-.01em;cursor:pointer;text-align:left}
-.faq-ic{width:28px;height:28px;border-radius:50%;border:1px solid var(--brd);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .25s,background .2s;color:var(--t2);font-size:16px}
-.faq-item.open .faq-ic{transform:rotate(45deg);background:rgba(232,65,122,.15);border-color:rgba(232,65,122,.3);color:var(--pink)}
+.faq-item{border-bottom:1px solid #E5E7EB}
+.faq-q{width:100%;padding:24px 0;display:flex;align-items:center;justify-content:space-between;gap:16px;background:none;border:none;color:#111827;font-size:16px;font-weight:700;letter-spacing:-.01em;cursor:pointer;text-align:left}
+.faq-ic{width:28px;height:28px;border-radius:50%;border:1px solid #E5E7EB;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .25s,background .2s;color:#6B7280;font-size:16px}
+.faq-item.open .faq-ic{transform:rotate(45deg);background:#F3F4F6;border-color:#D1D5DB;color:#111827}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .25s}
 .faq-item.open .faq-a{max-height:300px;padding-bottom:24px}
-.faq-a p{font-size:15px;color:var(--t2);line-height:1.75}
-.faq-a a{color:var(--pink);text-decoration:none}
+.faq-a p{font-size:15px;color:#6B7280;line-height:1.75}
+.faq-a a{color:#111827;text-decoration:underline}
 
 /* FINAL CTA */
-.final{text-align:center;padding:96px 24px 120px;position:relative;overflow:hidden}
-.final::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(232,65,122,.14) 0%,transparent 60%);pointer-events:none}
-.final h2{font-size:clamp(38px,6.5vw,76px);font-weight:900;letter-spacing:-.05em;line-height:1.01;margin-bottom:16px;position:relative;z-index:1}
-.final h2 em{font-style:normal;color:var(--pink)}
-.final p{font-size:18px;color:var(--t2);margin-bottom:48px;position:relative;z-index:1}
-.final-note{font-size:12px;color:var(--t3);margin-top:18px;position:relative;z-index:1}
+.final{text-align:center;padding:96px 24px 120px;background:#F9FAFB;border-top:1px solid #E5E7EB}
+.final h2{font-size:clamp(38px,6.5vw,72px);font-weight:900;letter-spacing:-.05em;line-height:1.01;margin-bottom:16px;color:#111827}
+.final h2 em{font-style:normal;color:#111827}
+.final p{font-size:18px;color:#6B7280;margin-bottom:48px}
+.final-note{font-size:12px;color:#9CA3AF;margin-top:18px}
 
 /* FOOTER */
-footer{border-top:1px solid var(--brd);padding:28px 48px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--t3)}
-footer a{color:var(--t3);text-decoration:none;transition:color .2s}
-footer a:hover{color:var(--t1)}
+footer{border-top:1px solid #E5E7EB;padding:28px 48px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#9CA3AF;background:#fff}
+footer a{color:#9CA3AF;text-decoration:none;transition:color .2s}
+footer a:hover{color:#111827}
 .foot-links{display:flex;gap:22px}
 
 /* MOBILE */
 @media(max-width:768px){
   nav{padding:0 20px}
   .hero{padding:56px 18px 72px}
-  .cta-btn{padding:18px 36px;font-size:16px;width:100%;max-width:320px;justify-content:center}
+  .cta-btn{padding:16px 32px;font-size:16px;width:100%;max-width:320px;justify-content:center}
   .trust{gap:12px}
   .stats{grid-template-columns:1fr 1fr}
-  .stat{border-bottom:1px solid var(--brd)}
-  .stat:nth-child(odd){border-right:1px solid var(--brd)}
+  .stat{border-bottom:1px solid #E5E7EB}
+  .stat:nth-child(odd){border-right:1px solid #E5E7EB}
   .stat:nth-last-child(-n+2){border-bottom:none}
   .stat-n{font-size:28px}
   section{padding:64px 0}
@@ -359,7 +371,7 @@ footer a:hover{color:var(--t1)}
   .foot-links{flex-wrap:wrap;justify-content:center}
 }
 @media(max-width:400px){
-  .hero-h{font-size:40px}
+  .hero-h{font-size:36px}
   .s-h{font-size:30px}
 }
 
@@ -367,52 +379,52 @@ footer a:hover{color:var(--t1)}
 .tf-icon,.prob-ic,.step-ic{display:none}
 
 /* ===== TICKER STRIP ===== */
-#ticker-wrap{overflow:hidden;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);padding:10px 0;position:relative}
+#ticker-wrap{overflow:hidden;border-bottom:1px solid #E5E7EB;background:#F9FAFB;padding:10px 0;position:relative}
 #ticker-wrap::before,#ticker-wrap::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none}
-#ticker-wrap::before{left:0;background:linear-gradient(90deg,#0a0a0a,transparent)}
-#ticker-wrap::after{right:0;background:linear-gradient(-90deg,#0a0a0a,transparent)}
+#ticker-wrap::before{left:0;background:linear-gradient(90deg,#F9FAFB,transparent)}
+#ticker-wrap::after{right:0;background:linear-gradient(-90deg,#F9FAFB,transparent)}
 .ticker-track{display:flex;gap:0;width:max-content;animation:ticker 38s linear infinite}
 .ticker-track:hover{animation-play-state:paused}
 @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.tick{display:inline-flex;align-items:center;gap:10px;padding:0 40px;white-space:nowrap;border-right:1px solid rgba(255,255,255,.06)}
-.tick-before{font-size:13px;color:rgba(255,255,255,.42)}
-.tick-arrow{font-size:14px;color:var(--pink);font-weight:700;flex-shrink:0}
-.tick-after{font-size:13px;color:rgba(255,255,255,.82);font-weight:600}
+.tick{display:inline-flex;align-items:center;gap:10px;padding:0 40px;white-space:nowrap;border-right:1px solid #E5E7EB}
+.tick-before{font-size:13px;color:#9CA3AF}
+.tick-arrow{font-size:14px;color:#374151;font-weight:700;flex-shrink:0}
+.tick-after{font-size:13px;color:#111827;font-weight:600}
 
 /* ===== LOGOS BAR ===== */
-#logos-bar{padding:36px 0 40px;border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);text-align:center}
-#logos-bar .logos-label{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.22);margin-bottom:24px;font-weight:600}
+#logos-bar{padding:36px 0 40px;border-top:1px solid #F3F4F6;border-bottom:1px solid #F3F4F6;text-align:center;background:#F9FAFB}
+#logos-bar .logos-label{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:#9CA3AF;margin-bottom:24px;font-weight:600}
 #logos-bar .logos-row{display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap}
-.logo-item{font-size:13px;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.18);text-transform:uppercase;transition:color .2s}
-.logo-item:hover{color:rgba(255,255,255,.4)}
+.logo-item{font-size:13px;font-weight:700;letter-spacing:.08em;color:#D1D5DB;text-transform:uppercase;transition:color .2s}
+.logo-item:hover{color:#9CA3AF}
 
 /* ===== HOMEPAGE QUIZ ===== */
-#quiz-section{padding:80px 24px 96px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;background:linear-gradient(180deg,rgba(124,58,237,.04) 0%,transparent 100%);border-top:1px solid rgba(255,255,255,.06)}
+#quiz-section{padding:80px 24px 96px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;background:#F9FAFB;border-top:1px solid #E5E7EB}
 #quiz-section-label{text-align:center;margin-bottom:48px}
-#tf-bar-wrap{position:fixed;top:104px;left:0;right:0;height:3px;background:rgba(255,255,255,0.07);z-index:99}
-#tf-bar-fill{height:100%;background:linear-gradient(90deg,#7c3aed,#E8417A);width:5%;transition:width .5s cubic-bezier(.4,0,.2,1)}
+#tf-bar-wrap{position:fixed;top:104px;left:0;right:0;height:3px;background:#E5E7EB;z-index:99}
+#tf-bar-fill{height:100%;background:linear-gradient(90deg,#6366F1,#111827);width:5%;transition:width .5s cubic-bezier(.4,0,.2,1)}
 #tf-wrap{width:100%;max-width:600px;position:relative}
 #tf-proof{display:none}
 #tf-proof-dot{display:none}
 @media(max-width:600px){#quiz-section{padding:56px 0 64px}}
-#tf-meta{font-size:12px;font-weight:600;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:36px}
+#tf-meta{font-size:12px;font-weight:600;color:#9CA3AF;text-transform:uppercase;letter-spacing:.12em;margin-bottom:36px}
 .tf-q{display:none}.tf-q.active{display:block;animation:tfIn .38s cubic-bezier(.22,1,.36,1)}
 @keyframes tfIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 .tf-icon{font-size:40px;margin-bottom:18px;line-height:1;display:block}
-.tf-qtxt{font-size:34px;font-weight:800;line-height:1.2;margin-bottom:12px;letter-spacing:-.02em}
-.tf-sub{font-size:15px;color:rgba(255,255,255,0.45);margin-bottom:32px;line-height:1.5}
+.tf-qtxt{font-size:34px;font-weight:800;line-height:1.2;margin-bottom:12px;letter-spacing:-.02em;color:#111827}
+.tf-sub{font-size:15px;color:#6B7280;margin-bottom:32px;line-height:1.5}
 .tf-chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
-.tf-chips .chip{padding:13px 22px;font-size:15px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.15);transition:all .18s;background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.8);cursor:pointer;user-select:none}
-.tf-chips .chip:hover{border-color:#7c3aed;background:rgba(124,58,237,0.12);color:#fff;transform:translateY(-2px)}
-.tf-chips .chip.on{background:rgba(124,58,237,0.3);border-color:#a78bfa;color:#fff;transform:scale(1.04);box-shadow:0 0 0 3px rgba(124,58,237,0.2)}
-.tf-continue{display:none;margin-top:8px;padding:15px 36px;border-radius:12px;border:none;background:linear-gradient(135deg,#7c3aed,#E8417A);color:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s}
+.tf-chips .chip{padding:13px 22px;font-size:15px;border-radius:10px;border:1.5px solid #E5E7EB;transition:all .18s;background:#fff;color:#374151;cursor:pointer;user-select:none;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.tf-chips .chip:hover{border-color:#6366F1;background:#F5F3FF;color:#4338CA;transform:translateY(-2px)}
+.tf-chips .chip.on{background:#EEF2FF;border-color:#6366F1;color:#4338CA;transform:scale(1.04);box-shadow:0 0 0 3px rgba(99,102,241,.15)}
+.tf-continue{display:none;margin-top:8px;padding:15px 36px;border-radius:12px;border:none;background:#111827;color:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s}
 .tf-continue.visible{display:inline-block;animation:tfIn .3s ease}
-.tf-continue:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,0.4)}
+.tf-continue:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.2);background:#374151}
 #tf-footer{position:fixed;bottom:28px;left:0;right:0;display:flex;justify-content:center;z-index:50}
-#tf-back-btn{padding:10px 22px;border-radius:10px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.45);font-size:14px;cursor:pointer;transition:all .2s}
-#tf-back-btn:hover{border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.8)}
+#tf-back-btn{padding:10px 22px;border-radius:10px;border:1px solid #E5E7EB;background:#fff;color:#9CA3AF;font-size:14px;cursor:pointer;transition:all .2s;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+#tf-back-btn:hover{border-color:#D1D5DB;color:#374151}
 #tf-back-btn.tf-hidden{visibility:hidden;pointer-events:none}
-.tf-no-email{font-size:12px;color:rgba(255,255,255,0.2);margin-top:20px}
+.tf-no-email{font-size:12px;color:#9CA3AF;margin-top:20px}
 /* Loading overlay */
 #loading-overlay{display:none;position:fixed;inset:0;background:#0a0a0f;z-index:300;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px}
 @keyframes ldPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
@@ -467,28 +479,58 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
 <!-- HERO -->
 <section class="hero" id="hero-section">
   <div class="wrap hero-inner">
-    <div class="proof-bar rv">
-      <span class="proof-stars">★★★★★</span>
-      <span><strong>4.8/5</strong> &nbsp;·&nbsp; <strong id="live-n">4,247</strong> plans generated</span>
-    </div>
-    <h1 class="hero-h rv">Your business plan,<br><em>in 90 seconds.</em></h1>
-    <p class="hero-sub rv d1">Answer 10 questions. Get a personalised business match and a complete 90-day launch plan with first-client scripts, pricing, and daily tasks.</p>
-    <div class="rv d2" style="display:flex;flex-direction:column;align-items:center;gap:20px">
-      <!-- PATH 1: generate personalized plan -->
-      <button class="cta-btn" onclick="scrollToQuiz()">
-        Generate my personalized plan <span class="cta-ic">→</span>
-      </button>
-      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center">
-        <span style="font-size:12px;color:var(--t3)">Free quiz · 90 seconds · Full plan €17</span>
+
+    <!-- LEFT: text + input -->
+    <div class="hero-left">
+      <div class="proof-bar rv" style="display:inline-flex;margin-bottom:28px">
+        <span class="proof-stars">★★★★★</span>
+        <span><strong>4.8/5</strong> &nbsp;·&nbsp; <strong id="live-n">4,247</strong> entrepreneurs helped</span>
       </div>
-      <!-- DIVIDER -->
-      <div class="or-divider" style="width:100%;max-width:360px">or</div>
-      <!-- PATH 2: ready-made plans -->
-      <a class="cta-secondary" href="/plans.html">
-        Browse 10 ready-made plans →
-      </a>
-      <span style="font-size:12px;color:var(--t3)">Instant delivery · €17 each · No quiz needed</span>
+      <h1 class="hero-h rv">Find the business<br>you were made for,<br><em>in 90 seconds.</em></h1>
+      <p class="hero-sub rv d1">Tell us your skills and budget. Our AI matches you with the right business and writes a complete 90-day launch plan.</p>
+      <div class="rv d2">
+        <div class="hero-input-wrap">
+          <input class="hero-input" id="hero-idea-input" type="text" placeholder="What's your business idea? (or leave blank)">
+          <button class="hero-input-btn" onclick="startQuizWithIdea()">Get started →</button>
+        </div>
+        <div style="font-size:12px;color:var(--t3);margin-bottom:20px">Free quiz · 90 seconds · Full plan €17</div>
+        <div class="or-divider" style="max-width:320px;margin-bottom:20px">or</div>
+        <a class="cta-secondary" style="font-size:15px;padding:14px 28px" href="/plans.html">Browse 10 ready-made plans →</a>
+        <div style="font-size:11px;color:var(--t3);margin-top:10px">Instant delivery · €17 · No quiz needed</div>
+      </div>
     </div>
+
+    <!-- RIGHT: plan preview card -->
+    <div class="hero-right rv d2">
+      <div class="plan-mock" style="max-width:380px">
+        <div class="plan-mock-head">
+          <div>
+            <div class="plan-mock-label-top">Your AI-generated plan</div>
+            <div class="plan-mock-title-text">Freelance Copywriter</div>
+          </div>
+          <div class="plan-mock-badge">✓ 94% match</div>
+        </div>
+        <div class="plan-mock-body">
+          <div class="plan-mock-slabel">Income potential</div>
+          <div class="plan-mock-row"><span class="plan-mock-ml">Month 1</span><div class="plan-mock-bar"><div class="plan-mock-fill" style="width:28%"></div></div><span class="plan-mock-mv">€800</span></div>
+          <div class="plan-mock-row"><span class="plan-mock-ml">Month 3</span><div class="plan-mock-bar"><div class="plan-mock-fill" style="width:55%"></div></div><span class="plan-mock-mv">€2,100</span></div>
+          <div class="plan-mock-row"><span class="plan-mock-ml">Month 6</span><div class="plan-mock-bar"><div class="plan-mock-fill" style="width:85%"></div></div><span class="plan-mock-mv hi">€4,500</span></div>
+          <div class="plan-mock-sep"></div>
+          <div class="plan-mock-slabel">Week 1 action plan</div>
+          <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Set up LinkedIn + portfolio page</div>
+          <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Send 10 cold emails (template inside)</div>
+          <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Price your first package: €150</div>
+          <div class="plan-mock-blur-wrap">
+            <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Land first client by Friday</div>
+            <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Request first testimonial</div>
+            <div class="plan-mock-overlay">
+              <span class="plan-mock-unlock" onclick="scrollToQuiz()">Unlock your full plan →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -535,6 +577,124 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
   </div>
 </div>
 
+<!-- INCOME CALCULATOR — interactive section -->
+<section id="calc-section" style="background:#fff;padding:80px 0;border-top:1px solid #E5E7EB">
+  <div class="wrap" style="max-width:860px">
+    <div style="text-align:center;margin-bottom:48px">
+      <div class="s-tag" style="margin-bottom:12px">Income estimator</div>
+      <h2 style="font-size:clamp(28px,3.5vw,42px);font-weight:900;letter-spacing:-.04em;line-height:1.1">How much could you make?</h2>
+      <p style="font-size:17px;color:#6B7280;margin-top:12px;max-width:520px;margin-left:auto;margin-right:auto">Pick a business type and how many hours you can commit. See a realistic income estimate.</p>
+    </div>
+
+    <!-- Business type cards -->
+    <div id="calc-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:40px">
+      <button class="calc-card calc-card-on" data-biz="freelance" onclick="calcSelectBiz(this)">
+        <span style="font-size:28px;display:block;margin-bottom:8px">✍️</span>
+        <strong>Freelance</strong>
+        <div class="calc-card-range">€1,200–4,500/mo</div>
+      </button>
+      <button class="calc-card" data-biz="consulting" onclick="calcSelectBiz(this)">
+        <span style="font-size:28px;display:block;margin-bottom:8px">🧠</span>
+        <strong>Consulting</strong>
+        <div class="calc-card-range">€2,000–8,000/mo</div>
+      </button>
+      <button class="calc-card" data-biz="ecommerce" onclick="calcSelectBiz(this)">
+        <span style="font-size:28px;display:block;margin-bottom:8px">🛍️</span>
+        <strong>E-commerce</strong>
+        <div class="calc-card-range">€800–6,000/mo</div>
+      </button>
+      <button class="calc-card" data-biz="content" onclick="calcSelectBiz(this)">
+        <span style="font-size:28px;display:block;margin-bottom:8px">📱</span>
+        <strong>Content</strong>
+        <div class="calc-card-range">€300–5,000/mo</div>
+      </button>
+      <button class="calc-card" data-biz="coaching" onclick="calcSelectBiz(this)">
+        <span style="font-size:28px;display:block;margin-bottom:8px">🏋️</span>
+        <strong>Coaching</strong>
+        <div class="calc-card-range">€1,500–6,000/mo</div>
+      </button>
+      <button class="calc-card" data-biz="saas" onclick="calcSelectBiz(this)">
+        <span style="font-size:28px;display:block;margin-bottom:8px">💻</span>
+        <strong>SaaS / App</strong>
+        <div class="calc-card-range">€500–20,000/mo</div>
+      </button>
+    </div>
+
+    <!-- Hours slider -->
+    <div style="background:#F9FAFB;border:1px solid #E5E7EB;border-radius:20px;padding:36px 40px;margin-bottom:32px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <label style="font-size:15px;font-weight:600;color:#374151">Hours per week you can commit</label>
+        <span id="calc-hrs-label" style="font-size:22px;font-weight:900;color:#111827">20 hrs</span>
+      </div>
+      <input id="calc-slider" type="range" min="5" max="60" value="20" step="5"
+        oninput="calcUpdate()"
+        style="width:100%;accent-color:#6366F1;height:6px;cursor:pointer;margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#9CA3AF">
+        <span>5 hrs (side hustle)</span>
+        <span>60 hrs (full-time)</span>
+      </div>
+    </div>
+
+    <!-- Result display -->
+    <div id="calc-result" style="background:#111827;border-radius:20px;padding:40px;text-align:center;position:relative;overflow:hidden">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(99,102,241,.25) 0%,transparent 70%);pointer-events:none"></div>
+      <div style="font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:12px">Estimated monthly income</div>
+      <div style="display:flex;align-items:baseline;justify-content:center;gap:8px;margin-bottom:8px">
+        <span id="calc-low" style="font-size:42px;font-weight:900;color:#fff;letter-spacing:-.04em;line-height:1">€1,000</span>
+        <span style="font-size:22px;color:rgba(255,255,255,.4)">–</span>
+        <span id="calc-high" style="font-size:64px;font-weight:900;color:#A5B4FC;letter-spacing:-.04em;line-height:1">€2,800</span>
+      </div>
+      <div id="calc-note" style="font-size:14px;color:rgba(255,255,255,.5);margin-bottom:28px">Part-time freelance · realistic range for months 2–6</div>
+      <button class="cta-btn" onclick="scrollToQuiz()" style="font-size:15px;padding:14px 32px">Get your personalised plan →</button>
+      <div style="font-size:12px;color:rgba(255,255,255,.3);margin-top:10px">Free quiz · 90 sec · Full plan €17</div>
+    </div>
+  </div>
+</section>
+
+<style>
+.calc-card{background:#fff;border:1.5px solid #E5E7EB;border-radius:14px;padding:18px 16px;text-align:center;cursor:pointer;transition:all .18s;color:#374151;font-family:inherit;font-size:14px}
+.calc-card:hover{border-color:#6366F1;background:#F5F3FF;color:#4338CA}
+.calc-card.calc-card-on{border-color:#6366F1;background:#EEF2FF;color:#4338CA;box-shadow:0 0 0 3px rgba(99,102,241,.15)}
+.calc-card-range{font-size:11px;color:#9CA3AF;margin-top:4px;font-weight:400}
+.calc-card.calc-card-on .calc-card-range{color:#6366F1}
+@media(max-width:600px){
+  #calc-section .wrap{padding:0 16px}
+  #calc-result{padding:28px 20px}
+}
+</style>
+
+<script>
+var CALC_DATA={
+  freelance:{low:[200,300,400,600,900,1200,1500,1900,2300,2800,3200,3600],high:[500,800,1200,1800,2500,3200,3800,4200,4500,4500,4500,4500]},
+  consulting:{low:[300,500,800,1200,1800,2400,3000,3800,4600,5500,6500,7000],high:[800,1400,2200,3200,4500,5800,7000,7800,8000,8000,8000,8000]},
+  ecommerce:{low:[100,200,350,550,750,1000,1300,1700,2200,2800,3500,4200],high:[300,600,1000,1600,2200,2900,3600,4200,5000,5800,6000,6000]},
+  content:{low:[50,100,180,280,400,550,750,1000,1400,1900,2500,3200],high:[200,400,700,1100,1600,2200,2800,3500,4000,4500,5000,5000]},
+  coaching:{low:[200,400,700,1100,1600,2100,2700,3400,4200,5000,5800,6000],high:[600,1100,1800,2600,3500,4300,5000,5600,6000,6000,6000,6000]},
+  saas:{low:[0,0,50,100,200,350,550,800,1200,1800,2600,3500],high:[100,200,400,700,1200,1900,2800,4000,5500,7500,10000,15000]}
+};
+var calcBiz='freelance';
+function calcSelectBiz(el){
+  document.querySelectorAll('.calc-card').forEach(function(c){c.classList.remove('calc-card-on')});
+  el.classList.add('calc-card-on');
+  calcBiz=el.dataset.biz;
+  calcUpdate();
+}
+function calcUpdate(){
+  var hrs=parseInt(document.getElementById('calc-slider').value);
+  document.getElementById('calc-hrs-label').textContent=hrs+' hrs';
+  var idx=Math.min(Math.round((hrs-5)/5),11);
+  var d=CALC_DATA[calcBiz];
+  var low=d.low[idx],high=d.high[idx];
+  var fmt=function(n){return n>=1000?'€'+(n/1000).toFixed(n%1000===0?0:1)+'k':'€'+n};
+  document.getElementById('calc-low').textContent=fmt(low);
+  document.getElementById('calc-high').textContent=fmt(high);
+  var labels={freelance:'Freelance work',consulting:'Consulting',ecommerce:'E-commerce store',content:'Content / creator',coaching:'Coaching clients',saas:'SaaS / app revenue'};
+  var stage=hrs<=15?'side hustle':hrs<=30?'part-time':hrs<=45?'near full-time':'full-time';
+  document.getElementById('calc-note').textContent=labels[calcBiz]+' · '+stage+' commitment · realistic range months 2–6';
+}
+calcUpdate();
+</script>
+
 <!-- QUIZ — appears just below the fold, scrolled to when user clicks CTA -->
 <div id="quiz-section">
   <div id="quiz-section-label">
@@ -544,7 +704,7 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
   <div id="tf-bar-wrap"><div id="tf-bar-fill"></div></div>
   <div id="tf-wrap">
     <div id="tf-proof"><span id="tf-proof-dot"></span></div>
-    <div id="tf-meta">Question <strong style="color:#fff">1</strong> <span style="color:rgba(255,255,255,0.25)">/ 10</span></div>
+    <div id="tf-meta">Question <strong style="color:#111827">1</strong> <span style="color:#9CA3AF">/ 10</span></div>
     <div id="tf-slides">
 
       <div class="tf-q active" id="tfq-1" data-q="1">
@@ -690,9 +850,9 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
 </div>
 
 <!-- CROSS-LINK: plans shop -->
-<div style="text-align:center;padding:32px 24px 0;border-top:1px solid rgba(255,255,255,.06)">
-  <p style="font-size:13px;color:rgba(255,255,255,.35);margin-bottom:14px">Don't want to take the quiz?</p>
-  <a href="/plans.html" style="display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:100px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:rgba(255,255,255,.7);font-size:14px;font-weight:600;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='rgba(255,255,255,.35)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,.15)';this.style.color='rgba(255,255,255,.7)'">Browse 10 ready-made plans →</a>
+<div style="text-align:center;padding:32px 24px 0;border-top:1px solid #E5E7EB">
+  <p style="font-size:13px;color:#9CA3AF;margin-bottom:14px">Don't want to take the quiz?</p>
+  <a href="/plans.html" style="display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:100px;border:1.5px solid #E5E7EB;background:#fff;color:#374151;font-size:14px;font-weight:600;text-decoration:none;transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.08)">Browse 10 ready-made plans →</a>
 </div>
 
 <!-- LOADING OVERLAY (full-screen, shown during AI generation) -->
@@ -701,7 +861,7 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
     <div id="ld-icon" style="font-size:52px;margin-bottom:20px;display:block;animation:ldPulse 2.2s ease-in-out infinite"></div>
     <h2 id="ld-headline" style="font-size:26px;font-weight:800;margin-bottom:8px;letter-spacing:-.01em;line-height:1.25">Scanning business models…</h2>
     <p style="font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:28px">This usually takes 15–30 seconds</p>
-    <div style="width:100%;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;margin-bottom:32px;overflow:hidden"><div id="ld-bar" style="height:100%;background:linear-gradient(90deg,#7c3aed,#E8417A);width:6%;border-radius:2px;transition:width 1.2s cubic-bezier(.4,0,.2,1)"></div></div>
+    <div style="width:100%;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;margin-bottom:32px;overflow:hidden"><div id="ld-bar" style="height:100%;background:linear-gradient(90deg,#6366F1,#111827);width:6%;border-radius:2px;transition:width 1.2s cubic-bezier(.4,0,.2,1)"></div></div>
     <div style="display:flex;flex-direction:column;gap:10px;text-align:left;margin-bottom:28px">
       <div class="ld-step" id="lds-1">Scanning 2,400+ business models</div>
       <div class="ld-step" id="lds-2">Matching ideas to your profile</div>
@@ -846,9 +1006,9 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
     <div class="sample-wrap rv">
       <div class="sample-header">
         <div>
-          <div style="font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Your business match</div>
-          <div style="font-size:22px;font-weight:800;letter-spacing:-.02em">UX &amp; Product Consulting</div>
-          <div style="font-size:13px;color:rgba(255,255,255,.5);margin-top:4px;line-height:1.5">Turn your design experience into a consulting practice for early-stage startups — remote, flexible, no agency needed.</div>
+          <div style="font-size:11px;color:#9CA3AF;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Your business match</div>
+          <div style="font-size:22px;font-weight:800;letter-spacing:-.02em;color:#111827">UX &amp; Product Consulting</div>
+          <div style="font-size:13px;color:#6B7280;margin-top:4px;line-height:1.5">Turn your design experience into a consulting practice for early-stage startups — remote, flexible, no agency needed.</div>
         </div>
         <div class="sample-match">94% match</div>
       </div>
@@ -861,51 +1021,51 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
       <div class="sample-body">
 
         <div class="s-panel on" id="sp-income">
-          <div style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:16px">Realistic projections based on your profile — conservative estimate</div>
-          <div class="sp-row"><span class="sp-label">Month 1</span><div class="sp-bar"><div class="sp-fill" style="width:12%"></div></div><span class="sp-val" style="color:rgba(255,255,255,.6)">€800 – €1,200</span></div>
-          <div class="sp-row"><span class="sp-label">Month 2</span><div class="sp-bar"><div class="sp-fill" style="width:20%"></div></div><span class="sp-val" style="color:rgba(255,255,255,.7)">€1,500 – €2,000</span></div>
-          <div class="sp-row"><span class="sp-label">Month 3</span><div class="sp-bar"><div class="sp-fill" style="width:32%"></div></div><span class="sp-val" style="color:rgba(255,255,255,.8)">€2,400 – €3,200</span></div>
+          <div style="font-size:12px;color:#9CA3AF;margin-bottom:16px">Realistic projections based on your profile — conservative estimate</div>
+          <div class="sp-row"><span class="sp-label">Month 1</span><div class="sp-bar"><div class="sp-fill" style="width:12%"></div></div><span class="sp-val" style="color:#6B7280">€800 – €1,200</span></div>
+          <div class="sp-row"><span class="sp-label">Month 2</span><div class="sp-bar"><div class="sp-fill" style="width:20%"></div></div><span class="sp-val" style="color:#4B5563">€1,500 – €2,000</span></div>
+          <div class="sp-row"><span class="sp-label">Month 3</span><div class="sp-bar"><div class="sp-fill" style="width:32%"></div></div><span class="sp-val" style="color:#374151">€2,400 – €3,200</span></div>
           <div class="sp-row"><span class="sp-label">Month 6</span><div class="sp-bar"><div class="sp-fill" style="width:52%"></div></div><span class="sp-val">€3,800 – €5,000</span></div>
-          <div class="sp-row"><span class="sp-label">Month 12</span><div class="sp-bar"><div class="sp-fill" style="width:80%"></div></div><span class="sp-val" style="color:#5dcaa5;font-size:15px">€5,500 – €8,000</span></div>
-          <div style="margin-top:16px;font-size:12px;color:rgba(255,255,255,.3)">2 retainer clients × €2,000 + 2 project clients × €1,500 = €7,000/month by month 12</div>
+          <div class="sp-row"><span class="sp-label">Month 12</span><div class="sp-bar"><div class="sp-fill" style="width:80%"></div></div><span class="sp-val" style="color:#059669;font-size:15px">€5,500 – €8,000</span></div>
+          <div style="margin-top:16px;font-size:12px;color:#9CA3AF">2 retainer clients × €2,000 + 2 project clients × €1,500 = €7,000/month by month 12</div>
         </div>
 
         <div class="s-panel" id="sp-script">
-          <div style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:14px">Copy-paste ready. Personalised for your niche and strengths.</div>
+          <div style="font-size:12px;color:#9CA3AF;margin-bottom:14px">Copy-paste ready. Personalised for your niche and strengths.</div>
           <div class="script-box">Subject: Quick question about your onboarding flow<br><br>Hi [Name],<br><br>I came across [Company] while looking at early-stage SaaS tools in the productivity space. Your product looks solid — but I noticed your onboarding drops users before they reach the first "aha moment".<br><br>I'm a UX consultant who helps startups like yours fix exactly this. My last client cut their drop-off rate by 34% in 6 weeks.<br><br>Would it make sense to jump on a 20-minute call this week? No pitch — just a quick look at your current flow and I'll tell you what I'd fix first.<br><br>— [Your name]</div>
-          <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,.3)">Expected response rate: 8–14% · Daily target: send to 20 contacts</div>
+          <div style="margin-top:12px;font-size:12px;color:#9CA3AF">Expected response rate: 8–14% · Daily target: send to 20 contacts</div>
         </div>
 
         <div class="s-panel" id="sp-day1">
-          <div style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:14px">Your first day. Estimated total time: 3 hours.</div>
-          <div class="task-item"><div class="task-n">1</div><div><strong>Update LinkedIn headline</strong> — change to "UX Consultant for Early-Stage SaaS · Helping startups improve activation and retention" · <span style="color:rgba(255,255,255,.4)">30 min · Tool: LinkedIn</span></div></div>
-          <div class="task-item"><div class="task-n">2</div><div><strong>Build a list of 30 target companies</strong> — find Series A SaaS startups with 5–30 employees on Crunchbase and LinkedIn Sales Navigator · <span style="color:rgba(255,255,255,.4)">60 min · Tool: Crunchbase (free tier)</span></div></div>
-          <div class="task-item"><div class="task-n">3</div><div><strong>Send first 10 outreach messages</strong> — use the script from your plan, personalise the company name and one specific detail · <span style="color:rgba(255,255,255,.4)">60 min · Tool: LinkedIn / email</span></div></div>
-          <div class="task-item"><div class="task-n">4</div><div><strong>Set up a free Calendly link</strong> — 30-minute "Discovery Call" slot so interested prospects can book directly · <span style="color:rgba(255,255,255,.4)">20 min · Tool: Calendly (free)</span></div></div>
+          <div style="font-size:12px;color:#9CA3AF;margin-bottom:14px">Your first day. Estimated total time: 3 hours.</div>
+          <div class="task-item"><div class="task-n">1</div><div><strong>Update LinkedIn headline</strong> — change to "UX Consultant for Early-Stage SaaS · Helping startups improve activation and retention" · <span style="color:#9CA3AF">30 min · Tool: LinkedIn</span></div></div>
+          <div class="task-item"><div class="task-n">2</div><div><strong>Build a list of 30 target companies</strong> — find Series A SaaS startups with 5–30 employees on Crunchbase and LinkedIn Sales Navigator · <span style="color:#9CA3AF">60 min · Tool: Crunchbase (free tier)</span></div></div>
+          <div class="task-item"><div class="task-n">3</div><div><strong>Send first 10 outreach messages</strong> — use the script from your plan, personalise the company name and one specific detail · <span style="color:#9CA3AF">60 min · Tool: LinkedIn / email</span></div></div>
+          <div class="task-item"><div class="task-n">4</div><div><strong>Set up a free Calendly link</strong> — 30-minute "Discovery Call" slot so interested prospects can book directly · <span style="color:#9CA3AF">20 min · Tool: Calendly (free)</span></div></div>
         </div>
 
         <div class="s-panel" id="sp-pricing">
-          <div style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:14px">Three tiers. Start with Starter to get first clients, move to Retainer within 60 days.</div>
+          <div style="font-size:12px;color:#9CA3AF;margin-bottom:14px">Three tiers. Start with Starter to get first clients, move to Retainer within 60 days.</div>
           <div class="price-tier">
             <div class="price-tier-name">Starter</div>
-            <div class="price-tier-price">€500 <span style="font-size:14px;font-weight:400;color:rgba(255,255,255,.4)">/project</span></div>
+            <div class="price-tier-price">€500 <span style="font-size:14px;font-weight:400;color:#9CA3AF">/project</span></div>
             <div class="price-tier-desc">UX audit + 3 prioritised recommendations. One-time. Perfect for getting your first 3 testimonials.</div>
           </div>
-          <div class="price-tier" style="border-color:rgba(124,58,237,.35);background:rgba(124,58,237,.06)">
-            <div class="price-tier-name" style="color:#a78bfa">Main — recommended</div>
-            <div class="price-tier-price">€1,500 <span style="font-size:14px;font-weight:400;color:rgba(255,255,255,.4)">/month</span></div>
+          <div class="price-tier" style="border-color:#6366F1;background:#EEF2FF">
+            <div class="price-tier-name" style="color:#6366F1">Main — recommended</div>
+            <div class="price-tier-price">€1,500 <span style="font-size:14px;font-weight:400;color:#9CA3AF">/month</span></div>
             <div class="price-tier-desc">Monthly retainer. 2 design sprints + weekly check-in. This is your core revenue — aim for 2 retainer clients.</div>
           </div>
           <div class="price-tier">
             <div class="price-tier-name">Premium</div>
-            <div class="price-tier-price">€3,500 <span style="font-size:14px;font-weight:400;color:rgba(255,255,255,.4)">/month</span></div>
+            <div class="price-tier-price">€3,500 <span style="font-size:14px;font-weight:400;color:#9CA3AF">/month</span></div>
             <div class="price-tier-desc">Full embedded consulting. 3 days/week. Full product design ownership. For funded startups with real UX needs.</div>
           </div>
         </div>
 
       </div>
     </div>
-    <p class="rv" style="text-align:center;font-size:13px;color:rgba(255,255,255,.3);margin-top:20px">Your plan will be built for your specific answers — different business, different scripts, different projections.</p>
+    <p class="rv" style="text-align:center;font-size:13px;color:#9CA3AF;margin-top:20px">Your plan will be built for your specific answers — different business, different scripts, different projections.</p>
   </section>
 </div>
 
@@ -960,16 +1120,16 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
     <div class="offer-card rv">
       <!-- Price anchor comparison -->
       <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:40px">
-        <div style="text-align:center;padding:16px 24px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08)">
-          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:6px">Business consultant</div>
-          <div style="font-size:26px;font-weight:800;text-decoration:line-through;color:var(--t3)">€200–500<span style="font-size:14px">/hr</span></div>
+        <div style="text-align:center;padding:16px 24px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:6px">Business consultant</div>
+          <div style="font-size:26px;font-weight:800;text-decoration:line-through;color:rgba(255,255,255,.3)">€200–500<span style="font-size:14px">/hr</span></div>
         </div>
-        <div style="text-align:center;padding:16px 24px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08)">
-          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:6px">Business plan course</div>
-          <div style="font-size:26px;font-weight:800;text-decoration:line-through;color:var(--t3)">€197</div>
+        <div style="text-align:center;padding:16px 24px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:6px">Business plan course</div>
+          <div style="font-size:26px;font-weight:800;text-decoration:line-through;color:rgba(255,255,255,.3)">€197</div>
         </div>
-        <div style="text-align:center;padding:16px 24px;border-radius:12px;background:rgba(232,65,122,0.12);border:1px solid rgba(232,65,122,0.35)">
-          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--pink);margin-bottom:6px">GetBizIdea today</div>
+        <div style="text-align:center;padding:16px 24px;border-radius:12px;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.4)">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.7);margin-bottom:6px">GetBizIdea today</div>
           <div style="font-size:42px;font-weight:900;color:#fff;letter-spacing:-.04em;line-height:1">€17</div>
         </div>
       </div>
@@ -1089,7 +1249,7 @@ function tfBack(){
 function updateTfProgress(){
   const pct=Math.max(5,Math.round((tfCurrent-1)/TF_TOTAL*100));
   const fill=document.getElementById('tf-bar-fill');if(fill)fill.style.width=pct+'%';
-  const meta=document.getElementById('tf-meta');if(meta)meta.innerHTML='Question <strong style="color:#fff">'+tfCurrent+'</strong> <span style="color:rgba(255,255,255,0.25)">/ '+TF_TOTAL+'</span>';
+  const meta=document.getElementById('tf-meta');if(meta)meta.innerHTML='Question <strong style="color:#111827">'+tfCurrent+'</strong> <span style="color:#9CA3AF">/ '+TF_TOTAL+'</span>';
   const back=document.getElementById('tf-back-btn');if(back)back.className=tfCurrent<=1?'tf-hidden':'';
 }
 document.querySelectorAll('.chip').forEach(c=>{
@@ -1136,6 +1296,11 @@ function scrollToQuiz(){
   document.getElementById('quiz-section').scrollIntoView({behavior:'smooth'});
 }
 function startQuiz(){
+  scrollToQuiz();
+}
+function startQuizWithIdea(){
+  var idea = document.getElementById('hero-idea-input').value.trim();
+  if(idea) try{localStorage.setItem('gbi_idea',idea)}catch(e){}
   scrollToQuiz();
 }
 
