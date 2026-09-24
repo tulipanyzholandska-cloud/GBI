@@ -106,30 +106,29 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 nav{position:sticky;top:0;z-index:100;height:62px;padding:0 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,10,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--brd)}
 .logo{font-size:17px;font-weight:800;color:#fff;text-decoration:none;letter-spacing:-.02em}
 .logo span{color:var(--pink)}
-.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;border-radius:10px;background:var(--pink);color:#fff;font-size:14px;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:background .18s,transform .15s;letter-spacing:-.01em}
-.nav-btn:hover{background:var(--pink-d);transform:translateY(-1px)}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 26px;border-radius:100px;background:var(--pink);color:#fff;font-size:14px;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:background .18s,transform .15s,box-shadow .18s;letter-spacing:.01em}
+.nav-btn:hover{background:var(--pink-d);transform:translateY(-1px);box-shadow:0 4px 20px rgba(232,65,122,.4)}
 
-/* HERO */
-.hero{padding:72px 0 64px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-160px;right:-80px;width:700px;height:600px;background:radial-gradient(ellipse,rgba(232,65,122,.1) 0%,transparent 65%);pointer-events:none}
-.hero-inner{display:grid;grid-template-columns:1fr 440px;gap:56px;align-items:center}
-.hero-left{z-index:1}
-.hero-right{z-index:1}
+/* HERO — hyper3d-style: centered, minimal, massive headline */
+.hero{padding:120px 0 80px;position:relative;overflow:hidden;text-align:center}
+.hero::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);width:1000px;height:800px;background:radial-gradient(ellipse,rgba(124,58,237,.18) 0%,rgba(232,65,122,.09) 38%,transparent 68%);pointer-events:none;z-index:0}
+.hero::after{content:'';position:absolute;bottom:-80px;left:50%;transform:translateX(-50%);width:700px;height:300px;background:radial-gradient(ellipse,rgba(232,65,122,.07) 0%,transparent 70%);pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto}
 
 .proof-bar{
   display:inline-flex;align-items:center;gap:10px;
-  padding:7px 16px;border-radius:8px;margin-bottom:28px;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
-  font-size:13px;color:rgba(255,255,255,.55);
+  padding:7px 16px;border-radius:100px;margin-bottom:40px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  font-size:13px;color:rgba(255,255,255,.5);
 }
 .proof-dot{display:none}
-.proof-bar strong{color:rgba(255,255,255,.85);font-weight:600}
+.proof-bar strong{color:rgba(255,255,255,.8);font-weight:600}
 .proof-stars{color:#facc15;letter-spacing:1px;font-size:12px}
 
-.hero-h{font-size:clamp(40px,5.5vw,72px);font-weight:900;letter-spacing:-.055em;line-height:.97;margin-bottom:22px}
+.hero-h{font-size:clamp(48px,7vw,88px);font-weight:900;letter-spacing:-.055em;line-height:.94;margin-bottom:28px;text-wrap:balance}
 .hero-h em{font-style:normal;color:var(--pink)}
 
-.hero-sub{font-size:clamp(16px,1.7vw,19px);color:var(--t2);max-width:480px;margin:0 0 40px;line-height:1.65}
+.hero-sub{font-size:clamp(16px,1.8vw,20px);color:var(--t2);max-width:540px;margin:0 auto 44px;line-height:1.65}
 
 /* PLAN MOCKUP VISUAL */
 .plan-mock{background:var(--c1);border:1px solid rgba(255,255,255,.1);border-radius:20px;overflow:hidden;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.5)}
@@ -153,29 +152,26 @@ nav{position:sticky;top:0;z-index:100;height:62px;padding:0 48px;display:flex;al
 .plan-mock-overlay{position:absolute;inset:0;background:linear-gradient(transparent 0%,rgba(20,20,20,.92) 50%);display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px}
 .plan-mock-unlock{font-size:12px;font-weight:700;color:var(--pink);cursor:pointer;letter-spacing:.01em}
 
-@media(max-width:960px){
-  .hero-inner{grid-template-columns:1fr 360px;gap:36px}
-}
 @media(max-width:760px){
-  .hero{padding:48px 0 40px}
-  .hero-inner{grid-template-columns:1fr;gap:32px}
+  .hero{padding:72px 0 56px}
+  .hero-h{font-size:clamp(40px,10vw,56px)}
   .hero-sub{margin-bottom:32px}
 }
 
-/* PRIMARY CTA BUTTON */
+/* PRIMARY CTA BUTTON — pill style like hyper3d */
 .cta-btn{
   display:inline-flex;align-items:center;gap:12px;
-  padding:20px 52px;border-radius:14px;
+  padding:20px 56px;border-radius:100px;
   background:var(--pink);color:#fff;
-  font-size:18px;font-weight:800;letter-spacing:-.02em;
+  font-size:18px;font-weight:700;letter-spacing:-.01em;
   text-decoration:none;border:none;cursor:pointer;
-  box-shadow:0 8px 40px rgba(232,65,122,.35);
+  box-shadow:0 0 48px rgba(232,65,122,.4),0 8px 24px rgba(0,0,0,.3);
   transition:background .2s,transform .18s,box-shadow .2s;
   position:relative;overflow:hidden;
 }
-.cta-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-100%);animation:sweep 2.8s 1.5s infinite}
+.cta-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.14),transparent);transform:translateX(-100%);animation:sweep 3s 2s infinite}
 @keyframes sweep{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
-.cta-btn:hover{background:var(--pink-d);transform:translateY(-3px);box-shadow:0 16px 56px rgba(232,65,122,.45)}
+.cta-btn:hover{background:var(--pink-d);transform:translateY(-2px);box-shadow:0 0 64px rgba(232,65,122,.55),0 16px 40px rgba(0,0,0,.4)}
 .cta-btn:active{transform:translateY(0)}
 .cta-ic{transition:transform .2s}
 .cta-btn:hover .cta-ic{transform:translateX(5px)}
@@ -183,6 +179,15 @@ nav{position:sticky;top:0;z-index:100;height:62px;padding:0 48px;display:flex;al
 .trust{margin-top:22px;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
 .trust-i{font-size:12px;color:var(--t3);display:flex;align-items:center;gap:5px}
 .ck{color:var(--green);font-weight:700}
+
+/* PLAN PREVIEW SHOWCASE */
+.plan-preview{display:grid;grid-template-columns:1fr 400px;gap:64px;align-items:center;padding:96px 0}
+.plan-preview-left .s-tag{margin-bottom:12px}
+.plan-preview-left .s-h{margin-bottom:20px}
+.plan-preview-left .s-sub{margin-bottom:36px}
+@media(max-width:900px){
+  .plan-preview{grid-template-columns:1fr;gap:40px;padding:64px 0}
+}
 
 /* STATS STRIP */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd)}
@@ -317,8 +322,7 @@ footer a:hover{color:var(--t1)}
 @media(max-width:768px){
   nav{padding:0 20px}
   .hero{padding:56px 18px 72px}
-  .hero-h{letter-spacing:-.04em}
-  .cta-btn{padding:18px 36px;font-size:17px;width:100%;max-width:320px;justify-content:center}
+  .cta-btn{padding:18px 36px;font-size:16px;width:100%;max-width:320px;justify-content:center}
   .trust{gap:12px}
   .stats{grid-template-columns:1fr 1fr}
   .stat{border-bottom:1px solid var(--brd)}
@@ -359,10 +363,11 @@ footer a:hover{color:var(--t1)}
 .tick-after{font-size:13px;color:rgba(255,255,255,.82);font-weight:600}
 
 /* ===== LOGOS BAR ===== */
-#logos-bar{padding:28px 0;border-bottom:1px solid rgba(255,255,255,.06);text-align:center}
-#logos-bar .logos-label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.25);margin-bottom:20px;font-weight:600}
-#logos-bar .logos-row{display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap}
-.logo-item{font-size:14px;font-weight:700;letter-spacing:-.01em;color:rgba(255,255,255,.2);text-transform:uppercase;letter-spacing:.06em}
+#logos-bar{padding:36px 0 40px;border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);text-align:center}
+#logos-bar .logos-label{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.22);margin-bottom:24px;font-weight:600}
+#logos-bar .logos-row{display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap}
+.logo-item{font-size:13px;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.18);text-transform:uppercase;transition:color .2s}
+.logo-item:hover{color:rgba(255,255,255,.4)}
 
 /* ===== HOMEPAGE QUIZ ===== */
 #quiz-section{padding:80px 24px 96px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;background:linear-gradient(180deg,rgba(124,58,237,.04) 0%,transparent 100%);border-top:1px solid rgba(255,255,255,.06)}
@@ -442,73 +447,38 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
 <!-- HERO -->
 <section class="hero" id="hero-section">
   <div class="wrap hero-inner">
-
-    <!-- LEFT: copy -->
-    <div class="hero-left rv">
-      <div class="proof-bar">
-        <span class="proof-stars">★★★★★</span>
-        <span><strong>4.8/5</strong> from 847 reviews &nbsp;·&nbsp; <strong id="live-n">4,247</strong> plans generated</span>
-      </div>
-      <h1 class="hero-h">Your personalised<br>business plan,<br><em>in 90 seconds.</em></h1>
-      <p class="hero-sub">Answer 10 questions about your skills, time, and budget. Get a personalised business match and a complete 90-day launch plan with first-client scripts, pricing, and daily tasks — ready to start tomorrow.</p>
-
-      <!-- HERO INPUT — venturekit-style -->
-      <div style="display:flex;gap:0;margin-bottom:16px;max-width:440px">
-        <input id="hero-input" type="text" placeholder="e.g. I'm good at writing and have 10h/week…" autocomplete="off"
-          style="flex:1;padding:15px 18px;border-radius:12px 0 0 12px;border:1.5px solid rgba(255,255,255,.14);border-right:none;background:rgba(255,255,255,.06);color:#fff;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s"
-          onfocus="this.style.borderColor='rgba(124,58,237,.6)'" onblur="this.style.borderColor='rgba(255,255,255,.14)'"
-          onkeydown="if(event.key==='Enter')scrollToQuiz()">
-        <button onclick="scrollToQuiz()" style="padding:15px 22px;border-radius:0 12px 12px 0;border:1.5px solid #7c3aed;border-left:none;background:#7c3aed;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:background .18s" onmouseover="this.style.background='#6d28d9'" onmouseout="this.style.background='#7c3aed'">Get started →</button>
-      </div>
-
-      <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:24px">
+    <div class="proof-bar rv">
+      <span class="proof-stars">★★★★★</span>
+      <span><strong>4.8/5</strong> &nbsp;·&nbsp; <strong id="live-n">4,247</strong> plans generated</span>
+    </div>
+    <h1 class="hero-h rv">Your business plan,<br><em>in 90 seconds.</em></h1>
+    <p class="hero-sub rv d1">Answer 10 questions. Get a personalised business match and a complete 90-day launch plan with first-client scripts, pricing, and daily tasks.</p>
+    <div class="rv d2" style="display:flex;flex-direction:column;align-items:center;gap:16px">
+      <button class="cta-btn" onclick="scrollToQuiz()">
+        Take the free quiz <span class="cta-ic">→</span>
+      </button>
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center">
         <span style="font-size:12px;color:var(--t3)">Free to start</span>
-        <span style="font-size:12px;color:rgba(255,255,255,.12)">·</span>
+        <span style="font-size:12px;color:rgba(255,255,255,.1)">·</span>
         <span style="font-size:12px;color:var(--t3)">No credit card</span>
-        <span style="font-size:12px;color:rgba(255,255,255,.12)">·</span>
-        <span style="font-size:12px;color:var(--t3)">30-day money back</span>
-      </div>
-
-      <div style="display:flex;gap:20px;flex-wrap:wrap">
-        <a href="/quiz.html?demo=1" style="font-size:13px;color:var(--t2);text-decoration:none;transition:color .15s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--t2)'">See a sample plan →</a>
-        <a href="/plans.html" style="font-size:13px;color:var(--t2);text-decoration:none;transition:color .15s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--t2)'">Ready-made plans →</a>
+        <span style="font-size:12px;color:rgba(255,255,255,.1)">·</span>
+        <span style="font-size:12px;color:var(--t3)">Full plan €17</span>
       </div>
     </div>
-
-    <!-- RIGHT: plan mockup -->
-    <div class="hero-right rv d1">
-      <div class="plan-mock">
-        <div class="plan-mock-head">
-          <div>
-            <div class="plan-mock-label-top">Your business match</div>
-            <div class="plan-mock-title-text">UX &amp; Product Consulting</div>
-          </div>
-          <div class="plan-mock-badge">94% match</div>
-        </div>
-        <div class="plan-mock-body">
-          <div class="plan-mock-slabel">Income projection</div>
-          <div class="plan-mock-row"><span class="plan-mock-ml">Month 1</span><div class="plan-mock-bar"><div class="plan-mock-fill" style="width:14%"></div></div><span class="plan-mock-mv">€1,200</span></div>
-          <div class="plan-mock-row"><span class="plan-mock-ml">Month 3</span><div class="plan-mock-bar"><div class="plan-mock-fill" style="width:32%"></div></div><span class="plan-mock-mv">€2,800</span></div>
-          <div class="plan-mock-row"><span class="plan-mock-ml">Month 6</span><div class="plan-mock-bar"><div class="plan-mock-fill" style="width:55%"></div></div><span class="plan-mock-mv">€4,500</span></div>
-          <div class="plan-mock-row"><span class="plan-mock-ml">Month 12</span><div class="plan-mock-bar"><div class="plan-mock-fill" style="width:84%"></div></div><span class="plan-mock-mv hi">€7,000</span></div>
-          <div class="plan-mock-sep"></div>
-          <div class="plan-mock-slabel">Day 1 action plan</div>
-          <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Update LinkedIn headline to attract SaaS clients</div>
-          <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Build list of 30 target companies on Crunchbase</div>
-          <div class="plan-mock-blur-wrap" style="position:relative">
-            <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Send 10 personalised outreach messages</div>
-            <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Set up free Calendly booking link</div>
-            <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Create a one-page case study from past work</div>
-            <div class="plan-mock-overlay">
-              <span class="plan-mock-unlock" onclick="scrollToQuiz()">Get your personalised plan →</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
 </section>
+
+<!-- LOGOS / TRUST BAR — immediately after hero -->
+<div id="logos-bar">
+  <div class="logos-label">Trusted by entrepreneurs in 38 countries</div>
+  <div class="logos-row">
+    <span class="logo-item">Forbes</span>
+    <span class="logo-item">Entrepreneur</span>
+    <span class="logo-item">Business Insider</span>
+    <span class="logo-item">Product Hunt</span>
+    <span class="logo-item">Y Combinator</span>
+  </div>
+</div>
 
 <!-- SCROLLING TICKER — doubts → reality -->
 <div id="ticker-wrap">
@@ -538,18 +508,6 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
     <span class="tick"><span class="tick-before">Spent two years overthinking it</span><span class="tick-arrow">→</span><span class="tick-after">wish I'd started sooner</span></span>
     <span class="tick"><span class="tick-before">"There's too much competition"</span><span class="tick-arrow">→</span><span class="tick-after">found my niche, fully booked in 6 weeks</span></span>
     <span class="tick"><span class="tick-before">Was waiting to feel ready</span><span class="tick-arrow">→</span><span class="tick-after">the readiness came after I started</span></span>
-  </div>
-</div>
-
-<!-- LOGOS / TRUST BAR -->
-<div id="logos-bar">
-  <div class="logos-label">Trusted by entrepreneurs in 38 countries</div>
-  <div class="logos-row">
-    <span class="logo-item">Forbes</span>
-    <span class="logo-item">Entrepreneur</span>
-    <span class="logo-item">Business Insider</span>
-    <span class="logo-item">Product Hunt</span>
-    <span class="logo-item">Y Combinator</span>
   </div>
 </div>
 
@@ -743,6 +701,50 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
   <div class="stat">
     <div class="stat-n">4.8</div>
     <div class="stat-l">Average rating<br>out of 5</div>
+  </div>
+</div>
+
+<!-- PLAN PREVIEW SHOWCASE -->
+<div class="wrap">
+  <div class="plan-preview">
+    <div class="plan-preview-left rv">
+      <div class="s-tag">What you actually get</div>
+      <h2 class="s-h">A real plan,<br>not a generic list.</h2>
+      <p class="s-sub">Income projections, day-1 tasks, outreach scripts — all built for your specific answers. Unlock the full 90-day roadmap for €17.</p>
+      <button class="cta-btn" onclick="scrollToQuiz()" style="font-size:15px;padding:16px 40px">
+        Start the free quiz <span class="cta-ic">→</span>
+      </button>
+    </div>
+    <div class="rv d1">
+      <div class="plan-mock">
+        <div class="plan-mock-head">
+          <div>
+            <div class="plan-mock-label-top">Your business match</div>
+            <div class="plan-mock-title-text">UX &amp; Product Consulting</div>
+          </div>
+          <div class="plan-mock-badge">94% match</div>
+        </div>
+        <div class="plan-mock-body">
+          <div class="plan-mock-slabel">Income projection</div>
+          <div class="plan-mock-row"><span class="plan-mock-ml">Month 1</span><div class="plan-mock-bar"><div class="plan-mock-fill" style="width:14%"></div></div><span class="plan-mock-mv">€1,200</span></div>
+          <div class="plan-mock-row"><span class="plan-mock-ml">Month 3</span><div class="plan-mock-bar"><div class="plan-mock-fill" style="width:32%"></div></div><span class="plan-mock-mv">€2,800</span></div>
+          <div class="plan-mock-row"><span class="plan-mock-ml">Month 6</span><div class="plan-mock-bar"><div class="plan-mock-fill" style="width:55%"></div></div><span class="plan-mock-mv">€4,500</span></div>
+          <div class="plan-mock-row"><span class="plan-mock-ml">Month 12</span><div class="plan-mock-bar"><div class="plan-mock-fill" style="width:84%"></div></div><span class="plan-mock-mv hi">€7,000</span></div>
+          <div class="plan-mock-sep"></div>
+          <div class="plan-mock-slabel">Day 1 action plan</div>
+          <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Update LinkedIn headline to attract SaaS clients</div>
+          <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Build list of 30 target companies on Crunchbase</div>
+          <div class="plan-mock-blur-wrap" style="position:relative">
+            <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Send 10 personalised outreach messages</div>
+            <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Set up free Calendly booking link</div>
+            <div class="plan-mock-task"><span class="plan-mock-check">✓</span>Create a one-page case study from past work</div>
+            <div class="plan-mock-overlay">
+              <span class="plan-mock-unlock" onclick="scrollToQuiz()">Get your personalised plan →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
