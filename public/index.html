@@ -106,8 +106,12 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 nav{position:sticky;top:0;z-index:100;height:62px;padding:0 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,10,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--brd)}
 .logo{font-size:17px;font-weight:800;color:#fff;text-decoration:none;letter-spacing:-.02em}
 .logo span{color:var(--pink)}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-link{font-size:14px;color:rgba(255,255,255,.55);text-decoration:none;font-weight:500;transition:color .18s;letter-spacing:.01em}
+.nav-link:hover{color:#fff}
 .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 26px;border-radius:100px;background:var(--pink);color:#fff;font-size:14px;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:background .18s,transform .15s,box-shadow .18s;letter-spacing:.01em}
 .nav-btn:hover{background:var(--pink-d);transform:translateY(-1px);box-shadow:0 4px 20px rgba(232,65,122,.4)}
+@media(max-width:600px){nav{padding:0 18px}.nav-link{display:none}}
 
 /* HERO — hyper3d-style: centered, minimal, massive headline */
 .hero{padding:120px 0 80px;position:relative;overflow:hidden;text-align:center}
@@ -175,6 +179,19 @@ nav{position:sticky;top:0;z-index:100;height:62px;padding:0 48px;display:flex;al
 .cta-btn:active{transform:translateY(0)}
 .cta-ic{transition:transform .2s}
 .cta-btn:hover .cta-ic{transform:translateX(5px)}
+/* SECONDARY CTA — for ready-made plans */
+.cta-secondary{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:20px 40px;border-radius:100px;
+  background:transparent;color:rgba(255,255,255,.8);
+  font-size:17px;font-weight:600;letter-spacing:-.01em;
+  text-decoration:none;border:1.5px solid rgba(255,255,255,.18);cursor:pointer;
+  transition:background .2s,border-color .2s,color .2s,transform .18s;
+}
+.cta-secondary:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.35);color:#fff;transform:translateY(-2px)}
+/* TWO-PATH DIVIDER */
+.or-divider{font-size:13px;color:rgba(255,255,255,.25);display:flex;align-items:center;gap:12px;white-space:nowrap}
+.or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.1)}
 
 .trust{margin-top:22px;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
 .trust-i{font-size:12px;color:var(--t3);display:flex;align-items:center;gap:5px}
@@ -441,7 +458,10 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
 <!-- NAV -->
 <nav>
   <a class="logo" href="/">Get<span>Biz</span>Idea</a>
-  <button class="nav-btn" onclick="scrollToQuiz()">Start free →</button>
+  <div class="nav-links">
+    <a class="nav-link" href="/plans.html">Ready-made plans</a>
+    <button class="nav-btn" onclick="scrollToQuiz()">Generate my plan →</button>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -453,17 +473,21 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
     </div>
     <h1 class="hero-h rv">Your business plan,<br><em>in 90 seconds.</em></h1>
     <p class="hero-sub rv d1">Answer 10 questions. Get a personalised business match and a complete 90-day launch plan with first-client scripts, pricing, and daily tasks.</p>
-    <div class="rv d2" style="display:flex;flex-direction:column;align-items:center;gap:16px">
+    <div class="rv d2" style="display:flex;flex-direction:column;align-items:center;gap:20px">
+      <!-- PATH 1: generate personalized plan -->
       <button class="cta-btn" onclick="scrollToQuiz()">
-        Take the free quiz <span class="cta-ic">→</span>
+        Generate my personalized plan <span class="cta-ic">→</span>
       </button>
       <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center">
-        <span style="font-size:12px;color:var(--t3)">Free to start</span>
-        <span style="font-size:12px;color:rgba(255,255,255,.1)">·</span>
-        <span style="font-size:12px;color:var(--t3)">No credit card</span>
-        <span style="font-size:12px;color:rgba(255,255,255,.1)">·</span>
-        <span style="font-size:12px;color:var(--t3)">Full plan €17</span>
+        <span style="font-size:12px;color:var(--t3)">Free quiz · 90 seconds · Full plan €17</span>
       </div>
+      <!-- DIVIDER -->
+      <div class="or-divider" style="width:100%;max-width:360px">or</div>
+      <!-- PATH 2: ready-made plans -->
+      <a class="cta-secondary" href="/plans.html">
+        Browse 10 ready-made plans →
+      </a>
+      <span style="font-size:12px;color:var(--t3)">Instant delivery · €17 each · No quiz needed</span>
     </div>
   </div>
 </section>
@@ -663,6 +687,12 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
   <div id="tf-footer">
     <button id="tf-back-btn" class="tf-hidden" onclick="tfBack()">↑ Back</button>
   </div>
+</div>
+
+<!-- CROSS-LINK: plans shop -->
+<div style="text-align:center;padding:32px 24px 0;border-top:1px solid rgba(255,255,255,.06)">
+  <p style="font-size:13px;color:rgba(255,255,255,.35);margin-bottom:14px">Don't want to take the quiz?</p>
+  <a href="/plans.html" style="display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:100px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:rgba(255,255,255,.7);font-size:14px;font-weight:600;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='rgba(255,255,255,.35)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,.15)';this.style.color='rgba(255,255,255,.7)'">Browse 10 ready-made plans →</a>
 </div>
 
 <!-- LOADING OVERLAY (full-screen, shown during AI generation) -->
