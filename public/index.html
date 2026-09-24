@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <!-- Open Graph -->
 <meta property="og:title" content="Stop guessing. Find the business you were made for.">
@@ -472,9 +473,26 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
   <a class="logo" href="/">Get<span>Biz</span>Idea</a>
   <div class="nav-links">
     <a class="nav-link" href="/plans.html">Ready-made plans</a>
+    <a class="nav-link" href="/dashboard.html" id="nav-dashboard" style="display:none">My Plans</a>
+    <a class="nav-link" href="/login.html" id="nav-login">Sign in</a>
     <button class="nav-btn" onclick="scrollToQuiz()">Generate my plan →</button>
   </div>
 </nav>
+<script>
+(function(){
+  var url='https://YOUR_PROJECT.supabase.co',key='YOUR_ANON_KEY';
+  if(url==='https://YOUR_PROJECT.supabase.co')return;
+  try{
+    var sb=supabase.createClient(url,key);
+    sb.auth.getSession().then(function(r){
+      if(r.data&&r.data.session){
+        document.getElementById('nav-login').style.display='none';
+        document.getElementById('nav-dashboard').style.display='';
+      }
+    });
+  }catch(e){}
+})();
+</script>
 
 <!-- HERO -->
 <section class="hero" id="hero-section">
