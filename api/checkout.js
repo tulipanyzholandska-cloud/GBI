@@ -39,6 +39,18 @@ export default async function handler(req, res) {
         success_url: `${baseUrl}/quiz.html?unlocked=true&rid=${resultId}&upsell=1`,
         cancel_url: `${baseUrl}/quiz.html?unlocked=true&rid=${resultId}`,
       });
+    } else if (product === 'tripwire') {
+      // €7 tripwire / 30-day action plan
+      session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        locale: 'en',
+        line_items: [{ price_data: { currency: 'eur', product_data: { name: '30-Day Action Plan PDF', description: 'Your personalized step-by-step launch plan — ready to execute today' }, unit_amount: 700 }, quantity: 1 }],
+        mode: 'payment',
+        metadata: { resultId: resultId || '', email: email || '', type: 'tripwire' },
+        customer_email: email || undefined,
+        success_url: `${baseUrl}/plan.html?rid=${resultId}&tw=1`,
+        cancel_url: `${baseUrl}/quiz.html?rid=${resultId}`,
+      });
     } else {
       // €17 main plan
       session = await stripe.checkout.sessions.create({
