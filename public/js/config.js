@@ -1,10 +1,6 @@
 // GetBizIdea — Supabase configuration
-// 1. Create project at https://supabase.com/dashboard
-// 2. Go to Settings → API
-// 3. Copy Project URL and anon/public key below
-// 4. Deploy to Vercel
 
 window.GBI_CONFIG = {
-  SUPABASE_URL: 'https://YOUR_PROJECT.supabase.co',
-  SUPABASE_ANON: 'YOUR_ANON_KEY'
+  SUPABASE_URL: 'https://zdelmslbyeaffcmjlnvg.supabase.co',
+  SUPABASE_ANON: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpkZWxtc2xieWVhZmZjbWpsbnZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NjAxMzcsImV4cCI6MjA5MTMzNjEzN30.CqIt7n4syN9JFF0NiNTBZ8qMUxxx2ABUziUPdHCovRU'
 };
