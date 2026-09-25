@@ -122,19 +122,13 @@ nav{position:sticky;top:0;z-index:100;height:62px;padding:0 48px;display:flex;al
 .hero-left{text-align:left}
 .hero-right{position:relative}
 
-/* HERO INPUT */
-.hero-input-wrap{display:flex;align-items:center;background:#fff;border:1.5px solid #E5E7EB;border-radius:14px;overflow:hidden;transition:border-color .2s,box-shadow .2s;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.hero-input-wrap:focus-within{border-color:#111827;box-shadow:0 0 0 3px rgba(17,24,39,.08)}
-.hero-input{flex:1;background:none;border:none;outline:none;padding:16px 20px;font-size:16px;color:#111827;font-family:inherit;min-width:0}
-.hero-input::placeholder{color:#9CA3AF}
-.hero-input-btn{padding:10px 20px;margin:7px;border-radius:9px;background:#111827;border:none;color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:background .18s;white-space:nowrap;flex-shrink:0;font-family:inherit}
-.hero-input-btn:hover{background:#374151}
-
 @media(max-width:860px){
   .hero-inner{grid-template-columns:1fr;gap:48px}
   .hero-left{text-align:center}
+  .hero-left .rv.d2{align-items:center !important}
   .hero-right{display:none}
-  .hero-input-wrap{max-width:420px;margin:0 auto 12px}
+  .hero-sub{margin-left:auto;margin-right:auto}
+  .or-divider{margin-left:auto !important;margin-right:auto !important}
 }
 
 .proof-bar{
@@ -399,49 +393,6 @@ footer a:hover{color:#111827}
 .logo-item{font-size:13px;font-weight:700;letter-spacing:.08em;color:#D1D5DB;text-transform:uppercase;transition:color .2s}
 .logo-item:hover{color:#9CA3AF}
 
-/* ===== HOMEPAGE QUIZ ===== */
-#quiz-section{padding:80px 24px 96px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;background:#F9FAFB;border-top:1px solid #E5E7EB}
-#quiz-section-label{text-align:center;margin-bottom:48px}
-#tf-bar-wrap{position:fixed;top:104px;left:0;right:0;height:3px;background:#E5E7EB;z-index:99}
-#tf-bar-fill{height:100%;background:linear-gradient(90deg,#6366F1,#111827);width:5%;transition:width .5s cubic-bezier(.4,0,.2,1)}
-#tf-wrap{width:100%;max-width:600px;position:relative}
-#tf-proof{display:none}
-#tf-proof-dot{display:none}
-@media(max-width:600px){#quiz-section{padding:56px 0 64px}}
-#tf-meta{font-size:12px;font-weight:600;color:#9CA3AF;text-transform:uppercase;letter-spacing:.12em;margin-bottom:36px}
-.tf-q{display:none}.tf-q.active{display:block;animation:tfIn .38s cubic-bezier(.22,1,.36,1)}
-@keyframes tfIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
-.tf-icon{font-size:40px;margin-bottom:18px;line-height:1;display:block}
-.tf-qtxt{font-size:34px;font-weight:800;line-height:1.2;margin-bottom:12px;letter-spacing:-.02em;color:#111827}
-.tf-sub{font-size:15px;color:#6B7280;margin-bottom:32px;line-height:1.5}
-.tf-chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
-.tf-chips .chip{padding:13px 22px;font-size:15px;border-radius:10px;border:1.5px solid #E5E7EB;transition:all .18s;background:#fff;color:#374151;cursor:pointer;user-select:none;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.tf-chips .chip:hover{border-color:#6366F1;background:#F5F3FF;color:#4338CA;transform:translateY(-2px)}
-.tf-chips .chip.on{background:#EEF2FF;border-color:#6366F1;color:#4338CA;transform:scale(1.04);box-shadow:0 0 0 3px rgba(99,102,241,.15)}
-.tf-continue{display:none;margin-top:8px;padding:15px 36px;border-radius:12px;border:none;background:#111827;color:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s}
-.tf-continue.visible{display:inline-block;animation:tfIn .3s ease}
-.tf-continue:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.2);background:#374151}
-#tf-footer{position:fixed;bottom:28px;left:0;right:0;display:flex;justify-content:center;z-index:50}
-#tf-back-btn{padding:10px 22px;border-radius:10px;border:1px solid #E5E7EB;background:#fff;color:#9CA3AF;font-size:14px;cursor:pointer;transition:all .2s;box-shadow:0 1px 4px rgba(0,0,0,.08)}
-#tf-back-btn:hover{border-color:#D1D5DB;color:#374151}
-#tf-back-btn.tf-hidden{visibility:hidden;pointer-events:none}
-.tf-no-email{font-size:12px;color:#9CA3AF;margin-top:20px}
-/* Loading overlay */
-#loading-overlay{display:none;position:fixed;inset:0;background:#0a0a0f;z-index:300;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px}
-@keyframes ldPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
-.ld-step{font-size:14px;color:rgba(255,255,255,0.2);display:flex;align-items:center;gap:10px;padding:2px 0;transition:all .4s}
-.ld-step::before{content:'·';width:18px;text-align:center;font-size:20px;flex-shrink:0;color:rgba(255,255,255,0.15)}
-.ld-step.ld-active{color:#fff;font-weight:600}
-.ld-step.ld-active::before{content:'';width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);border-top-color:#a78bfa;animation:spin .7s linear infinite;display:inline-block;flex-shrink:0;margin:1px}
-.ld-step.ld-done{color:rgba(255,255,255,0.55)}
-.ld-step.ld-done::before{content:'✓';color:#5dcaa5;font-weight:700;font-size:14px}
-@keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:600px){
-  #tf-wrap{padding:0 20px 40px}
-  .tf-qtxt{font-size:24px}
-  .tf-sub{font-size:14px;margin-bottom:22px}
-  .tf-chips .chip{padding:11px 16px;font-size:14px}
-}
 </style>
 <script>
 !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]);t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys getNextSurveyStep onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
@@ -504,16 +455,15 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
         <span class="proof-stars">★★★★★</span>
         <span><strong>4.8/5</strong> &nbsp;·&nbsp; <strong id="live-n">4,247</strong> entrepreneurs helped</span>
       </div>
-      <h1 class="hero-h rv">Find the business<br>you were made for,<br><em>in 90 seconds.</em></h1>
-      <p class="hero-sub rv d1">Tell us your skills and budget. Our AI matches you with the right business and writes a complete 90-day launch plan.</p>
-      <div class="rv d2">
-        <div class="hero-input-wrap">
-          <input class="hero-input" id="hero-idea-input" type="text" placeholder="What's your business idea? (or leave blank)">
-          <button class="hero-input-btn" onclick="startQuizWithIdea()">Get started →</button>
-        </div>
-        <div style="font-size:12px;color:var(--t3);margin-bottom:20px">Free quiz · 90 seconds · Full plan €17</div>
+      <h1 class="hero-h rv">Your AI gives you<br>exact steps to launch<br><em>your business.</em></h1>
+      <p class="hero-sub rv d1">Answer 10 questions. AI matches you with the right business and writes every concrete step — website copy, your first ad, client outreach scripts, and a full 90-day roadmap.</p>
+      <div class="rv d2" style="display:flex;flex-direction:column;align-items:flex-start;gap:0">
+        <a class="cta-btn" href="/quiz" style="text-decoration:none;margin-bottom:16px">
+          Get my free business plan <span class="cta-ic">→</span>
+        </a>
+        <div style="font-size:12px;color:var(--t3);margin-bottom:20px">Free quiz · 90 seconds · No account needed</div>
         <div class="or-divider" style="max-width:320px;margin-bottom:20px">or</div>
-        <a class="cta-secondary" style="font-size:15px;padding:14px 28px" href="/plans.html">Browse 10 ready-made plans →</a>
+        <a class="cta-secondary" style="font-size:15px;padding:14px 28px" href="/plans">Browse 10 ready-made plans →</a>
         <div style="font-size:11px;color:var(--t3);margin-top:10px">Instant delivery · €17 · No quiz needed</div>
       </div>
     </div>
@@ -558,6 +508,40 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
     <span class="logo-item">Business Insider</span>
     <span class="logo-item">Product Hunt</span>
     <span class="logo-item">Y Combinator</span>
+  </div>
+</div>
+
+<!-- WHAT AI CREATES — execution kit strip -->
+<div style="background:#fff;padding:32px 24px;border-bottom:1px solid #E5E7EB">
+  <div style="max-width:1040px;margin:0 auto">
+    <div style="text-align:center;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#9CA3AF;margin-bottom:20px">What AI builds for you in 90 seconds</div>
+    <div style="display:flex;gap:0;flex-wrap:wrap;justify-content:center;border:1px solid #E5E7EB;border-radius:16px;overflow:hidden">
+      <div style="flex:1;min-width:150px;padding:18px 16px;text-align:center;border-right:1px solid #E5E7EB">
+        <div style="font-size:20px;margin-bottom:8px">🌐</div>
+        <div style="font-size:13px;font-weight:700;color:#111827">Website copy</div>
+        <div style="font-size:11px;color:#9CA3AF;margin-top:3px">headline, about, services</div>
+      </div>
+      <div style="flex:1;min-width:150px;padding:18px 16px;text-align:center;border-right:1px solid #E5E7EB">
+        <div style="font-size:20px;margin-bottom:8px">📧</div>
+        <div style="font-size:13px;font-weight:700;color:#111827">Cold email script</div>
+        <div style="font-size:11px;color:#9CA3AF;margin-top:3px">copy-paste &amp; send today</div>
+      </div>
+      <div style="flex:1;min-width:150px;padding:18px 16px;text-align:center;border-right:1px solid #E5E7EB">
+        <div style="font-size:20px;margin-bottom:8px">🎯</div>
+        <div style="font-size:13px;font-weight:700;color:#111827">50 target leads</div>
+        <div style="font-size:11px;color:#9CA3AF;margin-top:3px">search queries included</div>
+      </div>
+      <div style="flex:1;min-width:150px;padding:18px 16px;text-align:center;border-right:1px solid #E5E7EB">
+        <div style="font-size:20px;margin-bottom:8px">📣</div>
+        <div style="font-size:13px;font-weight:700;color:#111827">First ad concept</div>
+        <div style="font-size:11px;color:#9CA3AF;margin-top:3px">copy + targeting strategy</div>
+      </div>
+      <div style="flex:1;min-width:150px;padding:18px 16px;text-align:center">
+        <div style="font-size:20px;margin-bottom:8px">📋</div>
+        <div style="font-size:13px;font-weight:700;color:#111827">90-day roadmap</div>
+        <div style="font-size:11px;color:#9CA3AF;margin-top:3px">day-by-day action plan</div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -710,17 +694,9 @@ function calcUpdate(){
 calcUpdate();
 </script>
 
-<!-- QUIZ — appears just below the fold, scrolled to when user clicks CTA -->
-<div id="quiz-section">
-  <div id="quiz-section-label">
-    <div class="s-tag" style="margin-bottom:8px">Take the free quiz</div>
-    <h2 style="font-size:clamp(26px,3.5vw,38px);font-weight:900;letter-spacing:-.04em;line-height:1.1">Answer 10 questions.<br>Get your personalised plan.</h2>
-  </div>
-  <div id="tf-bar-wrap"><div id="tf-bar-fill"></div></div>
-  <div id="tf-wrap">
-    <div id="tf-proof"><span id="tf-proof-dot"></span></div>
-    <div id="tf-meta">Question <strong style="color:#111827">1</strong> <span style="color:#9CA3AF">/ 10</span></div>
-    <div id="tf-slides">
+<!-- QUIZ REMOVED — quiz is at /quiz -->
+<div id="quiz-section" style="display:none">
+  <div id="tf-slides">
 
       <div class="tf-q active" id="tfq-1" data-q="1">
         <span class="tf-icon">🎂</span>
@@ -854,39 +830,6 @@ calcUpdate();
           <span class="chip" data-g="risk">Lack of time</span>
           <span class="chip" data-g="risk">Lack of confidence</span>
         </div>
-        <p class="tf-no-email">✓ No email required — instant AI results</p>
-      </div>
-
-    </div>
-  </div>
-  <div id="tf-footer">
-    <button id="tf-back-btn" class="tf-hidden" onclick="tfBack()">↑ Back</button>
-  </div>
-</div>
-
-<!-- CROSS-LINK: plans shop -->
-<div style="text-align:center;padding:32px 24px 0;border-top:1px solid #E5E7EB">
-  <p style="font-size:13px;color:#9CA3AF;margin-bottom:14px">Don't want to take the quiz?</p>
-  <a href="/plans.html" style="display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:100px;border:1.5px solid #E5E7EB;background:#fff;color:#374151;font-size:14px;font-weight:600;text-decoration:none;transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.08)">Browse 10 ready-made plans →</a>
-</div>
-
-<!-- LOADING OVERLAY (full-screen, shown during AI generation) -->
-<div id="loading-overlay">
-  <div style="width:100%;max-width:420px;text-align:center;padding:0 24px">
-    <div id="ld-icon" style="font-size:52px;margin-bottom:20px;display:block;animation:ldPulse 2.2s ease-in-out infinite"></div>
-    <h2 id="ld-headline" style="font-size:26px;font-weight:800;margin-bottom:8px;letter-spacing:-.01em;line-height:1.25">Scanning business models…</h2>
-    <p style="font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:28px">This usually takes 15–30 seconds</p>
-    <div style="width:100%;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;margin-bottom:32px;overflow:hidden"><div id="ld-bar" style="height:100%;background:linear-gradient(90deg,#6366F1,#111827);width:6%;border-radius:2px;transition:width 1.2s cubic-bezier(.4,0,.2,1)"></div></div>
-    <div style="display:flex;flex-direction:column;gap:10px;text-align:left;margin-bottom:28px">
-      <div class="ld-step" id="lds-1">Scanning 2,400+ business models</div>
-      <div class="ld-step" id="lds-2">Matching ideas to your profile</div>
-      <div class="ld-step" id="lds-3">Calculating income projections</div>
-      <div class="ld-step" id="lds-4">Writing your 90-day action plan</div>
-      <div class="ld-step" id="lds-5">Finalising your results</div>
-    </div>
-    <div style="font-size:12px;color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:100px;padding:7px 18px;display:inline-block">847 people got their plan this week</div>
-  </div>
-</div>
 
 <!-- STATS + REST OF PAGE (below the quiz) -->
 <div id="how-it-works"></div>
@@ -914,8 +857,8 @@ calcUpdate();
   <div class="plan-preview">
     <div class="plan-preview-left rv">
       <div class="s-tag">What you actually get</div>
-      <h2 class="s-h">A real plan,<br>not a generic list.</h2>
-      <p class="s-sub">Income projections, day-1 tasks, outreach scripts — all built for your specific answers. Unlock the full 90-day roadmap for €17.</p>
+      <h2 class="s-h">Not a plan.<br>An execution kit.</h2>
+      <p class="s-sub">Website copy, cold email script, 50 leads to contact, your first ad brief — all generated for your specific business. Unlock it for €17.</p>
       <button class="cta-btn" onclick="scrollToQuiz()" style="font-size:15px;padding:16px 40px">
         Start the free quiz <span class="cta-ic">→</span>
       </button>
@@ -986,8 +929,8 @@ calcUpdate();
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-bottom:48px" class="how-it-works-grid">
       <div class="rv">
         <div class="s-tag">How it works</div>
-        <h2 class="s-h">From zero to your launch plan<br>in under 2 minutes.</h2>
-        <p class="s-sub">Answer 10 questions about your skills, budget and goals. AI scans 2,400+ business models and generates a personalised 90-day plan — just for you.</p>
+        <h2 class="s-h">Quiz → AI builds your kit → You execute.</h2>
+        <p class="s-sub">Answer 10 questions. AI writes your website copy, finds your first leads, scripts your outreach email, and hands you a step-by-step checklist to launch — in under 2 minutes.</p>
       </div>
       <div class="rv d1" style="border-radius:20px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.1)">
         <img src="/img/workspace.jpg" alt="Entrepreneur workspace with business plan" style="width:100%;display:block;object-fit:cover">
@@ -999,19 +942,19 @@ calcUpdate();
         <div class="step-n">01</div>
         <span class="step-ic">🎯</span>
         <h3>Answer 10 quick questions</h3>
-        <p>Your age, country, available hours per week, budget, and what you're naturally good at. No sign-up. No email. Completely free. Takes 90 seconds.</p>
+        <p>Your skills, available hours, budget, and goals. Takes 90 seconds. No sign-up, no email. AI scans 2,400+ business models and picks your best match.</p>
       </div>
       <div class="step rv d2">
         <div class="step-n">02</div>
         <span class="step-ic">🤖</span>
-        <h3>AI finds your match</h3>
-        <p>Our AI scans 2,400+ business models and selects the one that fits your specific situation — not a generic suggestion, a personalised recommendation.</p>
+        <h3>AI builds your launch kit</h3>
+        <p>Your personalised plan includes: your business name ideas, website copy, logo brief, first 50 leads to contact, and a ready-to-send cold email script — all in one document.</p>
       </div>
       <div class="step rv d3">
         <div class="step-n">03</div>
         <span class="step-ic">🚀</span>
-        <h3>Get your full launch plan</h3>
-        <p>Day-1 tasks, first client outreach scripts, pricing strategy, income projections, tools list, and a full 90-day roadmap. Everything to actually start — today.</p>
+        <h3>Execute step by step</h3>
+        <p>Follow your AI-generated checklist: set up your page, run your first ad, send your outreach batch. Every task links to the exact tool and script to use — on day 1.</p>
       </div>
     </div>
   </section>
@@ -1263,7 +1206,7 @@ function playDemoVideo(){
   <section style="padding-top:0">
     <div class="rv">
       <div class="s-tag">What you get</div>
-      <h2 class="s-h">Everything to launch your business.<br>For the price of a <em style="color:var(--pink)">coffee.</em></h2>
+      <h2 class="s-h">Your full launch kit,<br>AI-built, for <em style="color:var(--pink)">€17.</em></h2>
     </div>
     <div class="offer-card rv">
       <!-- Price anchor comparison -->
@@ -1282,14 +1225,14 @@ function playDemoVideo(){
         </div>
       </div>
       <div class="feats">
-        <div class="feat"><div class="feat-ck">✓</div>Your AI-matched business idea</div>
-        <div class="feat"><div class="feat-ck">✓</div>Full 90-day action plan</div>
-        <div class="feat"><div class="feat-ck">✓</div>Day-1 task list</div>
-        <div class="feat"><div class="feat-ck">✓</div>First client outreach script</div>
-        <div class="feat"><div class="feat-ck">✓</div>Pricing strategy</div>
-        <div class="feat"><div class="feat-ck">✓</div>Income projections</div>
-        <div class="feat"><div class="feat-ck">✓</div>Top 3 mistakes to avoid</div>
-        <div class="feat"><div class="feat-ck">✓</div>Tools &amp; setup checklist</div>
+        <div class="feat"><div class="feat-ck">✓</div>AI-matched business idea (from 2,400+ models)</div>
+        <div class="feat"><div class="feat-ck">✓</div>Website &amp; page copy — ready to paste</div>
+        <div class="feat"><div class="feat-ck">✓</div>Logo brief + brand name ideas</div>
+        <div class="feat"><div class="feat-ck">✓</div>50 target leads with search queries</div>
+        <div class="feat"><div class="feat-ck">✓</div>Cold email script — copy-paste &amp; send</div>
+        <div class="feat"><div class="feat-ck">✓</div>First ad concept + targeting strategy</div>
+        <div class="feat"><div class="feat-ck">✓</div>Pricing strategy + income projections</div>
+        <div class="feat"><div class="feat-ck">✓</div>Full 90-day step-by-step roadmap</div>
       </div>
       <p class="p-meta" style="margin:0 0 36px">one-time · instant access · no subscription · no recurring fees</p>
       <button class="cta-btn" onclick="startQuiz()" style="display:inline-flex;font-size:17px;padding:18px 44px">
@@ -1376,8 +1319,8 @@ function playDemoVideo(){
     <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.3);border-radius:100px;padding:6px 14px;font-size:12px;font-weight:700;color:#A5B4FC;margin-bottom:20px;letter-spacing:.04em">
       ✦ FREE TO START · NO ACCOUNT NEEDED
     </div>
-    <h2 style="font-size:clamp(36px,5vw,64px);font-weight:900;letter-spacing:-.05em;line-height:1.05;margin-bottom:16px">Your business is<br><em style="color:#A5B4FC">90 seconds away.</em></h2>
-    <p style="font-size:18px;color:rgba(255,255,255,.6);margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto">Stop overthinking. Find out exactly which business fits your life — free quiz, full plan in €17.</p>
+    <h2 style="font-size:clamp(36px,5vw,64px);font-weight:900;letter-spacing:-.05em;line-height:1.05;margin-bottom:16px">Your business launch<br>starts with <em style="color:#A5B4FC">one quiz.</em></h2>
+    <p style="font-size:18px;color:rgba(255,255,255,.6);margin-bottom:36px;max-width:520px;margin-left:auto;margin-right:auto">AI writes your website, finds your leads, scripts your first email, and hands you a launch checklist — all for €17. The quiz is free.</p>
     <button class="cta-btn" onclick="startQuiz()" style="border:none;cursor:pointer;font-size:18px;padding:20px 52px;box-shadow:0 8px 32px rgba(99,102,241,.35)">
       Find My Business Idea <span class="cta-ic">→</span>
     </button>
@@ -1426,85 +1369,8 @@ function playDemoVideo(){
 <script>
 document.documentElement.classList.add('js-on');
 
-// ── QUIZ LOGIC ──────────────────────────────────────────────────────────────
-let tfCurrent=1;
-const TF_TOTAL=10;
-const TF_SINGLE=['age','loc','life','time','budget','btype','inc','risk'];
-const TF_GRP={1:'age',2:'loc',3:'life',4:'time',5:'budget',6:'str',7:'int',8:'btype',9:'inc',10:'risk'};
-
-function tfNext(){
-  if(tfCurrent>=TF_TOTAL){generate();return;}
-  const g=TF_GRP[tfCurrent];
-  if(g&&document.querySelectorAll('[data-g="'+g+'"].on').length===0){
-    const chips=document.getElementById('g-'+g);
-    if(chips){chips.animate([{transform:'translateX(-5px)'},{transform:'translateX(5px)'},{transform:'translateX(-3px)'},{transform:'translateX(0)'}],{duration:280});chips.querySelectorAll('.chip').forEach(c=>{c.style.borderColor='#ef4444';setTimeout(()=>c.style.borderColor='',1800)});}
-    return;
-  }
-  const cur=document.getElementById('tfq-'+tfCurrent);
-  if(cur){cur.style.transition='opacity .2s,transform .2s';cur.style.opacity='0';cur.style.transform='translateY(-18px)';setTimeout(()=>{cur.style.display='none';cur.style.opacity='';cur.style.transform='';cur.classList.remove('active');tfCurrent++;const nxt=document.getElementById('tfq-'+tfCurrent);if(nxt){nxt.style.display='block';nxt.classList.add('active');}updateTfProgress();},200);}
-}
-function tfBack(){
-  if(tfCurrent<=1)return;
-  const cur=document.getElementById('tfq-'+tfCurrent);
-  if(cur){cur.style.transition='opacity .18s,transform .18s';cur.style.opacity='0';cur.style.transform='translateY(18px)';setTimeout(()=>{cur.style.display='none';cur.style.opacity='';cur.style.transform='';cur.classList.remove('active');tfCurrent--;const prv=document.getElementById('tfq-'+tfCurrent);if(prv){prv.style.display='block';prv.classList.add('active');}updateTfProgress();},170);}
-}
-function updateTfProgress(){
-  const pct=Math.max(5,Math.round((tfCurrent-1)/TF_TOTAL*100));
-  const fill=document.getElementById('tf-bar-fill');if(fill)fill.style.width=pct+'%';
-  const meta=document.getElementById('tf-meta');if(meta)meta.innerHTML='Question <strong style="color:#111827">'+tfCurrent+'</strong> <span style="color:#9CA3AF">/ '+TF_TOTAL+'</span>';
-  const back=document.getElementById('tf-back-btn');if(back)back.className=tfCurrent<=1?'tf-hidden':'';
-}
-document.querySelectorAll('.chip').forEach(c=>{
-  c.addEventListener('click',()=>{
-    const g=c.dataset.g;
-    if(TF_SINGLE.includes(g)){document.querySelectorAll('[data-g="'+g+'"]').forEach(x=>x.classList.remove('on'));c.classList.add('on');window._autoAdv&&clearTimeout(window._autoAdv);window._autoAdv=setTimeout(tfNext,420);}
-    else{c.classList.toggle('on');const qEl=c.closest('.tf-q');if(qEl){const contId='tf-cont-'+qEl.dataset.q;const cont=document.getElementById(contId);if(cont)cont.className=qEl.querySelectorAll('.chip.on').length>0?'tf-continue visible':'tf-continue';}}
-  });
-});
-function get(g){return[...document.querySelectorAll('[data-g="'+g+'"].on')].map(x=>x.textContent).join(', ')||'not specified'}
-
-function startLoadingAnim(){
-  const steps=[{id:'lds-1',icon:'🔍',text:'Scanning 2,400+ business models…',pct:18},{id:'lds-2',icon:'🎯',text:'Matching ideas to your profile…',pct:38},{id:'lds-3',icon:'📊',text:'Calculating income projections…',pct:58},{id:'lds-4',icon:'📋',text:'Writing your 90-day action plan…',pct:78},{id:'lds-5',icon:'✨',text:'Finalising your results…',pct:91}];
-  const bar=document.getElementById('ld-bar');const icon=document.getElementById('ld-icon');const headline=document.getElementById('ld-headline');
-  const delays=[0,4000,8000,13000,19000];
-  steps.forEach((s,idx)=>{window['_ld'+idx]=setTimeout(()=>{steps.forEach((ss,ii)=>{const el=document.getElementById(ss.id);if(!el)return;el.className=ii<idx?'ld-step ld-done':ii===idx?'ld-step ld-active':'ld-step';});if(bar)bar.style.width=s.pct+'%';if(icon)icon.textContent=s.icon;if(headline)headline.textContent=s.text;},delays[idx]);});
-}
-
-async function generate(){
-  const quizData={age:get('age'),location:get('loc'),lifestyle:get('life'),time:get('time'),budget:get('budget'),strengths:get('str'),interests:get('int'),btype:get('btype'),income:get('inc'),risk:get('risk'),language:'en'};
-  ph('quiz_completed',{age:quizData.age,location:quizData.location,time:quizData.time,budget:quizData.budget});
-  // Show loading overlay
-  const overlay=document.getElementById('loading-overlay');
-  overlay.style.display='flex';
-  startLoadingAnim();
-  try{
-    const controller=new AbortController();
-    const tid=setTimeout(()=>controller.abort(),110000);
-    const resp=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({quizData}),signal:controller.signal});
-    clearTimeout(tid);
-    const data=await resp.json();
-    if(!data.plan)throw new Error(data.error||'No plan returned');
-    // Redirect to quiz.html for results
-    const rid=data.resultId||'';
-    if(rid)localStorage.setItem('gbi_rid',rid);
-    window.location.href='/quiz.html?rid='+rid+(data.plan?'&fresh=1':'');
-  }catch(e){
-    overlay.style.display='none';
-    alert('Something went wrong: '+e.message);
-  }
-}
-
-function scrollToQuiz(){
-  document.getElementById('quiz-section').scrollIntoView({behavior:'smooth'});
-}
-function startQuiz(){
-  scrollToQuiz();
-}
-function startQuizWithIdea(){
-  var idea = document.getElementById('hero-idea-input').value.trim();
-  if(idea) try{localStorage.setItem('gbi_idea',idea)}catch(e){}
-  scrollToQuiz();
-}
+function scrollToQuiz(){ window.location.href = '/quiz'; }
+function startQuiz(){ window.location.href = '/quiz'; }
 
 function sTab(el,panelId){
   el.closest('.sample-tabs').querySelectorAll('.s-tab').forEach(t=>t.classList.remove('on'));
