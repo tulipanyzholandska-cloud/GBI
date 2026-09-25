@@ -37,7 +37,9 @@ nav{height:60px;padding:0 32px;display:flex;align-items:center;justify-content:s
 .wrap{max-width:980px;margin:0 auto;padding:0 20px}
 .plans-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:20px;padding:0 20px 72px;max-width:980px;margin:0 auto}
 
-.plan-card{background:#fff;border:1.5px solid #E5E7EB;border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:12px;transition:border-color .2s,transform .2s,box-shadow .2s}
+.plan-card{background:#fff;border:1.5px solid #E5E7EB;border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:12px;transition:border-color .2s,transform .2s,box-shadow .2s;overflow:hidden}
+.plan-cover{margin:-24px -24px 16px;height:130px;display:flex;align-items:center;justify-content:center;font-size:54px;position:relative;flex-shrink:0}
+.plan-cover::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.18));pointer-events:none}
 .plan-card:hover{border-color:#6366F1;transform:translateY(-3px);box-shadow:0 12px 32px rgba(99,102,241,.1)}
 .plan-card.featured{background:linear-gradient(135deg,#F0F4FF 0%,#FAFBFF 100%);border-color:#C7D2FE;border-width:2px}
 
@@ -135,6 +137,7 @@ nav{height:60px;padding:0 32px;display:flex;align-items:center;justify-content:s
 <div class="plans-grid">
 
   <div class="plan-card featured">
+    <div class="plan-cover" style="background:#0077B5;padding:0"><img src="/img/plan-linkedin.jpg" style="width:100%;height:100%;object-fit:cover;display:block"></div>
     <div><span class="plan-tag tag-popular">Most Popular</span></div>
     <div class="plan-name">LinkedIn Ghostwriting Agency</div>
     <div class="plan-tagline">Write thought-leadership posts for busy founders and executives. No degree, no experience needed — just writing.</div>
@@ -151,11 +154,12 @@ nav{height:60px;padding:0 32px;display:flex;align-items:center;justify-content:s
         <div class="plan-price-old">€97</div>
       </div>
       <button class="btn-buy" onclick="openBuyModal('linkedin-ghostwriting','LinkedIn Ghostwriting Agency',17)">Buy now →</button>
-      <a class="btn-demo" href="/quiz.html?demo=1">Preview</a>
+      <a class="btn-demo" href="/linkedin-ghostwriting">See details</a>
     </div>
   </div>
 
   <div class="plan-card">
+    <div class="plan-cover" style="background:linear-gradient(135deg,#16A34A,#14532D)">🗺️</div>
     <div><span class="plan-tag tag-hot">Hot</span></div>
     <div class="plan-name">Local SEO Agency</div>
     <div class="plan-tagline">Help local businesses rank on Google Maps and get more walk-in customers. Recurring revenue model.</div>
@@ -178,6 +182,7 @@ nav{height:60px;padding:0 32px;display:flex;align-items:center;justify-content:s
 
   <div class="plan-card">
     <div><span class="plan-tag tag-new">New</span></div>
+    <div class="plan-cover" style="background:linear-gradient(135deg,#F97316,#C2410C)">🎨</div>
     <div class="plan-name">Etsy Digital Products</div>
     <div class="plan-tagline">Sell printables, templates, and digital art on Etsy. One-time work, passive recurring income.</div>
     <div class="plan-income">€500–€3,000/month potential</div>
@@ -199,6 +204,7 @@ nav{height:60px;padding:0 32px;display:flex;align-items:center;justify-content:s
 
   <div class="plan-card">
     <div><span class="plan-tag tag-hot">Hot</span></div>
+    <div class="plan-cover" style="background:linear-gradient(135deg,#7C3AED,#4C1D95)">📱</div>
     <div class="plan-name">Social Media Management</div>
     <div class="plan-tagline">Manage Instagram, Facebook, and TikTok for small businesses. High demand, low competition locally.</div>
     <div class="plan-income">€1,200–€4,500/month potential</div>
@@ -220,6 +226,7 @@ nav{height:60px;padding:0 32px;display:flex;align-items:center;justify-content:s
 
   <div class="plan-card">
     <div><span class="plan-tag tag-new">New</span></div>
+    <div class="plan-cover" style="background:linear-gradient(135deg,#0891B2,#164E63)">💼</div>
     <div class="plan-name">Virtual Assistant Agency</div>
     <div class="plan-tagline">Provide admin, email, and operations support to online businesses. Work from anywhere, start with zero investment.</div>
     <div class="plan-income">€800–€3,000/month potential</div>
@@ -241,6 +248,7 @@ nav{height:60px;padding:0 32px;display:flex;align-items:center;justify-content:s
 
   <div class="plan-card">
     <div><span class="plan-tag tag-popular">Beginner Friendly</span></div>
+    <div class="plan-cover" style="background:linear-gradient(135deg,#1D4ED8,#1E3A8A)">📚</div>
     <div class="plan-name">Online Tutoring Business</div>
     <div class="plan-tagline">Teach what you know: school subjects, languages, music, fitness, or software. Build a roster of recurring students.</div>
     <div class="plan-income">€600–€2,500/month potential</div>
@@ -262,6 +270,7 @@ nav{height:60px;padding:0 32px;display:flex;align-items:center;justify-content:s
 
   <div class="plan-card">
     <div><span class="plan-tag tag-hot">High Income</span></div>
+    <div class="plan-cover" style="background:linear-gradient(135deg,#111827,#374151)">📨</div>
     <div class="plan-name">B2B Cold Email Agency</div>
     <div class="plan-tagline">Generate leads for software companies and agencies using cold email outreach. Fully remote, no prior experience needed.</div>
     <div class="plan-income">€2,000–€8,000/month potential</div>
@@ -283,6 +292,7 @@ nav{height:60px;padding:0 32px;display:flex;align-items:center;justify-content:s
 
   <div class="plan-card">
     <div><span class="plan-tag tag-new">Trending</span></div>
+    <div class="plan-cover" style="background:linear-gradient(135deg,#DC2626,#7F1D1D)">▶️</div>
     <div class="plan-name">YouTube Automation Channel</div>
     <div class="plan-tagline">Build faceless YouTube channels with outsourced content. Monetise through AdSense, sponsorships, and affiliate deals.</div>
     <div class="plan-income">€500–€5,000/month potential</div>
@@ -304,6 +314,7 @@ nav{height:60px;padding:0 32px;display:flex;align-items:center;justify-content:s
 
   <div class="plan-card">
     <div><span class="plan-tag tag-popular">Lifestyle Friendly</span></div>
+    <div class="plan-cover" style="background:linear-gradient(135deg,#D97706,#78350F)">📦</div>
     <div class="plan-name">Amazon FBA Private Label</div>
     <div class="plan-tagline">Source a product, brand it, and sell it on Amazon. Build a real e-commerce asset with passive income potential.</div>
     <div class="plan-income">€1,000–€10,000/month potential</div>
@@ -325,6 +336,7 @@ nav{height:60px;padding:0 32px;display:flex;align-items:center;justify-content:s
 
   <div class="plan-card">
     <div><span class="plan-tag tag-new">Low Cost Start</span></div>
+    <div class="plan-cover" style="background:linear-gradient(135deg,#7C3AED,#6D28D9)">🎙️</div>
     <div class="plan-name">Podcast Production Agency</div>
     <div class="plan-tagline">Edit, produce, and grow podcasts for brands and entrepreneurs. Creative work, recurring clients, no audience needed.</div>
     <div class="plan-income">€1,000–€3,500/month potential</div>

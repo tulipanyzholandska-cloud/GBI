@@ -24,8 +24,8 @@ export default async function handler(req, res) {
         mode: 'payment',
         metadata: { planId: planId || '', email: email || '', type: 'ready-made-plan' },
         customer_email: email || undefined,
-        success_url: `${baseUrl}/plans.html?purchased=${planId}&email=${encodeURIComponent(email || '')}`,
-        cancel_url: `${baseUrl}/plans.html`,
+        success_url: `${baseUrl}/plans?purchased=${planId}&email=${encodeURIComponent(email || '')}`,
+        cancel_url: `${baseUrl}/plans`,
       });
     } else if (product === 'upsell') {
       // €27 Launch Week upsell
