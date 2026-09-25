@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Account Settings — GetBizIdea</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23111827'/><text y='24' x='4' font-size='22'>💡</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/config.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#F9FAFB;color:#111827;min-height:100vh}
+a{text-decoration:none;color:inherit}
+nav{height:60px;padding:0 32px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid #E5E7EB;position:sticky;top:0;z-index:50}
+.logo{font-size:18px;font-weight:800;color:#111827;letter-spacing:-.02em}
+.logo span{color:#6366F1}
+.nav-right{display:flex;align-items:center;gap:16px}
+.btn-back{padding:9px 18px;border-radius:100px;background:#F3F4F6;color:#374151;font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:inherit;transition:background .18s}
+.btn-back:hover{background:#E5E7EB}
+.layout{max-width:640px;margin:0 auto;padding:40px 24px}
+h1{font-size:26px;font-weight:800;letter-spacing:-.04em;margin-bottom:6px}
+.page-sub{font-size:14px;color:#6B7280;margin-bottom:36px}
+.section{background:#fff;border:1px solid #E5E7EB;border-radius:16px;margin-bottom:20px;overflow:hidden}
+.section-header{padding:20px 24px 0}
+.section-title{font-size:15px;font-weight:700;margin-bottom:4px}
+.section-desc{font-size:13px;color:#6B7280;margin-bottom:20px}
+.section-body{padding:0 24px 24px}
+.form-group{margin-bottom:16px}
+label{display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px}
+input[type=email],input[type=text],input[type=password]{width:100%;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:14px;color:#111827;font-family:inherit;outline:none;transition:border-color .18s,box-shadow .18s;background:#fff}
+input:focus{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,241,.12)}
+input:disabled{background:#F9FAFB;color:#9CA3AF;cursor:not-allowed}
+input::placeholder{color:#9CA3AF}
+.btn-save{padding:10px 22px;border-radius:10px;background:#111827;color:#fff;font-size:13px;font-weight:700;border:none;cursor:pointer;font-family:inherit;transition:background .18s}
+.btn-save:hover{background:#374151}
+.btn-save:disabled{background:#9CA3AF;cursor:not-allowed}
+.divider{height:1px;background:#F3F4F6;margin:0 24px}
+.plan-row{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;gap:16px;flex-wrap:wrap}
+.plan-info .plan-name{font-size:15px;font-weight:700;margin-bottom:3px}
+.plan-info .plan-detail{font-size:13px;color:#6B7280}
+.badge-free{display:inline-flex;padding:3px 10px;border-radius:100px;background:#F3F4F6;color:#6B7280;font-size:12px;font-weight:700;margin-left:8px;vertical-align:middle}
+.badge-pro{display:inline-flex;padding:3px 10px;border-radius:100px;background:#EEF2FF;color:#6366F1;font-size:12px;font-weight:700;margin-left:8px;vertical-align:middle}
+.btn-upgrade{padding:9px 20px;border-radius:100px;background:#6366F1;color:#fff;font-size:13px;font-weight:700;border:none;cursor:pointer;font-family:inherit;transition:background .18s;white-space:nowrap}
+.btn-upgrade:hover{background:#4F46E5}
+.danger-row{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;gap:16px;flex-wrap:wrap}
+.danger-info .danger-title{font-size:14px;font-weight:600;color:#374151;margin-bottom:3px}
+.danger-info .danger-desc{font-size:13px;color:#9CA3AF}
+.btn-danger{padding:9px 18px;border-radius:10px;background:#FEF2F2;color:#DC2626;font-size:13px;font-weight:700;border:1px solid #FCA5A5;cursor:pointer;font-family:inherit;transition:all .18s}
+.btn-danger:hover{background:#FEE2E2}
+.success-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:12px 24px;border-radius:100px;font-size:14px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.2);display:none;z-index:999}
+.success-toast.show{display:block;animation:fadeup .3s ease}
+@keyframes fadeup{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+#loading-screen{position:fixed;inset:0;background:#F9FAFB;display:flex;align-items:center;justify-content:center;z-index:999}
+.spinner{width:32px;height:32px;border:3px solid #E5E7EB;border-top-color:#6366F1;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:640px){.layout{padding:24px 16px}nav{padding:0 16px}.plan-row,.danger-row{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+
+<div id="loading-screen"><div class="spinner"></div></div>
+
+<nav>
+  <a href="/" class="logo">GetBiz<span>Idea</span></a>
+  <div class="nav-right">
+    <button class="btn-back" onclick="window.location.href='/dashboard'">← My plans</button>
+  </div>
+</nav>
+
+<div class="layout" id="main-content" style="display:none">
+  <h1>Account settings</h1>
+  <p class="page-sub">Manage your profile and subscription</p>
+
+  <!-- Profile -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Profile</div>
+      <div class="section-desc">Your name and email address</div>
+    </div>
+    <div class="section-body">
+      <div class="form-group">
+        <label>Full name</label>
+        <input type="text" id="profile-name" placeholder="Jan Novák">
+      </div>
+      <div class="form-group">
+        <label>Email address</label>
+        <input type="email" id="profile-email" disabled>
+      </div>
+      <button class="btn-save" onclick="saveName()">Save changes</button>
+    </div>
+  </div>
+
+  <!-- Password -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Password</div>
+      <div class="section-desc">Change your account password</div>
+    </div>
+    <div class="section-body">
+      <div class="form-group">
+        <label>New password</label>
+        <input type="password" id="new-password" placeholder="At least 8 characters">
+      </div>
+      <div class="form-group">
+        <label>Confirm new password</label>
+        <input type="password" id="confirm-password" placeholder="Repeat password">
+      </div>
+      <button class="btn-save" onclick="changePassword()">Update password</button>
+    </div>
+  </div>
+
+  <!-- Plan -->
+  <div class="section">
+    <div class="plan-row">
+      <div class="plan-info">
+        <div class="plan-name">Current plan <span class="badge-free" id="plan-badge">Free</span></div>
+        <div class="plan-detail" id="plan-detail">1 business plan · Limited features</div>
+      </div>
+      <button class="btn-upgrade" onclick="window.location.href='/plans'" id="upgrade-btn">Upgrade to Pro →</button>
+    </div>
+  </div>
+
+  <!-- Danger zone -->
+  <div class="section">
+    <div class="danger-row">
+      <div class="danger-info">
+        <div class="danger-title">Delete account</div>
+        <div class="danger-desc">Permanently remove your account and all plans. This cannot be undone.</div>
+      </div>
+      <button class="btn-danger" onclick="confirmDelete()">Delete account</button>
+    </div>
+  </div>
+</div>
+
+<div class="success-toast" id="toast"></div>
+
+<script>
+var SUPABASE_URL = (window.GBI_CONFIG && window.GBI_CONFIG.SUPABASE_URL) || 'https://YOUR_PROJECT.supabase.co';
+var SUPABASE_ANON = (window.GBI_CONFIG && window.GBI_CONFIG.SUPABASE_ANON) || 'YOUR_ANON_KEY';
+var sb = null;
+var currentUser = null;
+try { sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON); } catch(e) {}
+
+function isConfigured() { return SUPABASE_URL !== 'https://YOUR_PROJECT.supabase.co'; }
+
+window.addEventListener('DOMContentLoaded', async function() {
+  if (!isConfigured()) {
+    showDemo();
+    return;
+  }
+  var { data: { session } } = await sb.auth.getSession();
+  if (!session) { window.location.href = '/login'; return; }
+  currentUser = session.user;
+  var name = (currentUser.user_metadata && currentUser.user_metadata.full_name) || '';
+  document.getElementById('profile-name').value = name;
+  document.getElementById('profile-email').value = currentUser.email;
+  document.getElementById('loading-screen').style.display = 'none';
+  document.getElementById('main-content').style.display = '';
+});
+
+function showDemo() {
+  document.getElementById('profile-name').value = 'Jan Novák';
+  document.getElementById('profile-email').value = 'jan@example.com';
+  document.getElementById('loading-screen').style.display = 'none';
+  document.getElementById('main-content').style.display = '';
+}
+
+async function saveName() {
+  var name = document.getElementById('profile-name').value.trim();
+  if (!name) return;
+  if (!isConfigured()) { toast('Changes saved ✓'); return; }
+  var { error } = await sb.auth.updateUser({ data: { full_name: name } });
+  if (error) toast('Error: ' + error.message);
+  else toast('Profile updated ✓');
+}
+
+async function changePassword() {
+  var pw = document.getElementById('new-password').value;
+  var pw2 = document.getElementById('confirm-password').value;
+  if (!pw || pw.length < 8) { toast('Password must be at least 8 characters'); return; }
+  if (pw !== pw2) { toast('Passwords do not match'); return; }
+  if (!isConfigured()) { toast('Password changed ✓'); return; }
+  var { error } = await sb.auth.updateUser({ password: pw });
+  if (error) toast('Error: ' + error.message);
+  else { toast('Password updated ✓'); document.getElementById('new-password').value = ''; document.getElementById('confirm-password').value = ''; }
+}
+
+function confirmDelete() {
+  if (confirm('Are you sure? This will permanently delete your account and all your business plans. This cannot be undone.')) {
+    toast('Please contact support to delete your account.');
+  }
+}
+
+function toast(msg) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(function(){ el.classList.remove('show'); }, 3000);
+}
+</script>
+</body>
+</html>
