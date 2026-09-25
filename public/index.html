@@ -44,11 +44,6 @@
     "priceCurrency": "EUR",
     "description": "Full 90-day business launch plan with first-client scripts, pricing strategy, and daily action plan"
   },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "847"
-  },
   "featureList": [
     "AI-powered business matching",
     "90-day action plan",
@@ -452,8 +447,7 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
     <!-- LEFT: text + input -->
     <div class="hero-left">
       <div class="proof-bar rv" style="display:inline-flex;margin-bottom:28px">
-        <span class="proof-stars">★★★★★</span>
-        <span><strong>4.8/5</strong> &nbsp;·&nbsp; <strong id="live-n">4,247</strong> entrepreneurs helped</span>
+        <span data-stat-wrap data-stat="plans_total" data-tpl="&lt;strong&gt;{n}&lt;/strong&gt; business plans generated so far"><strong>Free</strong> preview &nbsp;·&nbsp; full plan <strong>€17</strong> one-time</span>
       </div>
       <h1 class="hero-h rv">Your AI gives you<br>exact steps to launch<br><em>your business.</em></h1>
       <p class="hero-sub rv d1">Answer 10 questions. AI matches you with the right business and writes every concrete step — website copy, your first ad, client outreach scripts, and a full 90-day roadmap.</p>
@@ -501,14 +495,7 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
 
 <!-- LOGOS / TRUST BAR — immediately after hero -->
 <div id="logos-bar">
-  <div class="logos-label">Trusted by entrepreneurs in 38 countries</div>
-  <div class="logos-row">
-    <span class="logo-item">Forbes</span>
-    <span class="logo-item">Entrepreneur</span>
-    <span class="logo-item">Business Insider</span>
-    <span class="logo-item">Product Hunt</span>
-    <span class="logo-item">Y Combinator</span>
-  </div>
+  <div class="logos-label">Built for side-hustlers, freelancers and first-time founders</div>
 </div>
 
 <!-- WHAT AI CREATES — execution kit strip -->
@@ -834,21 +821,21 @@ calcUpdate();
 <!-- STATS + REST OF PAGE (below the quiz) -->
 <div id="how-it-works"></div>
 <div class="stats">
-  <div class="stat">
-    <div class="stat-n" data-count="2847">2,847</div>
-    <div class="stat-l">Plans generated<br>this week</div>
+  <div class="stat" data-stat-wrap data-stat="plans_total" data-tpl="&lt;div class=&quot;stat-n&quot;&gt;{n}&lt;/div&gt;&lt;div class=&quot;stat-l&quot;&gt;Plans generated&lt;br&gt;so far&lt;/div&gt;">
+    <div class="stat-n">90 s</div>
+    <div class="stat-l">From quiz<br>to your match</div>
   </div>
   <div class="stat">
-    <div class="stat-n" data-count="38">38</div>
-    <div class="stat-l">Countries<br>represented</div>
+    <div class="stat-n">7-day</div>
+    <div class="stat-l">Money-back<br>guarantee</div>
   </div>
   <div class="stat">
     <div class="stat-n">€17</div>
     <div class="stat-l">One-time<br>no subscription</div>
   </div>
   <div class="stat">
-    <div class="stat-n">4.8</div>
-    <div class="stat-l">Average rating<br>out of 5</div>
+    <div class="stat-n">3</div>
+    <div class="stat-l">Business ideas<br>matched to you</div>
   </div>
 </div>
 
@@ -1040,11 +1027,6 @@ calcUpdate();
     <div class="rv" style="text-align:center;margin-bottom:48px">
       <div class="s-tag" style="justify-content:center">Real results</div>
       <h2 class="s-h">They stopped overthinking.<br>They started.</h2>
-      <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:16px">
-        <span style="color:#F59E0B;font-size:20px">★★★★★</span>
-        <span style="font-size:15px;font-weight:700;color:#111827">4.8 / 5</span>
-        <span style="font-size:14px;color:#9CA3AF">· from 4,247 entrepreneurs</span>
-      </div>
     </div>
 
     <!-- Featured testimonial -->
@@ -1126,9 +1108,11 @@ calcUpdate();
       </div>
 
       <div class="rv d4" style="background:#EEF2FF;border:1px solid #C7D2FE;border-radius:16px;padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px">
-        <div style="font-size:36px;font-weight:900;color:#6366F1;letter-spacing:-.04em">4,247</div>
-        <div style="font-size:14px;font-weight:600;color:#4338CA">entrepreneurs helped</div>
-        <div style="font-size:13px;color:#6B7280">across 38 countries</div>
+        <div data-stat-wrap data-stat="plans_total" data-tpl="&lt;div style=&quot;font-size:36px;font-weight:900;color:#6366F1;letter-spacing:-.04em&quot;&gt;{n}&lt;/div&gt;&lt;div style=&quot;font-size:14px;font-weight:600;color:#4338CA&quot;&gt;business plans generated&lt;/div&gt;">
+          <div style="font-size:36px;font-weight:900;color:#6366F1;letter-spacing:-.04em">€17</div>
+          <div style="font-size:14px;font-weight:600;color:#4338CA">one-time · no subscription</div>
+        </div>
+        <div style="font-size:13px;color:#6B7280">7-day money-back guarantee</div>
         <button onclick="scrollToQuiz()" style="padding:11px 22px;border-radius:100px;background:#6366F1;color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;font-family:inherit;margin-top:4px">Join them →</button>
       </div>
 
@@ -1239,7 +1223,7 @@ function playDemoVideo(){
         Get my plan for €17 <span class="cta-ic">→</span>
       </button>
       <br>
-      <div class="guarantee">🛡️ 30-day money-back guarantee — get a plan you'd actually follow, or we refund you. No questions asked.</div>
+      <div class="guarantee">🛡️ 7-day money-back guarantee — get a plan you'd actually follow, or we refund you. No questions asked.</div>
       <p style="margin-top:14px;font-size:12px;color:rgba(255,255,255,.3)">Free preview first — pay only if you love your business match</p>
 
       <!-- Trust badges -->
@@ -1324,10 +1308,9 @@ function playDemoVideo(){
     <button class="cta-btn" onclick="startQuiz()" style="border:none;cursor:pointer;font-size:18px;padding:20px 52px;box-shadow:0 8px 32px rgba(99,102,241,.35)">
       Find My Business Idea <span class="cta-ic">→</span>
     </button>
-    <p class="final-note" style="margin-top:20px">Free preview · No account required · Full plan €17 · 30-day money-back</p>
+    <p class="final-note" style="margin-top:20px">Free preview · No account required · Full plan €17 · 7-day money-back</p>
     <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:16px">
-      <span style="color:#F59E0B;font-size:16px">★★★★★</span>
-      <span style="font-size:13px;color:rgba(255,255,255,.4)">4.8/5 · 4,247 entrepreneurs helped</span>
+      <span data-stat-wrap data-stat="plans_total" data-tpl="{n} business plans generated so far" style="font-size:13px;color:rgba(255,255,255,.4)"></span>
     </div>
   </div>
 </div>
@@ -1405,7 +1388,8 @@ const co=new IntersectionObserver(entries=>{
 },{threshold:.5});
 document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
 
-(()=>{const el=document.getElementById('live-n');if(!el)return;let n=2847;setInterval(()=>{n+=Math.floor(Math.random()*4);el.textContent=n.toLocaleString('en')},6000)})();
+/* Real social proof: /api/stats. Below MIN the honest fallback text stays. */
+(()=>{const MIN=100;fetch('/api/stats').then(r=>r.ok?r.json():null).then(st=>{if(!st)return;document.querySelectorAll('[data-stat-wrap]').forEach(w=>{const v=st[w.dataset.stat];if(typeof v==='number'&&v>=MIN)w.innerHTML=w.dataset.tpl.replace('{n}',v.toLocaleString('en'))})}).catch(()=>{})})();
 
 let t=false;window.addEventListener('scroll',()=>{if(!t&&scrollY>200){t=true;ph('landing_scrolled')}},{passive:true});
 </script>
