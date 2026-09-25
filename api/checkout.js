@@ -1,4 +1,5 @@
 import Stripe from 'stripe';
+import { PLAN_CONTENT } from './_plan-content.js';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
@@ -8,19 +9,22 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).end();
 
-  const { resultId, email, product, planId, planName, planPrice } = req.body;
+  const { resultId, email, product, planId } = req.body || {};
   const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://getbizidea.com';
 
   try {
     let session;
 
     if (product === 'plan') {
-      // Ready-made plan purchase
-      const amount = Math.round((planPrice || 17) * 100);
+      // Ready-made plan purchase — price and plan are decided server-side,
+      // never trust planPrice/planName from the client.
+      const plan = PLAN_CONTENT[planId];
+      if (!plan) return res.status(400).json({ error: 'Unknown plan' });
+      const amount = 1700;
       session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         locale: 'en',
-        line_items: [{ price_data: { currency: 'eur', product_data: { name: planName || 'Ready-Made Business Plan', description: 'Complete 90-day business launch plan — instant download after purchase' }, unit_amount: amount }, quantity: 1 }],
+        line_items: [{ price_data: { currency: 'eur', product_data: { name: plan.name || 'Ready-Made Business Plan', description: 'Complete 90-day business launch plan — instant download after purchase' }, unit_amount: amount }, quantity: 1 }],
         mode: 'payment',
         metadata: { planId: planId || '', email: email || '', type: 'ready-made-plan' },
         customer_email: email || undefined,

@@ -24,7 +24,14 @@ export default async function handler(req, res) {
     body = {};
   }
 
-  if (body.testMode === true) {
+  // Test unlock (owner only): requires ADMIN_SECRET. Without it, fall through to
+  // Stripe signature verification — otherwise anyone could POST a fake event
+  // and unlock any plan for free.
+  const isTest = body.testMode === true
+    && !!process.env.ADMIN_SECRET
+    && body.adminSecret === process.env.ADMIN_SECRET;
+
+  if (isTest) {
     event = body;
   } else {
     const sig = req.headers['stripe-signature'];
@@ -146,7 +153,6 @@ export default async function handler(req, res) {
       let alreadyPaid = false;
       if (resultId) {
         // Atomic update: only succeeds if paid is currently false — prevents race condition with Stripe retries
-        const isTest = body.testMode === true;
         const { data: updated } = await supabase
           .from('results')
           .update({ paid: true, email, ...(isTest ? { is_test: true } : {}) })

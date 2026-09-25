@@ -49,7 +49,8 @@ export default async function handler(req, res) {
     const paid        = orders.filter(o => o.paid);
     const upsells     = orders.filter(o => o.upsell_paid);
     const with_email  = orders.filter(o => o.email && o.email !== '—');
-    const revenue_eur = (paid.length * 7) + (upsells.length * 27);
+    const MAIN_PRICE_EUR = 17; // keep in sync with api/checkout.js
+    const revenue_eur = (paid.length * MAIN_PRICE_EUR) + (upsells.length * 27);
     const conv_rate   = orders.length > 0 ? +((paid.length / orders.length) * 100).toFixed(1) : 0;
     const email_rate  = orders.length > 0 ? +((with_email.length / orders.length) * 100).toFixed(1) : 0;
 
@@ -64,7 +65,7 @@ export default async function handler(req, res) {
       const key = o.created_at?.slice(0, 10);
       if (dayMap[key]) {
         dayMap[key].total++;
-        if (o.paid) { dayMap[key].paid++; dayMap[key].revenue += 7; }
+        if (o.paid) { dayMap[key].paid++; dayMap[key].revenue += MAIN_PRICE_EUR; }
         if (o.upsell_paid) { dayMap[key].revenue += 27; }
       }
     });
