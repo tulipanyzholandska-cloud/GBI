@@ -1,50 +1,15 @@
-# Claude SDK for Python
+# GetBizIdea
 
-[![PyPI version](https://img.shields.io/pypi/v/anthropic.svg)](https://pypi.org/project/anthropic/)
+AI business-idea quiz → personalized 90-day launch plan (€17 one-time). Live: https://getbizidea.com
 
-The Claude SDK for Python provides access to the [Claude API](https://docs.anthropic.com/en/api/) from Python applications.
+- `public/` — static site (Vercel `cleanUrls`)
+- `api/` — Vercel serverless functions (Stripe, Supabase, Anthropic, Brevo)
+- `supabase/` — SQL schema
 
-## Documentation
+Architecture, products, env vars and open issues: see [CLAUDE.md](CLAUDE.md).
 
-Full documentation is available at **[platform.claude.com/docs/en/api/sdks/python](https://platform.claude.com/docs/en/api/sdks/python)**.
-
-## Installation
-
+## Local
 ```sh
-pip install anthropic
+npm install
+npx vercel dev   # needs env vars from Vercel project
 ```
-
-## Getting started
-
-```python
-import os
-from anthropic import Anthropic
-
-client = Anthropic(
-    api_key=os.environ.get("ANTHROPIC_API_KEY"),  # This is the default and can be omitted
-)
-
-message = client.messages.create(
-    max_tokens=1024,
-    messages=[
-        {
-            "role": "user",
-            "content": "Hello, Claude",
-        }
-    ],
-    model="claude-opus-4-6",
-)
-print(message.content)
-```
-
-## Requirements
-
-Python 3.9+
-
-## Contributing
-
-See [CONTRIBUTING.md](./CONTRIBUTING.md).
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
