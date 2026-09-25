@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/config.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',sans-serif;background:#F9FAFB;color:#111827;min-height:100vh}
@@ -196,8 +197,8 @@ nav{height:60px;padding:0 32px;display:flex;align-items:center;justify-content:s
 </div>
 
 <script>
-var SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
-var SUPABASE_ANON = 'YOUR_ANON_KEY';
+var SUPABASE_URL = (window.GBI_CONFIG && window.GBI_CONFIG.SUPABASE_URL) || 'https://YOUR_PROJECT.supabase.co';
+var SUPABASE_ANON = (window.GBI_CONFIG && window.GBI_CONFIG.SUPABASE_ANON) || 'YOUR_ANON_KEY';
 
 var sb = null;
 var currentUser = null;
