@@ -104,7 +104,7 @@ footer a:hover{color:#6366F1}
         <label>Password</label>
         <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
       </div>
-      <a href="/forgot-password.html" class="forgot">Forgot password?</a>
+      <a href="/forgot-password" class="forgot">Forgot password?</a>
       <button class="btn-primary" id="login-btn" onclick="signInEmail()">Sign in</button>
       <div class="form-footer">
         Don't have an account? <button onclick="switchTab('register')">Create one free</button>
@@ -151,7 +151,7 @@ footer a:hover{color:#6366F1}
 </main>
 
 <footer>
-  <a href="/">GetBizIdea</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a>
+  <a href="/">GetBizIdea</a> · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a>
 </footer>
 
 <script>
@@ -172,7 +172,7 @@ try {
 if (sb) {
   sb.auth.getSession().then(function(r) {
     if (r.data && r.data.session) {
-      window.location.href = '/dashboard.html';
+      window.location.href = '/dashboard';
     }
   });
 }
@@ -193,7 +193,7 @@ async function signInGoogle() {
   if (!isConfigured()) { alert('Auth not configured yet. Add Supabase credentials.'); return; }
   var { error } = await sb.auth.signInWithOAuth({
     provider: 'google',
-    options: { redirectTo: window.location.origin + '/dashboard.html' }
+    options: { redirectTo: window.location.origin + '/dashboard' }
   });
   if (error) showErr('err-login', error.message);
 }
@@ -210,7 +210,7 @@ async function signInEmail() {
     showErr('err-login', error.message);
     btn.disabled = false; btn.textContent = 'Sign in';
   } else {
-    window.location.href = '/dashboard.html';
+    window.location.href = '/dashboard';
   }
 }
 
@@ -226,7 +226,7 @@ async function registerEmail() {
   var { error } = await sb.auth.signUp({
     email: email,
     password: pass,
-    options: { data: { full_name: name } }
+    options: { data: { full_name: name }, emailRedirectTo: 'https://getbizidea.com/dashboard' }
   });
   if (error) {
     showErr('err-register', error.message);
@@ -249,7 +249,7 @@ function showErr(id, msg) {
 if (sb) {
   sb.auth.onAuthStateChange(function(event, session) {
     if (event === 'SIGNED_IN' && session) {
-      window.location.href = '/dashboard.html';
+      window.location.href = '/dashboard';
     }
   });
 }

@@ -132,8 +132,8 @@ nav{height:60px;padding:0 32px;display:flex;align-items:center;justify-content:s
 </nav>
 
 <div class="user-menu" id="user-menu">
-  <a href="/dashboard.html">📋 My plans</a>
-  <a href="/account.html">⚙️ Account settings</a>
+  <a href="/dashboard">📋 My plans</a>
+  <a href="/account">⚙️ Account settings</a>
   <div class="menu-divider"></div>
   <button onclick="signOut()">🚪 Sign out</button>
 </div>
@@ -171,7 +171,7 @@ nav{height:60px;padding:0 32px;display:flex;align-items:center;justify-content:s
       <h3>Unlock full access for €9/month</h3>
       <p>Unlimited plans, AI business coach, financial projections, weekly check-ins</p>
     </div>
-    <button class="btn-upgrade" onclick="window.location.href='/plans.html'">Upgrade to Pro →</button>
+    <button class="btn-upgrade" onclick="window.location.href='/plans'">Upgrade to Pro →</button>
   </div>
 
   <!-- Plans section -->
@@ -222,7 +222,7 @@ window.addEventListener('DOMContentLoaded', async function() {
 
   var { data: { session } } = await sb.auth.getSession();
   if (!session) {
-    window.location.href = '/login.html';
+    window.location.href = '/login';
     return;
   }
   currentUser = session.user;
