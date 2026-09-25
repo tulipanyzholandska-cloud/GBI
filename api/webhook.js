@@ -56,8 +56,9 @@ export default async function handler(req, res) {
         const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
         const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://getbizidea.com';
 
+        let row = null;
         if (resultId) {
-          const { data: row } = await supabase.from('results').select('plan').eq('id', resultId).single();
+          ({ data: row } = await supabase.from('results').select('plan, quiz_data').eq('id', resultId).single());
           if (row && !row.plan?.upsell_paid) {
             const updatedPlan = { ...row.plan, upsell_paid: true };
             await supabase.from('results').update({ plan: updatedPlan }).eq('id', resultId);
@@ -66,7 +67,7 @@ export default async function handler(req, res) {
 
         // Fire-and-forget: generate 30-day plan + schedule daily emails
         if (email && resultId) {
-          generateAndScheduleCoach(email, resultId, row?.plan, baseUrl)
+          generateAndScheduleCoach(email, resultId, row?.plan, row?.quiz_data, baseUrl)
             .catch(e => console.error('Coach schedule error:', e.message));
         }
 
@@ -252,13 +253,13 @@ export default async function handler(req, res) {
   res.json({ received: true });
 }
 
-async function generateAndScheduleCoach(email, resultId, plan, baseUrl) {
+async function generateAndScheduleCoach(email, resultId, plan, quizDataRow, baseUrl) {
   // Generate 30-day plan using Claude (block 5)
   const Anthropic = (await import('@anthropic-ai/sdk')).default;
   const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
   const ideaName = plan?.top_idea?.name || 'your business';
-  const quizData = plan?.quiz_data || {};
+  const quizData = quizDataRow || {};
   const ctx = `Business: "${ideaName}", age ${quizData.age||''}, location ${quizData.location||''}, ${quizData.time||''}/week, budget ${quizData.budget||''}, strengths: ${quizData.strengths||''}, interests: ${quizData.interests||''}`;
 
   const msg = await claude.messages.create({

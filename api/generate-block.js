@@ -20,15 +20,23 @@ export default async function handler(req, res) {
 
   const { block, quizData, ideaName, language, rid } = req.body;
 
+  // Paywall: blocks 1–4 need a paid plan (€17), block 5 needs the Launch Week upsell (€27)
+  if (!rid) return res.status(400).json({ error: 'Missing rid' });
+  let row;
+  try {
+    const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+    ({ data: row } = await supabase.from('results').select('plan, paid').eq('id', rid).single());
+  } catch (e) {
+    console.error('Block access check error:', e.message);
+    return res.status(500).json({ error: 'Could not verify access' });
+  }
+  if (!row) return res.status(404).json({ error: 'Not found' });
+  const hasAccess = Number(block) === 5 ? row.plan?.upsell_paid === true : row.paid === true;
+  if (!hasAccess) return res.status(402).json({ error: 'Payment required' });
+
   // Return cached block from DB if available (saves Claude API tokens)
-  if (rid) {
-    try {
-      const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
-      const { data: row } = await supabase.from('results').select('plan').eq('id', rid).single();
-      if (row?.plan?.blocks?.[block]) {
-        return res.json({ block, data: row.plan.blocks[block], cached: true });
-      }
-    } catch (_) { /* ignore cache miss, generate fresh */ }
+  if (row.plan?.blocks?.[block]) {
+    return res.json({ block, data: row.plan.blocks[block], cached: true });
   }
   // FORCE English output for all blocks — language buttons removed
   const formal = 'CRITICAL: Every single word MUST be in English (US). ZERO Czech/Slovak/German/non-English words allowed — not even one. If the business name or context appears in another language, translate it and continue in English. No exceptions. ';
@@ -79,7 +87,7 @@ export default async function handler(req, res) {
     const data = JSON.parse(raw);
 
     // Persist block into plan.blocks[N] so future visits skip Claude
-    if (rid) {
+    {
       try {
         const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
         const { data: row } = await supabase.from('results').select('plan').eq('id', rid).single();

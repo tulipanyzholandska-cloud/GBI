@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { toPreviewPlan } from './_plan-preview.js';
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -15,12 +16,8 @@ export default async function handler(req, res) {
     if (error || !data) return res.status(404).json({ error: 'Not found' });
     // Only return full plan if paid; otherwise just basic preview
     const isPaid = data.paid === true;
-    // Gate premium content — strip full_plan and blocks for unpaid users
-    let plan = data.plan;
-    if (!isPaid && plan) {
-      const { full_plan, blocks, ...freePlan } = plan;
-      plan = freePlan;
-    }
+    // Gate premium content — unpaid users get only the free teaser
+    const plan = isPaid ? data.plan : toPreviewPlan(data.plan);
     res.json({ plan, email: data.email, quiz_data: data.quiz_data, paid: isPaid, is_test: data.is_test || false });
   } catch (err) {
     res.status(500).json({ error: err.message });
