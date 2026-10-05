@@ -1,4 +1,90 @@
+# GetBizIdea — search engines and AI assistants are welcome.
+# AI-readable summary: https://getbizidea.com/llms.txt
+
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /dashboard
+Disallow: /account
+Disallow: /admin
+Disallow: /login
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /plan$
+Disallow: /plan?
+Disallow: /preview
+Disallow: /index.backup
+
+Disallow: /getbizidea_interactive_premium
+
+# OpenAI (ChatGPT search, browsing, training)
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /api/
+
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+
+# Anthropic (Claude)
+User-agent: ClaudeBot
+Allow: /
+Disallow: /api/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /api/
+
+User-agent: Claude-User
+Allow: /
+Disallow: /api/
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /api/
+
+# Google Gemini / AI Overviews
+User-agent: Google-Extended
+Allow: /
+
+# Microsoft Copilot (Bing)
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+
+# Apple Intelligence
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Meta AI
+User-agent: meta-externalagent
+Allow: /
+Disallow: /api/
+
+# Mistral, DuckDuckGo AI, You.com, Common Crawl (used by many LLMs)
+User-agent: MistralAI-User
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+Disallow: /api/
 
 Sitemap: https://getbizidea.com/sitemap.xml
