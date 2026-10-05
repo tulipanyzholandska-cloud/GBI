@@ -1,4 +1,5 @@
 import Stripe from 'stripe';
+import { timingSafeEqual } from 'crypto';
 import { createClient } from '@supabase/supabase-js';
 import { scheduleDripEmails } from './_drip-emails.js';
 import { buildPlanEmail } from './_plan-content.js';
@@ -24,7 +25,13 @@ export default async function handler(req, res) {
     body = {};
   }
 
-  if (body.testMode === true) {
+  // Test mode (owner access code) skips Stripe signature verification, so it
+  // must carry the server-side secret UNLOCK_PIN in the x-unlock-pin header.
+  const isTest = body.testMode === true;
+  if (isTest) {
+    if (!isValidUnlockPin(req.headers['x-unlock-pin'])) {
+      return res.status(401).json({ error: 'Invalid access code' });
+    }
     event = body;
   } else {
     const sig = req.headers['stripe-signature'];
@@ -148,7 +155,6 @@ export default async function handler(req, res) {
       let alreadyPaid = false;
       if (resultId) {
         // Atomic update: only succeeds if paid is currently false — prevents race condition with Stripe retries
-        const isTest = body.testMode === true;
         const { data: updated } = await supabase
           .from('results')
           .update({ paid: true, email, ...(isTest ? { is_test: true } : {}) })
@@ -344,4 +350,12 @@ async function getRawBody(req) {
     req.on('end', () => resolve(data));
     req.on('error', reject);
   });
+}
+
+function isValidUnlockPin(pin) {
+  const expected = process.env.UNLOCK_PIN;
+  if (!expected || typeof pin !== 'string') return false;
+  const a = Buffer.from(pin);
+  const b = Buffer.from(expected);
+  return a.length === b.length && timingSafeEqual(a, b);
 }
