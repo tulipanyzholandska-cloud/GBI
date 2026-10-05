@@ -66,9 +66,9 @@ async function scheduleReminders(email, resultId, ideaName, baseUrl) {
   ];
 
   const now = Date.now();
-  for (const r of reminders) {
+  await Promise.all(reminders.map(r => {
     const scheduledAt = new Date(now + r.delay * 60 * 60 * 1000).toISOString();
-    fetch('https://api.brevo.com/v3/smtp/email', {
+    return fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: { 'api-key': process.env.BREVO_API_KEY, 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -80,7 +80,7 @@ async function scheduleReminders(email, resultId, ideaName, baseUrl) {
         tags: ['gbi-reminder', `reminder-${r.delay}h`]
       })
     }).catch(e => console.error(`Reminder ${r.delay}h error:`, e.message));
-  }
+  }));
 }
 
 export default async function handler(req, res) {
@@ -110,8 +110,8 @@ export default async function handler(req, res) {
 
     const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://getbizidea.com';
 
-    // Schedule 24h + 72h reminders (fire-and-forget)
-    scheduleReminders(email, resultId, ideaName, baseUrl);
+    // Schedule 24h + 72h reminders (awaited: Vercel freezes the function after the response)
+    await scheduleReminders(email, resultId, ideaName, baseUrl);
 
     res.json({ ok: true });
   } catch (err) {

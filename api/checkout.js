@@ -28,11 +28,11 @@ export default async function handler(req, res) {
         cancel_url: `${baseUrl}/plans`,
       });
     } else if (product === 'upsell') {
-      // €27 Launch Week upsell
+      // €27 30-Day Launch Coach upsell
       session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         locale: 'en',
-        line_items: [{ price_data: { currency: 'eur', product_data: { name: 'Launch Week — 7-Day Fast-Start Kit', description: 'Personalized daily schedule for Week 1: what to do each morning, afternoon & evening to land your first client' }, unit_amount: 2700 }, quantity: 1 }],
+        line_items: [{ price_data: { currency: 'eur', product_data: { name: '30-Day Launch Coach', description: '30 daily emails personalized to your business: one task, one copy-paste script and one win to aim for each day' }, unit_amount: 2700 }, quantity: 1 }],
         mode: 'payment',
         metadata: { resultId: resultId || '', email: email || '', type: 'upsell' },
         customer_email: email || undefined,
