@@ -1,5 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { createClient } from '@supabase/supabase-js';
+import { freePlan } from './_teaser.js';
 
 const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const LANG_MAP = { en: 'English', cs: 'Czech', sk: 'Slovak', de: 'German' };
@@ -82,7 +83,8 @@ JSON (fill ALL fields, be specific and concrete):
       console.error('DB exception:', e.message);
     }
 
-    res.json({ resultId, plan, dbError });
+    // Full plan is stored in DB; client only gets the free preview until paid (see /api/result)
+    res.json({ resultId, plan: freePlan(plan), dbError });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });

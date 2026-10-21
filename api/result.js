@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { freePlan } from './_teaser.js';
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -17,10 +18,7 @@ export default async function handler(req, res) {
     const isPaid = data.paid === true;
     // Gate premium content — strip full_plan and blocks for unpaid users
     let plan = data.plan;
-    if (!isPaid && plan) {
-      const { full_plan, blocks, ...freePlan } = plan;
-      plan = freePlan;
-    }
+    if (!isPaid && plan) plan = freePlan(plan);
     res.json({ plan, email: data.email, quiz_data: data.quiz_data, paid: isPaid, is_test: data.is_test || false });
   } catch (err) {
     res.status(500).json({ error: err.message });
