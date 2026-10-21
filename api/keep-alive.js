@@ -1,11 +1,8 @@
-import { createClient } from '@supabase/supabase-js';
+import { getSupabase } from './_supabase.js';
 
 export default async function handler(req, res) {
   try {
-    const supabase = createClient(
-      process.env.SUPABASE_URL,
-      process.env.SUPABASE_ANON_KEY
-    );
+    const supabase = getSupabase();
     const { count, error } = await supabase
       .from('results')
       .select('id', { count: 'exact', head: true });

@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+import { getSupabase } from './_supabase.js';
 
 export default async function handler(req, res) {
   const { rid, email } = req.method === 'GET' ? req.query : req.body;
@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+    const supabase = getSupabase();
 
     if (rid) {
       const { data: row } = await supabase.from('results').select('quiz_data').eq('id', rid).single();

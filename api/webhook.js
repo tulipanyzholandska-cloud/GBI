@@ -1,6 +1,6 @@
 import Stripe from 'stripe';
 import { timingSafeEqual } from 'crypto';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabase } from './_supabase.js';
 import { scheduleDripEmails } from './_drip-emails.js';
 import { buildPlanEmail } from './_plan-content.js';
 
@@ -53,7 +53,7 @@ export default async function handler(req, res) {
     // ── UPSELL PAYMENT (€27 30-Day Launch Coach) ──────────────────────────────
     if (type === 'upsell') {
       try {
-        const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+        const supabase = getSupabase();
         const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://getbizidea.com';
 
         let row = null;
@@ -149,7 +149,7 @@ export default async function handler(req, res) {
 
     // ── MAIN PLAN PAYMENT (€17) ────────────────────────────────────────────────
     try {
-      const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+      const supabase = getSupabase();
 
       // IDEMPOTENCY: check if already paid (don't re-send emails on repeated unlocks)
       let alreadyPaid = false;
@@ -256,7 +256,7 @@ export default async function handler(req, res) {
 
 async function generateAndScheduleCoach(email, resultId, plan, quizData, baseUrl) {
   const ideaName = plan?.top_idea?.name || 'your business';
-  const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+  const supabase = getSupabase();
 
   // Reuse the 30-day plan if the page already generated it (same data the user sees on the page)
   let coachPlan = plan?.blocks?.[5];

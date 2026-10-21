@@ -1,5 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabase } from './_supabase.js';
 
 const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
@@ -13,7 +13,7 @@ export default async function handler(req, res) {
   if (!rid) return res.status(400).json({ error: 'Missing rid' });
 
   try {
-    const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+    const supabase = getSupabase();
     const { data, error } = await supabase.from('results').select('plan, quiz_data').eq('id', rid).single();
     if (error || !data) return res.status(404).json({ error: 'Not found' });
 

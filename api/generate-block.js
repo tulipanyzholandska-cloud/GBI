@@ -1,5 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabase } from './_supabase.js';
 
 const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const LANG_MAP = { en: 'English', cs: 'Czech', sk: 'Slovak', de: 'German' };
@@ -37,7 +37,7 @@ export default async function handler(req, res) {
   if (!rid) return res.status(402).json({ error: 'Payment required' });
   let row;
   try {
-    const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+    const supabase = getSupabase();
     const { data, error } = await supabase.from('results').select('plan, quiz_data, paid').eq('id', rid).single();
     if (error || !data) return res.status(404).json({ error: 'Not found' });
     row = data;
@@ -112,7 +112,7 @@ export default async function handler(req, res) {
 
     // Persist block into plan.blocks[N] so future visits skip Claude
     try {
-      const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+      const supabase = getSupabase();
       const { data: fresh } = await supabase.from('results').select('plan').eq('id', rid).single();
       const basePlan = fresh?.plan || row.plan;
       const updatedPlan = { ...basePlan, blocks: { ...(basePlan?.blocks || {}), [block]: data } };

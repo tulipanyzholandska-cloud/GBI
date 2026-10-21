@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+import { getSupabase } from './_supabase.js';
 
 const SENDER = { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' };
 
@@ -94,7 +94,7 @@ export default async function handler(req, res) {
   if (!email) return res.status(400).json({ error: 'Missing email' });
 
   try {
-    const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+    const supabase = getSupabase();
 
     if (resultId) {
       const { data } = await supabase.from('results').select('email, paid').eq('id', resultId).single();

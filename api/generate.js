@@ -1,5 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabase } from './_supabase.js';
 import { freePlan } from './_teaser.js';
 
 const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
@@ -72,7 +72,7 @@ JSON (fill ALL fields, be specific and concrete):
     let resultId = null;
     let dbError = null;
     try {
-      const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+      const supabase = getSupabase();
       const { data, error } = await supabase.from('results').insert({
         quiz_data: quizData, plan, language: quizData.language || 'en'
       }).select('id').single();
