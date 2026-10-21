@@ -1,5 +1,6 @@
 // Drip email sequence — scheduled after unlock to drive engagement & retention
 // Uses Brevo's scheduledAt parameter
+import { brevoSend } from './_send-email.js';
 
 const SENDER = { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' };
 
@@ -73,24 +74,15 @@ export async function scheduleDripEmails(email, resultId, baseUrl) {
 
   for (const step of SEQUENCE) {
     const scheduledAt = new Date(now + step.day * 24 * 60 * 60 * 1000).toISOString();
-    try {
-      const resp = await fetch('https://api.brevo.com/v3/smtp/email', {
-        method: 'POST',
-        headers: { 'api-key': process.env.BREVO_API_KEY, 'Content-Type': 'application/json', 'accept': 'application/json' },
-        body: JSON.stringify({
-          sender: SENDER,
-          to: [{ email }],
-          subject: step.subject,
-          htmlContent: wrap(step.title, step.body, magicLink, unsubLink),
-          scheduledAt,
-          tags: ['gbi-drip', `day-${step.day}`]
-        })
-      });
-      const data = await resp.json().catch(() => ({}));
-      results.push({ day: step.day, ok: resp.ok, status: resp.status, messageId: data.messageId });
-    } catch (e) {
-      results.push({ day: step.day, ok: false, error: e.message });
-    }
+    const r = await brevoSend({
+      sender: SENDER,
+      to: [{ email }],
+      subject: step.subject,
+      htmlContent: wrap(step.title, step.body, magicLink, unsubLink),
+      scheduledAt,
+      tags: ['gbi-drip', `day-${step.day}`]
+    }, `drip day ${step.day}`);
+    results.push({ day: step.day, ...r });
   }
   return { ok: true, scheduled: results };
 }

@@ -2,6 +2,7 @@ import Stripe from 'stripe';
 import { timingSafeEqual } from 'crypto';
 import { getSupabase } from './_supabase.js';
 import { scheduleDripEmails } from './_drip-emails.js';
+import { brevoSend, brevoCancelScheduled, rememberScheduled } from './_send-email.js';
 import { buildPlanEmail } from './_plan-content.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -101,16 +102,12 @@ export default async function handler(req, res) {
   </p>
 </body></html>`;
           // Awaited: Vercel freezes the function after the response, so fire-and-forget work gets lost
-          await fetch('https://api.brevo.com/v3/smtp/email', {
-            method: 'POST',
-            headers: { 'api-key': process.env.BREVO_API_KEY, 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              sender: { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' },
-              to: [{ email }],
-              subject: '🚀 Your 30-Day Launch Coach starts tomorrow',
-              htmlContent
-            })
-          }).catch(e => console.error('Upsell email error:', e.message));
+          await brevoSend({
+            sender: { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' },
+            to: [{ email }],
+            subject: '🚀 Your 30-Day Launch Coach starts tomorrow',
+            htmlContent
+          }, 'upsell confirmation');
 
           await generateAndScheduleCoach(email, resultId, row?.plan, row?.quiz_data, baseUrl)
             .catch(e => console.error('Coach schedule error:', e.message));
@@ -129,16 +126,12 @@ export default async function handler(req, res) {
         if (email && planId) {
           const emailData = buildPlanEmail(planId, email, baseUrl);
           if (emailData) {
-            await fetch('https://api.brevo.com/v3/smtp/email', {
-              method: 'POST',
-              headers: { 'api-key': process.env.BREVO_API_KEY, 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                sender: { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' },
-                to: [{ email }],
-                subject: emailData.subject,
-                htmlContent: emailData.html
-              })
-            }).catch(e => console.error('Ready-made plan email error:', e.message));
+            await brevoSend({
+              sender: { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' },
+              to: [{ email }],
+              subject: emailData.subject,
+              htmlContent: emailData.html
+            }, 'ready-made plan');
           }
         }
       } catch (err) {
@@ -225,24 +218,30 @@ export default async function handler(req, res) {
 </html>`;
 
         // Awaited: Vercel freezes the function once the response is sent, so un-awaited sends can be lost
-        await fetch('https://api.brevo.com/v3/smtp/email', {
-          method: 'POST',
-          headers: {
-            'api-key': process.env.BREVO_API_KEY,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            sender: { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' },
-            to: [{ email }],
-            subject,
-            htmlContent
-          })
-        }).catch(e => console.error('Welcome email bg error:', e.message));
+        await brevoSend({
+          sender: { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' },
+          to: [{ email }],
+          subject,
+          htmlContent
+        }, 'welcome');
+
+        // Paid now: cancel the pending "your plan is still waiting" reminders
+        try {
+          const { data: r } = await supabase.from('results').select('quiz_data').eq('id', resultId).single();
+          const pending = r?.quiz_data?.scheduled_emails || [];
+          if (pending.length) {
+            await Promise.all(pending.map(brevoCancelScheduled));
+            await supabase.from('results').update({ quiz_data: { ...r.quiz_data, scheduled_emails: [] } }).eq('id', resultId);
+          }
+        } catch (e) { console.error('Cancel reminders error:', e.message); }
 
         // Fire-and-forget 7-email drip sequence
         if (type !== 'tripwire') {
           await scheduleDripEmails(email, resultId, baseUrl)
-            .then(drip => console.log('Drip scheduled:', JSON.stringify(drip)))
+            .then(async drip => {
+              console.log('Drip scheduled:', JSON.stringify(drip));
+              await rememberScheduled(supabase, resultId, (drip.scheduled || []).map(d => d.messageId));
+            })
             .catch(dripErr => console.error('Drip schedule error:', dripErr.message));
         }
       }
@@ -295,6 +294,7 @@ async function generateAndScheduleCoach(email, resultId, plan, quizData, baseUrl
   const magicLink = `${baseUrl}/quiz.html?unlocked=true&rid=${resultId}&upsell=1`;
   const now = new Date();
 
+  const coachIds = [];
   for (const dayData of days.slice(0, 30)) {
     const sendAt = new Date(now);
     sendAt.setDate(sendAt.getDate() + dayData.day); // Day 1 = tomorrow ("starts tomorrow morning")
@@ -325,22 +325,21 @@ async function generateAndScheduleCoach(email, resultId, plan, quizData, baseUrl
   <div style="text-align:center;margin-bottom:24px">
     <a href="${magicLink}" style="display:inline-block;padding:12px 28px;border-radius:10px;background:rgba(124,58,237,0.3);border:1px solid #7c3aed;color:#fff;font-size:14px;font-weight:700;text-decoration:none">Open My Business Plan →</a>
   </div>
-  <p style="color:rgba(255,255,255,0.2);font-size:11px;text-align:center">Get Biz Idea · Day ${dayData.day} of 30 · <a href="${baseUrl}/api/unsubscribe?email=${encodeURIComponent(email)}" style="color:rgba(255,255,255,0.2)">Unsubscribe</a></p>
+  <p style="color:rgba(255,255,255,0.2);font-size:11px;text-align:center">Get Biz Idea · Day ${dayData.day} of 30 · <a href="${baseUrl}/api/unsubscribe?rid=${resultId}&email=${encodeURIComponent(email)}" style="color:rgba(255,255,255,0.2)">Unsubscribe</a></p>
 </body></html>`;
 
-    await fetch('https://api.brevo.com/v3/smtp/email', {
-      method: 'POST',
-      headers: { 'api-key': process.env.BREVO_API_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sender: { name: 'Get Biz Idea Coach', email: 'hello@getbizidea.com' },
-        to: [{ email }],
-        subject: `Day ${dayData.day}: ${dayData.theme || 'Your daily task'}`,
-        htmlContent: html,
-        scheduledAt: sendAt.toISOString()
-      })
-    });
+    const r = await brevoSend({
+      sender: { name: 'Get Biz Idea Coach', email: 'hello@getbizidea.com' },
+      to: [{ email }],
+      subject: `Day ${dayData.day}: ${dayData.theme || 'Your daily task'}`,
+      htmlContent: html,
+      scheduledAt: sendAt.toISOString(),
+      tags: ['gbi-coach', `coach-day-${dayData.day}`]
+    }, `coach day ${dayData.day}`);
+    coachIds.push(r.messageId);
   }
-  console.log(`Coach: scheduled ${days.length} emails for ${email}`);
+  await rememberScheduled(supabase, resultId, coachIds);
+  console.log(`Coach: scheduled ${coachIds.filter(Boolean).length}/${days.length} emails for ${email}`);
 }
 
 async function getRawBody(req) {

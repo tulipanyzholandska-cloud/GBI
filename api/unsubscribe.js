@@ -1,4 +1,5 @@
 import { getSupabase } from './_supabase.js';
+import { brevoCancelScheduled } from './_send-email.js';
 
 export default async function handler(req, res) {
   const { rid, email } = req.method === 'GET' ? req.query : req.body;
@@ -10,13 +11,25 @@ export default async function handler(req, res) {
   try {
     const supabase = getSupabase();
 
+    // Collect every result row for this person: by rid, and by email (covers
+    // links that only carry the email, e.g. ready-made plan emails)
+    const rows = new Map();
     if (rid) {
-      const { data: row } = await supabase.from('results').select('quiz_data').eq('id', rid).single();
-      if (row) {
-        await supabase.from('results')
-          .update({ quiz_data: { ...(row.quiz_data || {}), unsubscribed: true, unsubscribed_at: new Date().toISOString() } })
-          .eq('id', rid);
-      }
+      const { data } = await supabase.from('results').select('id, quiz_data').eq('id', rid).maybeSingle();
+      if (data) rows.set(data.id, data);
+    }
+    if (email) {
+      const { data } = await supabase.from('results').select('id, quiz_data').eq('email', email);
+      (data || []).forEach(r => rows.set(r.id, r));
+    }
+
+    for (const row of rows.values()) {
+      const qd = row.quiz_data || {};
+      // Cancel emails already queued in Brevo, otherwise they still go out
+      await Promise.all((qd.scheduled_emails || []).map(brevoCancelScheduled));
+      await supabase.from('results')
+        .update({ quiz_data: { ...qd, scheduled_emails: [], unsubscribed: true, unsubscribed_at: new Date().toISOString() } })
+        .eq('id', row.id);
     }
 
     // Return a simple confirmation page

@@ -1,8 +1,9 @@
 import { getSupabase } from './_supabase.js';
+import { brevoSend, rememberScheduled } from './_send-email.js';
 
 const SENDER = { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' };
 
-const emailWrap = (body) => `<!DOCTYPE html>
+const emailWrap = (body, unsubLink) => `<!DOCTYPE html>
 <html><head><meta charset="UTF-8"></head>
 <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:600px;margin:0 auto;padding:20px;background:#0a0a0f;color:#fff">
   <div style="text-align:center;margin-bottom:24px">
@@ -10,14 +11,15 @@ const emailWrap = (body) => `<!DOCTYPE html>
   </div>
   ${body}
   <p style="color:rgba(255,255,255,0.2);font-size:11px;text-align:center;margin:24px 0 0">
-    Get Biz Idea · app.getbizidea.com<br>
-    You received this because you requested a free business plan preview.
+    Get Biz Idea · getbizidea.com<br>
+    You received this because you requested a free business plan preview.<br>
+    <a href="${unsubLink}" style="color:rgba(255,255,255,0.2);text-decoration:underline">Unsubscribe</a>
   </p>
 </body></html>`;
 
-async function scheduleReminders(email, resultId, ideaName, baseUrl) {
-  if (!process.env.BREVO_API_KEY) return;
+async function scheduleReminders(supabase, email, resultId, ideaName, baseUrl) {
   const link = `${baseUrl}/quiz.html?rid=${resultId}`;
+  const unsubLink = `${baseUrl}/api/unsubscribe?${resultId ? `rid=${resultId}&` : ''}email=${encodeURIComponent(email)}`;
 
   const reminders = [
     {
@@ -42,45 +44,42 @@ async function scheduleReminders(email, resultId, ideaName, baseUrl) {
             <a href="${link}" style="display:inline-block;padding:14px 32px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#e8417a);color:#fff;font-size:16px;font-weight:700;text-decoration:none">Unlock my full plan →</a>
             <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-top:10px">One-time · Instant access · No subscription</div>
           </div>
-        </div>`)
+        </div>`, unsubLink)
     },
     {
-      delay: 72,
-      subject: '⏳ Last reminder — your plan expires soon',
+      // 70h, not 72h: stays inside Brevo's scheduling window
+      delay: 70,
+      subject: `Still thinking about ${ideaName || 'your business idea'}?`,
       html: emailWrap(`
         <div style="background:linear-gradient(135deg,rgba(232,65,122,0.18),rgba(124,58,237,0.12));border:1px solid rgba(232,65,122,0.35);border-radius:16px;padding:28px;margin-bottom:16px">
-          <div style="display:inline-block;padding:4px 12px;border-radius:100px;background:rgba(232,65,122,0.2);font-size:11px;font-weight:700;color:#e8417a;margin-bottom:14px;letter-spacing:.06em">⏳ EXPIRES SOON</div>
-          <h2 style="font-size:22px;font-weight:800;margin:0 0 12px;line-height:1.3">Don't let your plan go to waste</h2>
+          <h2 style="font-size:22px;font-weight:800;margin:0 0 12px;line-height:1.3">Your plan is saved — whenever you're ready</h2>
           <p style="font-size:15px;color:rgba(255,255,255,0.7);line-height:1.7;margin:0 0 20px">
-            3 days ago you matched with <strong style="color:#fff">${ideaName || 'a business idea'}</strong>. Every day you wait is a day someone else in your market gets ahead.
+            A few days ago you matched with <strong style="color:#fff">${ideaName || 'a business idea'}</strong>. Your results are saved, so you can pick up right where you left off.
           </p>
           <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:16px;margin-bottom:20px;font-size:14px;color:rgba(255,255,255,0.7);line-height:1.8">
             The full plan includes the exact outreach script, pricing, and 90-day roadmap — everything you need to land your first client.
           </div>
+          <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7;margin:0 0 20px">
+            Not sure it's for you? Just reply to this email — tell me what's holding you back and I'll answer personally.
+          </p>
           <div style="text-align:center">
             <a href="${link}" style="display:inline-block;padding:14px 32px;border-radius:12px;background:linear-gradient(135deg,#e8417a,#7c3aed);color:#fff;font-size:16px;font-weight:700;text-decoration:none">Get my plan now →</a>
             <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-top:10px">€17 one-time · Instant access</div>
           </div>
-        </div>`)
+        </div>`, unsubLink)
     }
   ];
 
   const now = Date.now();
-  await Promise.all(reminders.map(r => {
-    const scheduledAt = new Date(now + r.delay * 60 * 60 * 1000).toISOString();
-    return fetch('https://api.brevo.com/v3/smtp/email', {
-      method: 'POST',
-      headers: { 'api-key': process.env.BREVO_API_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sender: SENDER,
-        to: [{ email }],
-        subject: r.subject,
-        htmlContent: r.html,
-        scheduledAt,
-        tags: ['gbi-reminder', `reminder-${r.delay}h`]
-      })
-    }).catch(e => console.error(`Reminder ${r.delay}h error:`, e.message));
-  }));
+  const sent = await Promise.all(reminders.map(r => brevoSend({
+    sender: SENDER,
+    to: [{ email }],
+    subject: r.subject,
+    htmlContent: r.html,
+    scheduledAt: new Date(now + r.delay * 60 * 60 * 1000).toISOString(),
+    tags: ['gbi-reminder', `reminder-${r.delay}h`]
+  }, `reminder ${r.delay}h`)));
+  await rememberScheduled(supabase, resultId, sent.map(r => r.messageId));
 }
 
 export default async function handler(req, res) {
@@ -97,9 +96,10 @@ export default async function handler(req, res) {
     const supabase = getSupabase();
 
     if (resultId) {
-      const { data } = await supabase.from('results').select('email, paid').eq('id', resultId).single();
+      const { data } = await supabase.from('results').select('email, paid, quiz_data').eq('id', resultId).single();
       // Don't send reminders to paying customers
       if (data?.paid) return res.json({ ok: true, skipped: 'already paid' });
+      if (data?.quiz_data?.unsubscribed) return res.json({ ok: true, skipped: 'unsubscribed' });
       // Don't schedule reminders again if email already saved (dedup)
       if (data?.email) {
         await supabase.from('results').update({ email }).eq('id', resultId);
@@ -111,7 +111,7 @@ export default async function handler(req, res) {
     const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://getbizidea.com';
 
     // Schedule 24h + 72h reminders (awaited: Vercel freezes the function after the response)
-    await scheduleReminders(email, resultId, ideaName, baseUrl);
+    await scheduleReminders(supabase, email, resultId, ideaName, baseUrl);
 
     res.json({ ok: true });
   } catch (err) {
