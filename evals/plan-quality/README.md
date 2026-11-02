@@ -1,8 +1,20 @@
-# Plan quality eval (draft for Honza's sign-off)
+# Plan quality eval
 
 Question: is our plan better than what a beginner gets free from a chatbot, measured against the goal of a first paying customer?
 
-Nothing has run yet. It needs an Anthropic API key and sign-off on the profiles and grading below.
+Nothing real has run yet. It needs an Anthropic API key. Run it from the project folder:
+
+```bash
+node evals/plan-quality/run.mjs
+```
+
+`--dry` checks the pipeline with no API calls. Results go to `results/`: `summary.json`, `scores.csv`, `raw.json`, `pairs-for-honza.md` and `pairs-key.json`, which stays closed until Honza has given his verdicts.
+
+Limits of this test:
+- Plan B comes from Claude Opus 5.5 as a stand-in for a free chatbot, not from ChatGPT itself. It is a strong opponent, but not the same product.
+- The grader is also a Claude model, so Honza's 5 pairs are the check on it.
+- Plan A is the free-stage plan from `api/generate.js`. The paid blocks and live competitor search are not part of this comparison.
+- Location, lifestyle, business type and timeline are fixed for every profile, and interests repeat strengths, because the table below does not set them.
 
 ## Method
 
@@ -25,7 +37,7 @@ The grader sees the plans in random order, without labels. Honza reads at least 
 | 7 | 45–54 | 5–10h | under €500 | Hands-on repairs | Fixing bikes | Confidence |
 | 8 | 55+ | 10–20h | under €1,000 | 30 years in accounting | Tax questions | Where to start |
 | 9 | 55+ | 5–10h | €0 | Gardening | Plant advice | Technology |
-| 10 | 25–34 | 20h+ | under €1,000 | Coding | Fixing websites | Finding clients |
+| 10 | 25–34 | 20–40 h | under €1,000 | Coding | Fixing websites | Finding clients |
 | 11 | 18–24 | 10–20h | €0 | Languages | Translating | Where to start |
 | 12 | 35–44 | 5–10h | under €100 | Cooking | Meal planning | Confidence |
 | 13 | 25–34 | under 5h | under €100 | Design | Logos and flyers | Time |

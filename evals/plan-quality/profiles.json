@@ -1,0 +1,137 @@
+[
+ {
+  "id": 1,
+  "age": "18–24",
+  "time": "5–10 h",
+  "budget": "€0",
+  "strengths": "Video, social",
+  "asked_for": "Editing clips",
+  "risk": "Finding clients"
+ },
+ {
+  "id": 2,
+  "age": "25–34",
+  "time": "5–10 h",
+  "budget": "under €100",
+  "strengths": "Writing",
+  "asked_for": "Fixing CVs",
+  "risk": "Confidence"
+ },
+ {
+  "id": 3,
+  "age": "25–34",
+  "time": "under 5 h",
+  "budget": "€0",
+  "strengths": "Numbers",
+  "asked_for": "Excel help",
+  "risk": "Time"
+ },
+ {
+  "id": 4,
+  "age": "35–44",
+  "time": "5–10 h",
+  "budget": "under €500",
+  "strengths": "Sales",
+  "asked_for": "Negotiating car deals",
+  "risk": "Where to start"
+ },
+ {
+  "id": 5,
+  "age": "35–44",
+  "time": "under 5 h",
+  "budget": "€0",
+  "strengths": "Organising",
+  "asked_for": "Planning family events",
+  "risk": "Time"
+ },
+ {
+  "id": 6,
+  "age": "45–54",
+  "time": "10–20 h",
+  "budget": "under €1,000",
+  "strengths": "Teaching",
+  "asked_for": "Explaining maths",
+  "risk": "Finding clients"
+ },
+ {
+  "id": 7,
+  "age": "45–54",
+  "time": "5–10 h",
+  "budget": "under €500",
+  "strengths": "Hands-on repairs",
+  "asked_for": "Fixing bikes",
+  "risk": "Confidence"
+ },
+ {
+  "id": 8,
+  "age": "55+",
+  "time": "10–20 h",
+  "budget": "under €1,000",
+  "strengths": "30 years in accounting",
+  "asked_for": "Tax questions",
+  "risk": "Where to start"
+ },
+ {
+  "id": 9,
+  "age": "55+",
+  "time": "5–10 h",
+  "budget": "€0",
+  "strengths": "Gardening",
+  "asked_for": "Plant advice",
+  "risk": "Technology"
+ },
+ {
+  "id": 10,
+  "age": "25–34",
+  "time": "20–40 h",
+  "budget": "under €1,000",
+  "strengths": "Coding",
+  "asked_for": "Fixing websites",
+  "risk": "Finding clients"
+ },
+ {
+  "id": 11,
+  "age": "18–24",
+  "time": "10–20 h",
+  "budget": "€0",
+  "strengths": "Languages",
+  "asked_for": "Translating",
+  "risk": "Where to start"
+ },
+ {
+  "id": 12,
+  "age": "35–44",
+  "time": "5–10 h",
+  "budget": "under €100",
+  "strengths": "Cooking",
+  "asked_for": "Meal planning",
+  "risk": "Confidence"
+ },
+ {
+  "id": 13,
+  "age": "25–34",
+  "time": "under 5 h",
+  "budget": "under €100",
+  "strengths": "Design",
+  "asked_for": "Logos and flyers",
+  "risk": "Time"
+ },
+ {
+  "id": 14,
+  "age": "45–54",
+  "time": "5–10 h",
+  "budget": "under €500",
+  "strengths": "Care work",
+  "asked_for": "Advice on caring for parents",
+  "risk": "Where to start"
+ },
+ {
+  "id": 15,
+  "age": "25–34",
+  "time": "5–10 h",
+  "budget": "€0",
+  "strengths": "Nothing specific",
+  "asked_for": "",
+  "risk": "Confidence"
+ }
+]
