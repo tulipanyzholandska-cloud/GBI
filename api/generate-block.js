@@ -1,6 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { getSupabase } from './_supabase.js';
 import { researchCompetitors, dropDeadLinks } from './_research.js';
+import { incomeRule, capProjection } from './_income.js';
 
 const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const LANG_MAP = { en: 'English', cs: 'Czech', sk: 'Slovak', de: 'German' };
@@ -69,7 +70,7 @@ export default async function handler(req, res) {
   const blocks = {
     1: {
       system: `Premium business consultant. ALL output MUST be in English. ${formal}${truth}NEVER mention specific cities. Return ONLY valid JSON.`,
-      prompt: `${ctx}\n\nReturn JSON for income projection. All amounts are planning estimates, so keep them modest for someone starting from zero:\n{"hero_statement":"","income_projection":{"month_1":0,"month_2":0,"month_3":0,"month_6":0,"month_9":0,"month_12":0,"month_12_math":"X clients x Y€ = Z€","year_2_potential":0,"income_sources":[{"source":"","monthly_amount":0,"percentage":0},{"source":"","monthly_amount":0,"percentage":0},{"source":"","monthly_amount":0,"percentage":0}]}}\n\nREMEMBER: English only. Every word.`,
+      prompt: `${ctx}\n\nReturn JSON for income projection. ${incomeRule(quizData.time)} hero_statement describes the working life they are building, with no amounts:\n{"hero_statement":"","income_projection":{"month_1":0,"month_2":0,"month_3":0,"month_6":0,"month_9":0,"month_12":0,"month_12_math":"X clients x Y€ = Z€","year_2_potential":0,"income_sources":[{"source":"","monthly_amount":0,"percentage":0},{"source":"","monthly_amount":0,"percentage":0},{"source":"","monthly_amount":0,"percentage":0}]}}\n\nREMEMBER: English only. Every word.`,
       tokens: 2500
     },
     2: {
@@ -116,6 +117,7 @@ export default async function handler(req, res) {
     if (!jsonStr) throw new Error('Incomplete JSON from model' + (msg.stop_reason === 'max_tokens' ? ' (max_tokens)' : ''));
     const data = JSON.parse(jsonStr);
     if (competitors) data.competitors = competitors;
+    if (data.income_projection) capProjection(data.income_projection, quizData.time);
     if (Number(block) === 3) await dropDeadLinks(data.checklist?.day1, 'tool_url');
     if (Number(block) === 4) await dropDeadLinks(data.tools, 'url');
 
