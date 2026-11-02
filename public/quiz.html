@@ -373,6 +373,14 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
           <span class="chip" data-g="risk">Lack of time</span>
           <span class="chip" data-g="risk">Lack of confidence</span>
         </div>
+      </div>
+
+      <div class="tf-q" id="tfq-11" data-q="11">
+        <span class="tf-icon">🙋</span>
+        <h2 class="tf-qtxt">What do people already ask you for help with?</h2>
+        <p class="tf-sub">Fixing laptops, CVs, Excel, garden advice… Optional, but it makes your match far more personal</p>
+        <textarea id="tf-asked-for" maxlength="200" rows="3" placeholder="e.g. friends ask me to fix their CVs" style="width:100%;max-width:520px;padding:13px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.06);color:#fff;font:inherit;font-size:16px;resize:none;outline:none"></textarea>
+        <div><button class="tf-continue visible" id="tf-cont-11" onclick="tfNext()">Find my match →</button></div>
         <p class="tf-no-email">✓ Free · results in about 30 seconds</p>
       </div>
 
@@ -428,11 +436,11 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
         </svg>
         <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
           <div id="score-num" style="font-size:24px;font-weight:700">0</div>
-          <div style="font-size:9px;color:rgba(255,255,255,0.4)">/100</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4)">/5</div>
         </div>
       </div>
       <div>
-        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,0.4);margin-bottom:6px">viability score</div>
+        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,0.4);margin-bottom:6px">how hard to start</div>
         <div style="font-size:14px;font-weight:600;color:#5dcaa5;margin-bottom:4px" id="score-label">✓ Analyzing...</div>
         <div style="font-size:12px;color:rgba(255,255,255,0.55);line-height:1.5" id="r-diff-reason"></div>
       </div>
@@ -452,34 +460,7 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
   </div>
 
   <!-- Radar + Why grid -->
-  <div class="radar-ideas-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
-    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:18px">
-      <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,0.4);margin-bottom:10px">Opportunity profile</div>
-      <svg width="100%" viewBox="-50 -25 300 230" style="overflow:visible">
-        <defs>
-          <linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#6366F1"/></linearGradient>
-          <radialGradient id="radarGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(167,139,250,0.4)"/><stop offset="100%" stop-color="rgba(167,139,250,0)"/></radialGradient>
-          <filter id="radarBlur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
-        </defs>
-        <polygon points="100,55 135,77.5 135,122.5 100,145 65,122.5 65,77.5" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
-        <polygon points="100,32.5 152.5,62.5 152.5,137.5 100,167.5 47.5,137.5 47.5,62.5" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-        <line x1="100" y1="100" x2="100" y2="32.5" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-        <line x1="100" y1="100" x2="152.5" y2="62.5" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-        <line x1="100" y1="100" x2="152.5" y2="137.5" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-        <line x1="100" y1="100" x2="100" y2="167.5" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-        <line x1="100" y1="100" x2="47.5" y2="137.5" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-        <line x1="100" y1="100" x2="47.5" y2="62.5" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-        <polygon id="radar-glow" points="100,100 100,100 100,100 100,100 100,100 100,100" fill="url(#radarGlow)" filter="url(#radarBlur)" opacity="0.6" style="transition:all 1.4s cubic-bezier(.4,0,.2,1)"/>
-        <polygon id="radar-poly" points="100,100 100,100 100,100 100,100 100,100 100,100" fill="rgba(124,58,237,0.25)" stroke="url(#rg)" stroke-width="2" stroke-linejoin="round" style="transition:all 1.4s cubic-bezier(.34,1.56,.64,1);filter:drop-shadow(0 0 8px rgba(167,139,250,0.4))"/>
-        <g id="radar-dots" style="opacity:0;transition:opacity .6s .8s ease"></g>
-        <text x="100" y="22" text-anchor="middle" style="font-size:12px;font-weight:700;fill:rgba(255,255,255,0.85);font-family:inherit">Market</text>
-        <text x="160" y="62" text-anchor="start" style="font-size:12px;font-weight:700;fill:rgba(255,255,255,0.85);font-family:inherit">Competition</text>
-        <text x="160" y="142" text-anchor="start" style="font-size:12px;font-weight:700;fill:rgba(255,255,255,0.85);font-family:inherit">Profit</text>
-        <text x="100" y="188" text-anchor="middle" style="font-size:12px;font-weight:700;fill:rgba(255,255,255,0.85);font-family:inherit">Doable</text>
-        <text x="40" y="142" text-anchor="end" style="font-size:12px;font-weight:700;fill:rgba(255,255,255,0.85);font-family:inherit">Founder fit</text>
-        <text x="40" y="62" text-anchor="end" style="font-size:12px;font-weight:700;fill:rgba(255,255,255,0.85);font-family:inherit">Differentiation</text>
-      </svg>
-    </div>
+  <div style="margin-bottom:12px">
     <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:14px">
       <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,0.4);margin-bottom:10px">2 other ideas · tap to switch</div>
       <div id="r-others" style="display:flex;flex-direction:column;gap:8px"></div>
@@ -661,7 +642,7 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
   <!-- LAUNCH WEEK CONTENT (shown after upsell purchased) -->
   <div id="launch-week-block" style="display:none"></div>
 
-</div></div><script>let currentStep=1,selectedLang='en',resultId=null,planData=null,userEmail=null;function setLang(l,b){selectedLang=l;document.querySelectorAll('.lang-btn').forEach(x=>x.classList.remove('on'));b.classList.add('on')}let tfCurrent=1;const TF_TOTAL=10;const TF_SINGLE=['age','loc','life','time','budget','btype','inc','risk'];const TF_GRP={1:'age',2:'loc',3:'life',4:'time',5:'budget',6:'str',7:'int',8:'btype',9:'inc',10:'risk'};
+</div></div><script>let currentStep=1,selectedLang='en',resultId=null,planData=null,userEmail=null;function setLang(l,b){selectedLang=l;document.querySelectorAll('.lang-btn').forEach(x=>x.classList.remove('on'));b.classList.add('on')}let tfCurrent=1;const TF_TOTAL=11;const TF_SINGLE=['age','loc','life','time','budget','btype','inc','risk'];const TF_GRP={1:'age',2:'loc',3:'life',4:'time',5:'budget',6:'str',7:'int',8:'btype',9:'inc',10:'risk'};
 function tfNext(){if(tfCurrent>=TF_TOTAL){generate();return;}const g=TF_GRP[tfCurrent];if(g&&document.querySelectorAll('[data-g="'+g+'"].on').length===0){const chips=document.getElementById('g-'+g);if(chips){chips.animate([{transform:'translateX(-5px)'},{transform:'translateX(5px)'},{transform:'translateX(-3px)'},{transform:'translateX(0)'}],{duration:280});chips.querySelectorAll('.chip').forEach(c=>{c.style.borderColor='#ef4444';setTimeout(()=>c.style.borderColor='',1800)});}return;}ph('quiz_step',{step:tfCurrent,question:g||null});const cur=document.getElementById('tfq-'+tfCurrent);if(cur){cur.style.transition='opacity .2s,transform .2s';cur.style.opacity='0';cur.style.transform='translateY(-18px)';setTimeout(()=>{cur.style.display='none';cur.style.opacity='';cur.style.transform='';cur.classList.remove('active');tfCurrent++;const nxt=document.getElementById('tfq-'+tfCurrent);if(nxt){nxt.style.display='block';nxt.classList.add('active');}updateTfProgress();},200);}}
 function tfBack(){if(tfCurrent<=1)return;const cur=document.getElementById('tfq-'+tfCurrent);if(cur){cur.style.transition='opacity .18s,transform .18s';cur.style.opacity='0';cur.style.transform='translateY(18px)';setTimeout(()=>{cur.style.display='none';cur.style.opacity='';cur.style.transform='';cur.classList.remove('active');tfCurrent--;const prv=document.getElementById('tfq-'+tfCurrent);if(prv){prv.style.display='block';prv.classList.add('active');}updateTfProgress();},170);}}
 function updateTfProgress(){const pct=Math.max(5,Math.round((tfCurrent-1)/TF_TOTAL*100));const fill=document.getElementById('tf-bar-fill');if(fill)fill.style.width=pct+'%';const meta=document.getElementById('tf-meta');if(meta)meta.innerHTML='Question <strong style="color:#fff">'+tfCurrent+'</strong> <span style="color:rgba(255,255,255,0.25)">/ '+TF_TOTAL+'</span>';const back=document.getElementById('tf-back-btn');if(back)back.className=tfCurrent<=1?'tf-hidden':'';}
@@ -672,7 +653,7 @@ function shakeMissing(missing){missing.forEach(g=>{const container=document.getE
 function goStep(n){if(n>currentStep){const missing=validateStep(currentStep);if(missing.length){shakeMissing(missing);return}}document.getElementById('step'+currentStep).classList.remove('active');const dot=document.getElementById('dot'+currentStep);const lbl=document.getElementById('lbl'+currentStep);dot.classList.remove('active');dot.classList.add('done');lbl.classList.remove('active');if(currentStep<4)document.getElementById('line'+currentStep).classList.add('done');currentStep=n;document.getElementById('step'+n).classList.add('active');document.getElementById('dot'+n).classList.add('active');document.getElementById('lbl'+n).classList.add('active')}function ph(event,props){try{if(window.posthog)posthog.capture(event,props||{})}catch(e){}}
 function startLoadingAnim(){const steps=[{id:'lds-1',icon:'🔍',text:'Scanning 2,400+ business models…',pct:18},{id:'lds-2',icon:'🎯',text:'Matching ideas to your profile…',pct:38},{id:'lds-3',icon:'📊',text:'Calculating income projections…',pct:58},{id:'lds-4',icon:'📋',text:'Writing your 90-day action plan…',pct:78},{id:'lds-5',icon:'✨',text:'Finalising your results…',pct:91}];const bar=document.getElementById('ld-bar');const icon=document.getElementById('ld-icon');const headline=document.getElementById('ld-headline');let i=0;const delays=[0,4000,8000,13000,19000];steps.forEach((s,idx)=>{window['_ld'+idx]=setTimeout(()=>{steps.forEach((ss,ii)=>{const el=document.getElementById(ss.id);if(!el)return;el.className=ii<idx?'ld-step ld-done':ii===idx?'ld-step ld-active':'ld-step';});if(bar)bar.style.width=s.pct+'%';if(icon)icon.textContent=s.icon;if(headline)headline.textContent=s.text;},delays[idx]);});}
 function stopLoadingAnim(){for(let i=0;i<5;i++)clearTimeout(window['_ld'+i]);const bar=document.getElementById('ld-bar');if(bar){bar.style.width='100%';}}
-async function generate(){const quizData={age:get('age'),location:get('loc'),lifestyle:get('life'),time:get('time'),budget:get('budget'),strengths:get('str'),interests:get('int'),btype:get('btype'),income:get('inc'),risk:get('risk'),language:selectedLang,attribution:window.gbiAttribution?window.gbiAttribution():null};ph('quiz_completed',{age:quizData.age,location:quizData.location,time:quizData.time,budget:quizData.budget,btype:quizData.btype,timeline:quizData.income,obstacle:quizData.risk});document.getElementById('quiz-section').style.display='none';document.getElementById('loading-section').style.display='flex';startLoadingAnim();try{const controller=new AbortController();const tid=setTimeout(()=>controller.abort(),110000);const resp=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({quizData}),signal:controller.signal});clearTimeout(tid);const data=await resp.json();if(!data.plan){throw new Error(data.error||'No plan returned')}resultId=data.resultId;planData=data.plan;window._lastQuizData=quizData;if(resultId)localStorage.setItem('gbi_rid',resultId);if(data.dbError){console.error('DB error from generate:',data.dbError);window._dbError=data.dbError}if(window._devMode){renderResult(data.plan,false);showPayment();setTimeout(()=>showPaidContent(data.plan.full_plan),100);}else{/* Match first, email after: the email gate on the result page unlocks the preview */renderResult(data.plan,false);}}catch(e){console.error('Generate error:',e);ph('plan_generation_failed',{error:String(e&&e.message).slice(0,120)});stopLoadingAnim();alert('Something went wrong: '+e.message);document.getElementById('quiz-section').style.display='flex';document.getElementById('loading-section').style.display='none'}}function renderResult(d,isPaid){stopLoadingAnim();ph('plan_generated',{idea:d?.top_idea?.name,difficulty:d?.top_idea?.difficulty,month12_high:d?.top_idea?.income_forecast?.month_12_high});document.getElementById('loading-section').style.display='none';document.getElementById('result-section').style.display='block';const t=d.top_idea;const fp=d.full_plan||{};const _pt=document.getElementById('paywall-title');if(_pt&&t.name)_pt.textContent='Your 90-day launch plan for '+t.name;const max=t.income_forecast.month_12_high||3000;
+async function generate(){const quizData={age:get('age'),location:get('loc'),lifestyle:get('life'),time:get('time'),budget:get('budget'),strengths:get('str'),interests:get('int'),btype:get('btype'),income:get('inc'),risk:get('risk'),asked_for:(document.getElementById('tf-asked-for')?.value||'').trim(),language:selectedLang,attribution:window.gbiAttribution?window.gbiAttribution():null};ph('quiz_completed',{age:quizData.age,location:quizData.location,time:quizData.time,budget:quizData.budget,btype:quizData.btype,timeline:quizData.income,obstacle:quizData.risk});document.getElementById('quiz-section').style.display='none';document.getElementById('loading-section').style.display='flex';startLoadingAnim();try{const controller=new AbortController();const tid=setTimeout(()=>controller.abort(),110000);const resp=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({quizData}),signal:controller.signal});clearTimeout(tid);const data=await resp.json();if(!data.plan){throw new Error(data.error||'No plan returned')}resultId=data.resultId;planData=data.plan;window._lastQuizData=quizData;if(resultId)localStorage.setItem('gbi_rid',resultId);if(data.dbError){console.error('DB error from generate:',data.dbError);window._dbError=data.dbError}if(window._devMode){renderResult(data.plan,false);showPayment();setTimeout(()=>showPaidContent(data.plan.full_plan),100);}else{/* Match first, email after: the email gate on the result page unlocks the preview */renderResult(data.plan,false);}}catch(e){console.error('Generate error:',e);ph('plan_generation_failed',{error:String(e&&e.message).slice(0,120)});stopLoadingAnim();alert('Something went wrong: '+e.message);document.getElementById('quiz-section').style.display='flex';document.getElementById('loading-section').style.display='none'}}function renderResult(d,isPaid){stopLoadingAnim();ph('plan_generated',{idea:d?.top_idea?.name,difficulty:d?.top_idea?.difficulty,month12_high:d?.top_idea?.income_forecast?.month_12_high});document.getElementById('loading-section').style.display='none';document.getElementById('result-section').style.display='block';const t=d.top_idea;const fp=d.full_plan||{};const _pt=document.getElementById('paywall-title');if(_pt&&t.name)_pt.textContent='Your 90-day launch plan for '+t.name;const max=t.income_forecast.month_12_high||3000;
   document.getElementById('r-name').textContent=t.name;
   document.getElementById('r-tagline').textContent=t.tagline;
   if(document.getElementById('r-eyebrow')) document.getElementById('r-eyebrow').textContent='AI business report · '+new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
@@ -685,8 +666,8 @@ async function generate(){const quizData={age:get('age'),location:get('loc'),lif
   document.getElementById('stat-m12').textContent=f.month_12_low+'–'+f.month_12_high+' €';
   document.getElementById('r-forecast').innerHTML=[['3 months',f.month_3_low,f.month_3_high],['6 months',f.month_6_low,f.month_6_high],['12 months',f.month_12_low,f.month_12_high]].map(([l,lo,hi])=>'<div class="forecast-row"><span class="fc-l">'+l+'</span><div class="fc-bar"><div class="fc-fill" style="width:'+Math.round((hi/max)*100)+'%"></div></div><span class="fc-v">'+lo+'–'+hi+' €</span></div>').join('');
   document.getElementById('r-forecast-note').textContent=f.explanation;
-  const score=Math.min(99,Math.max(35,Math.round(((5-t.difficulty)/4*35)+(f.month_12_high/8000*35)+(t.fit_reasons.length/3*30))));
-  setTimeout(()=>{const arc=document.getElementById('score-arc');if(arc)arc.style.strokeDashoffset=239-(239*score/100);let c=0;const iv=setInterval(()=>{c+=2;const el=document.getElementById('score-num');if(el)el.textContent=Math.min(c,score);if(c>=score)clearInterval(iv);},18);const lbl=document.getElementById('score-label');if(lbl)lbl.textContent=score>=70?'✓ Strong opportunity':score>=50?'○ Good opportunity':'△ Consider alternatives';const rp=document.getElementById('radar-poly');if(rp){const vals=[Math.min(.95,f.month_12_high/6000),Math.max(.4,1-t.difficulty/5),t.fit_reasons.length/3*.9,.7+Math.random()*.2,1-t.difficulty/6,t.fit_reasons.length/3*.95];const angs=[-90,-30,30,90,150,210];const pts=vals.map((v,i)=>{const a=angs[i]*Math.PI/180;return (100+67*v*Math.cos(a))+','+(100+67*v*Math.sin(a));}).join(' ');rp.setAttribute('points',pts);const rg=document.getElementById('radar-glow');if(rg)rg.setAttribute('points',pts);}},300);
+  const hardness=Math.min(5,Math.max(1,Number(t.difficulty)||3));
+  setTimeout(()=>{const arc=document.getElementById('score-arc');if(arc)arc.style.strokeDashoffset=239-(239*hardness/5);const el=document.getElementById('score-num');if(el)el.textContent=hardness;const lbl=document.getElementById('score-label');if(lbl)lbl.textContent=hardness<=2?'Easier start':hardness===3?'Moderate start':'Harder start';},300);
   if(document.getElementById('locked-preview-days')) document.getElementById('locked-preview-days').textContent=((fp.action_plan||{}).days_8_30||[]).slice(0,2).join(' · ');
   if(document.getElementById('locked-preview-price')) document.getElementById('locked-preview-price').textContent=(fp.pricing||{}).recommended_price||'';
   try {

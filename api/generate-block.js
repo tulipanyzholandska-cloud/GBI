@@ -64,7 +64,7 @@ export default async function handler(req, res) {
   const formal = 'CRITICAL: Every single word MUST be in English (US). ZERO Czech/Slovak/German/non-English words allowed — not even one. If the business name or context appears in another language, translate it and continue in English. No exceptions. ';
   // The reader is usually a beginner, so anything they send has to be true on day one
   const truth = 'The reader is starting from zero: no clients, results or testimonials yet. Scripts must never claim past clients, results, case studies or experience they may not have; offer something they can really do instead, such as a free sample or a small first project. Do not state statistics, market figures or response rates as facts. Mark any number you estimate as an estimate. ';
-  const ctx = `Business: "${ideaName}", Type: ${quizData.btype}, Person: age ${quizData.age}, location type ${quizData.location}, ${quizData.time}/week, budget ${quizData.budget}, strengths: ${quizData.strengths}, interests: ${quizData.interests}, timeline to first income: ${quizData.income}, main obstacle to overcome: ${quizData.risk}`;
+  const ctx = `Business: "${ideaName}", Type: ${quizData.btype}, Person: age ${quizData.age}, location type ${quizData.location}, ${quizData.time}/week, budget ${quizData.budget}, strengths: ${quizData.strengths}, interests: ${quizData.interests}, timeline to first income: ${quizData.income}, main obstacle to overcome: ${quizData.risk}, people already ask them for help with: ${quizData.asked_for || 'not answered'}. The goal of this plan is the first paying customer, so anything that does not lead there comes later.`;
 
   const blocks = {
     1: {
