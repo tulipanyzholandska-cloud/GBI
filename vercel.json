@@ -18,6 +18,16 @@
   ],
   "redirects": [
     {
+      "source": "/landing",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/preview",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/(.*)",
       "destination": "https://getbizidea.com/$1",
       "permanent": true,

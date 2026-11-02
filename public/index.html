@@ -374,23 +374,9 @@ footer a:hover{color:#111827}
 .tf-icon,.prob-ic,.step-ic{display:none}
 
 /* ===== TICKER STRIP ===== */
-#ticker-wrap{overflow:hidden;border-bottom:1px solid #E5E7EB;background:#F9FAFB;padding:10px 0;position:relative}
-#ticker-wrap::before,#ticker-wrap::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none}
-#ticker-wrap::before{left:0;background:linear-gradient(90deg,#F9FAFB,transparent)}
-#ticker-wrap::after{right:0;background:linear-gradient(-90deg,#F9FAFB,transparent)}
-.ticker-track{display:flex;gap:0;width:max-content;animation:ticker 38s linear infinite}
-.ticker-track:hover{animation-play-state:paused}
-@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
-.tick{display:inline-flex;align-items:center;gap:10px;padding:0 40px;white-space:nowrap;border-right:1px solid #E5E7EB}
-.tick-before{font-size:13px;color:#9CA3AF}
-.tick-arrow{font-size:14px;color:#374151;font-weight:700;flex-shrink:0}
-.tick-after{font-size:13px;color:#111827;font-weight:600}
 
 /* ===== LOGOS BAR ===== */
-#logos-bar{padding:36px 0 40px;border-top:1px solid #F3F4F6;border-bottom:1px solid #F3F4F6;text-align:center;background:#F9FAFB}
-#logos-bar .logos-label{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:#9CA3AF;margin-bottom:24px;font-weight:600}
-#logos-bar .logos-row{display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap}
 .logo-item{font-size:13px;font-weight:700;letter-spacing:.08em;color:#D1D5DB;text-transform:uppercase;transition:color .2s}
 .logo-item:hover{color:#9CA3AF}
 
@@ -533,49 +519,6 @@ src="https://www.facebook.com/tr?id=992472496604900&ev=PageView&noscript=1"
 
   </div>
 </section>
-
-<!-- LOGOS / TRUST BAR — immediately after hero -->
-<div id="logos-bar">
-  <div class="logos-label">Trusted by entrepreneurs in 38 countries</div>
-  <div class="logos-row">
-    <span class="logo-item">Forbes</span>
-    <span class="logo-item">Entrepreneur</span>
-    <span class="logo-item">Business Insider</span>
-    <span class="logo-item">Product Hunt</span>
-    <span class="logo-item">Y Combinator</span>
-  </div>
-</div>
-
-<!-- SCROLLING TICKER — doubts → reality -->
-<div id="ticker-wrap">
-  <div class="ticker-track">
-    <span class="tick"><span class="tick-before">9–5 was fun</span><span class="tick-arrow">→</span><span class="tick-after">but planning your own time is more fun</span></span>
-    <span class="tick"><span class="tick-before">Friends said it was nonsense</span><span class="tick-arrow">→</span><span class="tick-after">until they started asking how I did it</span></span>
-    <span class="tick"><span class="tick-before">I said "I'll start next month" for two years</span><span class="tick-arrow">→</span><span class="tick-after">started on a Tuesday, made money that Friday</span></span>
-    <span class="tick"><span class="tick-before">Had to ask permission for a day off</span><span class="tick-arrow">→</span><span class="tick-after">now I set my own schedule</span></span>
-    <span class="tick"><span class="tick-before">My partner thought it was too risky</span><span class="tick-arrow">→</span><span class="tick-after">we paid off the car in 4 months</span></span>
-    <span class="tick"><span class="tick-before">"At least it's a stable job"</span><span class="tick-arrow">→</span><span class="tick-after">my income is less stable now — it keeps going up</span></span>
-    <span class="tick"><span class="tick-before">Mondays used to feel heavy</span><span class="tick-arrow">→</span><span class="tick-after">now I actually look forward to them</span></span>
-    <span class="tick"><span class="tick-before">"No one will pay me for this"</span><span class="tick-arrow">→</span><span class="tick-after">three clients in the first week</span></span>
-    <span class="tick"><span class="tick-before">I had no idea what business to start</span><span class="tick-arrow">→</span><span class="tick-after">90 seconds later I had a plan</span></span>
-    <span class="tick"><span class="tick-before">Spent two years overthinking it</span><span class="tick-arrow">→</span><span class="tick-after">wish I'd started sooner</span></span>
-    <span class="tick"><span class="tick-before">"There's too much competition"</span><span class="tick-arrow">→</span><span class="tick-after">found my niche, fully booked in 6 weeks</span></span>
-    <span class="tick"><span class="tick-before">Was waiting to feel ready</span><span class="tick-arrow">→</span><span class="tick-after">the readiness came after I started</span></span>
-    <!-- duplicate for seamless loop -->
-    <span class="tick"><span class="tick-before">9–5 was fun</span><span class="tick-arrow">→</span><span class="tick-after">but planning your own time is more fun</span></span>
-    <span class="tick"><span class="tick-before">Friends said it was nonsense</span><span class="tick-arrow">→</span><span class="tick-after">until they started asking how I did it</span></span>
-    <span class="tick"><span class="tick-before">I said "I'll start next month" for two years</span><span class="tick-arrow">→</span><span class="tick-after">started on a Tuesday, made money that Friday</span></span>
-    <span class="tick"><span class="tick-before">Had to ask permission for a day off</span><span class="tick-arrow">→</span><span class="tick-after">now I set my own schedule</span></span>
-    <span class="tick"><span class="tick-before">My partner thought it was too risky</span><span class="tick-arrow">→</span><span class="tick-after">we paid off the car in 4 months</span></span>
-    <span class="tick"><span class="tick-before">"At least it's a stable job"</span><span class="tick-arrow">→</span><span class="tick-after">my income is less stable now — it keeps going up</span></span>
-    <span class="tick"><span class="tick-before">Mondays used to feel heavy</span><span class="tick-arrow">→</span><span class="tick-after">now I actually look forward to them</span></span>
-    <span class="tick"><span class="tick-before">"No one will pay me for this"</span><span class="tick-arrow">→</span><span class="tick-after">three clients in the first week</span></span>
-    <span class="tick"><span class="tick-before">I had no idea what business to start</span><span class="tick-arrow">→</span><span class="tick-after">90 seconds later I had a plan</span></span>
-    <span class="tick"><span class="tick-before">Spent two years overthinking it</span><span class="tick-arrow">→</span><span class="tick-after">wish I'd started sooner</span></span>
-    <span class="tick"><span class="tick-before">"There's too much competition"</span><span class="tick-arrow">→</span><span class="tick-after">found my niche, fully booked in 6 weeks</span></span>
-    <span class="tick"><span class="tick-before">Was waiting to feel ready</span><span class="tick-arrow">→</span><span class="tick-after">the readiness came after I started</span></span>
-  </div>
-</div>
 
 <!-- INCOME CALCULATOR — interactive section -->
 <section id="calc-section" style="background:#fff;padding:80px 0;border-top:1px solid #E5E7EB">
@@ -1034,110 +977,6 @@ calcUpdate();
     <p class="rv" style="text-align:center;font-size:13px;color:#9CA3AF;margin-top:20px">Your plan will be built for your specific answers — different business, different scripts, different projections.</p>
   </section>
 </div>
-
-<!-- TESTIMONIALS — card grid with photos -->
-<section style="background:#F9FAFB;border-top:1px solid #E5E7EB;border-bottom:1px solid #E5E7EB;padding:80px 0">
-  <div class="wrap">
-    <div class="rv" style="text-align:center;margin-bottom:48px">
-      <div class="s-tag" style="justify-content:center">Real results</div>
-      <h2 class="s-h">They stopped overthinking.<br>They started.</h2>
-          </div>
-
-    <!-- Featured testimonial -->
-    <div class="rv d1" style="background:#111827;border-radius:24px;padding:40px 44px;margin-bottom:24px;position:relative;overflow:hidden">
-      <div style="position:absolute;top:0;right:0;width:300px;height:300px;background:radial-gradient(circle,rgba(99,102,241,.3) 0%,transparent 70%);pointer-events:none"></div>
-      <div style="font-size:60px;line-height:1;color:rgba(255,255,255,.15);font-family:Georgia,serif;margin-bottom:16px">"</div>
-      <p style="font-size:20px;line-height:1.6;color:#fff;font-weight:500;max-width:680px;margin-bottom:28px">I'd been "thinking about starting a business" for two years. This quiz took 90 seconds and gave me a clearer plan than anything I'd read or watched. I sent my first outreach message that evening. Had a client by Friday.</p>
-      <div style="display:flex;align-items:center;gap:14px">
-        <img src="https://i.pravatar.cc/56?img=47" alt="Sarah M." style="width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,.2);object-fit:cover">
-        <div>
-          <div style="font-size:15px;font-weight:700;color:#fff">Sarah M., 31</div>
-          <div style="font-size:13px;color:rgba(255,255,255,.5)">LinkedIn Ghostwriter · Manchester, UK</div>
-        </div>
-        <div style="margin-left:auto;background:rgba(255,255,255,.08);border-radius:100px;padding:6px 14px;font-size:12px;font-weight:700;color:#A5B4FC">€1,800/mo in 6 weeks</div>
-      </div>
-    </div>
-
-    <!-- Card grid -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px" class="testi-grid">
-
-      <div class="rv d2" style="background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:24px">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-          <img src="https://i.pravatar.cc/48?img=12" alt="Jan C." style="width:40px;height:40px;border-radius:50%;object-fit:cover">
-          <div>
-            <div style="font-size:14px;font-weight:700">Jan C., 28</div>
-            <div style="font-size:12px;color:#9CA3AF">B2B Lead Gen · Dublin</div>
-          </div>
-          <div style="margin-left:auto;color:#F59E0B;font-size:14px">★★★★★</div>
-        </div>
-        <p style="font-size:14px;line-height:1.6;color:#374151">"The cold email script in my plan was copy-paste ready. Sent to 15 companies on day one. Three replied. One became a <strong>€900/month client</strong>. The plan paid for itself 50× over."</p>
-      </div>
-
-      <div class="rv d3" style="background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:24px">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-          <img src="https://i.pravatar.cc/48?img=31" alt="Eva R." style="width:40px;height:40px;border-radius:50%;object-fit:cover">
-          <div>
-            <div style="font-size:14px;font-weight:700">Eva R., 44</div>
-            <div style="font-size:12px;color:#9CA3AF">Home Cleaning · Hamburg</div>
-          </div>
-          <div style="margin-left:auto;color:#F59E0B;font-size:14px">★★★★★</div>
-        </div>
-        <p style="font-size:14px;line-height:1.6;color:#374151">"I had no idea what to charge. The plan told me exactly what to do on day 1, day 7, day 30. I now have <strong>4 regular clients</strong> and my husband stopped asking when I'll get a real job."</p>
-      </div>
-
-      <div class="rv d4" style="background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:24px">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-          <img src="https://i.pravatar.cc/48?img=65" alt="Tomáš K." style="width:40px;height:40px;border-radius:50%;object-fit:cover">
-          <div>
-            <div style="font-size:14px;font-weight:700">Tomáš K., 36</div>
-            <div style="font-size:12px;color:#9CA3AF">SaaS Consultant · Prague</div>
-          </div>
-          <div style="margin-left:auto;color:#F59E0B;font-size:14px">★★★★★</div>
-        </div>
-        <p style="font-size:14px;line-height:1.6;color:#374151">"I spent 3 months reading business books. This quiz gave me more clarity in 90 seconds. My first client hired me 2 weeks later for a <strong>€2,500 project</strong>."</p>
-      </div>
-
-      <div class="rv d2" style="background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:24px">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-          <img src="https://i.pravatar.cc/48?img=25" alt="Marta S." style="width:40px;height:40px;border-radius:50%;object-fit:cover">
-          <div>
-            <div style="font-size:14px;font-weight:700">Marta S., 29</div>
-            <div style="font-size:12px;color:#9CA3AF">Social Media · Warsaw</div>
-          </div>
-          <div style="margin-left:auto;color:#F59E0B;font-size:14px">★★★★★</div>
-        </div>
-        <p style="font-size:14px;line-height:1.6;color:#374151">"I was scared nobody would pay me for what I love. The plan showed me exactly who to target and what to charge. <strong>€1,200 in my first month</strong> doing social media management."</p>
-      </div>
-
-      <div class="rv d3" style="background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:24px">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-          <img src="https://i.pravatar.cc/48?img=52" alt="David N." style="width:40px;height:40px;border-radius:50%;object-fit:cover">
-          <div>
-            <div style="font-size:14px;font-weight:700">David N., 41</div>
-            <div style="font-size:12px;color:#9CA3AF">Fitness Coach · Amsterdam</div>
-          </div>
-          <div style="margin-left:auto;color:#F59E0B;font-size:14px">★★★★★</div>
-        </div>
-        <p style="font-size:14px;line-height:1.6;color:#374151">"The income projection felt ambitious. I hit it in month 4. Now I have <strong>8 online clients</strong> at €150/session and I've quit the gym job I hated for 7 years."</p>
-      </div>
-
-      <div class="rv d4" style="background:#EEF2FF;border:1px solid #C7D2FE;border-radius:16px;padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px">
-        <div style="font-size:36px;font-weight:900;color:#6366F1;letter-spacing:-.04em">90 sec</div>
-        <div style="font-size:14px;font-weight:600;color:#4338CA">to your business match</div>
-        <div style="font-size:13px;color:#6B7280">Free quiz · No account needed</div>
-        <button onclick="scrollToQuiz()" style="padding:11px 22px;border-radius:100px;background:#6366F1;color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;font-family:inherit;margin-top:4px">Join them →</button>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<style>
-@media(max-width:768px){
-  .testi-grid{grid-template-columns:1fr !important}
-}
-</style>
-
 
 <!-- OFFER -->
 <div class="wrap">
