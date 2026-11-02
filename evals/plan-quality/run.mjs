@@ -58,7 +58,7 @@ function parseJson(text) {
 function toText(value, depth = 0) {
   if (Array.isArray(value)) return value.map(v => toText(v, depth)).join('\n');
   if (value && typeof value === 'object') {
-    return Object.entries(value).map(([key, v]) => {
+    return Object.entries(value).filter(([, v]) => v != null).map(([key, v]) => {
       const label = key.replace(/_/g, ' ');
       return typeof v === 'object' ? `${label}:\n${toText(v, depth + 1)}` : `${label}: ${v}`;
     }).join('\n');
