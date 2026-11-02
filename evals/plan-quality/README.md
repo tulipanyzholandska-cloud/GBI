@@ -13,6 +13,7 @@ node evals/plan-quality/run.mjs
 Limits of this test:
 - Plan B comes from Claude Opus 5.5 as a stand-in for a free chatbot, not from ChatGPT itself. It is a strong opponent, but not the same product.
 - The grader is also a Claude model, so Honza's 5 pairs are the check on it.
+- A runs on Haiku 4.5 as on the live site and B on Opus 5.5, so a loss alone does not separate a weak model from a weak prompt.
 - Plan A is the free-stage plan from `api/generate.js`. The paid blocks and live competitor search are not part of this comparison.
 - Location, lifestyle, business type and timeline are fixed for every profile, and interests repeat strengths, because the table below does not set them.
 
@@ -20,7 +21,7 @@ Limits of this test:
 
 For each profile, generate two plans:
 - **A:** our current prompts from `api/generate.js`.
-- **B:** a good free prompt: "Here are my answers. Recommend one business and give me a plan to get my first paying customer."
+- **B:** a good free prompt: "Here are my answers. Recommend one business and give me a plan to get my first paying customer." It also asks for the same plain headings as plan A, so format does not reveal the author.
 
 The grader sees the plans in random order, without labels. Honza reads at least 5 pairs himself, and where he disagrees with the grader, his verdict counts.
 

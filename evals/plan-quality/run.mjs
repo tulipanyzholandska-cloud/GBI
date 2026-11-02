@@ -54,16 +54,38 @@ function parseJson(text) {
   return JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}') + 1));
 }
 
-// Both plans reach the grader as plain text, so JSON structure cannot reveal which is ours
-function toText(value, depth = 0) {
-  if (Array.isArray(value)) return value.map(v => toText(v, depth)).join('\n');
-  if (value && typeof value === 'object') {
-    return Object.entries(value).filter(([, v]) => v != null).map(([key, v]) => {
-      const label = key.replace(/_/g, ' ');
-      return typeof v === 'object' ? `${label}:\n${toText(v, depth + 1)}` : `${label}: ${v}`;
-    }).join('\n');
-  }
-  return String(value ?? '');
+// Both plans use the same plain headings, so field names cannot reveal which one is ours
+const HEADINGS = 'Recommendation, Why it fits you, Expected income, First customer, Messages to send, Pricing, Action plan, Tools, Mistakes to avoid, Other ideas';
+
+function toText(value) {
+  if (Array.isArray(value)) return value.map(v => toText(v)).filter(Boolean).join('\n');
+  if (value && typeof value === 'object') return Object.values(value).map(v => toText(v)).filter(Boolean).join('\n');
+  return String(value ?? '').trim();
+}
+
+function renderPlanA(plan) {
+  const idea = plan.top_idea || {};
+  const fp = plan.full_plan || {};
+  const fc = fp.first_customer || {};
+  const money = idea.income_forecast || {};
+  const sections = [
+    ['Recommendation', [idea.name, idea.tagline, idea.market_size, idea.why_now, idea.difficulty_reason]],
+    ['Why it fits you', [idea.fit_reasons, idea.your_advantage]],
+    ['Expected income', [
+      money.month_3_low != null && `Month 3: €${money.month_3_low} to €${money.month_3_high}`,
+      money.month_6_low != null && `Month 6: €${money.month_6_low} to €${money.month_6_high}`,
+      money.month_12_low != null && `Month 12: €${money.month_12_low} to €${money.month_12_high}`,
+      money.month_12_math, money.explanation
+    ]],
+    ['First customer', [fc.platform, fc.expected_response_rate, fc.daily_outreach_target && `Contact ${fc.daily_outreach_target} people a day`]],
+    ['Messages to send', [fc.subject, fc.message, fc.followup_message, fp.scripts]],
+    ['Pricing', [fp.pricing]],
+    ['Action plan', [fp.action_plan]],
+    ['Tools', [fp.tools]],
+    ['Mistakes to avoid', [fp.top_mistakes, fp.main_objection]],
+    ['Other ideas', [plan.other_ideas?.map(o => [o.name, o.tagline, o.monthly_potential])]]
+  ];
+  return sections.map(([heading, parts]) => `${heading}\n${toText(parts.filter(Boolean))}`).join('\n\n');
 }
 
 async function planA(profile) {
@@ -71,7 +93,7 @@ async function planA(profile) {
   const raw = await ask({ model: OUR_MODEL, max_tokens: 8000, system, messages: [{ role: 'user', content: user }] });
   const plan = parseJson(raw.replace(/```json|```/g, ''));
   capForecast(plan.top_idea?.income_forecast, profile.time);
-  return { name: plan.top_idea?.name || '', text: toText({ recommendation: plan.top_idea, plan: plan.full_plan, other_ideas: plan.other_ideas }) };
+  return { name: plan.top_idea?.name || '', text: renderPlanA(plan) };
 }
 
 async function planB(profile) {
@@ -80,7 +102,7 @@ async function planB(profile) {
     model: FREE_CHATBOT_STAND_IN,
     max_tokens: 16000,
     output_config: { effort: 'medium' },
-    messages: [{ role: 'user', content: `Here are my answers.\n${answers}\n\nRecommend one business and give me a plan to get my first paying customer. Write in English, in plain text.` }]
+    messages: [{ role: 'user', content: `Here are my answers.\n${answers}\n\nRecommend one business and give me a plan to get my first paying customer. Write in English, in plain text with no markdown, using these headings: ${HEADINGS}.` }]
   });
   return { text };
 }
