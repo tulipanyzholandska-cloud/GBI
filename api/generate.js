@@ -1,8 +1,50 @@
 import Anthropic from '@anthropic-ai/sdk';
-import { createClient } from '@supabase/supabase-js';
+import { db } from './_supabase.js';
+import { toFreePlan } from './_plan-access.js';
 
 const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const LANG_MAP = { en: 'English', cs: 'Czech', sk: 'Slovak', de: 'German' };
+
+// Best effort per-instance limit: each call costs a Claude request and a new DB row
+const RATE_LIMIT = 5;
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+const hits = new Map();
+function rateLimited(ip) {
+  const now = Date.now();
+  for (const [key, h] of hits) if (now - h.start > RATE_WINDOW_MS) hits.delete(key);
+  const h = hits.get(ip) || { start: now, count: 0 };
+  h.count++;
+  hits.set(ip, h);
+  return h.count > RATE_LIMIT;
+}
+
+function allowedOrigin(origin) {
+  try {
+    const { hostname } = new URL(origin);
+    return ['localhost', '127.0.0.1'].includes(hostname)
+      || hostname === 'getbizidea.com' || hostname.endsWith('.getbizidea.com')
+      || hostname.endsWith('.vercel.app');
+  } catch { return false; }
+}
+
+// Quiz answers end up in the prompt and the DB, so only short strings get through
+function cleanQuizData(raw) {
+  const clean = {};
+  for (const key of ['age', 'location', 'lifestyle', 'time', 'budget', 'strengths', 'interests', 'btype', 'income', 'risk', 'language']) {
+    const value = raw?.[key];
+    clean[key] = Array.isArray(value)
+      ? value.slice(0, 12).map(v => String(v).slice(0, 80)).join(', ')
+      : String(value ?? '').slice(0, 200);
+  }
+  const attr = raw?.attribution;
+  if (attr && typeof attr === 'object') {
+    clean.attribution = {};
+    for (const key of ['utm_source', 'utm_medium', 'utm_campaign', 'referrer', 'landing']) {
+      if (attr[key]) clean.attribution[key] = String(attr[key]).slice(0, 120);
+    }
+  }
+  return clean;
+}
 
 // Extract first complete balanced JSON object from text (ignores trailing garbage)
 function extractFirstJson(text) {
@@ -31,13 +73,15 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
   // Basic origin check to prevent external abuse of Claude API
-  const origin = req.headers.origin || req.headers.referer || '';
-  const allowed = ['getbizidea.com', 'localhost', '127.0.0.1', 'vercel.app'];
-  if (origin && !allowed.some(h => origin.includes(h))) {
+  if (!allowedOrigin(req.headers.origin || req.headers.referer || '')) {
     return res.status(403).json({ error: 'Forbidden' });
   }
+  const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
+  if (rateLimited(ip)) {
+    return res.status(429).json({ error: 'Too many plans generated. Please try again in a few minutes.' });
+  }
 
-  const { quizData } = req.body;
+  const quizData = cleanQuizData(req.body?.quizData);
   // FORCE English output for all users — language buttons removed
   const lang = 'English';
   const systemPrompt = `You are a world-class business coach. CRITICAL LANGUAGE RULE: Every single word in your entire response MUST be in English (US). Do NOT use Czech, Slovak, German, or any non-English words — not even a single one. If you find yourself writing a non-English word, translate it immediately. The user's location does not change this: output is ALWAYS English. NEVER mention specific cities. Give exact copy-paste scripts. difficulty must be integer 1-5 ONLY. Respond ONLY with valid JSON, no markdown, no extra text. FINAL REMINDER: English only. No exceptions.`;
@@ -71,8 +115,7 @@ JSON (fill ALL fields, be specific and concrete):
     let resultId = null;
     let dbError = null;
     try {
-      const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
-      const { data, error } = await supabase.from('results').insert({
+      const { data, error } = await db().from('results').insert({
         quiz_data: quizData, plan, language: quizData.language || 'en'
       }).select('id').single();
       if (error) { dbError = error.message || JSON.stringify(error); console.error('DB error:', error); }
@@ -82,7 +125,8 @@ JSON (fill ALL fields, be specific and concrete):
       console.error('DB exception:', e.message);
     }
 
-    res.json({ resultId, plan, dbError });
+    // The full plan stays on the server until payment
+    res.json({ resultId, plan: toFreePlan(plan), dbError });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });

@@ -1,5 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
-import { createClient } from '@supabase/supabase-js';
+import { db } from './_supabase.js';
 
 const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
@@ -13,9 +13,9 @@ export default async function handler(req, res) {
   if (!rid) return res.status(400).json({ error: 'Missing rid' });
 
   try {
-    const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
-    const { data, error } = await supabase.from('results').select('plan, quiz_data').eq('id', rid).single();
+    const { data, error } = await db().from('results').select('plan, quiz_data, paid').eq('id', rid).single();
     if (error || !data) return res.status(404).json({ error: 'Not found' });
+    if (!data.paid) return res.status(402).json({ error: 'Payment required' });
 
     const plan = data.plan;
     const idea = plan.top_idea.name;
@@ -27,8 +27,8 @@ export default async function handler(req, res) {
       messages: [{ role: 'user', content: `Create a concise 30-day action plan for someone starting: "${idea}".
 
 Based on this data:
-- First customer approach: ${fp.first_customer}
-- Pricing: ${fp.pricing.recommended_price}
+- First customer approach: ${JSON.stringify(fp.first_customer)}
+- Pricing: ${JSON.stringify(fp.pricing?.main || fp.pricing)}
 - Days 1-7: ${fp.action_plan.days_1_7.join(', ')}
 - Days 8-30: ${fp.action_plan.days_8_30.join(', ')}
 

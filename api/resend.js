@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+import { db } from './_supabase.js';
 import { sendEmail } from './_send-email.js';
 
 export default async function handler(req, res) {
@@ -14,13 +14,11 @@ export default async function handler(req, res) {
   }
 
   try {
-    const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
-
     // Find most recent paid result for this email
-    const { data, error } = await supabase
+    const { data, error } = await db()
       .from('results')
       .select('id, plan, paid, created_at')
-      .eq('email', email.toLowerCase().trim())
+      .ilike('email', email.trim().replace(/[\\%_]/g, '\\$&'))
       .eq('paid', true)
       .order('created_at', { ascending: false })
       .limit(1)
@@ -36,7 +34,7 @@ export default async function handler(req, res) {
     const businessName = data.plan?.top_idea?.name || 'your business plan';
 
     await sendEmail({
-      to: email,
+      to: email.trim(),
       subject: 'Here is your Get Biz Idea link 🔗',
       html: `
         <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:560px;margin:0 auto;padding:32px 24px;background:#0a0a0a;color:#fff;border-radius:12px">

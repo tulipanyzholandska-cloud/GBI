@@ -66,7 +66,7 @@ posthog.init('phc_BoaHAFT5T6RTaMc2L275tTvgMmQ694ndbLDxxHHQQrG6',{api_host:'https
     <div class="upsell" id="upsell" style="display:none">
       <h3>Want the full 90-day plan?</h3>
       <p>Includes complete action plan, pricing strategy, tools list, top mistakes to avoid, and first customer script — everything you need to launch and grow.</p>
-      <a href="#" id="upsell-btn" class="btn-upsell">Unlock Full Plan · 19 €</a>
+      <a href="#" id="upsell-btn" class="btn-upsell">Unlock Full Plan · €17</a>
     </div>
   </div>
 </div>
@@ -95,7 +95,7 @@ async function loadPlan() {
     document.getElementById('metric').textContent = pdf.success_metric;
     if (tw !== '1') {
       document.getElementById('upsell').style.display = 'block';
-      document.getElementById('upsell-btn').href = '/?rid=' + rid;
+      document.getElementById('upsell-btn').href = '/quiz?rid=' + rid;
     }
     document.getElementById('loading').style.display = 'none';
     document.getElementById('plan-content').style.display = 'block';

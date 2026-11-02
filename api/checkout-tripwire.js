@@ -1,6 +1,4 @@
-// Merged into checkout.js — forward requests there with product:'tripwire'
-export default async function handler(req, res) {
-  req.body = { ...req.body, product: 'tripwire' };
-  const { default: checkout } = await import('./checkout.js');
-  return checkout(req, res);
+// The €7 tripwire is retired: it unlocked the same full plan as the €17 checkout.
+export default function handler(req, res) {
+  res.status(410).json({ error: 'This offer is no longer available' });
 }

@@ -252,6 +252,7 @@ footer a:hover{color:#111827}
 !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]);t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+" (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
 posthog.init('phc_BoaHAFT5T6RTaMc2L275tTvgMmQ694ndbLDxxHHQQrG6',{api_host:'https://us.i.posthog.com',person_profiles:'identified_only'});
 </script>
+<script src="/js/attribution.js"></script>
 </head>
 <body>
 
@@ -276,16 +277,15 @@ posthog.init('phc_BoaHAFT5T6RTaMc2L275tTvgMmQ694ndbLDxxHHQQrG6',{api_host:'https
         <div>
           <div style="display:flex;align-items:baseline;gap:10px">
             <span class="hero-price">€17</span>
-            <span class="hero-price-old">€97</span>
           </div>
-          <div class="hero-price-note">One-time · instant access · 30-day money back</div>
+          <div class="hero-price-note">One-time · instant access · 7-day money back</div>
         </div>
       </div>
       <button class="btn-buy-hero" onclick="openBuyModal()">Get instant access →</button>
       <div class="trust-row">
         <span class="trust-item">🔒 Stripe secured</span>
         <span class="trust-item">📬 Instant delivery</span>
-        <span class="trust-item">↩ 30-day refund</span>
+        <span class="trust-item">↩ 7-day refund</span>
       </div>
     </div>
     <div class="hero-img-card">
@@ -297,10 +297,10 @@ posthog.init('phc_BoaHAFT5T6RTaMc2L275tTvgMmQ694ndbLDxxHHQQrG6',{api_host:'https
 <!-- SOCIAL PROOF -->
 <div class="proof-strip">
   <div class="proof-inner">
-    <div class="proof-stat"><div class="proof-num">847+</div><div class="proof-label">entrepreneurs helped</div></div>
-    <div class="proof-stat"><div class="proof-num">4.9★</div><div class="proof-label">average rating</div></div>
-    <div class="proof-stat"><div class="proof-num">€1,500</div><div class="proof-label">avg month 3 income</div></div>
-    <div class="proof-stat"><div class="proof-num">90 days</div><div class="proof-label">to first €1k month</div></div>
+    <div class="proof-stat"><div class="proof-num">90 days</div><div class="proof-label">day-by-day roadmap</div></div>
+    <div class="proof-stat"><div class="proof-num">€17</div><div class="proof-label">one-time payment</div></div>
+    <div class="proof-stat"><div class="proof-num">Email</div><div class="proof-label">instant delivery</div></div>
+    <div class="proof-stat"><div class="proof-num">7 days</div><div class="proof-label">money-back guarantee</div></div>
   </div>
 </div>
 
@@ -493,14 +493,13 @@ posthog.init('phc_BoaHAFT5T6RTaMc2L275tTvgMmQ694ndbLDxxHHQQrG6',{api_host:'https
     </div>
     <div class="buy-price-row">
       <span class="buy-price">€17</span>
-      <span class="buy-price-old">€97</span>
     </div>
-    <div class="buy-price-note">One-time payment · Instant download · 30-day money back</div>
+    <div class="buy-price-note">One-time payment · Instant download · 7-day money back</div>
     <button class="btn-buy-main" onclick="openBuyModal()">Get instant access →</button>
     <div class="buy-trust">
       <span>🔒 Stripe secured</span>
       <span>📬 Instant delivery to email</span>
-      <span>↩ 30-day refund, no questions</span>
+      <span>↩ 7-day refund, no questions</span>
     </div>
   </div>
 </div>
@@ -543,7 +542,7 @@ posthog.init('phc_BoaHAFT5T6RTaMc2L275tTvgMmQ694ndbLDxxHHQQrG6',{api_host:'https
     <p style="font-size:13px;color:#6B7280;margin-bottom:20px;line-height:1.55">Complete 90-day plan delivered to your inbox in 60 seconds.</p>
     <input type="email" id="buy-email" placeholder="your@email.com" autocomplete="email" inputmode="email" style="width:100%;padding:13px 14px;border-radius:10px;border:1.5px solid #E5E7EB;font-size:14px;outline:none;font-family:inherit;margin-bottom:12px;color:#111827;transition:border-color .18s" onfocus="this.style.borderColor='#0077B5'" onblur="this.style.borderColor='#E5E7EB'" onkeydown="if(event.key==='Enter')confirmBuy()">
     <button onclick="confirmBuy()" id="buy-btn" style="width:100%;padding:15px;border-radius:11px;border:none;background:#0077B5;color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .18s">Pay €17 · Get Instant Access →</button>
-    <div style="text-align:center;font-size:11px;color:#9CA3AF;margin-top:10px">🔒 Stripe-secured · VISA · MC · AMEX · 30-day money back</div>
+    <div style="text-align:center;font-size:11px;color:#9CA3AF;margin-top:10px">🔒 Stripe-secured · VISA · MC · AMEX · 7-day money back</div>
   </div>
 </div>
 
@@ -581,7 +580,7 @@ async function confirmBuy(){
   btn.textContent='Redirecting to payment…';
   btn.disabled=true;
   try{
-    const resp=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({product:'plan',planId:'linkedin-ghostwriting',planName:'LinkedIn Ghostwriting Agency',planPrice:17,email})});
+    const resp=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({product:'plan',planId:'linkedin-ghostwriting',email,attribution:window.gbiAttribution?window.gbiAttribution():null})});
     const data=await resp.json();
     if(data.url)window.location.href=data.url;
     else throw new Error(data.error||'Payment failed');

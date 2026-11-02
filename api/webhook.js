@@ -1,6 +1,7 @@
 import Stripe from 'stripe';
 import { timingSafeEqual } from 'crypto';
-import { createClient } from '@supabase/supabase-js';
+import { db } from './_supabase.js';
+import { sendEmail, cancelScheduledEmail } from './_send-email.js';
 import { scheduleDripEmails } from './_drip-emails.js';
 import { buildPlanEmail } from './_plan-content.js';
 
@@ -47,24 +48,30 @@ export default async function handler(req, res) {
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
     const resultId = session.metadata?.resultId;
-    const email = session.customer_email || session.metadata?.email;
+    // Stripe puts the address typed at checkout in customer_details, not customer_email
+    const rawEmail = session.customer_details?.email || session.customer_email || session.metadata?.email;
+    const email = rawEmail ? rawEmail.trim().toLowerCase() : rawEmail;
     const type = session.metadata?.type;
 
     // ── UPSELL PAYMENT (€27 30-Day Launch Coach) ──────────────────────────────
     if (type === 'upsell') {
       try {
-        const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+        const supabase = db();
         const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://getbizidea.com';
 
         let row = null;
+        let alreadyWelcomed = false;
         if (resultId) {
           const { data } = await supabase.from('results').select('plan, quiz_data').eq('id', resultId).single();
           row = data;
-          // IDEMPOTENCY: Stripe retries must not re-send emails or re-schedule 30 coach emails
-          if (row?.plan?.upsell_paid) return res.json({ received: true, alreadyPaid: true });
-          if (row) {
+          // IDEMPOTENCY: coach_scheduled is only set once all 30 emails are queued, so a failed
+          // delivery can be retried by Stripe without re-sending what already went out
+          if (row?.plan?.coach_scheduled) return res.json({ received: true, alreadyPaid: true });
+          if (row && !row.plan?.upsell_paid) {
             const updatedPlan = { ...row.plan, upsell_paid: true };
             await supabase.from('results').update({ plan: updatedPlan }).eq('id', resultId);
+          } else {
+            alreadyWelcomed = !!row;
           }
         }
 
@@ -101,22 +108,17 @@ export default async function handler(req, res) {
   </p>
 </body></html>`;
           // Awaited: Vercel freezes the function after the response, so fire-and-forget work gets lost
-          await fetch('https://api.brevo.com/v3/smtp/email', {
-            method: 'POST',
-            headers: { 'api-key': process.env.BREVO_API_KEY, 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              sender: { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' },
-              to: [{ email }],
-              subject: '🚀 Your 30-Day Launch Coach starts tomorrow',
-              htmlContent
-            })
-          }).catch(e => console.error('Upsell email error:', e.message));
+          if (!alreadyWelcomed) {
+            await sendEmail({ to: email, subject: '🚀 Your 30-Day Launch Coach starts tomorrow', html: htmlContent, senderName: 'Get Biz Idea 🚀' })
+              .catch(e => console.error('Upsell email error:', e.message));
+          }
 
-          await generateAndScheduleCoach(email, resultId, row?.plan, row?.quiz_data, baseUrl)
-            .catch(e => console.error('Coach schedule error:', e.message));
+          await generateAndScheduleCoach(email, resultId, row?.plan, row?.quiz_data, baseUrl);
         }
       } catch (err) {
+        // A paid €27 product must not be lost silently: 500 makes Stripe retry the event
         console.error('Upsell webhook error:', err.message);
+        return res.status(500).json({ error: 'Coach delivery failed' });
       }
       return res.json({ received: true });
     }
@@ -129,27 +131,22 @@ export default async function handler(req, res) {
         if (email && planId) {
           const emailData = buildPlanEmail(planId, email, baseUrl);
           if (emailData) {
-            await fetch('https://api.brevo.com/v3/smtp/email', {
-              method: 'POST',
-              headers: { 'api-key': process.env.BREVO_API_KEY, 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                sender: { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' },
-                to: [{ email }],
-                subject: emailData.subject,
-                htmlContent: emailData.html
-              })
-            }).catch(e => console.error('Ready-made plan email error:', e.message));
+            await sendEmail({ to: email, subject: emailData.subject, html: emailData.html, senderName: 'Get Biz Idea 🚀' });
+          } else {
+            console.error('Ready-made plan not found:', planId);
           }
         }
       } catch (err) {
+        // The email is the whole product here: 500 makes Stripe retry delivery
         console.error('Ready-made plan webhook error:', err.message);
+        return res.status(500).json({ error: 'Plan delivery failed' });
       }
       return res.json({ received: true });
     }
 
     // ── MAIN PLAN PAYMENT (€17) ────────────────────────────────────────────────
     try {
-      const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+      const supabase = db();
 
       // IDEMPOTENCY: check if already paid (don't re-send emails on repeated unlocks)
       let alreadyPaid = false;
@@ -225,19 +222,11 @@ export default async function handler(req, res) {
 </html>`;
 
         // Awaited: Vercel freezes the function once the response is sent, so un-awaited sends can be lost
-        await fetch('https://api.brevo.com/v3/smtp/email', {
-          method: 'POST',
-          headers: {
-            'api-key': process.env.BREVO_API_KEY,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            sender: { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' },
-            to: [{ email }],
-            subject,
-            htmlContent
-          })
-        }).catch(e => console.error('Welcome email bg error:', e.message));
+        await sendEmail({ to: email, subject, html: htmlContent, senderName: 'Get Biz Idea 🚀' })
+          .catch(e => console.error('Welcome email bg error:', e.message));
+
+        await cancelReminders(supabase, resultId)
+          .catch(e => console.error('Cancel reminders error:', e.message));
 
         // Fire-and-forget 7-email drip sequence
         if (type !== 'tripwire') {
@@ -256,7 +245,7 @@ export default async function handler(req, res) {
 
 async function generateAndScheduleCoach(email, resultId, plan, quizData, baseUrl) {
   const ideaName = plan?.top_idea?.name || 'your business';
-  const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+  const supabase = db();
 
   // Reuse the 30-day plan if the page already generated it (same data the user sees on the page)
   let coachPlan = plan?.blocks?.[5];
@@ -291,7 +280,10 @@ async function generateAndScheduleCoach(email, resultId, plan, quizData, baseUrl
   }
   const days = coachPlan.days || [];
 
-  // Schedule 30 daily emails via Brevo (fire sequentially, don't await)
+  // Schedule the daily emails via Brevo. Days already queued by an earlier attempt are skipped,
+  // and each batch of progress is saved in case this run hits the function time limit.
+  const queued = new Set(plan?.coach_days_queued || []);
+  const pending = [];
   const magicLink = `${baseUrl}/quiz.html?unlocked=true&rid=${resultId}&upsell=1`;
   const now = new Date();
 
@@ -328,19 +320,40 @@ async function generateAndScheduleCoach(email, resultId, plan, quizData, baseUrl
   <p style="color:rgba(255,255,255,0.2);font-size:11px;text-align:center">Get Biz Idea · Day ${dayData.day} of 30 · <a href="${baseUrl}/api/unsubscribe?email=${encodeURIComponent(email)}" style="color:rgba(255,255,255,0.2)">Unsubscribe</a></p>
 </body></html>`;
 
-    await fetch('https://api.brevo.com/v3/smtp/email', {
-      method: 'POST',
-      headers: { 'api-key': process.env.BREVO_API_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sender: { name: 'Get Biz Idea Coach', email: 'hello@getbizidea.com' },
-        to: [{ email }],
+    if (queued.has(dayData.day)) continue;
+    pending.push(
+      sendEmail({
+        to: email,
         subject: `Day ${dayData.day}: ${dayData.theme || 'Your daily task'}`,
-        htmlContent: html,
+        html,
+        senderName: 'Get Biz Idea Coach',
         scheduledAt: sendAt.toISOString()
-      })
-    });
+      }).then(() => { queued.add(dayData.day); })
+    );
   }
+
+  const outcomes = await Promise.allSettled(pending);
+  const failures = outcomes.filter(o => o.status === 'rejected');
+
+  const { data: latest } = await supabase.from('results').select('plan').eq('id', resultId).single();
+  const complete = failures.length === 0 && days.length > 0;
+  await supabase.from('results').update({
+    plan: { ...latest?.plan, coach_days_queued: [...queued], ...(complete ? { coach_scheduled: true } : {}) }
+  }).eq('id', resultId);
+
+  if (!complete) throw new Error(`Coach: ${failures.length} of ${pending.length} emails failed, ${days.length} days planned`);
   console.log(`Coach: scheduled ${days.length} emails for ${email}`);
+}
+
+// The "your plan is waiting" reminders were queued at Brevo before the customer paid
+async function cancelReminders(supabase, resultId) {
+  const { data } = await supabase.from('results').select('quiz_data').eq('id', resultId).single();
+  const ids = data?.quiz_data?.reminder_message_ids || [];
+  if (!ids.length) return;
+  await Promise.allSettled(ids.map(id => cancelScheduledEmail(id)));
+  await supabase.from('results')
+    .update({ quiz_data: { ...data.quiz_data, reminder_message_ids: [] } })
+    .eq('id', resultId);
 }
 
 async function getRawBody(req) {

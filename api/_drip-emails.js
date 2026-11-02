@@ -44,18 +44,18 @@ const SEQUENCE = [
   { day: 14, subject: '💬 Mid-month — first client conversations?',
     title: 'Day 14 — the hard part',
     body: `<p>Day 14 is the make-or-break point. Most people quit here.</p>
-    <p>If you have <strong>at least one real conversation</strong> with a potential client — you're ahead of 90% of people who buy plans like this.</p>
+    <p>If you have <strong>at least one real conversation</strong> with a potential client — you're on the right track.</p>
     <p>If you don't yet — review the <strong>"3 mistakes that kill beginners"</strong> section in your plan. One of them is probably what's holding you back.</p>` },
   { day: 30, subject: '🏆 Month 1 — review + Days 31–90',
     title: 'Month 1 done',
     body: `<p>30 days in. Time for an honest review:</p>
     <ul style="padding-left:20px;line-height:1.9"><li>How many paying clients do you have?</li><li>What's your monthly revenue right now?</li><li>What is the ONE thing blocking growth?</li></ul>
     <p>Now open <strong>Days 31–90: Stable monthly income</strong>. Different game starts now — repeat what works, drop what doesn't, raise prices.</p>` },
-  { day: 60, subject: '💰 Are you at €500+/month yet?',
+  { day: 60, subject: '💰 Day 60: how are your numbers?',
     title: 'Day 60 milestone',
-    body: `<p>Two months in. Most successful members hit <strong>€500–€1,500/month</strong> by now.</p>
-    <p>If you're there — congrats. Time to optimize: which client type is most profitable? Double down.</p>
-    <p>If you're not — open your plan and look at <strong>Pricing strategy</strong>. The number one reason people stay stuck is they undercharge.</p>` },
+    body: `<p>Two months in. Time to check your numbers against your plan's income forecast.</p>
+    <p>If you're on track — congrats. Time to optimize: which client type is most profitable? Double down.</p>
+    <p>If you're behind — open your plan and look at <strong>Pricing strategy</strong>. The number one reason people stay stuck is they undercharge.</p>` },
   { day: 90, subject: '🎉 90-Day plan complete — what now?',
     title: 'You did 90 days',
     body: `<p>You've reached the end of your initial 90-day plan. By now you should know:</p>
