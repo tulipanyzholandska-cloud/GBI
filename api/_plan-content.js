@@ -235,7 +235,7 @@ export const PLAN_CONTENT = {
       },
       {
         title: '⚡ 5-Email Sequence That Works',
-        body: `Email 1 (Day 1): Value opener — mention a specific insight about their business\nEmail 2 (Day 3): Social proof — one result ("We helped [type of company] book 35 calls in 30 days")\nEmail 3 (Day 5): Pain point — "Most [target] struggle with X — here's why"\nEmail 4 (Day 8): Direct ask — "Worth a 15-minute call?"\nEmail 5 (Day 12): Breakup — "Last try — should I stop reaching out?"\n\nBreakup emails get 40% of all replies. Always send them.`
+        body: `Email 1 (Day 1): Value opener — mention a specific insight about their business\nEmail 2 (Day 3): Proof — one real result if you have it. If not, offer a free sample so they can judge your work\nEmail 3 (Day 5): Pain point — "Most [target] struggle with X — here's why"\nEmail 4 (Day 8): Direct ask — "Worth a 15-minute call?"\nEmail 5 (Day 12): Breakup — "Last try — should I stop reaching out?"\n\nBreakup emails get 40% of all replies. Always send them.`
       },
       {
         title: '⚠️ Critical Setup — Email Deliverability',
