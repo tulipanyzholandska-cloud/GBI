@@ -10,6 +10,10 @@
     {
       "path": "/api/keep-alive",
       "schedule": "0 9 */4 * *"
+    },
+    {
+      "path": "/api/send-scheduled",
+      "schedule": "0 8 * * *"
     }
   ],
   "redirects": [
@@ -17,19 +21,34 @@
       "source": "/(.*)",
       "destination": "https://getbizidea.com/$1",
       "permanent": true,
-      "has": [{ "type": "host", "value": "www.getbizidea.com" }]
+      "has": [
+        {
+          "type": "host",
+          "value": "www.getbizidea.com"
+        }
+      ]
     },
     {
       "source": "/(.*)",
       "destination": "https://getbizidea.com/$1",
       "permanent": true,
-      "has": [{ "type": "host", "value": "getbizidea.io" }]
+      "has": [
+        {
+          "type": "host",
+          "value": "getbizidea.io"
+        }
+      ]
     },
     {
       "source": "/(.*)",
       "destination": "https://getbizidea.com/$1",
       "permanent": true,
-      "has": [{ "type": "host", "value": "www.getbizidea.io" }]
+      "has": [
+        {
+          "type": "host",
+          "value": "www.getbizidea.io"
+        }
+      ]
     }
   ]
 }

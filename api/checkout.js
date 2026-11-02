@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { db } from './_supabase.js';
+import { getSupabase } from './_supabase.js';
 import { PLAN_CONTENT } from './_plan-content.js';
 
 const READY_MADE_PLAN_PRICE_CENTS = 1700;
@@ -48,7 +48,7 @@ export default async function handler(req, res) {
     } else {
       // Every other product belongs to a generated plan, and is delivered through it
       if (!resultId) return res.status(400).json({ error: 'Your plan was not saved. Please retake the quiz.' });
-      const { data: row } = await db().from('results').select('paid').eq('id', resultId).maybeSingle();
+      const { data: row } = await getSupabase().from('results').select('paid').eq('id', resultId).maybeSingle();
       if (!row) return res.status(400).json({ error: 'Your plan was not found. Please retake the quiz.' });
 
       if (product === 'upsell') {

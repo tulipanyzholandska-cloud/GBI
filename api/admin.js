@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { db } from './_supabase.js';
+import { getSupabase } from './_supabase.js';
 
 const PLAN_PRICE_EUR = 17;
 const COACH_PRICE_EUR = 27;
@@ -37,12 +37,14 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  if (!process.env.SUPABASE_URL) {
-    return res.status(500).json({ error: 'Missing env var: SUPABASE_URL' });
+  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
+    return res.status(500).json({ error: 'Missing env vars: SUPABASE_URL=' + (process.env.SUPABASE_URL ? 'set' : 'MISSING') + ', SUPABASE_ANON_KEY=' + (process.env.SUPABASE_ANON_KEY ? 'set' : 'MISSING') });
   }
 
   try {
-    const { data, error } = await db()
+    const supabase = getSupabase();
+
+    const { data, error } = await supabase
       .from('results')
       .select('id, email, paid, created_at, quiz_data, plan, is_test')
       .order('created_at', { ascending: false })

@@ -1,5 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
-import { db } from './_supabase.js';
+import { getSupabase } from './_supabase.js';
 
 const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
@@ -13,9 +13,10 @@ export default async function handler(req, res) {
   if (!rid) return res.status(400).json({ error: 'Missing rid' });
 
   try {
-    const { data, error } = await db().from('results').select('plan, quiz_data, paid').eq('id', rid).single();
+    const supabase = getSupabase();
+    const { data, error } = await supabase.from('results').select('plan, quiz_data, paid').eq('id', rid).single();
     if (error || !data) return res.status(404).json({ error: 'Not found' });
-    if (!data.paid) return res.status(402).json({ error: 'Payment required' });
+    if (data.paid !== true) return res.status(402).json({ error: 'Payment required' });
 
     const plan = data.plan;
     const idea = plan.top_idea.name;

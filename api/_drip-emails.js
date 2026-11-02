@@ -1,7 +1,5 @@
-// Drip email sequence — scheduled after unlock to drive engagement & retention
-// Uses Brevo's scheduledAt parameter
-
-const SENDER = { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' };
+// Drip email sequence after unlock, to drive engagement & retention.
+// Sent day by day from api/send-scheduled.js: Brevo can only schedule 72 hours ahead.
 
 const wrap = (title, body, magicLink, unsubLink) => `
 <!DOCTYPE html><html><head><meta charset="UTF-8"></head>
@@ -23,7 +21,7 @@ const wrap = (title, body, magicLink, unsubLink) => `
   </p>
 </body></html>`;
 
-const SEQUENCE = [
+export const SEQUENCE = [
   { day: 1, subject: '✓ Day 1 — Your first action today',
     title: 'Day 1: Start with your first move',
     body: `<p>You unlocked your full 90-day plan. Today the only thing that matters is taking your <strong>first concrete action</strong>.</p>
@@ -64,33 +62,8 @@ const SEQUENCE = [
     <p>Reply to this email and tell us how it went — we want to hear your story 🙌</p>` }
 ];
 
-export async function scheduleDripEmails(email, resultId, baseUrl) {
-  if (!process.env.BREVO_API_KEY || !email) return { ok: false, error: 'missing config' };
+export function buildDripEmail(step, email, resultId, baseUrl) {
   const magicLink = `${baseUrl}/quiz.html?unlocked=true&rid=${resultId}`;
   const unsubLink = `${baseUrl}/api/unsubscribe?rid=${resultId}&email=${encodeURIComponent(email)}`;
-  const now = Date.now();
-  const results = [];
-
-  for (const step of SEQUENCE) {
-    const scheduledAt = new Date(now + step.day * 24 * 60 * 60 * 1000).toISOString();
-    try {
-      const resp = await fetch('https://api.brevo.com/v3/smtp/email', {
-        method: 'POST',
-        headers: { 'api-key': process.env.BREVO_API_KEY, 'Content-Type': 'application/json', 'accept': 'application/json' },
-        body: JSON.stringify({
-          sender: SENDER,
-          to: [{ email }],
-          subject: step.subject,
-          htmlContent: wrap(step.title, step.body, magicLink, unsubLink),
-          scheduledAt,
-          tags: ['gbi-drip', `day-${step.day}`]
-        })
-      });
-      const data = await resp.json().catch(() => ({}));
-      results.push({ day: step.day, ok: resp.ok, status: resp.status, messageId: data.messageId });
-    } catch (e) {
-      results.push({ day: step.day, ok: false, error: e.message });
-    }
-  }
-  return { ok: true, scheduled: results };
+  return { subject: step.subject, html: wrap(step.title, step.body, magicLink, unsubLink) };
 }

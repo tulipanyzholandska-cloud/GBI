@@ -1,8 +1,7 @@
 import Stripe from 'stripe';
 import { timingSafeEqual } from 'crypto';
-import { db } from './_supabase.js';
-import { sendEmail, cancelScheduledEmail } from './_send-email.js';
-import { scheduleDripEmails } from './_drip-emails.js';
+import { getSupabase } from './_supabase.js';
+import { brevoSend, brevoCancelScheduled } from './_send-email.js';
 import { buildPlanEmail } from './_plan-content.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -56,7 +55,7 @@ export default async function handler(req, res) {
     // ── UPSELL PAYMENT (€27 30-Day Launch Coach) ──────────────────────────────
     if (type === 'upsell') {
       try {
-        const supabase = db();
+        const supabase = getSupabase();
         const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://getbizidea.com';
 
         let row = null;
@@ -64,14 +63,12 @@ export default async function handler(req, res) {
         if (resultId) {
           const { data } = await supabase.from('results').select('plan, quiz_data').eq('id', resultId).single();
           row = data;
-          // IDEMPOTENCY: coach_scheduled is only set once all 30 emails are queued, so a failed
-          // delivery can be retried by Stripe without re-sending what already went out
-          if (row?.plan?.coach_scheduled) return res.json({ received: true, alreadyPaid: true });
-          if (row && !row.plan?.upsell_paid) {
+          // IDEMPOTENCY: coach_started_at is set last, so a failed delivery can be retried by Stripe
+          if (row?.plan?.coach_started_at) return res.json({ received: true, alreadyPaid: true });
+          alreadyWelcomed = row?.plan?.upsell_paid === true;
+          if (row && !alreadyWelcomed) {
             const updatedPlan = { ...row.plan, upsell_paid: true };
             await supabase.from('results').update({ plan: updatedPlan }).eq('id', resultId);
-          } else {
-            alreadyWelcomed = !!row;
           }
         }
 
@@ -87,7 +84,7 @@ export default async function handler(req, res) {
     <div style="font-size:32px;margin-bottom:12px">🚀</div>
     <h2 style="color:#fff;font-size:20px;font-weight:700;margin:0 0 10px">Your 30-Day Launch Coach starts tomorrow</h2>
     <p style="color:rgba(255,255,255,0.65);font-size:14px;line-height:1.6;margin:0 0 24px">
-      Every morning at 8am you'll get one task, one copy-paste script and one win to aim for. You can also see the full 30-day schedule anytime:
+      Every morning you'll get one task, one copy-paste script and one win to aim for. You can also see the full 30-day schedule anytime:
     </p>
     <a href="${magicLink}" style="display:inline-block;padding:14px 32px;border-radius:12px;background:linear-gradient(135deg,#e8417a,#7c3aed);color:#fff;font-size:16px;font-weight:700;text-decoration:none">
       Open My 30-Day Plan →
@@ -109,16 +106,20 @@ export default async function handler(req, res) {
 </body></html>`;
           // Awaited: Vercel freezes the function after the response, so fire-and-forget work gets lost
           if (!alreadyWelcomed) {
-            await sendEmail({ to: email, subject: '🚀 Your 30-Day Launch Coach starts tomorrow', html: htmlContent, senderName: 'Get Biz Idea 🚀' })
-              .catch(e => console.error('Upsell email error:', e.message));
+            await brevoSend({
+              sender: { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' },
+              to: [{ email }],
+              subject: '🚀 Your 30-Day Launch Coach starts tomorrow',
+              htmlContent
+            }, 'upsell confirmation');
           }
 
-          await generateAndScheduleCoach(email, resultId, row?.plan, row?.quiz_data, baseUrl);
+          await startCoach(resultId, row?.plan, row?.quiz_data);
         }
       } catch (err) {
         // A paid €27 product must not be lost silently: 500 makes Stripe retry the event
         console.error('Upsell webhook error:', err.message);
-        return res.status(500).json({ error: 'Coach delivery failed' });
+        return res.status(500).json({ error: 'Coach setup failed' });
       }
       return res.json({ received: true });
     }
@@ -131,9 +132,13 @@ export default async function handler(req, res) {
         if (email && planId) {
           const emailData = buildPlanEmail(planId, email, baseUrl);
           if (emailData) {
-            await sendEmail({ to: email, subject: emailData.subject, html: emailData.html, senderName: 'Get Biz Idea 🚀' });
-          } else {
-            console.error('Ready-made plan not found:', planId);
+            const sent = await brevoSend({
+              sender: { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' },
+              to: [{ email }],
+              subject: emailData.subject,
+              htmlContent: emailData.html
+            }, 'ready-made plan');
+            if (!sent.ok) throw new Error('Plan email not accepted');
           }
         }
       } catch (err) {
@@ -146,7 +151,7 @@ export default async function handler(req, res) {
 
     // ── MAIN PLAN PAYMENT (€17) ────────────────────────────────────────────────
     try {
-      const supabase = db();
+      const supabase = getSupabase();
 
       // IDEMPOTENCY: check if already paid (don't re-send emails on repeated unlocks)
       let alreadyPaid = false;
@@ -222,17 +227,29 @@ export default async function handler(req, res) {
 </html>`;
 
         // Awaited: Vercel freezes the function once the response is sent, so un-awaited sends can be lost
-        await sendEmail({ to: email, subject, html: htmlContent, senderName: 'Get Biz Idea 🚀' })
-          .catch(e => console.error('Welcome email bg error:', e.message));
+        await brevoSend({
+          sender: { name: 'Get Biz Idea 🚀', email: 'hello@getbizidea.com' },
+          to: [{ email }],
+          subject,
+          htmlContent
+        }, 'welcome');
 
-        await cancelReminders(supabase, resultId)
-          .catch(e => console.error('Cancel reminders error:', e.message));
+        // Paid now: cancel the pending "your plan is still waiting" reminders
+        try {
+          const { data: r } = await supabase.from('results').select('quiz_data').eq('id', resultId).single();
+          const pending = r?.quiz_data?.scheduled_emails || [];
+          if (pending.length) {
+            await Promise.all(pending.map(brevoCancelScheduled));
+            await supabase.from('results').update({ quiz_data: { ...r.quiz_data, scheduled_emails: [] } }).eq('id', resultId);
+          }
+        } catch (e) { console.error('Cancel reminders error:', e.message); }
 
-        // Fire-and-forget 7-email drip sequence
-        if (type !== 'tripwire') {
-          await scheduleDripEmails(email, resultId, baseUrl)
-            .then(drip => console.log('Drip scheduled:', JSON.stringify(drip)))
-            .catch(dripErr => console.error('Drip schedule error:', dripErr.message));
+        // api/send-scheduled.js sends the drip sequence, counted from paid_at
+        if (type !== 'tripwire' && !isTest) {
+          const { data: paidRow } = await supabase.from('results').select('plan').eq('id', resultId).single();
+          await supabase.from('results')
+            .update({ plan: { ...paidRow?.plan, paid_at: new Date().toISOString() } })
+            .eq('id', resultId);
         }
       }
     } catch (err) {
@@ -243,9 +260,11 @@ export default async function handler(req, res) {
   res.json({ received: true });
 }
 
-async function generateAndScheduleCoach(email, resultId, plan, quizData, baseUrl) {
+// Prepares the 30-day plan and starts the clock. api/send-scheduled.js sends one day each
+// morning: Brevo can only schedule 72 hours ahead, so 30 days can't be queued up front.
+async function startCoach(resultId, plan, quizData) {
   const ideaName = plan?.top_idea?.name || 'your business';
-  const supabase = db();
+  const supabase = getSupabase();
 
   // Reuse the 30-day plan if the page already generated it (same data the user sees on the page)
   let coachPlan = plan?.blocks?.[5];
@@ -278,81 +297,11 @@ async function generateAndScheduleCoach(email, resultId, plan, quizData, baseUrl
       await supabase.from('results').update({ plan: updatedPlan }).eq('id', resultId);
     }
   }
-  const days = coachPlan.days || [];
-
-  // Schedule the daily emails via Brevo. Days already queued by an earlier attempt are skipped,
-  // and each batch of progress is saved in case this run hits the function time limit.
-  const queued = new Set(plan?.coach_days_queued || []);
-  const pending = [];
-  const magicLink = `${baseUrl}/quiz.html?unlocked=true&rid=${resultId}&upsell=1`;
-  const now = new Date();
-
-  for (const dayData of days.slice(0, 30)) {
-    const sendAt = new Date(now);
-    sendAt.setDate(sendAt.getDate() + dayData.day); // Day 1 = tomorrow ("starts tomorrow morning")
-    sendAt.setHours(8, 0, 0, 0); // 8am each day
-
-    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"></head>
-<body style="font-family:-apple-system,sans-serif;max-width:600px;margin:0 auto;padding:20px;background:#0a0a0f;color:#fff">
-  <div style="text-align:center;padding:16px 0 24px">
-    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.4)">Day ${dayData.day} · ${ideaName}</span>
-  </div>
-  <div style="background:linear-gradient(135deg,rgba(232,65,122,0.15),rgba(124,58,237,0.1));border:1px solid rgba(232,65,122,0.3);border-radius:16px;padding:24px;margin-bottom:20px">
-    <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#e8417a;margin-bottom:8px">TODAY'S THEME</div>
-    <div style="font-size:20px;font-weight:800;margin-bottom:4px">${dayData.theme || ''}</div>
-    <div style="font-size:12px;color:rgba(255,255,255,0.4)">${dayData.time_minutes || 30} minutes</div>
-  </div>
-  <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;margin-bottom:16px">
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.4);margin-bottom:10px">TODAY'S TASK</div>
-    <div style="font-size:15px;font-weight:600;line-height:1.5">${dayData.task || ''}</div>
-  </div>
-  ${dayData.script ? `<div style="background:rgba(124,58,237,0.1);border-left:4px solid #7c3aed;border-radius:0 12px 12px 0;padding:16px 18px;margin-bottom:16px">
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#a78bfa;margin-bottom:8px">COPY-PASTE SCRIPT</div>
-    <div style="font-size:14px;color:rgba(255,255,255,0.85);line-height:1.7;font-style:italic">${dayData.script}</div>
-  </div>` : ''}
-  <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:12px;padding:14px 16px;margin-bottom:24px">
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#5dcaa5;margin-bottom:6px">🎯 TODAY'S WIN</div>
-    <div style="font-size:14px;font-weight:600">${dayData.win || ''}</div>
-  </div>
-  <div style="text-align:center;margin-bottom:24px">
-    <a href="${magicLink}" style="display:inline-block;padding:12px 28px;border-radius:10px;background:rgba(124,58,237,0.3);border:1px solid #7c3aed;color:#fff;font-size:14px;font-weight:700;text-decoration:none">Open My Business Plan →</a>
-  </div>
-  <p style="color:rgba(255,255,255,0.2);font-size:11px;text-align:center">Get Biz Idea · Day ${dayData.day} of 30 · <a href="${baseUrl}/api/unsubscribe?email=${encodeURIComponent(email)}" style="color:rgba(255,255,255,0.2)">Unsubscribe</a></p>
-</body></html>`;
-
-    if (queued.has(dayData.day)) continue;
-    pending.push(
-      sendEmail({
-        to: email,
-        subject: `Day ${dayData.day}: ${dayData.theme || 'Your daily task'}`,
-        html,
-        senderName: 'Get Biz Idea Coach',
-        scheduledAt: sendAt.toISOString()
-      }).then(() => { queued.add(dayData.day); })
-    );
-  }
-
-  const outcomes = await Promise.allSettled(pending);
-  const failures = outcomes.filter(o => o.status === 'rejected');
+  if (!coachPlan?.days?.length) throw new Error('Coach plan has no days');
 
   const { data: latest } = await supabase.from('results').select('plan').eq('id', resultId).single();
-  const complete = failures.length === 0 && days.length > 0;
-  await supabase.from('results').update({
-    plan: { ...latest?.plan, coach_days_queued: [...queued], ...(complete ? { coach_scheduled: true } : {}) }
-  }).eq('id', resultId);
-
-  if (!complete) throw new Error(`Coach: ${failures.length} of ${pending.length} emails failed, ${days.length} days planned`);
-  console.log(`Coach: scheduled ${days.length} emails for ${email}`);
-}
-
-// The "your plan is waiting" reminders were queued at Brevo before the customer paid
-async function cancelReminders(supabase, resultId) {
-  const { data } = await supabase.from('results').select('quiz_data').eq('id', resultId).single();
-  const ids = data?.quiz_data?.reminder_message_ids || [];
-  if (!ids.length) return;
-  await Promise.allSettled(ids.map(id => cancelScheduledEmail(id)));
   await supabase.from('results')
-    .update({ quiz_data: { ...data.quiz_data, reminder_message_ids: [] } })
+    .update({ plan: { ...latest?.plan, coach_started_at: new Date().toISOString() } })
     .eq('id', resultId);
 }
 

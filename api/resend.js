@@ -1,4 +1,4 @@
-import { db } from './_supabase.js';
+import { getSupabase } from './_supabase.js';
 import { sendEmail } from './_send-email.js';
 
 export default async function handler(req, res) {
@@ -14,8 +14,10 @@ export default async function handler(req, res) {
   }
 
   try {
+    const supabase = getSupabase();
+
     // Find most recent paid result for this email
-    const { data, error } = await db()
+    const { data, error } = await supabase
       .from('results')
       .select('id, plan, paid, created_at')
       .ilike('email', email.trim().replace(/[\\%_]/g, '\\$&'))

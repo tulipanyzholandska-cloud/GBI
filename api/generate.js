@@ -1,6 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk';
-import { db } from './_supabase.js';
-import { toFreePlan } from './_plan-access.js';
+import { getSupabase } from './_supabase.js';
+import { freePlan } from './_teaser.js';
 
 const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const LANG_MAP = { en: 'English', cs: 'Czech', sk: 'Slovak', de: 'German' };
@@ -115,7 +115,8 @@ JSON (fill ALL fields, be specific and concrete):
     let resultId = null;
     let dbError = null;
     try {
-      const { data, error } = await db().from('results').insert({
+      const supabase = getSupabase();
+      const { data, error } = await supabase.from('results').insert({
         quiz_data: quizData, plan, language: quizData.language || 'en'
       }).select('id').single();
       if (error) { dbError = error.message || JSON.stringify(error); console.error('DB error:', error); }
@@ -125,8 +126,8 @@ JSON (fill ALL fields, be specific and concrete):
       console.error('DB exception:', e.message);
     }
 
-    // The full plan stays on the server until payment
-    res.json({ resultId, plan: toFreePlan(plan), dbError });
+    // Full plan is stored in DB; client only gets the free preview until paid (see /api/result)
+    res.json({ resultId, plan: freePlan(plan), dbError });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
