@@ -15,6 +15,7 @@ Limits of this test:
 - The grader is also a Claude model, so Honza's 5 pairs are the check on it.
 - A runs on Haiku 4.5 as on the live site and B on Opus 5.5, so a loss alone does not separate a weak model from a weak prompt.
 - Plan A is the free-stage plan from `api/generate.js`. The paid blocks and live competitor search are not part of this comparison.
+- The headings requested from B come from our plan structure, so B gets guidance a typical free user would not write. Together with Opus this pushes against A. The pass bar stays the same, and the result report must state this.
 - Location, lifestyle, business type and timeline are fixed for every profile, and interests repeat strengths, because the table below does not set them.
 
 ## Method
