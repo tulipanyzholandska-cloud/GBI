@@ -8,20 +8,23 @@ Nothing real has run yet. It needs an Anthropic API key. Run it from the project
 node evals/plan-quality/run.mjs
 ```
 
-`--dry` checks the pipeline with no API calls. Results go to `results/`: `summary.json`, `scores.csv`, `raw.json`, `pairs-for-honza.md` and `pairs-key.json`, which stays closed until Honza has given his verdicts.
+`--dry` checks the pipeline with no API calls. `--free-only` compares only the free-stage plan, without paid blocks and search. Results go to `results/`: `summary.json`, `scores.csv`, `raw.json`, `pairs-for-honza.md` and `pairs-key.json`, which stays closed until Honza has given his verdicts.
 
 Limits of this test:
 - Plan B comes from Claude Opus 5.5 as a stand-in for a free chatbot, not from ChatGPT itself. It is a strong opponent, but not the same product.
 - The grader is also a Claude model, so Honza's 5 pairs are the check on it.
 - A runs on Haiku 4.5 as on the live site and B on Opus 5.5, so a loss alone does not separate a weak model from a weak prompt.
-- Plan A is the free-stage plan from `api/generate.js`. The paid blocks and live competitor search are not part of this comparison.
+- By default plan A is what a buyer gets for €17: the free-stage plan plus paid blocks 1 to 4 and live competitor search, from the same code as the live site. The 30-day coach (block 5) is a separate upsell and is not measured. With `--free-only` the result says nothing about the paid product.
+- Where a paid block covers a section, plan A shows the block's text only, so the free-stage text in that section is not graded.
+- Plan B gets web search like plan A, since free chatbots can search. The live page shows competitors as links, which plain text cannot fully reproduce.
+- `summary.json` reports blocks that failed twice and profiles where search found no verifiable competitor. Both count against the product and must be in the report, together with `costUsd`.
 - The headings requested from B come from our plan structure, so B gets guidance a typical free user would not write. Together with Opus this pushes against A. The pass bar stays the same, and the result report must state this.
 - Location, lifestyle, business type and timeline are fixed for every profile, and interests repeat strengths, because the table below does not set them.
 
 ## Method
 
 For each profile, generate two plans:
-- **A:** our current prompts from `api/generate.js`.
+- **A:** our current prompts from `api/generate.js`, plus paid blocks 1 to 4 and competitor search from `api/_blocks.js`.
 - **B:** a good free prompt: "Here are my answers. Recommend one business and give me a plan to get my first paying customer." It also asks for the same plain headings as plan A, so format does not reveal the author.
 
 The grader sees the plans in random order, without labels. Honza reads at least 5 pairs himself, and where he disagrees with the grader, his verdict counts.

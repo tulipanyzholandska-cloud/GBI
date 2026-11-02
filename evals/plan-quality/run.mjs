@@ -1,15 +1,18 @@
 // Blind comparison of our plan (A) with a free chatbot style plan (B). See README.md.
 // Real run: ANTHROPIC_API_KEY=... node evals/plan-quality/run.mjs
 // Dry run with no API calls and no cost: node evals/plan-quality/run.mjs --dry
+// Free-stage plan only, without paid blocks and search: add --free-only
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Anthropic from '@anthropic-ai/sdk';
 import { buildPlanPrompts } from '../../api/_plan-prompt.js';
 import { capForecast } from '../../api/_income.js';
+import { generateBlockData } from '../../api/_blocks.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const DRY = process.argv.includes('--dry');
+const FREE_ONLY = process.argv.includes('--free-only');
 const OUT = path.join(here, DRY ? 'results-dry' : 'results');
 const GRADER_MODEL = 'claude-opus-5-5';
 const OUR_MODEL = 'claude-haiku-4-5-20251001'; // same as api/generate.js
@@ -22,12 +25,40 @@ const FIXED = { location: 'Small town', lifestyle: 'Employed full-time', btype: 
 const profiles = JSON.parse(fs.readFileSync(path.join(here, 'profiles.json'), 'utf8'))
   .map(p => ({ ...FIXED, interests: p.strengths, ...p }));
 
-const usage = { input: 0, output: 0, searches: 0 };
+// Blocks a buyer gets for the €17 plan. Block 5 (30-day coach) is a separate upsell.
+const PAID_BLOCKS = [1, 2, 3, 4];
+
+// USD per million tokens and per web search, from the Claude API pricing docs
+const PRICES = {
+  'claude-haiku-4-5-20251001': { input: 1, output: 5 },
+  'claude-opus-5-5': { input: 4, output: 20 }
+};
+const PRICE_PER_SEARCH = 0.01;
+
+const usage = {};
+const blockFailures = [];
 
 function fakeClient() {
   return { messages: { create: async ({ messages, system }) => {
     const text = messages[0].content;
     let out = 'Plain plan: contact 20 local people and offer a small first project.';
+    if (text.startsWith('Find 3 real')) {
+      const url = 'https://dry-rival.example/';
+      return {
+        stop_reason: 'end_turn',
+        usage: { input_tokens: 0, output_tokens: 0, server_tool_use: { web_search_requests: 1 } },
+        content: [
+          { type: 'web_search_tool_result', content: [{ url }] },
+          { type: 'text', text: JSON.stringify({ competitors: [{ name: 'Dry rival', url, price: '€10', weakness: 'slow', how_you_beat_them: 'faster' }] }) }
+        ]
+      };
+    }
+    if (system?.includes('Premium business')) {
+      if (text.includes('income projection')) out = JSON.stringify({ hero_statement: 'h', income_projection: { month_3: 100, month_12: 90000, month_12_math: 'm', income_sources: [{ source: 's', monthly_amount: 90000 }] } });
+      if (text.includes('pricing and first')) out = JSON.stringify({ pricing: { main: { name: 'Main', price: '€50', price_number: 50 } }, first_customer: { platform: 'p', outreach_message: 'block message', daily_target: 5 }, scripts: { upsell: 'u' } });
+      if (text.includes('action checklist')) out = JSON.stringify({ checklist: { day1: [{ task: 'block task', time_minutes: 30, tool: 't', tool_url: '' }] } });
+      if (text.includes('tools, mistakes')) out = JSON.stringify({ tools: [{ name: 'Tool', url: '', purpose: 'p' }], mistakes: [{ mistake: 'm' }], scaling_roadmap: [{ phase: 'M1-3', focus: 'f' }], passive_income: [{ product: 'pr' }] });
+    }
     if (system?.includes('blind')) {
       const score = { personal: 1, realistic: 1, first_customer: 1, honest: 2, ready_to_use: 1, reason: 'dry run' };
       out = JSON.stringify({ first: score, second: { ...score, personal: 2 } });
@@ -40,14 +71,36 @@ function fakeClient() {
   } } };
 }
 
-const claude = DRY ? fakeClient() : new Anthropic();
+// Counts every call, including those made inside the live block and research code
+const client = DRY ? fakeClient() : new Anthropic();
+const claude = { messages: { create: async (params, options) => {
+  const msg = await client.messages.create(params, options);
+  const row = usage[params.model] ||= { input: 0, output: 0, searches: 0 };
+  row.input += msg.usage?.input_tokens || 0;
+  row.output += msg.usage?.output_tokens || 0;
+  row.searches += msg.usage?.server_tool_use?.web_search_requests || 0;
+  return msg;
+} } };
+
+function costUsd() {
+  const total = Object.entries(usage).reduce((sum, [model, row]) => sum
+    + (row.input * PRICES[model].input + row.output * PRICES[model].output) / 1e6
+    + row.searches * PRICE_PER_SEARCH, 0);
+  return Math.round(total * 100) / 100;
+}
 
 async function ask(params) {
-  const msg = await claude.messages.create(params);
-  usage.input += msg.usage?.input_tokens || 0;
-  usage.output += msg.usage?.output_tokens || 0;
+  const messages = [...params.messages];
+  let msg = await claude.messages.create(params);
+  const parts = [...msg.content];
+  // A search can pause the turn, and the reply then carries on from where it stopped
+  for (let i = 0; i < 3 && msg.stop_reason === 'pause_turn'; i++) {
+    messages.push({ role: 'assistant', content: msg.content });
+    msg = await claude.messages.create({ ...params, messages });
+    parts.push(...msg.content);
+  }
   if (msg.stop_reason === 'max_tokens' || msg.stop_reason === 'refusal') throw new Error('Stopped early: ' + msg.stop_reason);
-  return msg.content.filter(b => b.type === 'text').map(b => b.text).join('\n').trim();
+  return parts.filter(b => b.type === 'text').map(b => b.text).join('').trim();
 }
 
 function parseJson(text) {
@@ -55,36 +108,59 @@ function parseJson(text) {
 }
 
 // Both plans use the same plain headings, so field names cannot reveal which one is ours
-const HEADINGS = 'Recommendation, Why it fits you, Expected income, First customer, Messages to send, Pricing, Action plan, Tools, Mistakes to avoid, Other ideas';
+const HEADINGS = 'Recommendation, Why it fits you, Expected income, First customer, Messages to send, Pricing, Action plan, Tools, Mistakes to avoid, Other ideas' + (FREE_ONLY ? '' : ', Competitors, Growth after the first customers');
 
 function toText(value) {
   if (Array.isArray(value)) return value.map(v => toText(v)).filter(Boolean).join('\n');
-  if (value && typeof value === 'object') return Object.values(value).map(v => toText(v)).filter(Boolean).join('\n');
+  if (value && typeof value === 'object') {
+    return Object.entries(value).map(([key, v]) => {
+      if (key === 'price_number') return '';
+      if (key.endsWith('_minutes')) return v ? `${v} minutes` : '';
+      if (key.endsWith('_hours')) return v ? `${v} hours` : '';
+      return toText(v);
+    }).filter(Boolean).join('\n');
+  }
   return String(value ?? '').trim();
 }
 
-function renderPlanA(plan) {
+// Where a paid block covers a section, it replaces the free-stage text, as on the paid page
+function renderPlanA(plan, blocks = {}) {
   const idea = plan.top_idea || {};
   const fp = plan.full_plan || {};
   const fc = fp.first_customer || {};
   const money = idea.income_forecast || {};
+  const projection = blocks[1]?.income_projection;
+  const paidCustomer = blocks[2]?.first_customer;
   const sections = [
     ['Recommendation', [idea.name, idea.tagline, idea.market_size, idea.why_now, idea.difficulty_reason]],
     ['Why it fits you', [idea.fit_reasons, idea.your_advantage]],
-    ['Expected income', [
+    ['Expected income', projection ? [
+      blocks[1].hero_statement,
+      ...['month_1', 'month_2', 'month_3', 'month_6', 'month_9', 'month_12'].map(m => projection[m] != null && `Month ${m.slice(6)}: €${projection[m]}`),
+      projection.month_12_math,
+      projection.income_sources?.map(s => `${s.source}: €${s.monthly_amount}`)
+    ] : [
       money.month_3_low != null && `Month 3: €${money.month_3_low} to €${money.month_3_high}`,
       money.month_6_low != null && `Month 6: €${money.month_6_low} to €${money.month_6_high}`,
       money.month_12_low != null && `Month 12: €${money.month_12_low} to €${money.month_12_high}`,
       money.month_12_math, money.explanation
     ]],
-    ['First customer', [fc.platform, fc.expected_response_rate, fc.daily_outreach_target && `Contact ${fc.daily_outreach_target} people a day`]],
-    ['Messages to send', [fc.subject, fc.message, fc.followup_message, fp.scripts]],
-    ['Pricing', [fp.pricing]],
-    ['Action plan', [fp.action_plan]],
-    ['Tools', [fp.tools]],
-    ['Mistakes to avoid', [fp.top_mistakes, fp.main_objection]],
+    ['First customer', paidCustomer
+      ? [paidCustomer.platform, paidCustomer.where_to_find, paidCustomer.expected_response_rate, paidCustomer.daily_target && `Contact ${paidCustomer.daily_target} people a day`]
+      : [fc.platform, fc.expected_response_rate, fc.daily_outreach_target && `Contact ${fc.daily_outreach_target} people a day`]],
+    ['Messages to send', paidCustomer
+      ? [paidCustomer.subject_line, paidCustomer.outreach_message, paidCustomer.followup_day3, paidCustomer.closing_script, blocks[2].scripts]
+      : [fc.subject, fc.message, fc.followup_message, fp.scripts]],
+    ['Pricing', [blocks[2]?.pricing || fp.pricing]],
+    ['Action plan', [blocks[3]?.checklist || fp.action_plan]],
+    ['Tools', [blocks[4]?.tools || fp.tools]],
+    ['Mistakes to avoid', [blocks[4]?.mistakes || fp.top_mistakes, fp.main_objection]],
     ['Other ideas', [plan.other_ideas?.map(o => [o.name, o.tagline, o.monthly_potential])]]
   ];
+  if (!FREE_ONLY) {
+    sections.push(['Competitors', [blocks[1]?.competitors?.map(c => [c.name, c.url, c.price, c.weakness, c.how_you_beat_them])]]);
+    sections.push(['Growth after the first customers', [blocks[4]?.scaling_roadmap, blocks[4]?.passive_income]]);
+  }
   return sections.map(([heading, parts]) => `${heading}\n${toText(parts.filter(Boolean))}`).join('\n\n');
 }
 
@@ -95,7 +171,24 @@ async function planA(profile) {
   const raw = await ask({ model: OUR_MODEL, max_tokens: 8000, system, messages: [{ role: 'user', content: user }] });
   const plan = parseJson(raw.replace(/```json|```/g, ''));
   capForecast(plan.top_idea?.income_forecast, profile.time);
-  return { name: plan.top_idea?.name || '', text: renderPlanA(plan) };
+  const name = plan.top_idea?.name || '';
+  const blocks = FREE_ONLY ? {} : await paidBlocks(profile, name);
+  return { name, competitors: blocks[1]?.competitors?.length ?? null, text: renderPlanA(plan, blocks) };
+}
+
+// A block that fails twice stays missing and is reported, since a buyer would also go without it
+async function paidBlocks(profile, ideaName) {
+  const blocks = {};
+  await Promise.all(PAID_BLOCKS.map(async block => {
+    for (let attempt = 1; attempt <= 2 && !blocks[block]; attempt++) {
+      try {
+        blocks[block] = await generateBlockData(claude, block, ideaName, profile);
+      } catch (err) {
+        if (attempt === 2) blockFailures.push({ id: profile.id, block, error: err.message });
+      }
+    }
+  }));
+  return blocks;
 }
 
 async function planB(profile) {
@@ -104,6 +197,8 @@ async function planB(profile) {
     model: FREE_CHATBOT_STAND_IN,
     max_tokens: 16000,
     output_config: { effort: 'medium' },
+    // Free chatbots can search the web, and plan A gets search here too
+    ...(FREE_ONLY ? {} : { tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 3 }] }),
     messages: [{ role: 'user', content: `Here are my answers.\n${answers}\n\nRecommend one business and give me a plan to get my first paying customer. Write in English, in plain text with no markdown, using these headings: ${HEADINGS}.` }]
   });
   return { text };
@@ -164,7 +259,8 @@ const wins = rows.filter(r => r.totalA > r.totalB).length;
 const ties = rows.filter(r => r.totalA === r.totalB).length;
 const honestZeros = rows.filter(r => Number(r.scoreA.honest) === 0).length;
 const passed = wins >= 12 && honestZeros === 0 && kinds >= 10;
-const summary = { passed, wins, ties, losses: rows.length - wins - ties, honestZeros, kinds, repeats, usage, dryRun: DRY };
+const noCompetitors = rows.filter(r => r.a.competitors === 0).map(r => r.id);
+const summary = { scope: FREE_ONLY ? 'free-stage plan' : 'free-stage plan plus paid blocks 1-4', passed, wins, ties, losses: rows.length - wins - ties, honestZeros, kinds, blockFailures, noCompetitors, repeats, usage, costUsd: costUsd(), dryRun: DRY };
 
 fs.writeFileSync(path.join(OUT, 'raw.json'), JSON.stringify(rows, null, 1));
 fs.writeFileSync(path.join(OUT, 'summary.json'), JSON.stringify(summary, null, 1));
